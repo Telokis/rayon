@@ -21,11 +21,19 @@ SET(RAYON_HEADER_DIR "${CMAKE_CURRENT_LIST_DIR}/Include")
 SET(RAYON_SOURCE_DIR "${CMAKE_CURRENT_LIST_DIR}/Source")
 
 SET(RAYON_HEADER_FILES
+  "${RAYON_HEADER_DIR}/EventManager.hh"
+
   "${RAYON_HEADER_DIR}/Tools/Helpers.hh"
   "${RAYON_HEADER_DIR}/Tools/Color.hh"
   "${RAYON_HEADER_DIR}/Tools/Vector3.hh"
   "${RAYON_HEADER_DIR}/Tools/CachedValue.hh"
+  "${RAYON_HEADER_DIR}/Tools/BoundingBox.hh"
 
+  "${RAYON_HEADER_DIR}/Tools/Angle/Radian.hh"
+  "${RAYON_HEADER_DIR}/Tools/Angle/Degree.hh"
+
+  "${RAYON_HEADER_DIR}/Tools/Helpers/Any.hh"
+  "${RAYON_HEADER_DIR}/Tools/Helpers/Globals.hh"
   "${RAYON_HEADER_DIR}/Tools/Helpers/PI.hh"
   "${RAYON_HEADER_DIR}/Tools/Helpers/Pow.hh"
   "${RAYON_HEADER_DIR}/Tools/Helpers/Clamp.hh"
@@ -34,9 +42,15 @@ SET(RAYON_HEADER_FILES
 
 SET(RAYON_SOURCE_FILES
   "${RAYON_SOURCE_DIR}/TempMain.cpp"
+  "${RAYON_SOURCE_DIR}/EventManager.cpp"
 
   "${RAYON_SOURCE_DIR}/Tools/Color.cpp"
-  "${RAYON_SOURCE_DIR}/Tools/Vector3.cpp"
+  "${RAYON_SOURCE_DIR}/Tools/BoundingBox.cpp"
+
+  "${RAYON_SOURCE_DIR}/Tools/Helpers/Globals.cpp"
+  
+  "${RAYON_SOURCE_DIR}/Tools/Angle/Radian.cpp"
+  "${RAYON_SOURCE_DIR}/Tools/Angle/Degree.cpp"
 )
 
 # Set sources

@@ -8,19 +8,16 @@
 #include <iostream>
 #include <iomanip>
 #include "Tools/Vector3.hh"
-
-template<int n>
-struct constN
-{
-  constN()
-  {
-    std::cout << n << '\n';
-  }
-};
+#include "Tools/Helpers/Any.hh"
+#include <string>
 
 int  main()
 {
-  constN<RayOn::Tools::Helpers::Pow3(2)> N;
+  RayOn::Tools::Helpers::Any  test = 18;
+  test = 3.5;
+  std::cout << RayOn::Tools::Helpers::AnyCast<double>(test) << "\n";
+  test = std::string("toto");
+  std::cout << RayOn::Tools::Helpers::AnyCast<std::string>(test) << "\n";
   std::cin.get();
   return 0;
 }

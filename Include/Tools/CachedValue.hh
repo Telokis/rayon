@@ -21,6 +21,8 @@ namespace RayOn
       const T       operator()() const;
       T&            operator()();
 
+      bool          isValid() const;
+
     private:
       T             _value;
       bool mutable  _valid;
@@ -29,51 +31,57 @@ namespace RayOn
 
     // CachedValue implementation below :
     template<typename T>
-    CachedValue::CachedValue()
+    CachedValue<T>::CachedValue()
       : _value(),
       _valid(false)
     {
     }
 
     template<typename T>
-    CachedValue::CachedValue(const T& value, bool valid)
+    CachedValue<T>::CachedValue(const T& value, bool valid)
       : _value(value),
       _valid(valid)
     {
     }
 
     template<typename T>
-    void  CachedValue::set(const T& value)
+    void  CachedValue<T>::set(const T& value)
     {
       _value = value;
       _valid = true;
     }
 
     template<typename T>
-    void  CachedValue::invalidate() const
+    void  CachedValue<T>::invalidate() const
     {
       _valid = false;
     }
 
     template<typename T>
-    CachedValue&  CachedValue::operator=(const T& value)
+    bool  CachedValue<T>::isValid() const
+    {
+      return _valid;
+    }
+
+    template<typename T>
+    CachedValue<T>&  CachedValue<T>::operator=(const T& value)
     {
       set(value);
       return *this;
     }
 
     template<typename T>
-    const T CachedValue::operator()() const
+    const T CachedValue<T>::operator()() const
     {
       return _value;
     }
 
     template<typename T>
-    T&      CachedValue::operator()()
+    T&      CachedValue<T>::operator()()
     {
       return _value;
     }
-  }
-}
+  } // namespace Tools
+} // namespace RayOn
 
 #endif // RAYON_TOOLS_CACHEDVALUE_HH_

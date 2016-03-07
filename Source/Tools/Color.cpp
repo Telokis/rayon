@@ -6,22 +6,22 @@ namespace RayOn
 {
   namespace Tools
   {
-    constexpr Color::Color()
+    Color::Color()
       : _intValue(0xff000000)
     {
     }
 
-    constexpr Color::Color(uint32 v)
+    Color::Color(uint32 v)
       : _intValue(0xff000000 | v)
     {
     }
 
-    constexpr Color::Color(uint8 r, uint8 g, uint8 b)
+     Color::Color(uint8 r, uint8 g, uint8 b)
       : _charValues{0xff, r, g, b}
     {
     }
 
-    constexpr Color::Color(uint8 a, uint8 r, uint8 g, uint8 b)
+    Color::Color(uint8 a, uint8 r, uint8 g, uint8 b)
       : _charValues{a, r, g, b}
     {
     }

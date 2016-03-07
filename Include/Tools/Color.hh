@@ -15,10 +15,10 @@ namespace RayOn
     class   Color
     {
     public:
-      constexpr Color();
-      constexpr Color(uint32);
-      constexpr Color(uint8 r, uint8 g, uint8 b);
-      constexpr Color(uint8 a, uint8 r, uint8 g, uint8 b);
+      Color();
+      Color(uint32);
+      Color(uint8 r, uint8 g, uint8 b);
+      Color(uint8 a, uint8 r, uint8 g, uint8 b);
       ~Color();
 
       static Color    interpolate(const Color& c1, const Color& c2, double val);
