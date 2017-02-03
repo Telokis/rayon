@@ -5,30 +5,26 @@
 
 #include "Tools/Color.hh"
 #include "Tools/Helpers/PI.hh"
+#include "Tools/Helpers/Types.hh"
 
 namespace RayOn
 {
   namespace Globals
   {
     /**
-    * @brief   When no intersection is found.
-    */
-    extern const RayOn::Tools::Color NoColor;
+     * @brief   Represents an infinite number.
+     */
+    extern constexpr const Float_t Infinity = std::numeric_limits<Float_t>::infinity();
 
     /**
-    * @brief   Represents an infinite number.
-    */
-    extern const double Infinity;
+     * @brief   Represents an invalid number.
+     */
+    extern constexpr const Float_t Invalid = Infinity;
 
     /**
-    * @brief   Represents an invalid number.
-    */
-    extern const double Invalid;
-
-    /**
-    * @brief   Represents a floating zero.
-    */
-    extern const double SmallEnough;
+     * @brief   Represents a floating zero.
+     */
+    extern constexpr const Float_t SmallEnough = 0.00000001;
 
   } // namespace Globals
 } // namespace RayOn

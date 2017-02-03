@@ -3,7 +3,6 @@
 #ifndef RAYON_TOOLS_COLOR_H
 #define RAYON_TOOLS_COLOR_H
 
-#include "Tools/Helpers/Clamp.hh"
 #include "Tools/Helpers/Types.hh"
 #include <vector>
 
