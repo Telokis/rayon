@@ -7,6 +7,7 @@
 #include "Tools/Helpers/Pow.hh"
 #include "Tools/Helpers/Clamp.hh"
 #include "Tools/Helpers/Types.hh"
+#include <algorithm>
 
 namespace RayOn
 {
@@ -32,6 +33,28 @@ namespace RayOn
     inline Vec_t Normalize(Vec_t v)
     {
       return glm::normalize(v);
+    }
+
+    inline Vec_t Reflect(Vec_t v, Vec_t n)
+    {
+      return glm::reflect(v, n);
+    }
+
+    inline Vec_t Refract(Vec_t v, Vec_t n, Float_t eta)
+    {
+      return glm::refract(v, n, eta);
+    }
+
+    inline Float_t Min(Float_t a, Float_t b)
+    {
+      using std::min;
+      return min(a, b);
+    }
+
+    inline Float_t Max(Float_t a, Float_t b)
+    {
+      using std::max;
+      return max(a, b);
     }
 
     inline constexpr Float_t DegToRad(Float_t val)

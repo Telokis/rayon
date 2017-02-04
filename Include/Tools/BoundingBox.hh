@@ -5,6 +5,7 @@
 
 #include "Tools/CachedValue.hh"
 #include "Tools/Helpers.hh"
+#include "Tools/Ray.hh"
 
 namespace RayOn
 {
@@ -15,8 +16,9 @@ namespace RayOn
     BoundingBox(const Vec_t& min, const Vec_t& max);
 
   public:
-    const Vec_t  getSize() const;
-    bool              isInside(const Vec_t& point) const;
+    const Vec_t getSize() const;
+    bool        isInside(const Vec_t& point) const;
+    bool        intersectRay(const Ray& ray) const;
 
   private:
     Vec_t                      _min;
