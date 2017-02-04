@@ -20,26 +20,18 @@ endif()
 set(CMAKE_MODULE_PATH ${RAYON_CMAKE_FOLDER_DIR}/Modules ${CMAKE_MODULE_PATH})
 include(${RAYON_CMAKE_FOLDER_DIR}/Source_Grouping.cmake)
 
-SET(RAYON_HEADER_FILES
+file(GLOB_RECURSE RAYON_SOURCE_FILES_GLOBBED "${RAYON_SOURCE_DIR}/*.cpp")
+file(GLOB_RECURSE RAYON_HEADER_FILES_GLOBBED "${RAYON_HEADER_DIR}/*.hh")
 
-  "Tools/Helpers.hh"
-  "Tools/Color.hh"
-  "Tools/CachedValue.hh"
-  "Tools/BoundingBox.hh"
+foreach(dir ${RAYON_HEADER_FILES_GLOBBED})
+  string(REPLACE "${RAYON_HEADER_DIR}/" "" tmp_str ${dir})
+  set(RAYON_HEADER_FILES ${RAYON_HEADER_FILES} ${tmp_str})
+endforeach(dir)
 
-  "Tools/Helpers/Globals.hh"
-  "Tools/Helpers/PI.hh"
-  "Tools/Helpers/Pow.hh"
-  "Tools/Helpers/Clamp.hh"
-  "Tools/Helpers/Types.hh"
-)
-
-SET(RAYON_SOURCE_FILES
-  "main.cpp"
-
-  "Tools/Color.cpp"
-  "Tools/BoundingBox.cpp"
-)
+foreach(dir ${RAYON_SOURCE_FILES_GLOBBED})
+  string(REPLACE "${RAYON_SOURCE_DIR}/" "" tmp_str ${dir})
+  set(RAYON_SOURCE_FILES ${RAYON_SOURCE_FILES} ${tmp_str})
+endforeach(dir)
 
 # Source grouping setup
 if (ENABLE_SOURCE_GROUPING)

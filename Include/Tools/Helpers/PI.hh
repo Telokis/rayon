@@ -9,8 +9,8 @@ namespace RayOn
 {
   namespace Globals
   {
-    const constexpr auto PI = 3.14159265358979323846;
-  }
-}
+    const constexpr Float_t PI = 3.14159265358979323846;
+  } // namespace Globals
+} // namespace RayOn
 
 #endif // RAYON_TOOLS_HELPERS_PI_HH

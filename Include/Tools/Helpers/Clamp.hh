@@ -7,15 +7,12 @@ namespace RayOn
 {
   namespace Tools
   {
-    namespace Helpers
+    template<typename T, typename U>
+    constexpr const T Clamp(const T x, const U min, const U max)
     {
-      template<typename T, typename U>
-      constexpr const T Clamp(const T x, const U min,  const U max)
-      {
-        return x < min ? min : x > max ? max : x;
-      }
+      return x < min ? min : x > max ? max : x;
     }
-  }
-}
+  } // namespace Tools
+} // namespace RayOn
 
 #endif // RAYON_TOOLS_HELPERS_CLAMP_HH

@@ -5,6 +5,7 @@
 
 #include <cstdint>
 #include <glm/vec3.hpp>
+#include <glm/mat3x3.hpp>
 
 namespace RayOn
 {
@@ -25,10 +26,12 @@ namespace RayOn
   using Float_t = long double;
 
   /**
-   * @brief   Typedef for vectors.
+   * @brief   Typedef for Vec_ts.
    *          We may want to change it later.
    */
   using Vec_t = glm::tvec3<Float_t>;
+
+  using Mat_t = glm::tmat3x3<Float_t>;
 }
 
 #endif // RAYON_TOOLS_HELPERS_TYPES_HH

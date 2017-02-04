@@ -8,26 +8,22 @@
 
 namespace RayOn
 {
-  namespace Tools
+  class BoundingBox
   {
+  public:
+    BoundingBox();
+    BoundingBox(const Vec_t& min, const Vec_t& max);
 
-    class BoundingBox
-    {
-    public:
-      BoundingBox();
-      BoundingBox(const VectorType& min, const VectorType& max);
+  public:
+    const Vec_t  getSize() const;
+    bool              isInside(const Vec_t& point) const;
 
-    public:
-      const VectorType  getSize() const;
-      bool              isInside(const VectorType& point) const;
+  private:
+    Vec_t                      _min;
+    Vec_t                      _max;
+    mutable CachedValue<Vec_t> _size;
+  };
 
-    private:
-      VectorType                      _min;
-      VectorType                      _max;
-      mutable CachedValue<VectorType> _size;
-    };
-
-  } // namespace Tools
 } // namespace RayOn
 
 #endif // RAYON_TOOLS_BOUNDINGBOX_HH_

@@ -12,12 +12,12 @@ namespace RayOn
   namespace Globals
   {
     /**
-     * @brief   Represents an infinite number.
+     * @brief   Represents an infinite Float_t.
      */
     extern constexpr const Float_t Infinity = std::numeric_limits<Float_t>::infinity();
 
     /**
-     * @brief   Represents an invalid number.
+     * @brief   Represents an invalid Float_t.
      */
     extern constexpr const Float_t Invalid = Infinity;
 
