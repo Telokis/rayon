@@ -1,13 +1,15 @@
-#ifndef RTLight_h
-#define RTLight_h
+#ifndef RAYON_RTLIGHT_HH_
+#define RAYON_RTLIGHT_HH_
 
-#include "Entities/Entity.h"
-#include "Scene.h"
-#include "Tools/Color.h"
+#include "Entities/Entity.hh"
+#include "Tools/Color.hh"
+#include "Entities/Objects/RTObject.hh"
 
-class   RTLight : public Entity
+namespace RayOn
 {
-public:
+  class   RTLight : public Entity
+  {
+  public:
     explicit RTLight(const Color &color = 0xffffffff);
     RTLight(const Vec_t &pos,
             const Vec_t &rot,
@@ -16,18 +18,16 @@ public:
             const Color &color = 0xffffffff);
     virtual ~RTLight();
 
-    virtual void    serialize(QDomElement &node) const Q_DECL_OVERRIDE;
-
-public:
+  public:
     virtual void        preprocess() = 0;
     virtual RTLight     *clone() const = 0;
-    virtual Color       apply(const Color &color,
-                              const Scene &scene,
-                              RTObject *obj,
-                              const Vec_t &point) = 0;
-    virtual const char  *name() const = 0;
+    virtual Color       apply(const Color& color,
+                              RTObject* obj,
+                              const Vec_t& point) = 0;
+    virtual const char* name() const = 0;
 
-    RT_GENERATE_PROPERTY_DECLARATION(RTLight, Color, _color, Color)
-};
+    RAYON_GENERATE_PROPERTY_DECLARATION(RTLight, Color, _color, Color)
+  };
+} // namespace RayOn
 
-#endif // RTLight_h
+#endif // RAYON_RTLIGHT_HH_

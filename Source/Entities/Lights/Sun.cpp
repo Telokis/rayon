@@ -1,72 +1,69 @@
-#include "Entities/Lights/Sun.h"
-
-const char   *Sun::LightName = "Soleil";
-
-Sun::Sun()
+#include "Entities/Lights/Sun.hh"
+#if 0
+namespace RayOn
+{
+  Sun::Sun()
     : _power(0.5)
-{
-}
+  {
+  }
 
-Sun::Sun(const Vec_t &pos)
+  Sun::Sun(const Vec_t &pos)
     : ParentType(pos, Vec_t(0, 0, 0)),
-      _power(0.5)
-{
-}
+    _power(0.5)
+  {
+  }
 
-Sun::Sun(Float_t x, Float_t y, Float_t z)
+  Sun::Sun(Float_t x, Float_t y, Float_t z)
     : ParentType(x, y, z),
-      _power(0.5)
-{
-}
+    _power(0.5)
+  {
+  }
 
-Sun::~Sun()
-{
-}
+  Sun::~Sun()
+  {
+  }
 
-bool    Sun::doesShadow(const Scene &scene,
-                        const Vec_t &point) const
-{
-    double  k;
-    Vec_t  light_vec;
-    Vec_t  tmp_pos;
+  bool    Sun::doesShadow(const Scene& scene,
+                          const Vec_t& point) const
+  {
+    Float_t k;
+    Vec_t   light_vec;
+    Vec_t   tmp_pos;
 
-    k = RT_INVALID;
+    k = Globals::Invalid;
     light_vec = _pos - point;
-    tmp_pos = point + light_vec * 0.001f;
+    tmp_pos = point + light_vec * Globals::Epsilon;
     for (const auto& object : scene.objects())
     {
-        k = object->inter(tmp_pos, light_vec);
-        if (k > RT_ZERO_VAL && k < 1.0)
-            return (true);
+      k = object->inter(tmp_pos, light_vec);
+      if (k > Globals::Epsilon && k < 1.0)
+        return true;
     }
-    return (false);
-}
+    return false;
+  }
 
-Color       Sun::applyImpl(const Color &color,
-                           const Scene &scene,
-                           RTObject *obj,
-                           const Vec_t &point) const
-{
-    double  cos_a;
-    Vec_t  light_vec;
+  Color       Sun::applyImpl(const Color& color,
+                             const Scene& scene,
+                             RTObject* obj,
+                             const Vec_t& point) const
+  {
+    Float_t cos_a;
+    Vec_t   light_vec;
     Color   res;
 
     if (doesShadow(scene, point))
-        return (0);
+      return 0;
     cos_a = 0;
     light_vec = getPos() - point;
-    light_vec.normalize();
-    cos_a = Vec_t::dotProduct(light_vec, obj->norm(point));
-    if (cos_a < RT_ZERO_VAL)
-        return (0xFF000000);
+    light_vec = Tools::Normalize(light_vec);
+    cos_a = Tools::DotProduct(light_vec, obj->norm(point));
+    if (cos_a < Globals::Epsilon)
+      return 0xFF000000;
     res = color * cos_a;
-    return (Color::interpolate(res, getColor(), cos_a * _power));
-}
+    return Color::interpolate(res, getColor(), cos_a * _power);
+  }
 
-void    Sun::serialize(QDomElement &node) const
-{
-    ParentType::serialize(node);
-    node.setAttribute("Power", _power);
-}
+  RAYON_GENERATE_PROPERTY_DEFINITION(Sun, Float_t, _power, Power)
 
-RT_GENERATE_PROPERTY_DEFINITION(Sun, Float_t, _power, Power)
+} // namespace RayOn
+#endif

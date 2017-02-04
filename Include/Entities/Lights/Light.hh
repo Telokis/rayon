@@ -1,27 +1,29 @@
-#ifndef RTLight_H
-#define RTLight_H
+#ifndef RAYON_LIGHT_HH_
+#define RAYON_LIGHT_HH_
 
-#include "include/Entities/Lights/RTLight.h"
+#include "Entities/Lights/RTLight.hh"
 
-template <class Derived>
-class   Light : public RTLight
+namespace RayOn
 {
-public:
-    Light(const Color &color = 0xffffffff)
-        : RTLight(color)
+  template <class Derived>
+  class   Light : public RTLight
+  {
+  public:
+    Light(const Color& color = 0xffffffff)
+      : RTLight(color)
     {
     }
 
-    Light(const Vec_t &pos,
-          const Vec_t &rot,
-          const Color &color = 0xffffffff)
-        : RTLight(pos, rot, color)
+    Light(const Vec_t& pos,
+          const Vec_t& rot,
+          const Color& color = 0xffffffff)
+      : RTLight(pos, rot, color)
     {
     }
 
     Light(Float_t x, Float_t y, Float_t z,
-          const Color &color = 0xffffffff)
-        : RTLight(x, y, z, color)
+          const Color& color = 0xffffffff)
+      : RTLight(x, y, z, color)
     {
     }
 
@@ -29,34 +31,35 @@ public:
     {
     }
 
-protected:
+  protected:
     void    preprocessImpl()
     {
     }
 
-public:
-    RTLight    *clone() const final
+  public:
+    RTLight*  clone() const final
     {
-        return (new Derived(static_cast<Derived const&>(*this)));
+      return new Derived(static_cast<Derived const&>(*this));
     }
 
-    Color       apply(const Color &color,
-                      const Scene &scene,
-                      RTObject *obj,
-                      const Vec_t &point) final
+    Color       apply(const Color& color,
+                      const Scene& scene,
+                      RTObject* obj,
+                      const Vec_t& point) final
     {
-        return (static_cast<Derived*>(this)->applyImpl(color, scene, obj, point));
+      return static_cast<Derived*>(this)->applyImpl(color, scene, obj, point);
     }
 
     void        preprocess() final
     {
-        static_cast<Derived*>(this)->preprocessImpl();
+      static_cast<Derived*>(this)->preprocessImpl();
     }
 
-    const char  *name() const final
+    const char* name() const final
     {
-        return (Derived::LightName);
+      return Derived::LightName;
     }
-};
+  };
+} // namespace RayOn
 
-#endif // RTLight_H
+#endif // RAYON_LIGHT_HH_

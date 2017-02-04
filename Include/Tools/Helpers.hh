@@ -14,14 +14,14 @@ namespace RayOn
   {
     /**
      * @brief       Checks whether @a a is 0 or not based
-     *              on @ref RayOn::Globals::SmallEnough
+     *              on @ref RayOn::Globals::Epsilon
      * @param[in] a Value to test.
      * @return      True if @a a is considered 0.
      *              False otherwise.
      */
     inline constexpr bool IsZero(Float_t val)
     {
-      return (val < Globals::SmallEnough) && (val > -Globals::SmallEnough);
+      return (val < Globals::Epsilon) && (val > -Globals::Epsilon);
     }
 
     inline Float_t DotProduct(Vec_t a, Vec_t b)
@@ -56,9 +56,9 @@ namespace RayOn
      */
     inline constexpr Float_t Smallest(Float_t a, Float_t b)
     {
-      return ((a) < Globals::SmallEnough && (b) > Globals::SmallEnough ?
-        (b) : (a) > Globals::SmallEnough && (b) < Globals::SmallEnough ?
-              (a) : (a) < Globals::SmallEnough && (b) < Globals::SmallEnough ?
+      return ((a) < Globals::Epsilon && (b) > Globals::Epsilon ?
+        (b) : (a) > Globals::Epsilon && (b) < Globals::Epsilon ?
+              (a) : (a) < Globals::Epsilon && (b) < Globals::Epsilon ?
               Globals::Invalid : (a) < (b) ? (a) : (b));
     }
 

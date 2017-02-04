@@ -1,31 +1,29 @@
 #include "Entities/Lights/RTLight.hh"
 
-RTLight::RTLight(const Color &color)
+namespace RayOn
+{
+  RTLight::RTLight(const Color &color)
     : _color(color)
-{
-}
+  {
+  }
 
-RTLight::RTLight(const Vec_t &pos,
-                 const Vec_t &rot,
-                 const Color &color)
+  RTLight::RTLight(const Vec_t &pos,
+                   const Vec_t &rot,
+                   const Color &color)
     : Entity(pos, rot), _color(color)
-{
-}
+  {
+  }
 
-RTLight::RTLight(Float_t x, Float_t y, Float_t z,
-                 const Color &color)
+  RTLight::RTLight(Float_t x, Float_t y, Float_t z,
+                   const Color &color)
     : Entity(x, y, z), _color(color)
-{
-}
+  {
+  }
 
-RTLight::~RTLight()
-{
-}
+  RTLight::~RTLight()
+  {
+  }
 
-void    RTLight::serialize(QDomElement &node) const
-{
-    Entity::serialize(node);
-    node.setAttribute("Color", QString::Float_t(_color, 16));
-}
+  RAYON_GENERATE_PROPERTY_DEFINITION(RTLight, Color, _color, Color)
 
-RT_GENERATE_PROPERTY_DEFINITION(RTLight, Color, _color, Color)
+} // namespace RayOn

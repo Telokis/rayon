@@ -1,24 +1,26 @@
-#ifndef SUN_H
-#define SUN_H
-
-/** \file Sun.h
+#ifndef RAYON_SUN_HH_
+#define RAYON_SUN_HH_
+#if 0
+/** \file Sun.hh
  * Describes the @ref Sun class.
  */
 
-#include "Entities/Lights/Light.h"
+#include "Entities/Lights/Light.hh"
 
-/**
- * @brief   The @ref Sun class represents a point light
- *          with an infinite range.
- *          For this @ref Entity, the rotation doesn't
- *          matter.
- */
-class   Sun : public Light<Sun>
+namespace RayOn
 {
+  /**
+   * @brief   The @ref Sun class represents a point light
+   *          with an infinite range.
+   *          For this @ref Entity, the rotation doesn't
+   *          matter.
+   */
+  class   Sun : public Light<Sun>
+  {
     typedef Light<Sun> ParentType;  /**< Typedef for easier access to parent's type */
     friend  ParentType;             /**< Required for CRTP used by @ref Light */
 
-public:
+  public:
     /**
      * @brief   Default constructor, lets the parent choose
      *          default position/rotation and sets the power
@@ -31,7 +33,7 @@ public:
      *          @a pos and the power to 0.5.
      * @param[in] pos   The desired position for the @ref Entity.
      */
-    Sun(const Vec_t &pos);
+    Sun(const Vec_t& pos);
 
     /**
      * @brief   Coordinates constructor. Sets the position to
@@ -47,22 +49,14 @@ public:
      */
     ~Sun();
 
-private:
+  private:
     /**
      * @brief   This is the display name of the @ref RTLight.
      * @see     RTLight::name
      */
-    static const char   *LightName;
+    static const constexpr auto LightName = "Soleil";
 
-private:
-    /**
-     * @brief           This method writes the informations of the
-     *                  @ref RTLight to the given XML Node.
-     * @param[out] node The current node representing the @ref RTLight
-     *                  in the xml file.
-     */
-    virtual void    serialize(QDomElement &node) const Q_DECL_OVERRIDE;
-
+  private:
     /**
      * @brief       Internally used to check shadows.
      *              Iterates through all objects in the given @a scene
@@ -73,8 +67,8 @@ private:
      * @return      True if an opaque object is in the way.
      *              False if no opaque object were found.
      */
-    bool    doesShadow(const Scene &scene,
-                       const Vec_t &point) const;
+    bool    doesShadow(const Scene& scene,
+                       const Vec_t& point) const;
 
     /**
      * @brief           This method transforms the given @a color
@@ -92,12 +86,14 @@ private:
      * @param[in] point The impact point.
      * @return          The transformed color.
      */
-    Color   applyImpl(const Color &color,
-                      const Scene &scene,
-                      RTObject *obj,
-                      const Vec_t &point) const;
+    Color   applyImpl(const Color& color,
+                      const Scene& scene,
+                      RTObject* obj,
+                      const Vec_t& point) const;
 
-    RT_GENERATE_PROPERTY_DECLARATION(Sun, Float_t, _power, Power)
-};
+    RAYON_GENERATE_PROPERTY_DECLARATION(Sun, Float_t, _power, Power)
+  };
+} // namespace RayOn
 
-#endif // SUN_H
+#endif // RAYON_SUN_HH_
+#endif

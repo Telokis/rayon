@@ -24,7 +24,7 @@ namespace RayOn
     /**
      * @brief   Represents a floating zero.
      */
-    extern constexpr const Float_t SmallEnough = 0.00000001;
+    extern constexpr const Float_t Epsilon = 0.00000001;
 
   } // namespace Globals
 } // namespace RayOn

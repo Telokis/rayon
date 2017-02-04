@@ -35,7 +35,7 @@ namespace RayOn
     if (Tools::IsZero(tmp_pos.z) || Tools::IsZero(tmp_dir.z))
       return Globals::Invalid;
     k = -1 * tmp_pos.z / tmp_dir.z;
-    k = (k > Globals::SmallEnough) ? k : Globals::Invalid;
+    k = (k > Globals::Epsilon) ? k : Globals::Invalid;
     return k;
   }
 
