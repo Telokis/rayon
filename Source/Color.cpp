@@ -1,5 +1,5 @@
-#include "Tools/Color.hh"
-#include "Tools/Helpers/Clamp.hh"
+#include "Color.hh"
+#include "Tools/Clamp.hh"
 
 using RayOn::Tools::Clamp;
 

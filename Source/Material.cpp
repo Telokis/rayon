@@ -1,25 +1,19 @@
-#include "Tools/RawImage.hh"
+#include "Material.hh"
 
 namespace RayOn
 {
-  RawImage::RawImage(const uint32 width, const uint32 height)
-    : _width(width)
-    , _height(height)
-    , _pixels(width * height)
+  void Material::setFlag(Flags flag, bool value)
   {
+    _flags.set(static_cast<size_t>(flag), value);
   }
 
-  RawImage::RawImage()
-    : _width(0)
-    , _height(0)
+  bool Material::testFlag(Flags flag) const
   {
+    return _flags.test(static_cast<size_t>(flag));
   }
 
-  void  RawImage::resize(const uint32 width, const uint32 height)
-  {
-    _width = width;
-    _height = height;
-    _pixels.resize(width * height);
-  }
-
+  RAYON_GENERATE_PROPERTY_DEFINITION(Material, Color, _color, Color)
+  RAYON_GENERATE_PROPERTY_DEFINITION(Material, Float_t, _reflexion, Reflexion)
+  RAYON_GENERATE_PROPERTY_DEFINITION(Material, Float_t, _transparency, Transparency)
+  RAYON_GENERATE_PROPERTY_DEFINITION(Material, Float_t, _refraction, Refraction)
 } // namespace RayOn

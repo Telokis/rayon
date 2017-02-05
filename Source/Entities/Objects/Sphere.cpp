@@ -1,5 +1,5 @@
 #include "Entities/Objects/Sphere.hh"
-#include "Tools/SolverSecond.hh"
+#include "SolverSecond.hh"
 #include "Tools/Helpers.hh"
 
 namespace RayOn

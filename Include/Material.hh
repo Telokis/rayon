@@ -3,51 +3,36 @@
 #ifndef RAYON_MATERIAL_HH_
 #define RAYON_MATERIAL_HH_
 
+#include "Tools/Helpers.hh"
 #include "Color.hh"
-#include <vector>
+#include <bitset>
 
 namespace RayOn
 {
-  class RawImage
+  enum class Flags : size_t
   {
-    static const int BYTES_PER_PIXEL = 4;
-    using StorageType = std::vector<Color>;
+    NoShadow = 0,   ///< Object doesn't catch shadow rays.
+    NoImage,        ///< Object doesn't catch camera rays.
+    NoReflection,   ///< Object doesn't catch reflection rays.
+    NoTransparency, ///< Object doesn't catch transparency rays.
+    NoShading,      ///< Object ignores diffuse lighting.
 
-  public:
-    RawImage();
-    RawImage(const uint32 width, const uint32 height);
 
-    void  resize(const uint32 width, const uint32 height);
+    COUNT
+  };
 
-    inline uint32 width() const
-    {
-      return _width;
-    };
+  class Material
+  {
+    void  setFlag(Flags flag, bool value = true);
+    bool  testFlag(Flags flag) const;
 
-    inline uint32 height() const
-    {
-      return _height;
-    };
-
-    inline const StorageType& pixels() const
-    {
-      return _pixels;
-    };
-
-    inline Color& pixel(uint32 x, uint32 y)
-    {
-      return _pixels.at(x + y * _width);
-    }
-
-    inline Color pixel(uint32 x, uint32 y) const
-    {
-      return _pixels.at(x + y * _width);
-    }
+    RAYON_GENERATE_PROPERTY_DECLARATION(Material, Color, _color, Color)
+    RAYON_GENERATE_PROPERTY_DECLARATION(Material, Float_t, _reflexion, Reflexion)
+    RAYON_GENERATE_PROPERTY_DECLARATION(Material, Float_t, _transparency, Transparency)
+    RAYON_GENERATE_PROPERTY_DECLARATION(Material, Float_t, _refraction, Refraction)
 
   private:
-    uint32      _width;
-    uint32      _height;
-    StorageType _pixels;
+    std::bitset<static_cast<size_t>(Flags::COUNT)>  _flags;
   };
 } // namespace RayOn
 

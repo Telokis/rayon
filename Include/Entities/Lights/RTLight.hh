@@ -2,7 +2,7 @@
 #define RAYON_RTLIGHT_HH_
 
 #include "Entities/Entity.hh"
-#include "Tools/Color.hh"
+#include "Color.hh"
 #include "Entities/Objects/RTObject.hh"
 
 namespace RayOn

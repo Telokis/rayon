@@ -1,5 +1,5 @@
 #include "Entities/Objects/Plane.hh"
-#include "Tools/SolverSecond.hh"
+#include "SolverSecond.hh"
 
 namespace RayOn
 {

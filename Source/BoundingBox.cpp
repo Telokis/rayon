@@ -1,4 +1,4 @@
-#include "Tools/BoundingBox.hh"
+#include "BoundingBox.hh"
 
 namespace RayOn
 {

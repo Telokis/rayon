@@ -1,4 +1,4 @@
-#include "Tools/Ray.hh"
+#include "Ray.hh"
 #include <iostream>
 #include <iomanip>
 #include <string>

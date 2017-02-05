@@ -1,4 +1,4 @@
-#include "Tools/RawImage.hh"
+#include "RawImage.hh"
 
 namespace RayOn
 {

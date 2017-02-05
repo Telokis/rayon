@@ -2,8 +2,8 @@
 #define RAYON_RTOBJECT_HH_
 
 #include "Entities/Entity.hh"
-#include "Tools/Color.hh"
-#include "Tools/Ray.hh"
+#include "Color.hh"
+#include "Ray.hh"
 
 namespace RayOn
 {
@@ -23,8 +23,6 @@ namespace RayOn
     virtual Vec_t       norm(const Vec_t &point) = 0;
     virtual const char* name() const = 0;
 
-    RAYON_GENERATE_PROPERTY_DECLARATION(RTObject, Color, _color, Color)
-    RAYON_GENERATE_PROPERTY_DECLARATION(RTObject, double, _reflexion, Reflexion)
   };
 } // namespace RayOn
 
