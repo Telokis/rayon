@@ -13,17 +13,17 @@ namespace RayOn
     /**
      * @brief   Represents an infinite Float_t.
      */
-    extern constexpr const Float_t Infinity = std::numeric_limits<Float_t>::infinity();
+    static constexpr const Float_t Infinity = std::numeric_limits<Float_t>::infinity();
 
     /**
      * @brief   Represents an invalid Float_t.
      */
-    extern constexpr const Float_t Invalid = Infinity;
+    static constexpr const Float_t Invalid = Infinity;
 
     /**
      * @brief   Represents a floating zero.
      */
-    extern constexpr const Float_t Epsilon = 0.00000001;
+    static constexpr const Float_t Epsilon = 0.00000001;
 
   } // namespace Globals
 } // namespace RayOn

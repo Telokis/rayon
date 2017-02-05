@@ -1,7 +1,7 @@
 #ifndef RAYON_ENTITY_HH_
 #define RAYON_ENTITY_HH_
 
-#include "Tools/helpers.hh"
+#include "Tools/Helpers.hh"
 
 namespace RayOn
 {

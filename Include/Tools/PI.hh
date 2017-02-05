@@ -9,7 +9,7 @@ namespace RayOn
 {
   namespace Globals
   {
-    const constexpr Float_t PI = 3.14159265358979323846;
+    static const constexpr Float_t PI = 3.14159265358979323846;
   } // namespace Globals
 } // namespace RayOn
 
