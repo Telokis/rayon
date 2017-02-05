@@ -12,7 +12,7 @@ namespace RayOn
 
   public:
     explicit Sphere(Float_t radius);
-    Sphere(const Vec_t &pos, const Vec_t &rot, Float_t radius);
+    Sphere(const Vec_t& pos, const Vec_t& rot, Float_t radius);
     Sphere(Float_t x, Float_t y, Float_t z, Float_t radius);
     ~Sphere();
 
@@ -20,9 +20,8 @@ namespace RayOn
     static constexpr const auto ObjectName = "Sphere";
 
   private:
-    Float_t  interImpl(const Vec_t &origin,
-                       const Vec_t &direction) const;
-    Vec_t  normImpl(const Vec_t &point) const;
+    Float_t  interImpl(const Ray& ray) const;
+    Vec_t  normImpl(const Vec_t& point) const;
 
     RAYON_GENERATE_PROPERTY_DECLARATION(Sphere, Float_t, _radius, Radius)
   };

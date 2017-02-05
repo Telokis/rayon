@@ -39,10 +39,9 @@ namespace RayOn
       return new Derived(static_cast<Derived const&>(*this));
     }
 
-    Float_t     inter(const Vec_t &origin,
-                       const Vec_t &direction) final
+    Float_t     inter(const Ray &ray) final
     {
-      return static_cast<Derived*>(this)->interImpl(origin, direction);
+      return static_cast<Derived*>(this)->interImpl(ray);
     }
 
     Vec_t       norm(const Vec_t &point) final

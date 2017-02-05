@@ -13,7 +13,7 @@ namespace RayOn
 
   public:
     Plane();
-    Plane(const Vec_t &pos, const Vec_t &rot);
+    Plane(const Vec_t& pos, const Vec_t& rot);
     Plane(Float_t x, Float_t y, Float_t z);
     ~Plane();
 
@@ -22,9 +22,8 @@ namespace RayOn
     static const constexpr auto ObjectName = "Plane";
 
   private:
-    Float_t       interImpl(const Vec_t &origin,
-                       const Vec_t &direction) const;
-    const Vec_t&  normImpl(const Vec_t &point) const;
+    Float_t       interImpl(const Ray& ray) const;
+    const Vec_t&  normImpl(const Vec_t& point) const;
     void          preprocessImpl();
   };
 

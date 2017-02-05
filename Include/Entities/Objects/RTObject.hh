@@ -3,6 +3,7 @@
 
 #include "Entities/Entity.hh"
 #include "Tools/Color.hh"
+#include "Tools/Ray.hh"
 
 namespace RayOn
 {
@@ -16,8 +17,7 @@ namespace RayOn
     virtual ~RTObject();
 
   public:
-    virtual Float_t     inter(const Vec_t &origin,
-                              const Vec_t &direction) = 0;
+    virtual Float_t     inter(const Ray &ray) = 0;
     virtual void        preprocess() = 0;
     virtual RTObject*   clone() const = 0;
     virtual Vec_t       norm(const Vec_t &point) = 0;

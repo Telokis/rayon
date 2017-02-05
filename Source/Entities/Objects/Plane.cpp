@@ -21,16 +21,15 @@ namespace RayOn
   {
   }
 
-  Float_t      Plane::interImpl(const Vec_t &origin,
-                                const Vec_t &direction) const
+  Float_t      Plane::interImpl(const Ray& ray) const
   {
     Float_t  k;
     Vec_t  tmp_pos;
     Vec_t  tmp_dir;
 
-    tmp_pos = origin - _pos;
+    tmp_pos = ray.getOrigin() - _pos;
     tmp_pos = indirectRotation(tmp_pos);
-    tmp_dir = indirectRotation(direction);
+    tmp_dir = indirectRotation(ray.getDirection());
 
     if (Tools::IsZero(tmp_pos.z) || Tools::IsZero(tmp_dir.z))
       return Globals::Invalid;

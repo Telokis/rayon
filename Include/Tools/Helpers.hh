@@ -3,10 +3,10 @@
 #ifndef RAYON_TOOLS_HELPERS_HH
 #define RAYON_TOOLS_HELPERS_HH
 
-#include "Tools/Helpers/Globals.hh"
-#include "Tools/Helpers/Pow.hh"
-#include "Tools/Helpers/Clamp.hh"
-#include "Tools/Helpers/Types.hh"
+#include "Tools/Globals.hh"
+#include "Tools/Pow.hh"
+#include "Tools/Clamp.hh"
+#include "Tools/Types.hh"
 #include <algorithm>
 
 namespace RayOn

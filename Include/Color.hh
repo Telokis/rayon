@@ -3,7 +3,7 @@
 #ifndef RAYON_TOOLS_COLOR_H
 #define RAYON_TOOLS_COLOR_H
 
-#include "Tools/Helpers/Types.hh"
+#include "Tools/Types.hh"
 #include <vector>
 
 namespace RayOn

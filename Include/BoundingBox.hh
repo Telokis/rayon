@@ -3,9 +3,9 @@
 #ifndef RAYON_TOOLS_BOUNDINGBOX_HH_
 #define RAYON_TOOLS_BOUNDINGBOX_HH_
 
-#include "Tools/CachedValue.hh"
+#include "CachedValue.hh"
 #include "Tools/Helpers.hh"
-#include "Tools/Ray.hh"
+#include "Ray.hh"
 
 namespace RayOn
 {

@@ -9,7 +9,7 @@ namespace RayOn
   {
   }
 
-  Sphere::Sphere(const Vec_t &pos, const Vec_t &rot, Float_t radius)
+  Sphere::Sphere(const Vec_t& pos, const Vec_t& rot, Float_t radius)
     : ParentType(pos, rot),
     _radius(radius)
   {
@@ -25,8 +25,7 @@ namespace RayOn
   {
   }
 
-  Float_t      Sphere::interImpl(const Vec_t &origin,
-                                 const Vec_t &direction) const
+  Float_t      Sphere::interImpl(const Ray& ray) const
   {
     using Tools::Pow2;
 
@@ -34,9 +33,9 @@ namespace RayOn
     Vec_t   tmp_dir;
     Float_t results[2];
 
-    tmp_pos = origin - _pos;
+    tmp_pos = ray.getOrigin() - _pos;
     tmp_pos = indirectRotation(tmp_pos);
-    tmp_dir = indirectRotation(direction);
+    tmp_dir = indirectRotation(ray.getDirection());
 
     if (Tools::Solver::Second(results,
                               Pow2(tmp_dir.x) + Pow2(tmp_dir.y) + Pow2(tmp_dir.z),

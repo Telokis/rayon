@@ -3,9 +3,8 @@
 #ifndef RAYON_TOOLS_HELPERS_GLOBALS_HH
 #define RAYON_TOOLS_HELPERS_GLOBALS_HH
 
-#include "Tools/Color.hh"
-#include "Tools/Helpers/PI.hh"
-#include "Tools/Helpers/Types.hh"
+#include "Tools/PI.hh"
+#include "Tools/Types.hh"
 
 namespace RayOn
 {

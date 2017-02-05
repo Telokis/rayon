@@ -3,7 +3,7 @@
 #ifndef RAYON_RAY_HH_
 #define RAYON_RAY_HH_
 
-#include "Helpers.hh"
+#include "Tools/Helpers.hh"
 #include "CachedValue.hh"
 
 namespace RayOn
