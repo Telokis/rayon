@@ -34,6 +34,11 @@ namespace RayOn
       return _pixels;
     };
 
+    inline StorageType& pixels()
+    {
+      return _pixels;
+    };
+
     inline Color& pixel(uint32 x, uint32 y)
     {
       return _pixels.at(x + y * _width);

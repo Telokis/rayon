@@ -5,6 +5,7 @@
 
 #include "Tools/Helpers.hh"
 #include "Color.hh"
+#include "Ray.hh"
 #include <bitset>
 
 namespace RayOn
@@ -23,8 +24,10 @@ namespace RayOn
 
   class Material
   {
+  public:
     void  setFlag(Flags flag, bool value = true);
     bool  testFlag(Flags flag) const;
+    bool  testFlag(RayType type) const;
 
     RAYON_GENERATE_PROPERTY_DECLARATION(Material, Color, _color, Color)
     RAYON_GENERATE_PROPERTY_DECLARATION(Material, Float_t, _reflexion, Reflexion)

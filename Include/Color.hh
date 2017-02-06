@@ -29,7 +29,7 @@ namespace RayOn
       return _intValue;
     }
 
-    inline const uint32 intValue() const
+    inline uint32 intValue() const
     {
       return _intValue;
     }
@@ -55,22 +55,22 @@ namespace RayOn
     }
 
 
-    inline const uint8 alpha() const
+    inline uint8 alpha() const
     {
       return _charValues[0];
     }
 
-    inline const uint8 red() const
+    inline uint8 red() const
     {
       return _charValues[1];
     }
 
-    inline const uint8 green() const
+    inline uint8 green() const
     {
       return _charValues[2];
     }
 
-    inline const uint8 blue() const
+    inline uint8 blue() const
     {
       return _charValues[3];
     }

@@ -7,6 +7,11 @@
 
 namespace RayOn
 {
+  class Scene;
+} // namespace RayOn
+
+namespace RayOn
+{
   class   RTLight : public Entity
   {
   public:
@@ -22,6 +27,7 @@ namespace RayOn
     virtual void        preprocess() = 0;
     virtual RTLight     *clone() const = 0;
     virtual Color       apply(const Color& color,
+                              const Scene& scene,
                               RTObject* obj,
                               const Vec_t& point) = 0;
     virtual const char* name() const = 0;

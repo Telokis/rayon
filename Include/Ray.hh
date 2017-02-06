@@ -8,12 +8,12 @@
 
 namespace RayOn
 {
-  enum class RayType
+  enum class RayType : size_t
   {
-    Primary,
     Shadow,
+    Primary,
     Reflected,
-    Refracted
+    Transparency
   };
 
   class Ray
