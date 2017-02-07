@@ -20,18 +20,8 @@ endif()
 set(CMAKE_MODULE_PATH ${RAYON_CMAKE_FOLDER_DIR}/Modules ${CMAKE_MODULE_PATH})
 include(${RAYON_CMAKE_FOLDER_DIR}/Source_Grouping.cmake)
 
-file(GLOB_RECURSE RAYON_SOURCE_FILES_GLOBBED "${RAYON_SOURCE_DIR}/*.cpp")
-file(GLOB_RECURSE RAYON_HEADER_FILES_GLOBBED "${RAYON_HEADER_DIR}/*.hh")
-
-foreach(dir ${RAYON_HEADER_FILES_GLOBBED})
-  string(REPLACE "${RAYON_HEADER_DIR}/" "" tmp_str ${dir})
-  set(RAYON_HEADER_FILES ${RAYON_HEADER_FILES} ${tmp_str})
-endforeach(dir)
-
-foreach(dir ${RAYON_SOURCE_FILES_GLOBBED})
-  string(REPLACE "${RAYON_SOURCE_DIR}/" "" tmp_str ${dir})
-  set(RAYON_SOURCE_FILES ${RAYON_SOURCE_FILES} ${tmp_str})
-endforeach(dir)
+file(GLOB_RECURSE RAYON_SOURCE_FILES RELATIVE ${RAYON_SOURCE_DIR} "${RAYON_SOURCE_DIR}/*.cpp")
+file(GLOB_RECURSE RAYON_HEADER_FILES RELATIVE ${RAYON_HEADER_DIR} "${RAYON_HEADER_DIR}/*.hh" "${RAYON_HEADER_DIR}/*.hpp")
 
 # Source grouping setup
 if (ENABLE_SOURCE_GROUPING)
@@ -44,6 +34,8 @@ endif()
 
 prefix_custom_list(RAYON_HEADERS "${RAYON_HEADER_DIR}/" RAYON_HEADER_FILES)
 prefix_custom_list(RAYON_SOURCES "${RAYON_SOURCE_DIR}/" RAYON_SOURCE_FILES)
+
+add_definitions(-DBOOST_PROGRAM_OPTIONS_SOURCE)
 
 # Set sources
 add_executable(RayOn ${RAYON_SOURCES} ${RAYON_HEADERS})

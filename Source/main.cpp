@@ -7,23 +7,26 @@
 #undef _CRT_SECURE_NO_WARNINGS
 
 #include "Ray.hh"
-#include "ImageFileHandlers/ImageFileHandler_BMP.hh"
+#include "RayOn.hh"
+
 #include <iostream>
-#include <iomanip>
-#include <string>
 
-using namespace RayOn;
-
-int  main()
+int  main(int ac, char** av)
 {
-  RawImage img(2, 2);
-
-  img.pixel(0, 0) = Color(255, 0, 0);
-  img.pixel(1, 0) = Color(0, 0, 255);
-  img.pixel(0, 1) = Color(255, 255, 255);
-  img.pixel(1, 1) = Color(0, 0, 0);
-  
-  IImageFileHandler* ifh = new ImageFileHandler_BMP;
-  ifh->writeToFile("./test.bmp", img);
-  return 0;
+  try
+  {
+    RayOn::RayOn  app(ac, av);
+    return app.run();
+  }
+  catch (std::exception& except)
+  {
+    std::cerr << "*****************************************************\n";
+    std::cerr << "ERROR ERROR ERROR ERROR ERROR ERROR ERROR ERROR ERROR\n";
+    std::cerr << "_____________________________________________________\n";
+    std::cerr << except.what() << "\n";
+    std::cerr << "_____________________________________________________\n";
+    std::cerr << "ERROR ERROR ERROR ERROR ERROR ERROR ERROR ERROR ERROR\n";
+    std::cerr << "*****************************************************\n";
+    return 1;
+  }
 }
