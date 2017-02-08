@@ -3,11 +3,11 @@
 filename="./Source/Version.cpp"
 major=$(cat Include/Version.hh | tr -d '\n' | sed -r 's/.*RAYON_MAJOR_VERSION ([0-9]+).*/\1/')
 minor=$(cat Include/Version.hh | tr -d '\n' | sed -r 's/.*RAYON_MINOR_VERSION ([0-9]+).*/\1/')
-git describe --abbrev=0 --tags > /dev/null 2>&1
+tagname=$(git describe --abbrev=0 --tags 2> /dev/null)
 if (( $? )) ; then
 	build=$(git rev-list HEAD | wc -l | tr -d '\n' | tr -d ' ')
 else
-	build=$(git rev-list  `git rev-list --tags --no-walk --max-count=1`..HEAD --count)
+	build=$(git rev-list  "$tagname..HEAD" --count)
 fi
 chash=$(git rev-parse --short HEAD | tr -d '\n' | tr -d ' ')
 
