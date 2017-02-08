@@ -1,2 +1,2 @@
-# RayOn
-A RayTracer to enlighten the world
+# RayOn v@VERSION@
+A RayTracer to enlighten the world and more
