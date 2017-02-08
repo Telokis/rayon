@@ -8,7 +8,7 @@ chash=$(git rev-parse --short HEAD | tr -d '\n' | tr -d ' ')
 fullversion="$major.$minor.$build-$chash"
 
 ddiff=$(git diff HEAD^ HEAD)
-if [ echo "$ddiff" | grep -q "+#define RAYON_MAJOR_VERSION" ] || [ echo "$ddiff" | grep -q "+#define RAYON_MINOR_VERSION" ] ; then
+if [ (echo "$ddiff" | grep -q "+#define RAYON_MAJOR_VERSION") ] || [ (echo "$ddiff" | grep -q "+#define RAYON_MINOR_VERSION") ] ; then
  echo "diff !"
 fi
 echo $fullversion
