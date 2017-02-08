@@ -1,4 +1,5 @@
 #include "RayOn.hh"
+#include "Version.hh"
 #include <iostream>
 
 namespace RayOn
@@ -11,6 +12,7 @@ namespace RayOn
 
   int RayOn::run()
   {
+    std::cout << version() << "\n";
     if (config().handleStoppingArgs())
       return 0;
 

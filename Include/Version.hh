@@ -6,9 +6,12 @@
 #define RAYON_MAJOR_VERSION 0
 #define RAYON_MINOR_VERSION 4
 
-#define RAYON_MAJOR_VERSION_STR #RAYON_MAJOR_VERSION
-#define RAYON_MINOR_VERSION_STR #RAYON_MINOR_VERSION
-
 extern const int RAYON_BUILD_VERSION;
+extern const char* const RAYON_COMMIT_HASH;
+
+namespace RayOn
+{
+  const char* const version();
+}
 
 #endif // RAYON_VERSION_HH_
