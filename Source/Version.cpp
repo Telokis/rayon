@@ -9,11 +9,11 @@
 
 using namespace std;
 
-const int RAYON_BUILD_VERSION = 20;
+const int RAYON_BUILD_VERSION = 22;
 
-const char* const RAYON_COMMIT_HASH = "bcd27a3";
+const char* const RAYON_COMMIT_HASH = "012ecdf";
 
 const char* const RayOn::version()
 {
-  return "0.4.20 (bcd27a3)";
+  return "0.4.22 (012ecdf)";
 }
