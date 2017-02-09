@@ -4,6 +4,7 @@
 #include "ImageFileHandlers/ImageFileHandler_BMP.hh"
 #include "Entities/Objects/Sphere.hh"
 #include "Entities/Objects/Plane.hh"
+#include "Entities/Objects/Rectangle.hh"
 #include "Entities/Lights/Sun.hh"
 #include "Entities/Eye.hh"
 
@@ -16,7 +17,7 @@ namespace RayOn
   {
     config().init(ac, av);
 
-    Eye* eye = new Eye(Vec_t(0, 0, -20), Vec_t(0, 0, 0));
+    Eye* eye = new Eye(Vec_t(0, 1, -5), Vec_t(0, 0, 0));
     _scene << eye;
     Sphere* sphere = new Sphere(Vec_t(0, 0, 0), Vec_t(0, 0, 0), 1);
     sphere->getMaterial().setColor(0x8B0A50);
@@ -29,9 +30,9 @@ namespace RayOn
     sphere->getMaterial().setColor(0x8B0A50);
     sphere->getMaterial().setFlag(Flags::NoShadow);
     _scene << sphere;
-    Plane* plane = new Plane(Vec_t(0, -1.2, 0), Vec_t(15, 0, 0));
-    plane->getMaterial().setColor(0x67E6EC);
-    _scene << plane;
+    Rectangle* rectangle = new Rectangle(Vec_t(0, -0.8, 0), Vec_t(0, 0, 0), 8, 5);
+    rectangle->getMaterial().setColor(0x67E6EC);
+    _scene << rectangle;
     Sun* sun = new Sun(10, 10, -20);
     sun->setColor(Color(255, 255, 255));
     _scene << sun;
@@ -73,6 +74,14 @@ namespace RayOn
     return color;
   }
 
+  /*
+  Given longitude and latitude on a sphere of radius S,
+  the 3D coordinates P = (P.x, P.y, P.z) are:
+  P.x = S * cos(y) * cos(x)
+  P.y = S * cos(y) * sin(x)
+  P.z = S * sin(y)
+  */
+
   int RayOn::run()
   {
     if (config().handleStoppingArgs())
@@ -92,7 +101,7 @@ namespace RayOn
       for (uint32 y = 0; y < height; ++y)
       {
         Float_t j = 0.0 - (y * 2.0 / height - 1.0);
-        cameraRay.setDirection(_scene.eye()->indirectRotation(Vec_t(i, j, 5)));
+        cameraRay.setDirection(_scene.eye()->indirectRotation(Vec_t(i, j, 1)));
         cameraRay.normalize();
         auto color = inter(_scene, cameraRay);
         img.pixel(x, y) = color;
