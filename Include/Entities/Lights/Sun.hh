@@ -1,6 +1,5 @@
 #ifndef RAYON_SUN_HH_
 #define RAYON_SUN_HH_
-#if 0
 /** \file Sun.hh
  * Describes the @ref Sun class.
  */
@@ -96,4 +95,3 @@ namespace RayOn
 } // namespace RayOn
 
 #endif // RAYON_SUN_HH_
-#endif

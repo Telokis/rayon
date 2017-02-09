@@ -92,8 +92,6 @@ namespace RayOn
     k = Globals::Invalid;
     for (auto& item : _objects)
     {
-      if (item->getMaterial().testFlag(ray.getType()))
-        continue;
       k_tmp = item->inter(ray);
       if (k_tmp != Globals::Invalid && k_tmp < k)
       {

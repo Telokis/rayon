@@ -7,13 +7,16 @@ namespace RayOn
 {
 
   Color::Color()
-    : _intValue(0xff000000)
+    : _charValues{0xff, 0, 0, 0}
   {
   }
 
   Color::Color(uint32 v)
-    : _intValue(0xff000000 | v)
   {
+    _charValues[0] = 0xff;
+    _charValues[1] = (v & uint32(0xFF0000)) >> 16;
+    _charValues[2] = (v & uint32(0xFF00)) >> 8;
+    _charValues[3] = (v & uint32(0xFF));
   }
 
   Color::Color(uint8 r, uint8 g, uint8 b)
@@ -60,7 +63,7 @@ namespace RayOn
 
   Color       Color::average(const Color* colors, size_t size)
   {
-    Color   result(0xff000000);
+    Color   result;
     uint64  tmp[3] = {0};
 
     if (!size)

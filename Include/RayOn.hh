@@ -4,6 +4,7 @@
 #define RAYON_RAYON_HH_
 
 #include "Config.hh"
+#include "Scene.hh"
 
 namespace RayOn
 {
@@ -22,6 +23,7 @@ namespace RayOn
     int run();
 
   private:
+    Scene _scene;
   };
 } // namespace RayOn
 

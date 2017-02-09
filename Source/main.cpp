@@ -1,6 +1,5 @@
 #define _CRT_SECURE_NO_WARNINGS 1
 #define STB_IMAGE_IMPLEMENTATION
-#define STBI_ONLY_BMP
 #include "libraries/stb_image.hh"
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include "libraries/stb_image_write.hh"

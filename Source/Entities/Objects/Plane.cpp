@@ -31,9 +31,9 @@ namespace RayOn
     tmp_pos = indirectRotation(tmp_pos);
     tmp_dir = indirectRotation(ray.getDirection());
 
-    if (Tools::IsZero(tmp_pos.z) || Tools::IsZero(tmp_dir.z))
+    if (Tools::IsZero(tmp_pos.y) || Tools::IsZero(tmp_dir.y))
       return Globals::Invalid;
-    k = -1 * tmp_pos.z / tmp_dir.z;
+    k = -1 * tmp_pos.y / tmp_dir.y;
     k = (k > Globals::Epsilon) ? k : Globals::Invalid;
     return k;
   }
@@ -45,7 +45,7 @@ namespace RayOn
 
   void        Plane::preprocessImpl()
   {
-    _norm = Tools::Normalize(directRotation(Vec_t(0, 0, 1)));
+    _norm = Tools::Normalize(directRotation(Vec_t(0, 1, 0)));
   }
 
 } // namespace RayOn

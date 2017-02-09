@@ -60,6 +60,28 @@ namespace RayOn
       return _direction;
     }
 
+    inline void setOrigin(const Vec_t& v)
+    {
+      _origin = v;
+    }
+
+    inline void setDirection(const Vec_t& v)
+    {
+      _direction = v;
+      _invDirection.invalidate();
+    }
+
+    inline void setType(RayType type)
+    {
+      _type = type;
+    }
+
+    inline void normalize()
+    {
+      _direction = Tools::Normalize(_direction);
+      _invDirection.invalidate();
+    }
+
     inline const Vec_t& getInvDirection() const
     {
       if (!_invDirection.isValid())

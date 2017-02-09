@@ -41,6 +41,8 @@ namespace RayOn
 
     Float_t     inter(const Ray &ray) final
     {
+      if (getMaterial().testFlag(ray.getType()))
+        return Globals::Invalid;
       return static_cast<Derived*>(this)->interImpl(ray);
     }
 

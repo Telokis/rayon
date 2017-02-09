@@ -24,14 +24,16 @@ namespace RayOn
     Color   &operator*=(double val);
     Color   operator*(double val) const;
 
-    inline uint32& intValue()
-    {
-      return _intValue;
-    }
-
     inline uint32 intValue() const
     {
-      return _intValue;
+      uint32 res = _charValues[0];
+      res <<= 8;
+      res |= _charValues[1];
+      res <<= 8;
+      res |= _charValues[2];
+      res <<= 8;
+      res |= _charValues[3];
+      return res;
     }
 
     inline uint8& alpha()
@@ -76,11 +78,7 @@ namespace RayOn
     }
 
   private:
-    union
-    {
-      uint32  _intValue;
-      uint8   _charValues[4];
-    };
+    uint8   _charValues[4];
   };
 
 } // namespace RayOn

@@ -1,5 +1,6 @@
 #include "Entities/Lights/Sun.hh"
-#if 0
+#include "Scene.hh"
+
 namespace RayOn
 {
   Sun::Sun()
@@ -27,15 +28,15 @@ namespace RayOn
                           const Vec_t& point) const
   {
     Float_t k;
-    Vec_t   light_vec;
-    Vec_t   tmp_pos;
+    Vec_t   light_vec(_pos - point);
+    Vec_t   tmp_pos(point + light_vec * Globals::Epsilon);
 
     k = Globals::Invalid;
-    light_vec = _pos - point;
-    tmp_pos = point + light_vec * Globals::Epsilon;
+    Ray shadowRay(RayType::Shadow, tmp_pos, light_vec);
+
     for (const auto& object : scene.objects())
     {
-      k = object->inter(tmp_pos, light_vec);
+      k = object->inter(shadowRay);
       if (k > Globals::Epsilon && k < 1.0)
         return true;
     }
@@ -66,4 +67,3 @@ namespace RayOn
   RAYON_GENERATE_PROPERTY_DEFINITION(Sun, Float_t, _power, Power)
 
 } // namespace RayOn
-#endif
