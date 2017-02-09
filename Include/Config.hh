@@ -20,6 +20,7 @@ namespace RayOn
     boost::program_options::variables_map       _variables;
 
   private:
+    RAYON_GENERATE_PROPERTY_DECLARATION(Config, std::string, _outputPath, OutputPath)
     RAYON_GENERATE_PROPERTY_DECLARATION(Config, uint32, _width, Width)
     RAYON_GENERATE_PROPERTY_DECLARATION(Config, uint32, _height, Height)
   };

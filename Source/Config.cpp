@@ -16,10 +16,11 @@ namespace RayOn
   void  Config::init(int ac, char** av)
   {
     _description.add_options()
-      ("help,h", "Produce help message")
+      ("help", "Produce help message")
       ("version,v", "Prints version information")
       ("width,w", po::value<uint32>(&_width)->default_value(512), "Width of the output image")
       ("height,h", po::value<uint32>(&_height)->default_value(512), "Height of the output image")
+      ("output,o", po::value<std::string>(&_outputPath)->default_value("out.bmp"), "Path to the image output")
       ;
 
     po::store(po::parse_command_line(ac, av, _description), _variables);
@@ -41,6 +42,7 @@ namespace RayOn
     return false;
   }
 
+  RAYON_GENERATE_PROPERTY_DEFINITION(Config, std::string, _outputPath, OutputPath)
   RAYON_GENERATE_PROPERTY_DEFINITION(Config, uint32, _width, Width)
   RAYON_GENERATE_PROPERTY_DEFINITION(Config, uint32, _height, Height)
 } // namespace RayOn

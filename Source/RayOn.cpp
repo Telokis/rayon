@@ -19,12 +19,20 @@ namespace RayOn
     Eye* eye = new Eye(Vec_t(0, 0, -20), Vec_t(0, 0, 0));
     _scene << eye;
     Sphere* sphere = new Sphere(Vec_t(0, 0, 0), Vec_t(0, 0, 0), 1);
-    sphere->getMaterial().setColor(0xff0000);
+    sphere->getMaterial().setColor(0x8B0A50);
+    sphere->getMaterial().setFlag(Flags::NoShading);
+    _scene << sphere;
+    sphere = new Sphere(Vec_t(-2.5, 0, 0), Vec_t(0, 0, 0), 1);
+    sphere->getMaterial().setColor(0x8B0A50);
+    _scene << sphere;
+    sphere = new Sphere(Vec_t(2.5, 0, 0), Vec_t(0, 0, 0), 1);
+    sphere->getMaterial().setColor(0x8B0A50);
+    sphere->getMaterial().setFlag(Flags::NoShadow);
     _scene << sphere;
     Plane* plane = new Plane(Vec_t(0, -1.2, 0), Vec_t(15, 0, 0));
-    plane->getMaterial().setColor(0xff00);
+    plane->getMaterial().setColor(0x67E6EC);
     _scene << plane;
-    Sun* sun = new Sun(10, 10, -10);
+    Sun* sun = new Sun(10, 10, -20);
     sun->setColor(Color(255, 255, 255));
     _scene << sun;
   }
@@ -43,7 +51,9 @@ namespace RayOn
     if (obj)
     {
       point = ray.evaluate(k);
-      color = scene.processLights(obj->getMaterial().getColor(), scene, obj, point);
+      color = obj->getMaterial().getColor();
+      if (!obj->getMaterial().testFlag(Flags::NoShading))
+        color = scene.processLights(obj->getMaterial().getColor(), scene, obj, point);
       if (obj->getMaterial().getReflexion() > Globals::Epsilon && depth < 5)
       {
         Ray reflected(RayType::Reflected, point,
@@ -78,18 +88,18 @@ namespace RayOn
     std::cout << std::hex;
     for (uint32 x = 0; x < width; ++x)
     {
+      Float_t i = x * 2.0 / width - 1.0;
       for (uint32 y = 0; y < height; ++y)
       {
-        cameraRay.setDirection(_scene.eye()->indirectRotation(Vec_t(width / 2.0 - x,
-                                                                    height / 2.0 - y,
-                                                                    1000.0)));
+        Float_t j = 0.0 - (y * 2.0 / height - 1.0);
+        cameraRay.setDirection(_scene.eye()->indirectRotation(Vec_t(i, j, 5)));
         cameraRay.normalize();
         auto color = inter(_scene, cameraRay);
         img.pixel(x, y) = color;
       }
     }
     IImageFileHandler* bmp = new ImageFileHandler_BMP;
-    std::cout << "Success : " << bmp->writeToFile("rendu.bmp", img) << '\n';
+    std::cout << "Success : " << bmp->writeToFile(config().getOutputPath().c_str(), img) << '\n';
     return 0;
   }
 

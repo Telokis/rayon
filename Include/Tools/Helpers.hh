@@ -57,6 +57,24 @@ namespace RayOn
       return max(a, b);
     }
 
+    inline Float_t Tan(Float_t a)
+    {
+      using std::tan;
+      return tan(a);
+    }
+
+    inline Float_t Sin(Float_t a)
+    {
+      using std::sin;
+      return sin(a);
+    }
+
+    inline Float_t Cos(Float_t a)
+    {
+      using std::cos;
+      return cos(a);
+    }
+
     inline constexpr Float_t DegToRad(Float_t val)
     {
       return val * Globals::PI / 180.0;

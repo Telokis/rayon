@@ -13,6 +13,9 @@ namespace RayOn
         const Vec_t &rot);
     Eye(Float_t x, Float_t y, Float_t z);
     virtual ~Eye();
+
+  private:
+    RAYON_GENERATE_PROPERTY_DECLARATION(Eye, Float_t, _fov, Fov)
   };
 } // namespace RayOn
 

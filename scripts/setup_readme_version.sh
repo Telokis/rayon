@@ -11,7 +11,7 @@ else
 fi
 build=$(($build+1))
 
-diffval=$(git diff HEAD^ HEAD)
+diffval=$(git diff)
 if (echo "$diffval" | grep -q "+"$'\x23'"define RAYON_MAJOR_VERSION") || (echo "$diffval" | grep -q "+"$'\x23'"define RAYON_MINOR_VERSION") ; then
 	build="0"
 fi
