@@ -1,5 +1,7 @@
-#include "Config.hh"
 #include <iostream>
+
+#include "Config.hh"
+#include "Version.hh"
 
 namespace po = boost::program_options;
 
@@ -16,6 +18,8 @@ namespace RayOn
     _description.add_options()
       ("help,h", "Produce help message")
       ("version,v", "Prints version information")
+      ("width,w", po::value<uint32>(&_width)->default_value(512), "Width of the output image")
+      ("height,h", po::value<uint32>(&_height)->default_value(512), "Height of the output image")
       ;
 
     po::store(po::parse_command_line(ac, av, _description), _variables);
@@ -31,9 +35,12 @@ namespace RayOn
     }
     if (_variables.count("version"))
     {
-      std::cout << "RayOn v." << "toto" << '\n';
+      std::cout << "RayOn v." << version() << '\n';
       return true;
     }
     return false;
   }
+
+  RAYON_GENERATE_PROPERTY_DEFINITION(Config, uint32, _width, Width)
+  RAYON_GENERATE_PROPERTY_DEFINITION(Config, uint32, _height, Height)
 } // namespace RayOn

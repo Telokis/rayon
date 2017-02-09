@@ -12,10 +12,8 @@ namespace RayOn
 
   int RayOn::run()
   {
-    std::cout << version() << "\n";
     if (config().handleStoppingArgs())
       return 0;
-
 
     return 0;
   }

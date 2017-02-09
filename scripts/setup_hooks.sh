@@ -9,6 +9,8 @@ done
 
 echo -e "#!bin/sh\n./scripts/handle_tags.sh\n./scripts/generate_version.sh" > "../.git/hooks/post-commit"
 
+echo -e "#!bin/sh\n./scripts/setup_readme_version.sh" > "../.git/hooks/pre-commit"
+
 cd ..
 ./scripts/generate_version.sh
 

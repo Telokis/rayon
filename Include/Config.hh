@@ -4,6 +4,7 @@
 #define RAYON_CONFIG_HH_
 
 #include <boost/program_options.hpp>
+#include "Tools/Helpers.hh"
 
 namespace RayOn
 {
@@ -17,6 +18,10 @@ namespace RayOn
   private:
     boost::program_options::options_description _description;
     boost::program_options::variables_map       _variables;
+
+  private:
+    RAYON_GENERATE_PROPERTY_DECLARATION(Config, uint32, _width, Width)
+    RAYON_GENERATE_PROPERTY_DECLARATION(Config, uint32, _height, Height)
   };
 } // namespace RayOn
 
