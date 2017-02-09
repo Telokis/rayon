@@ -9,8 +9,14 @@ if (( $? )) ; then
 else
 	build=$(git rev-list  "$tagname..HEAD" --count)
 fi
+build=$(($build+1))
 
-sed -i "s/_Current repository version : .*\._/_Current repository version : v$major.$minor.$build._/" README.md
+diffval=$(git diff HEAD^ HEAD)
+if (echo "$diffval" | grep -q "+"$'\x23'"define RAYON_MAJOR_VERSION") || (echo "$diffval" | grep -q "+"$'\x23'"define RAYON_MINOR_VERSION") ; then
+	build=0
+fi
+
+sed -i "s/_Current repository version : .*_/_Current repository version : v$major.$minor.$build_/" README.md
 git add README.md
 
 exit 0
