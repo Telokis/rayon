@@ -16,7 +16,7 @@ endif()
 set(Config_Libraries "log,program_options")
 
 include(ExternalProject)
-ExternalProject_Add(Boost_ext
+ExternalProject_Add(Boost
     TMP_DIR "${RAYON_ROOT_DIR}/downloads/tmp"
     DOWNLOAD_DIR "${RAYON_ROOT_DIR}/downloads"
     URL "${Boost_Url}"
