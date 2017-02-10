@@ -1,5 +1,5 @@
-#include "libraries/stb_image.hh"
-#include "libraries/stb_image_write.hh"
+#include "Libraries/stb_image.hh"
+#include "Libraries/stb_image_write.hh"
 
 #include <memory>
 

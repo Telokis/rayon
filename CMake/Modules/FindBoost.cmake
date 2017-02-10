@@ -212,6 +212,7 @@
 # If Boost_DIR is set, this behaves as any find_package call would. If not,
 # it looks at BOOST_ROOT and BOOSTROOT to find Boost.
 #
+
 if (NOT Boost_NO_BOOST_CMAKE)
   # If Boost_DIR is not set, look for BOOSTROOT and BOOST_ROOT as alternatives,
   # since these are more conventional for Boost.

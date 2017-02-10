@@ -11,7 +11,7 @@ extern const char* const RAYON_COMMIT_HASH;
 
 namespace RayOn
 {
-  const char* const version();
+  const char* version();
 }
 
 #endif // RAYON_VERSION_HH_

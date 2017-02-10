@@ -31,3 +31,4 @@ build/
 downloads/
 
 Source/Version.cpp
+Dependencies/boost_1_63_0/

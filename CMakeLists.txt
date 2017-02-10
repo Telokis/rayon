@@ -45,13 +45,15 @@ find_package(GLM REQUIRED)
 include_directories(${GLM_INCLUDE_DIR})
 
 # Find BOOST
-find_package(Boost QUIET COMPONENTS program_options log)
+set(BOOST_INCLUDEDIR "${RAYON_ROOT_DIR}/Dependencies/boost_1_63_0/include")
+find_package(Boost 1.63.0 EXACT COMPONENTS program_options log)
 if(NOT Boost_FOUND)
 	message("Boost not found. Setting up download...")
 	include(${RAYON_CMAKE_FOLDER_DIR}/Build_Boost.cmake)
 	add_dependencies(RayOn Boost)
 endif()
 include_directories("${RAYON_ROOT_DIR}/Dependencies/boost_1_63_0/include")
-target_link_libraries(RayOn "${RAYON_ROOT_DIR}/Dependencies/boost_1_63_0/lib")
+target_link_libraries(RayOn "${Boost_LIBRARIES}")
+message("${Boost_LIBRARIES}")
 
 target_include_directories(RayOn PUBLIC "${RAYON_HEADER_DIR}")
