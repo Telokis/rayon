@@ -4,7 +4,7 @@ filename="./Source/Version.cpp"
 major=$(cat Include/Version.hh | tr -d '\n' | sed -r 's/.*RAYON_MAJOR_VERSION ([0-9]+).*/\1/')
 minor=$(cat Include/Version.hh | tr -d '\n' | sed -r 's/.*RAYON_MINOR_VERSION ([0-9]+).*/\1/')
 tagname=$(git describe --abbrev=0 --tags 2> /dev/null)
-if (( $? )) ; then
+if [ $? -ne 0 ] ; then
 	build=$(git rev-list HEAD | wc -l | tr -d '\n' | tr -d ' ')
 else
 	build=$(git rev-list  "$tagname..HEAD" --count)

@@ -35,6 +35,7 @@ ExternalProject_Add(Boost
     --architecture=x64
     --threading=multi
     --link=shared
+    toolset=clang
     --layout=tagged
     --build-type=complete
     -j4
@@ -44,6 +45,7 @@ ExternalProject_Add(Boost
     --architecture=x64
     --threading=multi
     --link=shared
+    toolset=clang
     --layout=tagged
     --build-type=complete
     -j4 install

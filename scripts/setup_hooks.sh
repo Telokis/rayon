@@ -1,5 +1,10 @@
 #!/bin/sh
 
+if [ "${PWD##*/}" != "scripts" ] ; then
+    echo "Error, this script must run from the scripts folder."
+    exit 1
+fi
+
 hook_version_handling="#!bin/sh\n./scripts/generate_version.sh"
 hook_version_handling_files="post-checkout post-merge"
 
