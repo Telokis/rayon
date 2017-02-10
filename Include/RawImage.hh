@@ -4,6 +4,7 @@
 #define RAYON_RAWIMAGE_HH_
 
 #include "Color.hh"
+#include <memory>
 #include <vector>
 
 namespace RayOn
@@ -18,6 +19,9 @@ namespace RayOn
     RawImage(const uint32 width, const uint32 height);
 
     void  resize(const uint32 width, const uint32 height);
+
+    std::unique_ptr<uint8[]> raw() const;
+    void  fromRaw(uint8* data, uint32 w, uint32 h);
 
     inline uint32 width() const
     {

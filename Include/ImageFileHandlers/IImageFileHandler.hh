@@ -15,6 +15,8 @@ namespace RayOn
 
     virtual bool writeToFile(const char* path, const RawImage& readFrom) const = 0;
     //virtual bool writeToMemory(char*& data, size_t& size, const RawImage& readFrom) const = 0;
+
+    virtual const char* extensionName() const = 0;
   };
 } // namespace RayOn
 

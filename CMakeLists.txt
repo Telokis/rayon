@@ -1,6 +1,7 @@
 cmake_minimum_required (VERSION 3.3.2)
 project(RayOn)
 
+SET(RAYON_ROOT_DIR "${CMAKE_CURRENT_LIST_DIR}")
 SET(RAYON_HEADER_DIR "${CMAKE_CURRENT_LIST_DIR}/Include")
 SET(RAYON_SOURCE_DIR "${CMAKE_CURRENT_LIST_DIR}/Source")
 set(RAYON_CMAKE_FOLDER_DIR ${CMAKE_CURRENT_LIST_DIR}/CMake)
@@ -8,6 +9,7 @@ set(RAYON_CMAKE_FOLDER_DIR ${CMAKE_CURRENT_LIST_DIR}/CMake)
 # Configurable variables
 set(ENABLE_SOURCE_GROUPING true CACHE BOOL "Enable source subfolders")
 set(GLM_ROOT "${CMAKE_CURRENT_LIST_DIR}/Dependencies/glm" CACHE PATH "Path to GLM root directory")
+set(BOOST_ROOT "${RAYON_ROOT_DIR}/Dependencies/boost_1_63_0")
 
 # Set the debug postfix
 SET(CMAKE_DEBUG_POSTFIX "_d")
@@ -35,13 +37,21 @@ endif()
 prefix_custom_list(RAYON_HEADERS "${RAYON_HEADER_DIR}/" RAYON_HEADER_FILES)
 prefix_custom_list(RAYON_SOURCES "${RAYON_SOURCE_DIR}/" RAYON_SOURCE_FILES)
 
-add_definitions(-DBOOST_PROGRAM_OPTIONS_SOURCE)
-
 # Set sources
 add_executable(RayOn ${RAYON_SOURCES} ${RAYON_HEADERS})
 
 # Find GLM
 find_package(GLM REQUIRED)
-include_directories(Arkneo ${GLM_INCLUDE_DIR})
+include_directories(${GLM_INCLUDE_DIR})
+
+# Find BOOST
+find_package(Boost QUIET COMPONENTS program_options log)
+if(NOT Boost_FOUND)
+	message("Boost not found. Setting up download...")
+	include(${RAYON_CMAKE_FOLDER_DIR}/Build_Boost.cmake)
+	add_dependencies(RayOn Boost_ext)
+endif()
+include_directories("${RAYON_ROOT_DIR}/Dependencies/boost_1_63_0/include")
+target_link_libraries(RayOn "${RAYON_ROOT_DIR}/Dependencies/boost_1_63_0/lib")
 
 target_include_directories(RayOn PUBLIC "${RAYON_HEADER_DIR}")

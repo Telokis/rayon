@@ -28,5 +28,6 @@
 *.app
 
 build/
+downloads/
 
 Source/Version.cpp

@@ -77,9 +77,15 @@ namespace RayOn
   /*
   Given longitude and latitude on a sphere of radius S,
   the 3D coordinates P = (P.x, P.y, P.z) are:
-  P.x = S * cos(y) * cos(x)
-  P.y = S * cos(y) * sin(x)
-  P.z = S * sin(y)
+  P.x = S * sin(ax) * cos(ay)
+  P.y = S * sin(ax) * sin(ay)
+  P.z = S * cos(ax)
+  ax [0, pi]
+  ay [0, 2pi]
+
+  vect->x = sin(angle_h) * cos_v;
+  vect->y = sin(angle_v) * cos_h;
+  vect->z = cos_h * cos_v;
   */
 
   int RayOn::run()
