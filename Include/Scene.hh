@@ -159,15 +159,13 @@ namespace RayOn
      *          color influence. Otherwise, uses black for the
      *          current light.
      * @param[in] color The actual color expected on @a point.
-     * @param[in] scene The scene storing objects.
      * @param[in] obj   The @ref RTObject intersected.
      * @param[in] point The intersection on @a obj.
      * @return  The computed color to use.
      */
     Color       processLights(const Color& color,
-                              const Scene& scene,
                               RTObject* obj,
-                              const Vec_t& point);
+                              const Vec_t& point) const;
 
   public:
     /**
@@ -205,7 +203,7 @@ namespace RayOn
     ObjectsContainer    _objects;   /**< Collection of @ref RTObject * */
     LightsContainer     _lights;    /**< Collection of @ref RTLight * */
     Eye*                _eye;       /**< @ref Eye of the Scene */
-    std::vector<Color>  _colors;    /**< Buffer of the Scene, to store colors before averaging them */
+    mutable std::vector<Color>  _colors;    /**< Buffer of the Scene, to store colors before averaging them */
   };
 } // namespace RayOn
 

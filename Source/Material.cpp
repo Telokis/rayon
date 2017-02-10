@@ -6,7 +6,7 @@ namespace RayOn
     : _color(0)
     , _reflexion(0)
     , _transparency(0)
-    , _refraction(0)
+    , _refraction(1)
   {
   }
 

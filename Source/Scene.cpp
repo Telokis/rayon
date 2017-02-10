@@ -1,5 +1,6 @@
 #include "Scene.hh"
 #include "Entities/Lights/RTLight.hh"
+#include <iostream>
 
 namespace RayOn
 {
@@ -128,12 +129,11 @@ namespace RayOn
   }
 
   Color   Scene::processLights(const Color& color,
-                               const Scene& scene,
                                RTObject* obj,
-                               const Vec_t& point)
+                               const Vec_t& point) const
   {
     for (size_t i = 0; i < _lights.size(); ++i)
-      _colors[i] = _lights[i]->apply(color, scene, obj, point);
+      _colors[i] = _lights[i]->apply(color, *this, obj, point);
     return _lights.empty() ? Color(0xFF000000) : Color::average(_colors);
   }
 
