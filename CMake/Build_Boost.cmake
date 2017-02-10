@@ -25,7 +25,10 @@ ExternalProject_Add(Boost_ext
     BUILD_IN_SOURCE 1
     UPDATE_COMMAND ""
     PATCH_COMMAND ""
-    CONFIGURE_COMMAND ${Boost_Bootstrap_Command} --without-icu --with_libraries=${Config_Libraries}
+    CONFIGURE_COMMAND ${Boost_Bootstrap_Command}
+    --without-icu
+    --with-libraries=${Config_Libraries}
+    "--prefix=${RAYON_ROOT_DIR}/Dependencies/boost_1_63_0"
     BUILD_COMMAND  ${Boost_b2_Command}
     --without-python
     --address-model=64
