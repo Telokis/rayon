@@ -38,6 +38,7 @@ ExternalProject_Add(Boost
     --layout=tagged
     --build-type=complete
     -j4
+    "--prefix=${RAYON_ROOT_DIR}/Dependencies/boost_1_63_0"
     INSTALL_COMMAND ${Boost_b2_Command}
     --without-python
     --address-model=64
@@ -47,6 +48,7 @@ ExternalProject_Add(Boost
     --layout=tagged
     --build-type=complete
     -j4 install
+    "--prefix=${RAYON_ROOT_DIR}/Dependencies/boost_1_63_0"
     INSTALL_DIR "${RAYON_ROOT_DIR}/Dependencies/boost_1_63_0"
     LOG_DOWNLOAD 1
     LOG_UPDATE 1
