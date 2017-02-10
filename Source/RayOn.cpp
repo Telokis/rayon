@@ -33,6 +33,7 @@ namespace RayOn
     _scene << sphere;
     Plane* plane = new Plane(0, -0.8, 0);
     plane->getMaterial().setColor(0x67E6EC);
+    plane->getMaterial().setReflexion(0.9);
     _scene << plane;
     Sun* sun = new Sun(10, 10, -20);
     sun->setColor(Color(255, 255, 255));
@@ -76,7 +77,7 @@ namespace RayOn
       {
         Ray refracted(RayType::Transparency, point,
                       Tools::Refract(ray.getDirection(), obj->norm(point),
-                                     obj->getMaterial().getReflexion()));
+                                     obj->getMaterial().getRefraction()));
         tmp_color = inter(scene, refracted, depth + 1);
         color = Color::interpolate(color, tmp_color, obj->getMaterial().getTransparency());
       }
