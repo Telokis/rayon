@@ -25,15 +25,25 @@ namespace RayOn
     _scene << sphere;
     sphere = new Sphere(Vec_t(-2.5, 0, 0), Vec_t(0, 0, 0), 1);
     sphere->getMaterial().setColor(0x8B0A50);
+    sphere->getMaterial().setFlag(Flags::NoReflection);
     _scene << sphere;
     sphere = new Sphere(Vec_t(2.5, 0, 0), Vec_t(0, 0, 0), 1);
     sphere->getMaterial().setColor(0x8B0A50);
     sphere->getMaterial().setFlag(Flags::NoShadow);
     _scene << sphere;
-    Rectangle* rectangle = new Rectangle(Vec_t(0, -0.8, 0), Vec_t(0, 0, 0), 8, 5);
-    rectangle->getMaterial().setColor(0x67E6EC);
-    _scene << rectangle;
+    Plane* plane = new Plane(0, -0.8, 0);
+    plane->getMaterial().setColor(0x67E6EC);
+    _scene << plane;
     Sun* sun = new Sun(10, 10, -20);
+    sun->setColor(Color(255, 255, 255));
+    _scene << sun;
+    sun = new Sun(-10, 10, -20);
+    sun->setColor(Color(255, 255, 255));
+    _scene << sun;
+    sun = new Sun(10, 50, -20);
+    sun->setColor(Color(255, 255, 255));
+    _scene << sun;
+    sun = new Sun(-10, 30, -20);
     sun->setColor(Color(255, 255, 255));
     _scene << sun;
   }

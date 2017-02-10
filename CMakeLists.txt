@@ -37,6 +37,7 @@ endif()
 prefix_custom_list(RAYON_HEADERS "${RAYON_HEADER_DIR}/" RAYON_HEADER_FILES)
 prefix_custom_list(RAYON_SOURCES "${RAYON_SOURCE_DIR}/" RAYON_SOURCE_FILES)
 
+link_directories("${RAYON_ROOT_DIR}/Dependencies/boost_1_63_0/lib")
 # Set sources
 add_executable(RayOn ${RAYON_SOURCES} ${RAYON_HEADERS})
 
@@ -53,7 +54,11 @@ if(NOT Boost_FOUND)
 	add_dependencies(RayOn Boost)
 endif()
 include_directories("${RAYON_ROOT_DIR}/Dependencies/boost_1_63_0/include")
-target_link_libraries(RayOn "${Boost_LIBRARIES}")
-message("${Boost_LIBRARIES}")
+
+if (UNIX)
+	target_link_libraries(RayOn "${Boost_LIBRARIES}")
+else()
+	add_definitions(-DBOOST_AUTO_LINK_TAGGED)
+endif()
 
 target_include_directories(RayOn PUBLIC "${RAYON_HEADER_DIR}")

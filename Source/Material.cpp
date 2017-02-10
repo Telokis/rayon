@@ -2,6 +2,14 @@
 
 namespace RayOn
 {
+  Material::Material()
+    : _color(0)
+    , _reflexion(0)
+    , _transparency(0)
+    , _refraction(0)
+  {
+  }
+
   void Material::setFlag(Flags flag, bool value)
   {
     _flags.set(static_cast<size_t>(flag), value);

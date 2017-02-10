@@ -25,6 +25,8 @@ namespace RayOn
   class Material
   {
   public:
+    Material();
+
     void  setFlag(Flags flag, bool value = true);
     bool  testFlag(Flags flag) const;
     bool  testFlag(RayType type) const;
