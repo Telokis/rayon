@@ -30,27 +30,38 @@ namespace RayOn
       std::cout << "[Error]Image [" << path << "]. All sides of the cubemap must be the same size.\n";
       return false;
     }
+
+    _size = img.width();
+
     return true;
   }
 
   namespace
   {
-    Color getColor(const RawImage& img, Float_t x, Float_t y, uint32 size)
+    Color getColor(const RawImage& img, Float_t u, Float_t v, uint32 size)
     {
-      x = Tools::Clamp(Tools::Abs(x), 0u, size);
-      y = Tools::Clamp(Tools::Abs(y), 0u, size);
-      uint32 i1 = Tools::Floor(x * size);
-      uint32 i2 = i1 + 1;
-      uint32 j1 = Tools::Floor(y * size);
-      uint32 j2 = j1 + 1;
-      const Color& c1 = img.pixel(i1, j1);
-      const Color& c2 = img.pixel(i2, j1);
-      const Color& c3 = img.pixel(i1, j2);
-      const Color& c4 = img.pixel(i2, j2);
+      u = Tools::Abs(u);
+      v = 1 - Tools::Abs(v);
+      int umin = int(size * u);
+      int vmin = int(size * v);
+      int umax = int(size * u) + 1;
+      int vmax = int(size * v) + 1;
+      float ucoef = Tools::Abs(size * u - umin);
+      float vcoef = Tools::Abs(size * v - vmin);
 
-      Color ci1 = Color::interpolate(c1, c2, x);
-      Color ci2 = Color::interpolate(c3, c4, x);
-      return Color::interpolate(ci1, ci2, y);
+      umin = Tools::Clamp(umin, 0u, size - 1);
+      umax = Tools::Clamp(umax, 0u, size - 1);
+      vmin = Tools::Clamp(vmin, 0u, size - 1);
+      vmax = Tools::Clamp(vmax, 0u, size - 1);
+
+      const Color& c1 = img.pixel(umin, vmin);
+      const Color& c2 = img.pixel(umax, vmin);
+      const Color& c3 = img.pixel(umin, vmax);
+      const Color& c4 = img.pixel(umax, vmax);
+
+      Color ci1 = Color::interpolate(c1, c2, ucoef);
+      Color ci2 = Color::interpolate(c3, c4, ucoef);
+      return Color::interpolate(ci1, ci2, vcoef);
     }
   }
 
@@ -68,7 +79,7 @@ namespace RayOn
     {
       if (ray.getDirection().x > Globals::Epsilon)
       {
-        RAYON_TMP_CODE_GENERATE_SETUP(Left);
+        RAYON_TMP_CODE_GENERATE_SETUP(Right);
         res = getColor(img,
                        1.0f - (ray.getDirection().z / ray.getDirection().x + 1.0f) * 0.5f,
                        (ray.getDirection().y / ray.getDirection().x + 1.0f) * 0.5f,
@@ -76,7 +87,7 @@ namespace RayOn
       }
       else
       {
-        RAYON_TMP_CODE_GENERATE_SETUP(Right);
+        RAYON_TMP_CODE_GENERATE_SETUP(Left);
         res = getColor(img,
                        1.0f - (ray.getDirection().z / ray.getDirection().x + 1.0f) * 0.5f,
                        1.0f - (ray.getDirection().y / ray.getDirection().x + 1.0f) * 0.5f,
@@ -98,18 +109,15 @@ namespace RayOn
       {
         RAYON_TMP_CODE_GENERATE_SETUP(Down);
         res = getColor(img,
-                       1.0f - (ray.getDirection().x / ray.getDirection().y + 1.0f) * 0.5f,
-                       (ray.getDirection().z / ray.getDirection().y + 1.0f) * 0.5f,
+                       1.0 - (ray.getDirection().x / ray.getDirection().y + 1.0f) * 0.5f,
+                       1.0 - 0.5 * (ray.getDirection().z / ray.getDirection().y + 1.0f),
                        _size);
       }
     }
     else
     {
       if (ray.getDirection().z > Globals::Epsilon)
-      {/*
-        std::cout << "Coucou\n";
-        std::cout << (0.5 * (ray.getDirection().x / ray.getDirection().z + 1.0f)) << "\n";
-        std::cout << ((ray.getDirection().y / ray.getDirection().z + 1.0f) * 0.5f) << "\n";*/
+      {
         RAYON_TMP_CODE_GENERATE_SETUP(Front);
         res = getColor(img,
                        0.5 * (ray.getDirection().x / ray.getDirection().z + 1.0f),

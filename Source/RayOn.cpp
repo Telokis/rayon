@@ -21,34 +21,38 @@ namespace RayOn
     config().init(ac, av);
 
     CubeMap* cmap = new CubeMap;
-    cmap->loadSide(Side::Left, "./files/textures/cubemap/alpleft.tga");
+    /*cmap->loadSide(Side::Left, "./files/textures/cubemap/alpleft.tga");
     cmap->loadSide(Side::Right, "./files/textures/cubemap/alpright.tga");
     cmap->loadSide(Side::Up, "./files/textures/cubemap/alpup.tga");
     cmap->loadSide(Side::Down, "./files/textures/cubemap/alpdown.tga");
     cmap->loadSide(Side::Front, "./files/textures/cubemap/alpforward.tga");
-    cmap->loadSide(Side::Back, "./files/textures/cubemap/alpback.tga");
-    //_scene.setCubeMap(cmap);
+    cmap->loadSide(Side::Back, "./files/textures/cubemap/alpback.tga");*/
+    cmap->loadSide(Side::Left, "./files/textures/cubemap/stormydays_lf.tga");
+    cmap->loadSide(Side::Right, "./files/textures/cubemap/stormydays_rt.tga");
+    cmap->loadSide(Side::Up, "./files/textures/cubemap/stormydays_up.tga");
+    cmap->loadSide(Side::Down, "./files/textures/cubemap/stormydays_dn.tga");
+    cmap->loadSide(Side::Front, "./files/textures/cubemap/stormydays_ft.tga");
+    cmap->loadSide(Side::Back, "./files/textures/cubemap/stormydays_bk.tga");
+    _scene.setCubeMap(cmap);
 
     Eye* eye = new Eye(Vec_t(0, 1, -5), Vec_t(0, 0, 0));
     _scene << eye;
     Sphere* sphere = new Sphere(Vec_t(0, 0, 0), Vec_t(0, 0, 0), 1);
     sphere->getMaterial().setColor(0x8B0A50);
-    //sphere->getMaterial().setFlag(Flags::NoShading);
-    sphere->getMaterial().setReflexion(0.9);
+    sphere->getMaterial().setFlag(Flags::NoShading);
+    sphere->getMaterial().setReflexion(0.3);
     _scene << sphere;
     sphere = new Sphere(Vec_t(-2.5, 0, 0), Vec_t(0, 0, 0), 1);
     sphere->getMaterial().setColor(0x8B0A50);
     sphere->getMaterial().setFlag(Flags::NoReflection);
-    sphere->getMaterial().setReflexion(0.9);
     _scene << sphere;
     sphere = new Sphere(Vec_t(2.5, 0, 0), Vec_t(0, 0, 0), 1);
     sphere->getMaterial().setColor(0x8B0A50);
     sphere->getMaterial().setFlag(Flags::NoShadow);
-    sphere->getMaterial().setReflexion(0.9);
     _scene << sphere;
     Plane* plane = new Plane(0, -0.8, 0);
     plane->getMaterial().setColor(0x67E6EC);
-    plane->getMaterial().setReflexion(0.9);
+    plane->getMaterial().setReflexion(0.6);
     _scene << plane;
     Sun* sun = new Sun(10, 10, -20);
     sun->setColor(Color(255, 255, 255));
@@ -69,14 +73,11 @@ namespace RayOn
     if (config().handleStoppingArgs())
       return 0;
 
-    _scene.preprocess();
-
     auto width = config().getWidth();
     auto height = config().getHeight();
     RawImage  img(width, height);
 
     uint8 jn = config().getThreadCount();
-    jn = 8;
 
     std::vector<std::thread> threads;
     for (uint8 i = 0; i < jn; ++i)

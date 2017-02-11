@@ -18,6 +18,7 @@ namespace RayOn
       {
         Ray reflected(RayType::Reflected, point,
                       Tools::Reflect(ray.getDirection(), obj->norm(point)));
+        reflected.setOrigin(point + Globals::Epsilon * reflected.getDirection());
         tmp_color = inter(scene, reflected, depth + 1);
         color = Color::interpolate(color, tmp_color, obj->getMaterial().getReflexion());
       }
@@ -36,6 +37,7 @@ namespace RayOn
 
         if (eta != 1 && eta > Globals::Epsilon)
           refracted.setDirection(Tools::Refract(ray.getDirection(), obj->norm(point), eta));
+        refracted.setOrigin(point + Globals::Epsilon * refracted.getDirection());
         tmp_color = inter(scene, refracted, depth + 1);
         color = Color::interpolate(color, tmp_color, obj->getMaterial().getTransparency());
       }
@@ -50,22 +52,15 @@ namespace RayOn
       Vec_t       point;
       Float_t     k;
       Color       color(0);
-      Color tmp_color;
 
       obj = scene.getNearest(k, ray);
       if (obj)
       {
-        point = ray.evaluate(k + Globals::Epsilon);
+        point = ray.evaluate(k);
         color = obj->getMaterial().getColor();
         if (!obj->getMaterial().testFlag(Flags::NoShading))
           color = scene.processLights(obj->getMaterial().getColor(), obj, point);
-        if (obj->getMaterial().getReflexion() > Globals::Epsilon && depth < MAX_DEPTH)
-        {
-          Ray reflected(RayType::Reflected, point,
-                        Tools::Reflect(ray.getDirection(), obj->norm(point)));
-          tmp_color = inter(scene, reflected, depth + 1);
-          color = Color::interpolate(color, tmp_color, obj->getMaterial().getReflexion());
-        }
+        color = handleReflection(obj, ray, color, point, scene, depth);
         color = handleRefraction(obj, ray, color, point, scene, depth);
       }
       else if (scene.cubemap())
