@@ -8,7 +8,7 @@
 
 namespace RayOn
 {
-  static Config& config()
+  inline Config& config()
   {
     static Config config;
     return config;

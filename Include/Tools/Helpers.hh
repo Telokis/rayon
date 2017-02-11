@@ -25,6 +25,29 @@ namespace RayOn
       return (val < Globals::Epsilon) && (val > -Globals::Epsilon);
     }
 
+    inline constexpr Float_t Abs(Float_t val)
+    {
+      return val < 0 ? -val : val;
+    }
+
+    template <class T, class U, class V>
+    inline constexpr U Interp(T val, U a, V b)
+    {
+      return static_cast<U>((1 - val) * a + val * b);
+    }
+
+    inline constexpr Float_t Remap(Float_t value,
+                                   Float_t inMin, Float_t inMax,
+                                   Float_t outMin, Float_t outMax)
+    {
+      return (value - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
+    }
+
+    inline constexpr Float_t Remap(Float_t value, Float_t inMax, Float_t outMax)
+    {
+      return Remap(value, 0, inMax, 0, outMax);
+    }
+
     inline Float_t DotProduct(Vec_t a, Vec_t b)
     {
       return glm::dot(a, b);
@@ -43,6 +66,12 @@ namespace RayOn
     inline Vec_t Refract(Vec_t v, Vec_t n, Float_t eta)
     {
       return glm::refract(v, n, eta);
+    }
+
+    inline uint32 Floor(Float_t val)
+    {
+      using std::floor;
+      return static_cast<uint32>(floor(val));
     }
 
     inline Float_t Min(Float_t a, Float_t b)

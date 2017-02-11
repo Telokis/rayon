@@ -20,8 +20,10 @@ namespace RayOn
 
     void  resize(const uint32 width, const uint32 height);
 
-    std::unique_ptr<uint8[]> raw() const;
-    void  fromRaw(uint8* data, uint32 w, uint32 h);
+    std::unique_ptr<uint8[]> rawRGB() const;
+    std::unique_ptr<uint8[]> rawRGBA() const;
+    void  fromRawRGB(const uint8* data, uint32 w, uint32 h);
+    void  fromRawRGBA(const uint8* data, uint32 w, uint32 h);
 
     inline uint32 width() const
     {

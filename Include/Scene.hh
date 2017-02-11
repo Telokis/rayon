@@ -4,13 +4,13 @@
 #include "Entities/Objects/Plane.hh"
 #include "Entities/Objects/Sphere.hh"
 #include "Entities/Eye.hh"
+#include "CubeMap.hh"
 #include <vector>
 
 namespace RayOn
 {
   class   RTLight;
 } // namespace RayOn
-
 
 namespace RayOn
 {
@@ -130,6 +130,19 @@ namespace RayOn
 
   public:
     /**
+     * @brief             Will set the Scene's @ref CubeMap to @a cubemap.
+     * @param[in] cubemap The @ref CubeMap to store.
+     */
+    void        setCubeMap(CubeMap* cubemap);
+
+    /**
+     * @brief   Returns the @ref CubeMap held by the Scene.
+     * @return  The @ref CubeMap held by the Scene.
+     */
+    CubeMap*    cubemap() const;
+
+  public:
+    /**
      * @brief           Adds a @ref RTLight to the Scene.
      * @param[in] light The @ref RTLight to add.
      */
@@ -203,6 +216,7 @@ namespace RayOn
     ObjectsContainer    _objects;   /**< Collection of @ref RTObject * */
     LightsContainer     _lights;    /**< Collection of @ref RTLight * */
     Eye*                _eye;       /**< @ref Eye of the Scene */
+    CubeMap*            _cubemap;   /**< @ref CubeMap of the Scene */
     mutable std::vector<Color>  _colors;    /**< Buffer of the Scene, to store colors before averaging them */
   };
 } // namespace RayOn

@@ -5,13 +5,19 @@
 namespace RayOn
 {
   Scene::Scene()
+    : _eye(nullptr)
+    , _cubemap(nullptr)
   {
-    _eye = nullptr;
   }
 
   Scene::Scene(const Scene& other)
+    : _eye(nullptr)
+    , _cubemap(nullptr)
   {
-    _eye = new Eye(*other._eye);
+    if (other._eye)
+      _eye = new Eye(*other._eye);
+    if (other._cubemap)
+      _cubemap = new CubeMap(*other._cubemap);
     for (auto& object : other._objects)
       _objects.push_back(object->clone());
     for (auto& light : other._lights)
@@ -24,6 +30,8 @@ namespace RayOn
     {
       if (other._eye)
         _eye = new Eye(*other._eye);
+      if (other._cubemap)
+        _cubemap = new CubeMap(*other._cubemap);
       for (auto&& object : other._objects)
         _objects.push_back(object->clone());
       for (auto&& light : other._lights)
@@ -38,6 +46,7 @@ namespace RayOn
     _objects = std::move(other._objects);
     _lights = std::move(other._lights);
     other._eye = nullptr;
+    other._cubemap = nullptr;
   }
 
   Scene&    Scene::operator=(Scene&& other)
@@ -48,6 +57,7 @@ namespace RayOn
       _objects = std::move(other._objects);
       _lights = std::move(other._lights);
       other._eye = nullptr;
+      other._cubemap = nullptr;
     }
     return *this;
   }
@@ -65,6 +75,7 @@ namespace RayOn
       item = nullptr;
     }
     delete _eye;
+    delete _cubemap;
   }
 
   void    Scene::addObject(RTObject* object)
@@ -111,6 +122,16 @@ namespace RayOn
   Eye*        Scene::eye() const
   {
     return _eye;
+  }
+
+  void Scene::setCubeMap(CubeMap* cubemap)
+  {
+    _cubemap = cubemap;
+  }
+
+  CubeMap* Scene::cubemap() const
+  {
+    return _cubemap;
   }
 
   void        Scene::addLight(RTLight* light)

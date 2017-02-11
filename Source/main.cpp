@@ -5,15 +5,28 @@
 #include "Libraries/stb_image_write.hh"
 #undef _CRT_SECURE_NO_WARNINGS
 
+#include "ImageFileHandlers/ImageFileHandler_BMP.hh"
+#include "ImageFileHandlers/ImageFileHandler_PNG.hh"
+#include "ImageFileHandlers/ImageFileHandler_TGA.hh"
+
 #include "Ray.hh"
 #include "RayOn.hh"
+#include "Registry.hh"
 
 #include <iostream>
+
+void  setupDefaultRegistry()
+{
+  RayOn::registry().registerImageFileHandler("bmp", new RayOn::ImageFileHandler_BMP);
+  RayOn::registry().registerImageFileHandler("png", new RayOn::ImageFileHandler_PNG);
+  RayOn::registry().registerImageFileHandler("tga", new RayOn::ImageFileHandler_TGA);
+}
 
 int  main(int ac, char** av)
 {
   try
   {
+    setupDefaultRegistry();
     RayOn::RayOn  app(ac, av);
     return app.run();
   }

@@ -1,5 +1,6 @@
 #include "Color.hh"
 #include "Tools/Clamp.hh"
+#include "Tools/Helpers.hh"
 
 using RayOn::Tools::Clamp;
 
@@ -55,9 +56,9 @@ namespace RayOn
     Color   result = c1;
 
     val = Clamp(val, 0, 1);
-    result.red() = static_cast<uint8>(c1.red() * (1.0 - val) + c2.red() * val);
-    result.green() = static_cast<uint8>(c1.green() * (1.0 - val) + c2.green() * val);
-    result.blue() = static_cast<uint8>(c1.blue() * (1.0 - val) + c2.blue() * val);
+    result.red() = static_cast<uint8>(Tools::Interp(val, c1.red(), c2.red()));
+    result.green() = static_cast<uint8>(Tools::Interp(val, c1.green(), c2.green()));
+    result.blue() = static_cast<uint8>(Tools::Interp(val, c1.blue(), c2.blue()));
     return result;
   }
 

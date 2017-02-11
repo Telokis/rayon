@@ -62,3 +62,17 @@ else()
 endif()
 
 target_include_directories(RayOn PUBLIC "${RAYON_HEADER_DIR}")
+
+# Files
+add_custom_command(TARGET RayOn POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${CMAKE_CURRENT_LIST_DIR}/files"
+        $<TARGET_FILE_DIR:RayOn>/files)
+
+if (WIN32)
+# Copies again the files for Windows
+    add_custom_command(TARGET RayOn POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+            "${CMAKE_CURRENT_LIST_DIR}/files"
+            ${CMAKE_BINARY_DIR}/files)
+endif(WIN32)

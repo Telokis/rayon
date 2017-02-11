@@ -4,7 +4,7 @@ namespace RayOn
 {
   namespace
   {
-    static constexpr const uint8 MAX_DEPTH = 10;
+    static constexpr const uint8 MAX_DEPTH = 5;
     Color inter(const Scene& scene,
                 const Ray& ray,
                 uint8 depth = 0);
@@ -31,9 +31,11 @@ namespace RayOn
 
       if (obj->getMaterial().getTransparency() > Globals::Epsilon && depth < MAX_DEPTH)
       {
-        Ray refracted(RayType::Transparency, point,
-                      Tools::Refract(ray.getDirection(), obj->norm(point),
-                                     obj->getMaterial().getRefraction()));
+        Ray refracted(RayType::Transparency, point, ray.getDirection());
+        Float_t eta = obj->getMaterial().getRefraction();
+
+        if (eta != 1 && eta > Globals::Epsilon)
+          refracted.setDirection(Tools::Refract(ray.getDirection(), obj->norm(point), eta));
         tmp_color = inter(scene, refracted, depth + 1);
         color = Color::interpolate(color, tmp_color, obj->getMaterial().getTransparency());
       }
@@ -48,6 +50,7 @@ namespace RayOn
       Vec_t       point;
       Float_t     k;
       Color       color(0);
+      Color tmp_color;
 
       obj = scene.getNearest(k, ray);
       if (obj)
@@ -56,8 +59,18 @@ namespace RayOn
         color = obj->getMaterial().getColor();
         if (!obj->getMaterial().testFlag(Flags::NoShading))
           color = scene.processLights(obj->getMaterial().getColor(), obj, point);
-        color = handleReflection(obj, ray, color, point, scene, depth);
+        if (obj->getMaterial().getReflexion() > Globals::Epsilon && depth < MAX_DEPTH)
+        {
+          Ray reflected(RayType::Reflected, point,
+                        Tools::Reflect(ray.getDirection(), obj->norm(point)));
+          tmp_color = inter(scene, reflected, depth + 1);
+          color = Color::interpolate(color, tmp_color, obj->getMaterial().getReflexion());
+        }
         color = handleRefraction(obj, ray, color, point, scene, depth);
+      }
+      else if (scene.cubemap())
+      {
+        return scene.cubemap()->interceptRay(ray);
       }
       return color;
     }

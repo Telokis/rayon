@@ -2,8 +2,7 @@
 #include "Version.hh"
 #include "Worker.hh"
 #include "RawImage.hh"
-#include "ImageFileHandlers/ImageFileHandler_BMP.hh"
-#include "ImageFileHandlers/ImageFileHandler_PNG.hh"
+#include "ImageFileHandlers/ImageFileHandler.hh"
 #include "Entities/Objects/Sphere.hh"
 #include "Entities/Objects/Plane.hh"
 #include "Entities/Objects/Rectangle.hh"
@@ -21,19 +20,31 @@ namespace RayOn
   {
     config().init(ac, av);
 
+    CubeMap* cmap = new CubeMap;
+    cmap->loadSide(Side::Left, "./files/textures/cubemap/alpleft.tga");
+    cmap->loadSide(Side::Right, "./files/textures/cubemap/alpright.tga");
+    cmap->loadSide(Side::Up, "./files/textures/cubemap/alpup.tga");
+    cmap->loadSide(Side::Down, "./files/textures/cubemap/alpdown.tga");
+    cmap->loadSide(Side::Front, "./files/textures/cubemap/alpforward.tga");
+    cmap->loadSide(Side::Back, "./files/textures/cubemap/alpback.tga");
+    //_scene.setCubeMap(cmap);
+
     Eye* eye = new Eye(Vec_t(0, 1, -5), Vec_t(0, 0, 0));
     _scene << eye;
     Sphere* sphere = new Sphere(Vec_t(0, 0, 0), Vec_t(0, 0, 0), 1);
     sphere->getMaterial().setColor(0x8B0A50);
-    sphere->getMaterial().setFlag(Flags::NoShading);
+    //sphere->getMaterial().setFlag(Flags::NoShading);
+    sphere->getMaterial().setReflexion(0.9);
     _scene << sphere;
     sphere = new Sphere(Vec_t(-2.5, 0, 0), Vec_t(0, 0, 0), 1);
     sphere->getMaterial().setColor(0x8B0A50);
     sphere->getMaterial().setFlag(Flags::NoReflection);
+    sphere->getMaterial().setReflexion(0.9);
     _scene << sphere;
     sphere = new Sphere(Vec_t(2.5, 0, 0), Vec_t(0, 0, 0), 1);
     sphere->getMaterial().setColor(0x8B0A50);
     sphere->getMaterial().setFlag(Flags::NoShadow);
+    sphere->getMaterial().setReflexion(0.9);
     _scene << sphere;
     Plane* plane = new Plane(0, -0.8, 0);
     plane->getMaterial().setColor(0x67E6EC);
@@ -64,7 +75,8 @@ namespace RayOn
     auto height = config().getHeight();
     RawImage  img(width, height);
 
-    uint8 jn = 4;
+    uint8 jn = config().getThreadCount();
+    jn = 8;
 
     std::vector<std::thread> threads;
     for (uint8 i = 0; i < jn; ++i)
@@ -78,8 +90,8 @@ namespace RayOn
     for (std::thread& thread : threads)
       thread.join();
 
-    IImageFileHandler* png = new ImageFileHandler_PNG;
-    std::cout << "Success : " << png->writeToFile(config().getOutputPath().c_str(), img) << '\n';
+    bool success = ImageFileHandler::writeToFileBasedOnExtension(config().getOutputPath(), img);
+    std::cout << std::boolalpha << "Success : " << success << '\n';
     return 0;
   }
 

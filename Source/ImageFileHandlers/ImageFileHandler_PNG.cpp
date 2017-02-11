@@ -13,14 +13,14 @@ namespace RayOn
     unsigned char *data = stbi_load(path, &w, &h, &n, 4);
     if (!data)
       return false;
-    readInto.fromRaw(data, w, h);
+    readInto.fromRawRGBA(data, w, h);
     stbi_image_free(data);
     return true;
   }
 
   bool ImageFileHandler_PNG::writeToFile(const char* path, const RawImage& readFrom) const
   {
-    auto data = readFrom.raw();
+    auto data = readFrom.rawRGBA();
     return stbi_write_png(path, readFrom.width(), readFrom.height(),
                           4, data.get(), readFrom.width() * 4) != 0;
   }

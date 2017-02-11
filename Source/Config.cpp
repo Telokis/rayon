@@ -20,11 +20,16 @@ namespace RayOn
       ("version,v", "Prints version information")
       ("width,w", po::value<uint32>(&_width)->default_value(512), "Width of the output image")
       ("height,h", po::value<uint32>(&_height)->default_value(512), "Height of the output image")
-      ("output,o", po::value<std::string>(&_outputPath)->default_value("out.png"), "Path to the image output")
+      ("output,o", po::value<std::string>(&_outputPath)->default_value("out.png"),
+       "Path to the image output")
+      ("thread-count,j", po::value<uint32>(&_threadsCount)->default_value(4),
+       "Number of threads to use to render")
       ;
 
     po::store(po::parse_command_line(ac, av, _description), _variables);
     po::notify(_variables);
+    if (_threadsCount < 1)
+      _threadsCount = 1;
   }
 
   bool  Config::handleStoppingArgs() const
@@ -45,4 +50,5 @@ namespace RayOn
   RAYON_GENERATE_PROPERTY_DEFINITION(Config, std::string, _outputPath, OutputPath)
   RAYON_GENERATE_PROPERTY_DEFINITION(Config, uint32, _width, Width)
   RAYON_GENERATE_PROPERTY_DEFINITION(Config, uint32, _height, Height)
+  RAYON_GENERATE_PROPERTY_DEFINITION(Config, uint32, _threadsCount, ThreadCount)
 } // namespace RayOn
