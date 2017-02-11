@@ -28,8 +28,7 @@ namespace RayOn
     virtual RTLight     *clone() const = 0;
     virtual Color       apply(const Color& color,
                               const Scene& scene,
-                              RTObject* obj,
-                              const Vec_t& point) = 0;
+                              const IntersectionData& data) const = 0;
     virtual const char* name() const = 0;
 
     RAYON_GENERATE_PROPERTY_DECLARATION(RTLight, Color, _color, Color)

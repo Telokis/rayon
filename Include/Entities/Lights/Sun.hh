@@ -67,7 +67,8 @@ namespace RayOn
      *              False if no opaque object were found.
      */
     bool    doesShadow(const Scene& scene,
-                       const Vec_t& point) const;
+                       const Vec_t& point,
+                       RTObject* obj) const;
 
     /**
      * @brief           This method transforms the given @a color
@@ -87,8 +88,7 @@ namespace RayOn
      */
     Color   applyImpl(const Color& color,
                       const Scene& scene,
-                      RTObject* obj,
-                      const Vec_t& point) const;
+                      const IntersectionData& data) const;
 
     RAYON_GENERATE_PROPERTY_DECLARATION(Sun, Float_t, _power, Power)
   };

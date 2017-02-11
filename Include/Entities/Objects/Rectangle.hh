@@ -25,9 +25,9 @@ namespace RayOn
     static const constexpr auto ObjectName = "Rectangle";
 
   private:
-    Float_t       interImpl(const Ray& ray) const;
-    const Vec_t&  normImpl(const Vec_t& point) const;
-    void          preprocessImpl();
+    bool  interImpl(const Ray& ray, IntersectionData& data) const;
+    void  fillDataImpl(IntersectionData& data) const;
+    void  preprocessImpl();
 
   private:
     RAYON_GENERATE_PROPERTY_DECLARATION(Rectangle, Float_t, _width, Width)

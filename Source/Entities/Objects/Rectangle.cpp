@@ -26,12 +26,11 @@ namespace RayOn
   {
   }
 
-  Float_t      Rectangle::interImpl(const Ray& ray) const
+  bool      Rectangle::interImpl(const Ray& ray, IntersectionData& data) const
   {
     if (!_isOk)
-      return Globals::Invalid;
+      return false;
 
-    Float_t  k;
     Vec_t  tmp_pos;
     Vec_t  tmp_dir;
 
@@ -40,25 +39,25 @@ namespace RayOn
     tmp_dir = indirectRotation(ray.getDirection());
 
     if (Tools::IsZero(tmp_pos.y) || Tools::IsZero(tmp_dir.y))
-      return Globals::Invalid;
-    k = -1 * tmp_pos.y / tmp_dir.y;
-    if (k < Globals::Epsilon)
-      return Globals::Invalid;
-    Vec_t p = tmp_pos + tmp_dir * k;
-    if (p.x < -_halfW)
-      return Globals::Invalid;
-    if (p.x > _halfW)
-      return Globals::Invalid;
-    if (p.z < -_halfH)
-      return Globals::Invalid;
-    if (p.z > _halfH)
-      return Globals::Invalid;
-    return k;
+      return false;
+    data.k = -1 * tmp_pos.y / tmp_dir.y;
+    if (data.k < Globals::Epsilon)
+      return false;
+    data.localPoint = tmp_pos + tmp_dir * data.k;
+    if (data.localPoint.x < -_halfW)
+      return false;
+    if (data.localPoint.x > _halfW)
+      return false;
+    if (data.localPoint.z < -_halfH)
+      return false;
+    if (data.localPoint.z > _halfH)
+      return false;
+    return true;
   }
 
-  const Vec_t&  Rectangle::normImpl(const Vec_t&) const
+  void    Rectangle::fillDataImpl(IntersectionData& data) const
   {
-    return _norm;
+    data.normal = _norm;
   }
 
   void        Rectangle::preprocessImpl()

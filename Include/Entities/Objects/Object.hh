@@ -39,16 +39,16 @@ namespace RayOn
       return new Derived(static_cast<Derived const&>(*this));
     }
 
-    Float_t     inter(const Ray &ray) final
+    bool  inter(const Ray &ray, IntersectionData& data) const final
     {
       if (getMaterial().testFlag(ray.getType()))
         return Globals::Invalid;
-      return static_cast<Derived*>(this)->interImpl(ray);
+      return static_cast<Derived const*>(this)->interImpl(ray, data);
     }
 
-    Vec_t       norm(const Vec_t &point) final
+    void        fillData(IntersectionData& data) const final
     {
-      return static_cast<Derived*>(this)->normImpl(point);
+      return static_cast<Derived const*>(this)->fillDataImpl(data);
     }
 
     const char* name() const final

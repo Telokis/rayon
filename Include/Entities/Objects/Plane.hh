@@ -22,9 +22,9 @@ namespace RayOn
     static const constexpr auto ObjectName = "Plane";
 
   private:
-    Float_t       interImpl(const Ray& ray) const;
-    const Vec_t&  normImpl(const Vec_t& point) const;
-    void          preprocessImpl();
+    bool  interImpl(const Ray& ray, IntersectionData& data) const;
+    void  fillDataImpl(IntersectionData& data) const;
+    void  preprocessImpl();
   };
 
 } // namespace RayOn

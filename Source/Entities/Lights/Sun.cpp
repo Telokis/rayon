@@ -1,6 +1,6 @@
 #include "Entities/Lights/Sun.hh"
 #include "Scene.hh"
-
+#include <iostream>
 namespace RayOn
 {
   Sun::Sun()
@@ -25,19 +25,19 @@ namespace RayOn
   }
 
   bool    Sun::doesShadow(const Scene& scene,
-                          const Vec_t& point) const
+                          const Vec_t& point,
+                          RTObject* obj) const
   {
-    Float_t k;
     Vec_t   light_vec(_pos - point);
     Vec_t   tmp_pos(point + light_vec * Globals::Epsilon);
+    IntersectionData  data;
 
-    k = Globals::Invalid;
+    data.k = Globals::Invalid;
     Ray shadowRay(RayType::Shadow, tmp_pos, light_vec);
 
     for (const auto& object : scene.objects())
     {
-      k = object->inter(shadowRay);
-      if (k > Globals::Epsilon && k < 1.0)
+      if (obj != object && object->inter(shadowRay, data) && data.k < 1.0)
         return true;
     }
     return false;
@@ -45,19 +45,18 @@ namespace RayOn
 
   Color       Sun::applyImpl(const Color& color,
                              const Scene& scene,
-                             RTObject* obj,
-                             const Vec_t& point) const
+                             const IntersectionData& data) const
   {
     Float_t cos_a;
     Vec_t   light_vec;
     Color   res;
 
-    if (doesShadow(scene, point))
+    if (doesShadow(scene, data.point, data.obj))
       return 0;
     cos_a = 0;
-    light_vec = getPos() - point;
+    light_vec = getPos() - data.point;
     light_vec = Tools::Normalize(light_vec);
-    cos_a = Tools::DotProduct(light_vec, obj->norm(point));
+    cos_a = Tools::DotProduct(light_vec, data.normal);
     if (cos_a < Globals::Epsilon)
       return 0xFF000000;
     res = color * cos_a;

@@ -5,6 +5,7 @@
 #include "Color.hh"
 #include "Ray.hh"
 #include "Material.hh"
+#include "IntersectionData.hh"
 
 namespace RayOn
 {
@@ -23,10 +24,10 @@ namespace RayOn
     virtual ~RTObject();
 
   public:
-    virtual Float_t     inter(const Ray& ray) = 0;
+    virtual bool        inter(const Ray& ray, IntersectionData& data) const = 0;
     virtual void        preprocess() = 0;
     virtual RTObject*   clone() const = 0;
-    virtual Vec_t       norm(const Vec_t& point) = 0;
+    virtual void        fillData(IntersectionData& data) const = 0;
     virtual const char* name() const = 0;
 
   protected:

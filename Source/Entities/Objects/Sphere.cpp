@@ -25,7 +25,7 @@ namespace RayOn
   {
   }
 
-  Float_t      Sphere::interImpl(const Ray& ray) const
+  bool      Sphere::interImpl(const Ray& ray, IntersectionData& data) const
   {
     using Tools::Pow2;
 
@@ -42,14 +42,16 @@ namespace RayOn
                               2.0 * Tools::DotProduct(tmp_pos, tmp_dir),
                               Pow2(tmp_pos.x) + Pow2(tmp_pos.y) + Pow2(tmp_pos.z) - Pow2(_radius)))
     {
-      return Tools::Smallest(results[0], results[1]);
+      data.k = Tools::Smallest(results[0], results[1]);
+      data.localPoint = tmp_pos + data.k * tmp_dir;
+      return data.k != Globals::Invalid;
     }
-    return Globals::Invalid;
+    return false;
   }
 
-  Vec_t       Sphere::normImpl(const Vec_t& point) const
+  void    Sphere::fillDataImpl(IntersectionData& data) const
   {
-    return Tools::Normalize(point - _pos);
+    data.normal = Tools::Normalize(data.point - _pos);
   }
 
   RAYON_GENERATE_PROPERTY_DEFINITION(Sphere, Float_t, _radius, Radius)

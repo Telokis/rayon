@@ -20,8 +20,8 @@ namespace RayOn
     static constexpr const auto ObjectName = "Sphere";
 
   private:
-    Float_t  interImpl(const Ray& ray) const;
-    Vec_t  normImpl(const Vec_t& point) const;
+    bool  interImpl(const Ray& ray, IntersectionData& data) const;
+    void  fillDataImpl(IntersectionData& data) const;
 
     RAYON_GENERATE_PROPERTY_DECLARATION(Sphere, Float_t, _radius, Radius)
   };

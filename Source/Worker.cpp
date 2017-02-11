@@ -1,4 +1,5 @@
 #include "Worker.hh"
+#include "IntersectionData.hh"
 
 namespace RayOn
 {
@@ -9,37 +10,37 @@ namespace RayOn
                 const Ray& ray,
                 uint8 depth = 0);
 
-    Color handleReflection(RTObject* obj, const Ray& ray, Color color,
-                           const Vec_t& point, const Scene& scene, uint8 depth)
+    Color handleReflection(IntersectionData& data, const Ray& ray, Color color,
+                           const Scene& scene, uint8 depth)
     {
       Color tmp_color;
 
-      if (obj->getMaterial().getReflexion() > Globals::Epsilon && depth < MAX_DEPTH)
+      if (data.material->getReflexion() > Globals::Epsilon && depth < MAX_DEPTH)
       {
-        Ray reflected(RayType::Reflected, point,
-                      Tools::Reflect(ray.getDirection(), obj->norm(point)));
-        reflected.setOrigin(point + Globals::Epsilon * reflected.getDirection());
+        Ray reflected(RayType::Reflected, data.point,
+                      Tools::Reflect(ray.getDirection(), data.normal));
+        reflected.setOrigin(data.point + Globals::Epsilon * reflected.getDirection());
         tmp_color = inter(scene, reflected, depth + 1);
-        color = Color::interpolate(color, tmp_color, obj->getMaterial().getReflexion());
+        color = Color::interpolate(color, tmp_color, data.material->getReflexion());
       }
       return color;
     }
 
-    Color handleRefraction(RTObject* obj, const Ray& ray, Color color,
-                           const Vec_t& point, const Scene& scene, uint8 depth)
+    Color handleRefraction(IntersectionData& data, const Ray& ray, Color color,
+                           const Scene& scene, uint8 depth)
     {
       Color tmp_color;
 
-      if (obj->getMaterial().getTransparency() > Globals::Epsilon && depth < MAX_DEPTH)
+      if (data.material->getTransparency() > Globals::Epsilon && depth < MAX_DEPTH)
       {
-        Ray refracted(RayType::Transparency, point, ray.getDirection());
-        Float_t eta = obj->getMaterial().getRefraction();
+        Ray refracted(RayType::Transparency, data.point, ray.getDirection());
+        Float_t eta = data.material->getRefraction();
 
         if (eta != 1 && eta > Globals::Epsilon)
-          refracted.setDirection(Tools::Refract(ray.getDirection(), obj->norm(point), eta));
-        refracted.setOrigin(point + Globals::Epsilon * refracted.getDirection());
+          refracted.setDirection(Tools::Refract(ray.getDirection(), data.normal, eta));
+        refracted.setOrigin(data.point + Globals::Epsilon * refracted.getDirection());
         tmp_color = inter(scene, refracted, depth + 1);
-        color = Color::interpolate(color, tmp_color, obj->getMaterial().getTransparency());
+        color = Color::interpolate(color, tmp_color, data.material->getTransparency());
       }
       return color;
     }
@@ -48,20 +49,20 @@ namespace RayOn
                 const Ray& ray,
                 uint8 depth)
     {
-      RTObject*   obj;
-      Vec_t       point;
-      Float_t     k;
-      Color       color(0);
+      Color             color(0);
+      IntersectionData  data;
 
-      obj = scene.getNearest(k, ray);
-      if (obj)
+      data.obj = scene.getNearest(ray, data);
+      if (data.obj)
       {
-        point = ray.evaluate(k);
-        color = obj->getMaterial().getColor();
-        if (!obj->getMaterial().testFlag(Flags::NoShading))
-          color = scene.processLights(obj->getMaterial().getColor(), obj, point);
-        color = handleReflection(obj, ray, color, point, scene, depth);
-        color = handleRefraction(obj, ray, color, point, scene, depth);
+        data.material = &data.obj->getMaterial();
+        data.point = ray.evaluate(data.k);
+        data.obj->fillData(data);
+        color = data.material->getColor();
+        if (!data.material->testFlag(Flags::NoShading))
+          color = scene.processLights(data);
+        color = handleReflection(data, ray, color, scene, depth);
+        color = handleRefraction(data, ray, color, scene, depth);
       }
       else if (scene.cubemap())
       {

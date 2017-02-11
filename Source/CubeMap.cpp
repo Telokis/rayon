@@ -42,12 +42,12 @@ namespace RayOn
     {
       u = Tools::Abs(u);
       v = 1 - Tools::Abs(v);
-      int umin = int(size * u);
-      int vmin = int(size * v);
-      int umax = int(size * u) + 1;
-      int vmax = int(size * v) + 1;
-      float ucoef = Tools::Abs(size * u - umin);
-      float vcoef = Tools::Abs(size * v - vmin);
+      uint32 umin = Tools::Floor(size * u);
+      uint32 vmin = Tools::Floor(size * v);
+      uint32 umax = umin + 1;
+      uint32 vmax = vmin + 1;
+      Float_t ucoef = Tools::Abs(size * u - umin);
+      Float_t vcoef = Tools::Abs(size * v - vmin);
 
       umin = Tools::Clamp(umin, 0u, size - 1);
       umax = Tools::Clamp(umax, 0u, size - 1);

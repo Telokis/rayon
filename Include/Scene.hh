@@ -10,6 +10,7 @@
 namespace RayOn
 {
   class   RTLight;
+  struct  IntersectionData;
 } // namespace RayOn
 
 namespace RayOn
@@ -103,17 +104,14 @@ namespace RayOn
      * @brief       Will return the nearest @ref RTObject
      *              intersected for this @a origin and
      *              @a direction.
-     * @param[out]  k           The distance of the hit
-     *                          point. set to @ref RT_INVALID
-     *                          if no intersection is found.
-     * @param[in]   origin      The origin of the casted ray.
-     * @param[in]   direction   The direction of the casted ray.
+     * @param[in]   ray   The ray to shoot.
+     * @param[out]  data  Data to be filled by the object.
      * @return      The nearest @ref RTObject found.
      *              nullptr if no intersection was found.
      *              nullptr if no @ref RTObject is in the Scene.
      */
-    RTObject*   getNearest(Float_t& k,
-                           const Ray& ray) const;
+    RTObject*   getNearest(const Ray& ray,
+                           IntersectionData& data) const;
 
   public:
     /**
@@ -171,14 +169,10 @@ namespace RayOn
      *          If no object hides the light, computes light's
      *          color influence. Otherwise, uses black for the
      *          current light.
-     * @param[in] color The actual color expected on @a point.
-     * @param[in] obj   The @ref RTObject intersected.
-     * @param[in] point The intersection on @a obj.
+     * @param[in] data The data.
      * @return  The computed color to use.
      */
-    Color       processLights(const Color& color,
-                              RTObject* obj,
-                              const Vec_t& point) const;
+    Color       processLights(const IntersectionData& data) const;
 
   public:
     /**

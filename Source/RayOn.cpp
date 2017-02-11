@@ -6,6 +6,7 @@
 #include "Entities/Objects/Sphere.hh"
 #include "Entities/Objects/Plane.hh"
 #include "Entities/Objects/Rectangle.hh"
+#include "Entities/Objects/Box.hh"
 #include "Entities/Lights/Sun.hh"
 #include "Entities/Eye.hh"
 
@@ -35,16 +36,18 @@ namespace RayOn
     cmap->loadSide(Side::Back, "./files/textures/cubemap/stormydays_bk.tga");
     _scene.setCubeMap(cmap);
 
-    Eye* eye = new Eye(Vec_t(0, 1, -5), Vec_t(0, 0, 0));
+    Eye* eye = new Eye(Vec_t(0, 1, -3), Vec_t(0, 0, 0));
     _scene << eye;
+    Box* box = new Box(Vec_t(0, 2.5, 0), Vec_t(0, 45, 0), 1, 1, 1);
+    box->getMaterial().setColor(0x00ff00);
+    _scene << box;
     Sphere* sphere = new Sphere(Vec_t(0, 0, 0), Vec_t(0, 0, 0), 1);
     sphere->getMaterial().setColor(0x8B0A50);
-    sphere->getMaterial().setFlag(Flags::NoShading);
-    sphere->getMaterial().setReflexion(0.3);
     _scene << sphere;
     sphere = new Sphere(Vec_t(-2.5, 0, 0), Vec_t(0, 0, 0), 1);
     sphere->getMaterial().setColor(0x8B0A50);
     sphere->getMaterial().setFlag(Flags::NoReflection);
+    sphere->getMaterial().setReflexion(0.3);
     _scene << sphere;
     sphere = new Sphere(Vec_t(2.5, 0, 0), Vec_t(0, 0, 0), 1);
     sphere->getMaterial().setColor(0x8B0A50);
@@ -52,7 +55,7 @@ namespace RayOn
     _scene << sphere;
     Plane* plane = new Plane(0, -0.8, 0);
     plane->getMaterial().setColor(0x67E6EC);
-    plane->getMaterial().setReflexion(0.6);
+    plane->getMaterial().setReflexion(0.9);
     _scene << plane;
     Sun* sun = new Sun(10, 10, -20);
     sun->setColor(Color(255, 255, 255));
@@ -78,7 +81,7 @@ namespace RayOn
     RawImage  img(width, height);
 
     uint8 jn = config().getThreadCount();
-
+    jn = 1;
     std::vector<std::thread> threads;
     for (uint8 i = 0; i < jn; ++i)
     {

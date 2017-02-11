@@ -1,4 +1,5 @@
 #include "Scene.hh"
+#include "IntersectionData.hh"
 #include "Entities/Lights/RTLight.hh"
 #include <iostream>
 
@@ -95,21 +96,24 @@ namespace RayOn
       return _objects;
   }
 
-  RTObject*   Scene::getNearest(Float_t& k,
-                                const Ray& ray) const
+    RTObject*   Scene::getNearest(const Ray& ray,
+                                  IntersectionData& data) const
   {
-    Float_t     k_tmp;
-    RTObject*   result = nullptr;
+    RTObject* result = nullptr;
+    Float_t   k_tmp;
 
-    k = Globals::Invalid;
-    for (auto& item : _objects)
+    data.k = Globals::Invalid;
+    k_tmp = Globals::Invalid;
+    for (RTObject* item : _objects)
     {
-      k_tmp = item->inter(ray);
-      if (k_tmp != Globals::Invalid && k_tmp < k)
+      bool res = item->inter(ray, data);
+      if (res && data.k < k_tmp)
       {
-        k = k_tmp;
+        k_tmp = data.k;
         result = item;
       }
+      else
+        data.k = k_tmp;
     }
     return result;
   }
@@ -149,12 +153,13 @@ namespace RayOn
       return _lights;
   }
 
-  Color   Scene::processLights(const Color& color,
-                               RTObject* obj,
-                               const Vec_t& point) const
+    Color   Scene::processLights(const IntersectionData& data) const
   {
+    const Color color = data.material->getColor();
     for (size_t i = 0; i < _lights.size(); ++i)
-      _colors[i] = _lights[i]->apply(color, *this, obj, point);
+    {
+      _colors[i] = _lights[i]->apply(color, *this, data);
+    }
     return _lights.empty() ? Color(0xFF000000) : Color::average(_colors);
   }
 

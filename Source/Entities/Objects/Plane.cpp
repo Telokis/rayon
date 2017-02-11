@@ -21,26 +21,26 @@ namespace RayOn
   {
   }
 
-  Float_t      Plane::interImpl(const Ray& ray) const
+  bool        Plane::interImpl(const Ray& ray, IntersectionData& data) const
   {
-    Float_t  k;
-    Vec_t  tmp_pos;
-    Vec_t  tmp_dir;
+    Vec_t tmp_pos;
+    Vec_t tmp_dir;
 
     tmp_pos = ray.getOrigin() - _pos;
     tmp_pos = indirectRotation(tmp_pos);
     tmp_dir = indirectRotation(ray.getDirection());
 
     if (Tools::IsZero(tmp_pos.y) || Tools::IsZero(tmp_dir.y))
-      return Globals::Invalid;
-    k = -1 * tmp_pos.y / tmp_dir.y;
-    k = (k > Globals::Epsilon) ? k : Globals::Invalid;
-    return k;
+      return false;
+    data.k = -1 * tmp_pos.y / tmp_dir.y;
+    if (data.k < Globals::Epsilon)
+      return false;
+    return true;
   }
 
-  const Vec_t&  Plane::normImpl(const Vec_t&) const
+  void    Plane::fillDataImpl(IntersectionData& data) const
   {
-    return _norm;
+    data.normal = _norm;
   }
 
   void        Plane::preprocessImpl()

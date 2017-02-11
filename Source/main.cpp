@@ -26,6 +26,7 @@ int  main(int ac, char** av)
 {
   try
   {
+    std::cout << std::hex;
     setupDefaultRegistry();
     RayOn::RayOn  app(ac, av);
     return app.run();

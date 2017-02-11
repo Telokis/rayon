@@ -25,6 +25,12 @@ namespace RayOn
       return (val < Globals::Epsilon) && (val > -Globals::Epsilon);
     }
 
+    inline constexpr bool IsEqual(Float_t val1, Float_t val2)
+    {
+      return (val1 - Globals::Epsilon) < (val2 + Globals::Epsilon)
+        && (val1 + Globals::Epsilon) > (val2 - Globals::Epsilon);
+    }
+
     inline constexpr Float_t Abs(Float_t val)
     {
       return val < 0 ? -val : val;
