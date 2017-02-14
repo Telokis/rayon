@@ -1,6 +1,4 @@
 #include "Color.hh"
-#include "Tools/Clamp.hh"
-#include "Tools/Helpers.hh"
 
 using RayOn::Tools::Clamp;
 
@@ -33,9 +31,9 @@ namespace RayOn
   Color   &Color::operator*=(double val)
   {
     val = Clamp(val, 0, 1);
-    blue() = static_cast<uint8>(blue() * val);
-    green() = static_cast<uint8>(green() * val);
-    red() = static_cast<uint8>(red() * val);
+    _charValues[1] = Tools::Floor(_charValues[1] * val + 0.5);
+    _charValues[2] = Tools::Floor(_charValues[2] * val + 0.5);
+    _charValues[3] = Tools::Floor(_charValues[3] * val + 0.5);
     return *this;
   }
 
@@ -51,15 +49,26 @@ namespace RayOn
     return result;
   }
 
+  Color& Color::operator+=(const Color& c)
+  {
+    red() = red() + c.red();
+    green() = green() + c.green();
+    blue() = blue() + c.blue();
+    return *this;
+  }
+
+  Color Color::operator+(const Color& c) const
+  {
+    Color   result = *this;
+
+    result += c;
+    return result;
+  }
+
   Color       Color::interpolate(const Color& c1, const Color& c2, double val)
   {
-    Color   result = c1;
-
     val = Clamp(val, 0, 1);
-    result.red() = static_cast<uint8>(Tools::Interp(val, c1.red(), c2.red()));
-    result.green() = static_cast<uint8>(Tools::Interp(val, c1.green(), c2.green()));
-    result.blue() = static_cast<uint8>(Tools::Interp(val, c1.blue(), c2.blue()));
-    return result;
+    return Tools::Interp(val, c1, c2);
   }
 
   Color       Color::average(const Color* colors, size_t size)
@@ -86,6 +95,11 @@ namespace RayOn
   Color       Color::average(const std::vector<Color>& colors)
   {
     return average(colors.data(), colors.size());
+  }
+
+  std::ostream& operator<<(std::ostream& stream, const Color& color)
+  {
+    return stream << color.intValue();
   }
 
 } // namespace RayOn

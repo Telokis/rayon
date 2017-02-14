@@ -3,8 +3,9 @@
 #ifndef RAYON_TOOLS_COLOR_H
 #define RAYON_TOOLS_COLOR_H
 
-#include "Tools/Types.hh"
+#include "Tools/Helpers.hh"
 #include <vector>
+#include <iostream>
 
 namespace RayOn
 {
@@ -24,34 +25,37 @@ namespace RayOn
     Color   &operator*=(double val);
     Color   operator*(double val) const;
 
+    Color&  operator+=(const Color& c);
+    Color   operator+(const Color& c) const;
+
     inline uint32 intValue() const
     {
-      uint32 res = _charValues[0];
+      uint32 res = alpha();
       res <<= 8;
-      res |= _charValues[1];
+      res |= red();
       res <<= 8;
-      res |= _charValues[2];
+      res |= green();
       res <<= 8;
-      res |= _charValues[3];
+      res |= blue();
       return res;
     }
 
-    inline uint8& alpha()
+    inline uint32& alpha()
     {
       return _charValues[0];
     }
 
-    inline uint8& red()
+    inline uint32& red()
     {
       return _charValues[1];
     }
 
-    inline uint8& green()
+    inline uint32& green()
     {
       return _charValues[2];
     }
 
-    inline uint8& blue()
+    inline uint32& blue()
     {
       return _charValues[3];
     }
@@ -59,27 +63,29 @@ namespace RayOn
 
     inline uint8 alpha() const
     {
-      return _charValues[0];
+      return static_cast<uint8>(Tools::Clamp(_charValues[0], 0u, 255u));
     }
 
     inline uint8 red() const
     {
-      return _charValues[1];
+      return static_cast<uint8>(Tools::Clamp(_charValues[1], 0u, 255u));
     }
 
     inline uint8 green() const
     {
-      return _charValues[2];
+      return static_cast<uint8>(Tools::Clamp(_charValues[2], 0u, 255u));
     }
 
     inline uint8 blue() const
     {
-      return _charValues[3];
+      return static_cast<uint8>(Tools::Clamp(_charValues[3], 0u, 255u));
     }
 
   private:
-    uint8   _charValues[4];
+    uint32  _charValues[4];
   };
+
+  std::ostream& operator<<(std::ostream& stream, const Color& color);
 
 } // namespace RayOn
 

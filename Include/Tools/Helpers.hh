@@ -5,7 +5,6 @@
 
 #include "Tools/Globals.hh"
 #include "Tools/Pow.hh"
-#include "Tools/Clamp.hh"
 #include "Tools/Types.hh"
 #include <algorithm>
 
@@ -36,10 +35,16 @@ namespace RayOn
       return val < 0 ? -val : val;
     }
 
-    template <class T, class U, class V>
-    inline constexpr U Interp(T val, U a, V b)
+    template <class T, class U>
+    inline constexpr U Interp(T val, U a, U b)
     {
-      return static_cast<U>((1 - val) * a + val * b);
+      return static_cast<U>(a * (1 - val) + b * val);
+    }
+
+    template <class T, class U>
+    constexpr const T Clamp(const T x, const U min, const U max)
+    {
+      return x < min ? min : x > max ? max : x;
     }
 
     inline constexpr Float_t Remap(Float_t value,

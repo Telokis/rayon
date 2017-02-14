@@ -8,6 +8,8 @@ namespace RayOn
     , _transparency(0)
     , _refraction(1)
     , _flags(0)
+    , _glossiness(0)
+    , _ambient(-1)
   {
   }
 
@@ -46,4 +48,6 @@ namespace RayOn
   RAYON_GENERATE_PROPERTY_DEFINITION(Material, Float_t, _reflexion, Reflexion)
   RAYON_GENERATE_PROPERTY_DEFINITION(Material, Float_t, _transparency, Transparency)
   RAYON_GENERATE_PROPERTY_DEFINITION(Material, Float_t, _refraction, Refraction)
+  RAYON_GENERATE_PROPERTY_DEFINITION(Material, Float_t, _glossiness, Glossiness)
+  RAYON_GENERATE_PROPERTY_DEFINITION(Material, Float_t, _ambient, Ambient)
 } // namespace RayOn

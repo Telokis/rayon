@@ -8,12 +8,14 @@ namespace RayOn
   Scene::Scene()
     : _eye(nullptr)
     , _cubemap(nullptr)
+    , _ambient(0.2)
   {
   }
 
   Scene::Scene(const Scene& other)
     : _eye(nullptr)
     , _cubemap(nullptr)
+    , _ambient(other._ambient)
   {
     if (other._eye)
       _eye = new Eye(*other._eye);
@@ -29,6 +31,7 @@ namespace RayOn
   {
     if (this != &other)
     {
+      _ambient = other._ambient;
       if (other._eye)
         _eye = new Eye(*other._eye);
       if (other._cubemap)
@@ -44,6 +47,8 @@ namespace RayOn
   Scene::Scene(Scene&& other)
   {
     _eye = other._eye;
+    _cubemap = other._cubemap;
+    _ambient = other._ambient;
     _objects = std::move(other._objects);
     _lights = std::move(other._lights);
     other._eye = nullptr;
@@ -55,6 +60,8 @@ namespace RayOn
     if (this != &other)
     {
       _eye = other._eye;
+      _cubemap = other._cubemap;
+      _ambient = other._ambient;
       _objects = std::move(other._objects);
       _lights = std::move(other._lights);
       other._eye = nullptr;
@@ -153,14 +160,13 @@ namespace RayOn
       return _lights;
   }
 
-    Color   Scene::processLights(const IntersectionData& data) const
+  Color   Scene::processLights(const IntersectionData& data) const
   {
     const Color color = data.material->getColor();
+    Color result;
     for (size_t i = 0; i < _lights.size(); ++i)
-    {
-      _colors[i] = _lights[i]->apply(color, *this, data);
-    }
-    return _lights.empty() ? Color(0xFF000000) : Color::average(_colors);
+      result += _lights[i]->apply(color, *this, data);
+    return result;
   }
 
   void        Scene::preprocess()
@@ -199,4 +205,6 @@ namespace RayOn
     setEye(eye);
     return *this;
   }
+
+  RAYON_GENERATE_PROPERTY_DEFINITION(Scene, Float_t, _ambient, Ambient)
 } // namespace RayOn

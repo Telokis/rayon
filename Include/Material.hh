@@ -12,11 +12,11 @@ namespace RayOn
 {
   enum class Flags : size_t
   {
-    NoShadow = 0,   ///< Object doesn't catch shadow rays.
-    NoImage,        ///< Object doesn't catch camera rays.
-    NoReflection,   ///< Object doesn't catch reflection rays.
-    NoTransparency, ///< Object doesn't catch transparency rays.
-    NoShading,      ///< Object ignores diffuse lighting.
+    NoShadow = 0,     ///< Object doesn't catch shadow rays.
+    NoImage,          ///< Object doesn't catch camera rays.
+    NoReflection,     ///< Object doesn't catch reflection rays.
+    NoTransparency,   ///< Object doesn't catch transparency rays.
+    NoShading,        ///< Object ignores diffuse lighting.
 
 
     COUNT
@@ -35,6 +35,8 @@ namespace RayOn
     RAYON_GENERATE_PROPERTY_DECLARATION(Material, Float_t, _reflexion, Reflexion)
     RAYON_GENERATE_PROPERTY_DECLARATION(Material, Float_t, _transparency, Transparency)
     RAYON_GENERATE_PROPERTY_DECLARATION(Material, Float_t, _refraction, Refraction)
+    RAYON_GENERATE_PROPERTY_DECLARATION(Material, Float_t, _glossiness, Glossiness)
+    RAYON_GENERATE_PROPERTY_DECLARATION(Material, Float_t, _ambient, Ambient)
 
   private:
     std::bitset<static_cast<size_t>(Flags::COUNT)>  _flags;

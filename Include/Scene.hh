@@ -212,6 +212,8 @@ namespace RayOn
     Eye*                _eye;       /**< @ref Eye of the Scene */
     CubeMap*            _cubemap;   /**< @ref CubeMap of the Scene */
     mutable std::vector<Color>  _colors;    /**< Buffer of the Scene, to store colors before averaging them */
+    
+    RAYON_GENERATE_PROPERTY_DECLARATION(Scene, Float_t, _ambient, Ambient)
   };
 } // namespace RayOn
 

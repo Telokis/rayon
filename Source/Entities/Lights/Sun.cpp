@@ -49,7 +49,6 @@ namespace RayOn
   {
     Float_t cos_a;
     Vec_t   light_vec;
-    Color   res;
 
     if (doesShadow(scene, data.point, data.obj))
       return 0;
@@ -58,9 +57,8 @@ namespace RayOn
     light_vec = Tools::Normalize(light_vec);
     cos_a = Tools::DotProduct(light_vec, data.normal);
     if (cos_a < Globals::Epsilon)
-      return 0xFF000000;
-    res = color * cos_a;
-    return Color::interpolate(res, getColor(), cos_a * _power);
+      return 0;
+    return color * cos_a * _power;
   }
 
   RAYON_GENERATE_PROPERTY_DEFINITION(Sun, Float_t, _power, Power)
