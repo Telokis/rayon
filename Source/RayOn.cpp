@@ -43,7 +43,8 @@ namespace RayOn
     _scene << box;
     Sphere* sphere = new Sphere(Vec_t(2.5, 0, 0), Vec_t(0, 0, 0), 1);
     sphere->getMaterial().setColor(0x8B0A50);
-    sphere->getMaterial().setReflexion(1);
+    sphere->getMaterial().setTransparency(1);
+    sphere->getMaterial().setRefraction(1.5);
     _scene << sphere;
     sphere = new Sphere(Vec_t(-2.5, 0, 0), Vec_t(0, 0, 0), 1);
     sphere->getMaterial().setColor(0x8B0A50);
