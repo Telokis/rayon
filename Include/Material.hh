@@ -6,7 +6,10 @@
 #include "Tools/Helpers.hh"
 #include "Color.hh"
 #include "Ray.hh"
+
+#include <Json-Forwards.h>
 #include <bitset>
+#include <map>
 
 namespace RayOn
 {
@@ -25,11 +28,19 @@ namespace RayOn
   class Material
   {
   public:
+    static const std::map<Flags, std::string> flagToStr;
+    static const std::map<std::string, Flags> strToFlag;
+
+  public:
     Material();
 
     void  setFlag(Flags flag, bool value = true);
     bool  testFlag(Flags flag) const;
     bool  testFlag(RayType type) const;
+
+  public:
+    void    read(const Json::Value& root);
+    void    write(Json::Value& root) const;
 
     RAYON_GENERATE_PROPERTY_DECLARATION(Material, Color, _color, Color)
     RAYON_GENERATE_PROPERTY_DECLARATION(Material, Float_t, _reflexion, Reflexion)

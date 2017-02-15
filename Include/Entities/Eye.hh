@@ -14,8 +14,11 @@ namespace RayOn
     Eye(Float_t x, Float_t y, Float_t z);
     virtual ~Eye();
 
+  public:
+    void    read(const Json::Value& root) override;
+    void    write(Json::Value& root) const override;
+
   private:
-    RAYON_GENERATE_PROPERTY_DECLARATION(Eye, Float_t, _fov, Fov)
   };
 } // namespace RayOn
 

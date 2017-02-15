@@ -1,4 +1,6 @@
 #include "Entities/Entity.hh"
+#include "SceneParse.hh"
+#include <Json.h>
 
 namespace RayOn
 {
@@ -78,6 +80,18 @@ namespace RayOn
     _indirectMatrix[0][2] = s.y;
     _indirectMatrix[1][2] = -1 * c.y * s.x;
     _indirectMatrix[2][2] = c.x * c.y;
+  }
+
+  void Entity::read(const Json::Value& root)
+  {
+    readVal(root, "position", _pos);
+    readVal(root, "rotation", _rot);
+  }
+
+  void Entity::write(Json::Value& root) const
+  {
+    writeVal(root, "position", _pos);
+    writeVal(root, "rotation", _rot);
   }
 
   Vec_t      Entity::directRotation(const Vec_t &vec) const

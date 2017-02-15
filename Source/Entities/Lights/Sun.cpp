@@ -1,6 +1,10 @@
 #include "Entities/Lights/Sun.hh"
 #include "Scene.hh"
+#include "SceneParse.hh"
+
 #include <iostream>
+#include <Json.h>
+
 namespace RayOn
 {
   Sun::Sun()
@@ -62,5 +66,17 @@ namespace RayOn
   }
 
   RAYON_GENERATE_PROPERTY_DEFINITION(Sun, Float_t, _power, Power)
+
+  void Sun::read(const Json::Value& root)
+  {
+    ParentType::read(root);
+    readVal(root, "power", _power);
+  }
+
+  void Sun::write(Json::Value& root) const
+  {
+    ParentType::write(root);
+    writeVal(root, "power", _power);
+  }
 
 } // namespace RayOn

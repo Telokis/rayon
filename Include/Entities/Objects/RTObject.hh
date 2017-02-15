@@ -24,6 +24,10 @@ namespace RayOn
     virtual ~RTObject();
 
   public:
+    void    read(const Json::Value& root) override;
+    void    write(Json::Value& root) const override;
+
+  public:
     virtual bool        inter(const Ray& ray, IntersectionData& data) const = 0;
     virtual void        preprocess() = 0;
     virtual RTObject*   clone() const = 0;

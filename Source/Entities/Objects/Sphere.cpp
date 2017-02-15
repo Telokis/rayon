@@ -1,6 +1,9 @@
 #include "Entities/Objects/Sphere.hh"
 #include "SolverSecond.hh"
 #include "Tools/Helpers.hh"
+#include "SceneParse.hh"
+
+#include <Json.h>
 
 namespace RayOn
 {
@@ -55,5 +58,17 @@ namespace RayOn
   }
 
   RAYON_GENERATE_PROPERTY_DEFINITION(Sphere, Float_t, _radius, Radius)
+
+  void Sphere::read(const Json::Value& root)
+  {
+    ParentType::read(root);
+    readVal(root, "radius", _radius);
+  }
+
+  void Sphere::write(Json::Value& root) const
+  {
+    ParentType::write(root);
+    writeVal(root, "radius", _radius);
+  }
 
 } // namespace RayOn

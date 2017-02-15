@@ -1,5 +1,8 @@
 #include "Entities/Objects/Box.hh"
-#include <iostream>
+#include "SceneParse.hh"
+
+#include <Json.h>
+
 namespace RayOn
 {
   Box::Box(Float_t width, Float_t height, Float_t depth)
@@ -98,7 +101,23 @@ namespace RayOn
   }
 
   RAYON_GENERATE_PROPERTY_DEFINITION(Box, Float_t, _width, Width)
-    RAYON_GENERATE_PROPERTY_DEFINITION(Box, Float_t, _height, Height)
-    RAYON_GENERATE_PROPERTY_DEFINITION(Box, Float_t, _depth, Depth)
+  RAYON_GENERATE_PROPERTY_DEFINITION(Box, Float_t, _height, Height)
+  RAYON_GENERATE_PROPERTY_DEFINITION(Box, Float_t, _depth, Depth)
+
+  void Box::read(const Json::Value& root)
+  {
+    ParentType::read(root);
+    readVal(root, "width", _width);
+    readVal(root, "height", _height);
+    readVal(root, "depth", _depth);
+  }
+
+  void Box::write(Json::Value& root) const
+  {
+    ParentType::write(root);
+    writeVal(root, "width", _width);
+    writeVal(root, "height", _height);
+    writeVal(root, "depth", _depth);
+  }
 
 } // namespace RayOn

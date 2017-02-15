@@ -48,12 +48,16 @@ namespace RayOn
      */
     ~Sun();
 
+  public:
+    void    read(const Json::Value& root) override;
+    void    write(Json::Value& root) const override;
+
   private:
     /**
      * @brief   This is the display name of the @ref RTLight.
      * @see     RTLight::name
      */
-    static const constexpr auto LightName = "Soleil";
+    static const constexpr auto LightName = "Sun";
 
   private:
     /**

@@ -1,4 +1,7 @@
 #include "Entities/Objects/RTObject.hh"
+#include "SceneParse.hh"
+
+#include <Json.h>
 
 namespace RayOn
 {
@@ -33,6 +36,18 @@ namespace RayOn
   const Material& RTObject::getMaterial() const
   {
     return _material;
+  }
+
+  void RTObject::read(const Json::Value& root)
+  {
+    Entity::read(root);
+    _material.read(root["material"]);
+  }
+
+  void RTObject::write(Json::Value& root) const
+  {
+    Entity::write(root);
+    _material.write(root["material"]);
   }
 
 } // namespace RayOn

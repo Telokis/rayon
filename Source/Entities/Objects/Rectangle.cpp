@@ -1,4 +1,7 @@
 #include "Entities/Objects/Rectangle.hh"
+#include "SceneParse.hh"
+
+#include <Json.h>
 
 namespace RayOn
 {
@@ -70,5 +73,19 @@ namespace RayOn
 
   RAYON_GENERATE_PROPERTY_DEFINITION(Rectangle, Float_t, _width, Width)
   RAYON_GENERATE_PROPERTY_DEFINITION(Rectangle, Float_t, _height, Height)
+
+  void Rectangle::read(const Json::Value& root)
+  {
+    ParentType::read(root);
+    readVal(root, "width", _width);
+    readVal(root, "height", _height);
+  }
+
+  void Rectangle::write(Json::Value& root) const
+  {
+    ParentType::write(root);
+    writeVal(root, "width", _width);
+    writeVal(root, "height", _height);
+  }
 
 } // namespace RayOn

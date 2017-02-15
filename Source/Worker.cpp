@@ -127,11 +127,7 @@ namespace RayOn
         data.obj->fillData(data);
         return getColor(scene, ray, data, depth);
       }
-      else if (scene.cubemap())
-      {
-        return scene.cubemap()->interceptRay(ray);
-      }
-      return 0;
+      return scene.cubemap().interceptRay(ray);
     }
   } // anonymous namespace
 
@@ -146,7 +142,7 @@ namespace RayOn
   {
     Scene scene = *scene_;
     scene.preprocess();
-    Ray   cameraRay(RayType::Primary, scene.eye()->getPos(), Vec_t());
+    Ray   cameraRay(RayType::Primary, scene.eye().getPos(), Vec_t());
 
     for (uint32 x = 0; x < width; ++x)
     {
@@ -154,7 +150,7 @@ namespace RayOn
       for (uint32 y = _yStart; y < _yStop; ++y)
       {
         Float_t j = 0.0 - (y * 2.0 / height - 1.0);
-        cameraRay.setDirection(scene.eye()->indirectRotation(Vec_t(i, j, 1)));
+        cameraRay.setDirection(scene.eye().indirectRotation(Vec_t(i, j, 1)));
         cameraRay.normalize();
         auto color = inter(scene, cameraRay);
         _img->pixel(x, y) = color;

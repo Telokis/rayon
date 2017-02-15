@@ -17,6 +17,10 @@ namespace RayOn
     Box(Float_t x, Float_t y, Float_t z, Float_t width, Float_t height, Float_t depth);
     ~Box();
 
+  public:
+    void    read(const Json::Value& root) override;
+    void    write(Json::Value& root) const override;
+
   private:
     Vec_t   _norm[3];
     bool    _isOk;

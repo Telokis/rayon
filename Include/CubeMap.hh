@@ -5,7 +5,10 @@
 
 #include "RawImage.hh"
 #include "Ray.hh"
+
 #include <array>
+#include <map>
+#include <Json-Forwards.h>
 
 namespace RayOn
 {
@@ -22,12 +25,21 @@ namespace RayOn
   class CubeMap
   {
   public:
+    static const std::map<Side, std::string> sideToStr;
+    static const std::map<std::string, Side> strToSide;
+
+  public:
     CubeMap();
     bool  loadSide(Side side, const std::string& path);
     Color interceptRay(const Ray& ray) const;
 
+  public:
+    void    read(const Json::Value& root);
+    void    write(Json::Value& root) const;
+
   private:
     std::array<RawImage, 6> _images;
+    std::array<std::string, 6> _paths;
     uint32  _size;
   };
 } // namespace RayOn

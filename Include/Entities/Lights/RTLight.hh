@@ -24,6 +24,10 @@ namespace RayOn
     virtual ~RTLight();
 
   public:
+    void    read(const Json::Value& root) override;
+    void    write(Json::Value& root) const override;
+
+  public:
     virtual void        preprocess() = 0;
     virtual RTLight     *clone() const = 0;
     virtual Color       apply(const Color& color,

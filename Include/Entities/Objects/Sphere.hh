@@ -16,6 +16,10 @@ namespace RayOn
     Sphere(Float_t x, Float_t y, Float_t z, Float_t radius);
     ~Sphere();
 
+  public:
+    void    read(const Json::Value& root) override;
+    void    write(Json::Value& root) const override;
+
   private:
     static constexpr const auto ObjectName = "Sphere";
 

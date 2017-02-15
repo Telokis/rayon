@@ -2,6 +2,7 @@
 #define RAYON_ENTITY_HH_
 
 #include "Tools/Helpers.hh"
+#include <Json-forwards.h>
 
 namespace RayOn
 {
@@ -18,6 +19,10 @@ namespace RayOn
     void    computeRotation();
     void    computeDirectRotation();
     void    computeIndirectRotation();
+
+  public:
+    virtual void  read(const Json::Value& root);
+    virtual void  write(Json::Value& root) const;
 
   public:
     Vec_t  directRotation(const Vec_t &Vec_t) const;

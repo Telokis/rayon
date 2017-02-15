@@ -21,6 +21,7 @@ endif()
 
 set(CMAKE_MODULE_PATH ${RAYON_CMAKE_FOLDER_DIR}/Modules ${CMAKE_MODULE_PATH})
 include(${RAYON_CMAKE_FOLDER_DIR}/Source_Grouping.cmake)
+add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/Dependencies/json)
 
 file(GLOB_RECURSE RAYON_SOURCE_FILES RELATIVE ${RAYON_SOURCE_DIR} "${RAYON_SOURCE_DIR}/*.cpp")
 file(GLOB_RECURSE RAYON_HEADER_FILES RELATIVE ${RAYON_HEADER_DIR} "${RAYON_HEADER_DIR}/*.hh" "${RAYON_HEADER_DIR}/*.hpp")
@@ -40,6 +41,9 @@ prefix_custom_list(RAYON_SOURCES "${RAYON_SOURCE_DIR}/" RAYON_SOURCE_FILES)
 link_directories("${RAYON_ROOT_DIR}/Dependencies/boost_1_63_0/lib")
 # Set sources
 add_executable(RayOn ${RAYON_SOURCES} ${RAYON_HEADERS})
+
+target_link_libraries(RayOn "${JSON_LIBRARY}")
+include_directories(RayOn "${JSON_HEADER_DIR}")
 
 # Find GLM
 find_package(GLM REQUIRED)

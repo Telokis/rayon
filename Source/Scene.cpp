@@ -6,21 +6,15 @@
 namespace RayOn
 {
   Scene::Scene()
-    : _eye(nullptr)
-    , _cubemap(nullptr)
-    , _ambient(0.2)
+    : _ambient(0.2)
   {
   }
 
   Scene::Scene(const Scene& other)
-    : _eye(nullptr)
-    , _cubemap(nullptr)
-    , _ambient(other._ambient)
+    : _ambient(other._ambient)
   {
-    if (other._eye)
-      _eye = new Eye(*other._eye);
-    if (other._cubemap)
-      _cubemap = new CubeMap(*other._cubemap);
+    _eye = other._eye;
+    _cubemap = other._cubemap;
     for (auto& object : other._objects)
       _objects.push_back(object->clone());
     for (auto& light : other._lights)
@@ -32,10 +26,8 @@ namespace RayOn
     if (this != &other)
     {
       _ambient = other._ambient;
-      if (other._eye)
-        _eye = new Eye(*other._eye);
-      if (other._cubemap)
-        _cubemap = new CubeMap(*other._cubemap);
+      _eye = other._eye;
+      _cubemap = other._cubemap;
       for (auto&& object : other._objects)
         _objects.push_back(object->clone());
       for (auto&& light : other._lights)
@@ -51,8 +43,6 @@ namespace RayOn
     _ambient = other._ambient;
     _objects = std::move(other._objects);
     _lights = std::move(other._lights);
-    other._eye = nullptr;
-    other._cubemap = nullptr;
   }
 
   Scene&    Scene::operator=(Scene&& other)
@@ -64,8 +54,6 @@ namespace RayOn
       _ambient = other._ambient;
       _objects = std::move(other._objects);
       _lights = std::move(other._lights);
-      other._eye = nullptr;
-      other._cubemap = nullptr;
     }
     return *this;
   }
@@ -82,8 +70,6 @@ namespace RayOn
       delete item;
       item = nullptr;
     }
-    delete _eye;
-    delete _cubemap;
   }
 
   void    Scene::addObject(RTObject* object)
@@ -103,44 +89,45 @@ namespace RayOn
       return _objects;
   }
 
-    RTObject*   Scene::getNearest(const Ray& ray,
-                                  IntersectionData& data) const
+  RTObject*   Scene::getNearest(const Ray& ray,
+                                IntersectionData& data) const
   {
     RTObject* result = nullptr;
-    Float_t   k_tmp;
+    IntersectionData  tmp;
 
     data.k = Globals::Invalid;
-    k_tmp = Globals::Invalid;
+    tmp.k = Globals::Invalid;
     for (RTObject* item : _objects)
     {
       bool res = item->inter(ray, data);
-      if (res && data.k < k_tmp)
+      if (res && data.k < tmp.k)
       {
-        k_tmp = data.k;
+        tmp = data;
         result = item;
       }
       else
-        data.k = k_tmp;
+        data.k = tmp.k;
     }
+    data = tmp;
     return result;
   }
 
-  void        Scene::setEye(Eye* eye)
+  void        Scene::setEye(const Eye& eye)
   {
     _eye = eye;
   }
 
-  Eye*        Scene::eye() const
+  const Eye&  Scene::eye() const
   {
     return _eye;
   }
 
-  void Scene::setCubeMap(CubeMap* cubemap)
+  void Scene::setCubeMap(const CubeMap& cubemap)
   {
     _cubemap = cubemap;
   }
 
-  CubeMap* Scene::cubemap() const
+  const CubeMap&  Scene::cubemap() const
   {
     return _cubemap;
   }
@@ -160,7 +147,7 @@ namespace RayOn
       return _lights;
   }
 
-  Color   Scene::processLights(const IntersectionData& data) const
+    Color   Scene::processLights(const IntersectionData& data) const
   {
     const Color color = data.material->getColor();
     Color result;
@@ -181,11 +168,7 @@ namespace RayOn
       item->preprocess();
       item->computeRotation();
     }
-    if (_eye)
-    {
-      _eye->computeRotation();
-    }
-    _colors.resize(_lights.size());
+    _eye.computeRotation();
   }
 
   Scene&   Scene::operator<<(RTObject* object)
@@ -197,12 +180,6 @@ namespace RayOn
   Scene&    Scene::operator<<(RTLight* light)
   {
     addLight(light);
-    return *this;
-  }
-
-  Scene&    Scene::operator<<(Eye* eye)
-  {
-    setEye(eye);
     return *this;
   }
 

@@ -17,6 +17,10 @@ namespace RayOn
     Plane(Float_t x, Float_t y, Float_t z);
     ~Plane();
 
+  public:
+    void    read(const Json::Value& root) override;
+    void    write(Json::Value& root) const override;
+
   private:
     Vec_t              _norm;
     static const constexpr auto ObjectName = "Plane";

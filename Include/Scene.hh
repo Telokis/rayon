@@ -118,26 +118,26 @@ namespace RayOn
      * @brief           Will set the Scene's @ref Eye to @a eye.
      * @param[in] eye   The @ref Eye to store.
      */
-    void        setEye(Eye* eye);
+    void        setEye(const Eye& eye);
 
     /**
      * @brief   Returns the @ref Eye held by the Scene.
      * @return  The @ref Eye held by the Scene.
      */
-    Eye*        eye() const;
+    const Eye&  eye() const;
 
   public:
     /**
      * @brief             Will set the Scene's @ref CubeMap to @a cubemap.
      * @param[in] cubemap The @ref CubeMap to store.
      */
-    void        setCubeMap(CubeMap* cubemap);
+    void        setCubeMap(const CubeMap& cubemap);
 
     /**
      * @brief   Returns the @ref CubeMap held by the Scene.
      * @return  The @ref CubeMap held by the Scene.
      */
-    CubeMap*    cubemap() const;
+    const CubeMap&  cubemap() const;
 
   public:
     /**
@@ -198,20 +198,11 @@ namespace RayOn
      */
     Scene   &operator<<(RTLight* light);
 
-    /**
-     * @brief   Sets the @ref Eye of the Scene.
-     * @param[in] eye   The @ref Eye to add.
-     * @return  *this for chaining.
-     * @see     Scene::setEye
-     */
-    Scene   &operator<<(Eye* eye);
-
   private:
-    ObjectsContainer    _objects;   /**< Collection of @ref RTObject * */
-    LightsContainer     _lights;    /**< Collection of @ref RTLight * */
-    Eye*                _eye;       /**< @ref Eye of the Scene */
-    CubeMap*            _cubemap;   /**< @ref CubeMap of the Scene */
-    mutable std::vector<Color>  _colors;    /**< Buffer of the Scene, to store colors before averaging them */
+    ObjectsContainer  _objects;   /**< Collection of @ref RTObject * */
+    LightsContainer   _lights;    /**< Collection of @ref RTLight * */
+    Eye               _eye;       /**< @ref Eye of the Scene */
+    CubeMap           _cubemap;   /**< @ref CubeMap of the Scene */
     
     RAYON_GENERATE_PROPERTY_DECLARATION(Scene, Float_t, _ambient, Ambient)
   };

@@ -17,6 +17,10 @@ namespace RayOn
     Rectangle(Float_t x, Float_t y, Float_t z, Float_t width, Float_t height);
     ~Rectangle();
 
+  public:
+    void    read(const Json::Value& root) override;
+    void    write(Json::Value& root) const override;
+
   private:
     Vec_t   _norm;
     bool    _isOk;

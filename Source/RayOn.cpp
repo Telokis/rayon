@@ -2,6 +2,7 @@
 #include "Version.hh"
 #include "Worker.hh"
 #include "RawImage.hh"
+#include "SceneParse.hh"
 #include "ImageFileHandlers/ImageFileHandler.hh"
 #include "Entities/Objects/Sphere.hh"
 #include "Entities/Objects/Plane.hh"
@@ -21,23 +22,17 @@ namespace RayOn
   {
     config().init(ac, av);
 
-    CubeMap* cmap = new CubeMap;
-    /*cmap->loadSide(Side::Left, "./files/textures/cubemap/alpleft.tga");
-    cmap->loadSide(Side::Right, "./files/textures/cubemap/alpright.tga");
-    cmap->loadSide(Side::Up, "./files/textures/cubemap/alpup.tga");
-    cmap->loadSide(Side::Down, "./files/textures/cubemap/alpdown.tga");
-    cmap->loadSide(Side::Front, "./files/textures/cubemap/alpforward.tga");
-    cmap->loadSide(Side::Back, "./files/textures/cubemap/alpback.tga");*/
-    cmap->loadSide(Side::Left, "./files/textures/cubemap/stormydays_lf.tga");
-    cmap->loadSide(Side::Right, "./files/textures/cubemap/stormydays_rt.tga");
-    cmap->loadSide(Side::Up, "./files/textures/cubemap/stormydays_up.tga");
-    cmap->loadSide(Side::Down, "./files/textures/cubemap/stormydays_dn.tga");
-    cmap->loadSide(Side::Front, "./files/textures/cubemap/stormydays_ft.tga");
-    cmap->loadSide(Side::Back, "./files/textures/cubemap/stormydays_bk.tga");
+    CubeMap cmap;
+    cmap.loadSide(Side::Left, "./files/textures/cubemap/stormydays_lf.tga");
+    cmap.loadSide(Side::Right, "./files/textures/cubemap/stormydays_rt.tga");
+    cmap.loadSide(Side::Up, "./files/textures/cubemap/stormydays_up.tga");
+    cmap.loadSide(Side::Down, "./files/textures/cubemap/stormydays_dn.tga");
+    cmap.loadSide(Side::Front, "./files/textures/cubemap/stormydays_ft.tga");
+    cmap.loadSide(Side::Back, "./files/textures/cubemap/stormydays_bk.tga");
     _scene.setCubeMap(cmap);
 
-    Eye* eye = new Eye(Vec_t(0, 3, -4), Vec_t(20, 0, 0));
-    _scene << eye;
+    Eye eye(Vec_t(0, 3, -4), Vec_t(20, 0, 0));
+    _scene.setEye(eye);
     Box* box = new Box(Vec_t(0, 2.6847, 2.5), Vec_t(0, 45, 0), 1, 1, 1);
     box->getMaterial().setColor(0x8b8b);
     _scene << box;
@@ -73,6 +68,8 @@ namespace RayOn
     sun = new Sun(-10, 30, -20);
     sun->setColor(Color(255, 255, 255));
     _scene << sun;
+
+    sceneWrite(_scene, "./test.yon");
   }
 
   int RayOn::run()

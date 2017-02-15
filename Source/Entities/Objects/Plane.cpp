@@ -1,5 +1,8 @@
 #include "Entities/Objects/Plane.hh"
 #include "SolverSecond.hh"
+#include "SceneParse.hh"
+
+#include <Json.h>
 
 namespace RayOn
 {
@@ -46,6 +49,16 @@ namespace RayOn
   void        Plane::preprocessImpl()
   {
     _norm = Tools::Normalize(directRotation(Vec_t(0, 1, 0)));
+  }
+
+  void Plane::read(const Json::Value& root)
+  {
+    ParentType::read(root);
+  }
+
+  void Plane::write(Json::Value& root) const
+  {
+    ParentType::write(root);
   }
 
 } // namespace RayOn
