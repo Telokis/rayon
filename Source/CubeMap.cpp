@@ -95,7 +95,6 @@ namespace RayOn
   Color CubeMap::interceptRay(const Ray& ray) const
   {
     Color res;
-    const RawImage& img = _images.at(0);
 #define RAYON_TMP_CODE_GENERATE_SETUP(s) \
     const RawImage& img = _images.at(static_cast<size_t>(Side::s)); \
     if (img.width() == 0) \

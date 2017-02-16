@@ -7,7 +7,7 @@
 #include "Color.hh"
 #include "Ray.hh"
 
-#include <Json-Forwards.h>
+#include <Json-forwards.h>
 #include <bitset>
 #include <map>
 

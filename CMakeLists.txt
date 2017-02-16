@@ -42,6 +42,9 @@ link_directories("${RAYON_ROOT_DIR}/Dependencies/boost_1_63_0/lib")
 # Set sources
 add_executable(RayOn ${RAYON_SOURCES} ${RAYON_HEADERS})
 
+if (UNIX)
+  target_link_libraries(RayOn "pthread")
+endif()
 target_link_libraries(RayOn "${JSON_LIBRARY}")
 include_directories(RayOn "${JSON_HEADER_DIR}")
 
