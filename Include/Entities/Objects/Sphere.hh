@@ -11,7 +11,7 @@ namespace RayOn
     friend  ParentType;
 
   public:
-    explicit Sphere(Float_t radius);
+    explicit Sphere(Float_t radius = 1.0);
     Sphere(const Vec_t& pos, const Vec_t& rot, Float_t radius);
     Sphere(Float_t x, Float_t y, Float_t z, Float_t radius);
     ~Sphere();
@@ -20,7 +20,7 @@ namespace RayOn
     void    read(const Json::Value& root) override;
     void    write(Json::Value& root) const override;
 
-  private:
+  public:
     static constexpr const auto ObjectName = "Sphere";
 
   private:

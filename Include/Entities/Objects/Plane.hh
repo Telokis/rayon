@@ -23,6 +23,8 @@ namespace RayOn
 
   private:
     Vec_t              _norm;
+
+  public:
     static const constexpr auto ObjectName = "Plane";
 
   private:

@@ -1,5 +1,6 @@
 #include "SceneParse.hh"
 #include "Scene.hh"
+#include "Registry.hh"
 #include "Entities/Lights/RTLight.hh"
 
 #include <Json.h>
@@ -38,7 +39,7 @@ namespace RayOn
     }
   }
 
-  void  sceneParse(Scene& scene, const std::string& filename)
+  void  sceneRead(Scene& scene, const std::string& filename)
   {
     Json::Value root;
 
@@ -51,9 +52,9 @@ namespace RayOn
     }
     if (root.isMember("cubemap") && root["cubemap"].isObject())
     {
-      Eye eye;
-      eye.read(root["eye"]);
-      scene.setEye(eye);
+      CubeMap cubemap;
+      cubemap.read(root["cubemap"]);
+      scene.setCubeMap(cubemap);
     }
     if (root.isMember("objects") && root["objects"].isArray())
     {
@@ -61,7 +62,24 @@ namespace RayOn
 
       for (const Json::Value& object : objects)
       {
-
+        if (object.isMember("type") && object["type"].isString())
+        {
+          std::string name = object["type"].asString();
+          const IMetaRTObject* meta = registry().getMetaRTObject(name);
+          if (meta)
+          {
+            RTObject* obj = meta->make();
+            obj->read(object);
+            scene.addObject(obj);
+          }
+          else
+          {
+            std::cout << "[Warning] Unknown type `" << name << "` for object. Skipping...\n";
+            continue;
+          }
+        }
+        else
+          std::cout << "[Warning] Invalid `type` for object. Skipping...\n";
       }
     }
     if (root.isMember("lights") && root["lights"].isArray())
@@ -70,7 +88,24 @@ namespace RayOn
 
       for (const Json::Value& light : lights)
       {
-
+        if (light.isMember("type") && light["type"].isString())
+        {
+          std::string name = light["type"].asString();
+          const IMetaRTLight* meta = registry().getMetaRTLight(name);
+          if (meta)
+          {
+            RTLight* lig = meta->make();
+            lig->read(light);
+            scene.addLight(lig);
+          }
+          else
+          {
+            std::cout << "[Warning] Unknown type `" << name << "` for light. Skipping...\n";
+            continue;
+          }
+        }
+        else
+          std::cout << "[Warning] Invalid `type` for light. Skipping...\n";
       }
     }
   }

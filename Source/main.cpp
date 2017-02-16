@@ -9,6 +9,13 @@
 #include "ImageFileHandlers/ImageFileHandler_PNG.hh"
 #include "ImageFileHandlers/ImageFileHandler_TGA.hh"
 
+#include "MetaRTLights/MetaSun.hh"
+
+#include "MetaRTObjects/MetaSphere.hh"
+#include "MetaRTObjects/MetaPlane.hh"
+#include "MetaRTObjects/MetaRectangle.hh"
+#include "MetaRTObjects/MetaBox.hh"
+
 #include "Ray.hh"
 #include "RayOn.hh"
 #include "Registry.hh"
@@ -17,9 +24,16 @@
 
 void  setupDefaultRegistry()
 {
-  RayOn::registry().registerImageFileHandler("bmp", new RayOn::ImageFileHandler_BMP);
-  RayOn::registry().registerImageFileHandler("png", new RayOn::ImageFileHandler_PNG);
-  RayOn::registry().registerImageFileHandler("tga", new RayOn::ImageFileHandler_TGA);
+  RayOn::registry().registerImageFileHandler(new RayOn::ImageFileHandler_BMP);
+  RayOn::registry().registerImageFileHandler(new RayOn::ImageFileHandler_PNG);
+  RayOn::registry().registerImageFileHandler(new RayOn::ImageFileHandler_TGA);
+
+  RayOn::registry().registerMetaRTLight(new RayOn::MetaSun);
+
+  RayOn::registry().registerMetaRTObject(new RayOn::MetaSphere);
+  RayOn::registry().registerMetaRTObject(new RayOn::MetaPlane);
+  RayOn::registry().registerMetaRTObject(new RayOn::MetaRectangle);
+  RayOn::registry().registerMetaRTObject(new RayOn::MetaBox);
 }
 
 int  main(int ac, char** av)

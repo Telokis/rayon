@@ -19,12 +19,9 @@ namespace RayOn
       ext = "bmp";
     }
 
-    const auto& handlers = registry().getImageFileHandlers();
-    for (const auto& pair : handlers)
-    {
-      if (pair.second->extensionName() == ext)
-        return pair.second->readFromFile(file.c_str(), readInto);
-    }
+    const IImageFileHandler* handler = registry().getImageFileHandler(ext);
+    if (handler)
+      return handler->readFromFile(file.c_str(), readInto);
 
     std::cout << "[Error]No handler found for extension [" << ext << "].\n";
     return false;
@@ -44,13 +41,10 @@ namespace RayOn
     }
 
     const auto& handlers = registry().getImageFileHandlers();
-    const IImageFileHandler* def = nullptr;
-    for (const auto& pair : handlers)
-    {
-      def = pair.second.get();
-      if (pair.second->extensionName() == ext)
-        return pair.second->writeToFile(file.c_str(), readFrom);
-    }
+    const IImageFileHandler* def = handlers.empty() ? nullptr : handlers.begin()->second.get();
+    const IImageFileHandler* handler = registry().getImageFileHandler(ext);
+    if (handler)
+      return handler->writeToFile(file.c_str(), readFrom);
 
     if (force)
     {

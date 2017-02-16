@@ -22,54 +22,8 @@ namespace RayOn
   {
     config().init(ac, av);
 
-    CubeMap cmap;
-    cmap.loadSide(Side::Left, "./files/textures/cubemap/stormydays_lf.tga");
-    cmap.loadSide(Side::Right, "./files/textures/cubemap/stormydays_rt.tga");
-    cmap.loadSide(Side::Up, "./files/textures/cubemap/stormydays_up.tga");
-    cmap.loadSide(Side::Down, "./files/textures/cubemap/stormydays_dn.tga");
-    cmap.loadSide(Side::Front, "./files/textures/cubemap/stormydays_ft.tga");
-    cmap.loadSide(Side::Back, "./files/textures/cubemap/stormydays_bk.tga");
-    _scene.setCubeMap(cmap);
-
-    Eye eye(Vec_t(0, 3, -4), Vec_t(20, 0, 0));
-    _scene.setEye(eye);
-    Box* box = new Box(Vec_t(0, 2.6847, 2.5), Vec_t(0, 45, 0), 1, 1, 1);
-    box->getMaterial().setColor(0x8b8b);
-    _scene << box;
-    Sphere* sphere = new Sphere(Vec_t(2.5, 0, 0), Vec_t(0, 0, 0), 1);
-    sphere->getMaterial().setColor(0x8B0A50);
-    sphere->getMaterial().setTransparency(1);
-    sphere->getMaterial().setRefraction(1.5);
-    _scene << sphere;
-    sphere = new Sphere(Vec_t(-2.5, 0, 0), Vec_t(0, 0, 0), 1);
-    sphere->getMaterial().setColor(0x8B0A50);
-    sphere->getMaterial().setFlag(Flags::NoShading);
-    sphere->getMaterial().setAmbient(1);
-    sphere->getMaterial().setReflexion(1);
-    sphere->getMaterial().setGlossiness(2.5);
-    _scene << sphere;
-    sphere = new Sphere(Vec_t(0, 0, 5), Vec_t(0, 0, 0), 1);
-    sphere->getMaterial().setColor(0x8B0A50);
-    sphere->getMaterial().setFlag(Flags::NoShadow);
-    _scene << sphere;
-    Plane* plane = new Plane(0, -0.8, 0);
-    plane->getMaterial().setColor(0x67E6EC);
-    plane->getMaterial().setReflexion(0.8);
-    _scene << plane;
-    Sun* sun = new Sun(10, 10, -20);
-    sun->setColor(Color(255, 255, 255));
-    _scene << sun;
-    sun = new Sun(-10, 10, -20);
-    sun->setColor(Color(255, 255, 255));
-    _scene << sun;
-    sun = new Sun(10, 50, -20);
-    sun->setColor(Color(255, 255, 255));
-    _scene << sun;
-    sun = new Sun(-10, 30, -20);
-    sun->setColor(Color(255, 255, 255));
-    _scene << sun;
-
-    sceneWrite(_scene, "./test.yon");
+    if (!config().getInputPath().empty())
+      sceneRead(_scene, config().getInputPath());
   }
 
   int RayOn::run()

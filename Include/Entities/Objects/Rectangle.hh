@@ -12,7 +12,7 @@ namespace RayOn
     friend  ParentType;
 
   public:
-    Rectangle(Float_t width, Float_t height);
+    Rectangle(Float_t width = 1.0, Float_t height = 1.0);
     Rectangle(const Vec_t& pos, const Vec_t& rot, Float_t width, Float_t height);
     Rectangle(Float_t x, Float_t y, Float_t z, Float_t width, Float_t height);
     ~Rectangle();
@@ -26,6 +26,8 @@ namespace RayOn
     bool    _isOk;
     Float_t _halfW;
     Float_t _halfH;
+
+  public:
     static const constexpr auto ObjectName = "Rectangle";
 
   private:

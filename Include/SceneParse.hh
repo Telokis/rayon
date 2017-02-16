@@ -12,7 +12,7 @@ namespace RayOn
   class Material;
   class Color;
 
-  void  sceneParse(Scene& scene, const std::string& filename);
+  void  sceneRead(Scene& scene, const std::string& filename);
   void  sceneWrite(const Scene& scene, const std::string& filename);
 
   void  writeVal(Json::Value& node, const std::string& name, const Float_t& val);
