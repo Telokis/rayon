@@ -53,7 +53,7 @@ find_package(GLM REQUIRED)
 include_directories(${GLM_INCLUDE_DIR})
 
 # Find BOOST
-set(BOOST_INCLUDEDIR "${RAYON_ROOT_DIR}/Dependencies/boost_1_63_0/include")
+set(Boost_NO_SYSTEM_PATHS true)
 find_package(Boost 1.63.0 EXACT COMPONENTS program_options log)
 if(NOT Boost_FOUND)
 	message("Boost not found. Setting up download...")
