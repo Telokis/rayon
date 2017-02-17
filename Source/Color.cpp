@@ -1,8 +1,8 @@
 #include "Color.hh"
 
-using RayOn::Tools::Clamp;
+using Rayon::Tools::Clamp;
 
-namespace RayOn
+namespace Rayon
 {
 
   Color::Color()
@@ -102,4 +102,4 @@ namespace RayOn
     return stream << color.intValue();
   }
 
-} // namespace RayOn
+} // namespace Rayon

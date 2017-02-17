@@ -2,7 +2,7 @@
 #include "SceneParse.hh"
 #include <Json.h>
 
-namespace RayOn
+namespace Rayon
 {
 #define RAYON_DECLARE(flag) \
     {Flags::flag, #flag}
@@ -116,4 +116,4 @@ namespace RayOn
   RAYON_GENERATE_PROPERTY_DEFINITION(Material, Float_t, _glossiness, Glossiness)
   RAYON_GENERATE_PROPERTY_DEFINITION(Material, Float_t, _ambient, Ambient)
   RAYON_GENERATE_PROPERTY_DEFINITION(Material, Float_t, _shininess, Shininess)
-} // namespace RayOn
+} // namespace Rayon

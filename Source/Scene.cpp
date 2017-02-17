@@ -3,7 +3,7 @@
 #include "Entities/Lights/RTLight.hh"
 #include <iostream>
 
-namespace RayOn
+namespace Rayon
 {
   Scene::Scene()
     : _ambient(0.2)
@@ -185,4 +185,4 @@ namespace RayOn
   }
 
   RAYON_GENERATE_PROPERTY_DEFINITION(Scene, Float_t, _ambient, Ambient)
-} // namespace RayOn
+} // namespace Rayon

@@ -1,6 +1,6 @@
 #include "SolverSecond.hh"
 
-namespace RayOn
+namespace Rayon
 {
   namespace Tools
   {
@@ -53,4 +53,4 @@ namespace RayOn
 
     } // namespace Solver
   } // namespace Tools
-} // namespace RayOn
+} // namespace Rayon

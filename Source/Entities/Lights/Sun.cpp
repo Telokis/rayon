@@ -5,7 +5,7 @@
 #include <iostream>
 #include <Json.h>
 
-namespace RayOn
+namespace Rayon
 {
   Sun::Sun()
     : _power(0.5)
@@ -62,4 +62,4 @@ namespace RayOn
     writeVal(root, "power", _power, 0.5);
   }
 
-} // namespace RayOn
+} // namespace Rayon

@@ -3,7 +3,7 @@
 
 #include <Json.h>
 
-namespace RayOn
+namespace Rayon
 {
   Box::Box(Float_t width, Float_t height, Float_t depth)
     : _width(width)
@@ -120,4 +120,4 @@ namespace RayOn
     writeVal(root, "depth", _depth, 1);
   }
 
-} // namespace RayOn
+} // namespace Rayon

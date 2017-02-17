@@ -3,7 +3,7 @@
 
 #include "Object.hh"
 
-namespace RayOn
+namespace Rayon
 {
 
   class   Box : public Object<Box>
@@ -41,6 +41,6 @@ namespace RayOn
     RAYON_GENERATE_PROPERTY_DECLARATION(Box, Float_t, _depth, Depth)
   };
 
-} // namespace RayOn
+} // namespace Rayon
 
 #endif // RAYON_BOX_HH_

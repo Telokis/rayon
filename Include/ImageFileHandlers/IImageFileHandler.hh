@@ -5,7 +5,7 @@
 
 #include "RawImage.hh"
 
-namespace RayOn
+namespace Rayon
 {
   class IImageFileHandler
   {
@@ -18,6 +18,6 @@ namespace RayOn
 
     virtual const char* extensionName() const = 0;
   };
-} // namespace RayOn
+} // namespace Rayon
 
 #endif // RAYON_IIMAGEFILE_HANDLER_HH_

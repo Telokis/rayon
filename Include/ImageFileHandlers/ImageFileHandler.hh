@@ -5,7 +5,7 @@
 
 #include <string>
 
-namespace RayOn
+namespace Rayon
 {
   class RawImage;
 
@@ -18,6 +18,6 @@ namespace RayOn
                                              const RawImage& readFrom,
                                              bool force = true);
   };
-} // namespace RayOn
+} // namespace Rayon
 
 #endif // RAYON_IMAGEFILE_HANDLER_HH_

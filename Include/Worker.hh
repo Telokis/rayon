@@ -8,7 +8,7 @@
 
 #include <memory>
 
-namespace RayOn
+namespace Rayon
 {
   class Worker
   {
@@ -21,6 +21,6 @@ namespace RayOn
     uint32    _yStart;
     uint32    _yStop;
   };
-} // namespace RayOn
+} // namespace Rayon
 
 #endif // RAYON_WORKER_HH_

@@ -8,7 +8,7 @@
 #include <map>
 #include <iostream>
 
-namespace RayOn
+namespace Rayon
 {
 
   class   Color
@@ -115,6 +115,6 @@ namespace RayOn
 
   std::ostream& operator<<(std::ostream& stream, const Color& color);
 
-} // namespace RayOn
+} // namespace Rayon
 
 #endif // RAYON_TOOLS_COLOR_H

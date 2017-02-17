@@ -6,7 +6,7 @@
 #include "Tools/PI.hh"
 #include "Tools/Types.hh"
 
-namespace RayOn
+namespace Rayon
 {
   namespace Globals
   {
@@ -26,6 +26,6 @@ namespace RayOn
     static constexpr const Float_t Epsilon = 0.00000001;
 
   } // namespace Globals
-} // namespace RayOn
+} // namespace Rayon
 
 #endif // RAYON_TOOLS_HELPERS_GLOBALS_HH

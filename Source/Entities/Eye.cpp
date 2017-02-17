@@ -1,6 +1,6 @@
 #include "Entities/Eye.hh"
 
-namespace RayOn
+namespace Rayon
 {
   Eye::Eye()
   {
@@ -30,4 +30,4 @@ namespace RayOn
     Entity::write(root);
   }
 
-} // namespace RayOn
+} // namespace Rayon

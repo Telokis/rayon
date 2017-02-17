@@ -9,7 +9,7 @@
 extern const int RAYON_BUILD_VERSION;
 extern const char* const RAYON_COMMIT_HASH;
 
-namespace RayOn
+namespace Rayon
 {
   const char* version();
 }

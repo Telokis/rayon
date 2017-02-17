@@ -3,7 +3,7 @@
 
 #include "Entities/Lights/RTLight.hh"
 
-namespace RayOn
+namespace Rayon
 {
   template <class Derived>
   class   Light : public RTLight
@@ -60,6 +60,6 @@ namespace RayOn
       return Derived::LightName;
     }
   };
-} // namespace RayOn
+} // namespace Rayon
 
 #endif // RAYON_LIGHT_HH_

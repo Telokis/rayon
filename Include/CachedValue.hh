@@ -3,7 +3,7 @@
 #ifndef RAYON_TOOLS_CACHEDVALUE_HH_
 #define RAYON_TOOLS_CACHEDVALUE_HH_
 
-namespace RayOn
+namespace Rayon
 {
   template<typename T>
   class CachedValue
@@ -79,6 +79,6 @@ namespace RayOn
   {
     return _value;
   }
-} // namespace RayOn
+} // namespace Rayon
 
 #endif // RAYON_TOOLS_CACHEDVALUE_HH_

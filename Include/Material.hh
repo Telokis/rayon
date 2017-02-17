@@ -11,7 +11,7 @@
 #include <bitset>
 #include <map>
 
-namespace RayOn
+namespace Rayon
 {
   enum class Flags : size_t
   {
@@ -53,6 +53,6 @@ namespace RayOn
   private:
     std::bitset<static_cast<size_t>(Flags::COUNT)>  _flags;
   };
-} // namespace RayOn
+} // namespace Rayon
 
 #endif // RAYON_MATERIAL_HH_

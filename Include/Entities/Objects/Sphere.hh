@@ -3,7 +3,7 @@
 
 #include "Object.hh"
 
-namespace RayOn
+namespace Rayon
 {
   class   Sphere : public Object<Sphere>
   {
@@ -29,6 +29,6 @@ namespace RayOn
 
     RAYON_GENERATE_PROPERTY_DECLARATION(Sphere, Float_t, _radius, Radius)
   };
-} // namespace RayOn
+} // namespace Rayon
 
 #endif // RAYON_SPHERE_HH_

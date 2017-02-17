@@ -7,7 +7,7 @@
 #include <glm/vec3.hpp>
 #include <glm/mat3x3.hpp>
 
-namespace RayOn
+namespace Rayon
 {
   using int8 = std::int8_t;
   using int16 = std::int16_t;

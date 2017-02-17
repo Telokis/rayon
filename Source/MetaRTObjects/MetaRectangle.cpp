@@ -1,7 +1,7 @@
 #include "MetaRTObjects/MetaRectangle.hh"
 #include "Entities/Objects/Rectangle.hh"
 
-namespace RayOn
+namespace Rayon
 {
   RTObject*    MetaRectangle::make() const
   {
@@ -12,4 +12,4 @@ namespace RayOn
   {
     return Rectangle::ObjectName;
   }
-} // namespace RayOn
+} // namespace Rayon

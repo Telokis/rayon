@@ -5,7 +5,7 @@
 
 #include "Entities/Objects/RTObject.hh"
 
-namespace RayOn
+namespace Rayon
 {
   class IMetaRTObject
   {
@@ -14,6 +14,6 @@ namespace RayOn
 
     virtual const char* objectName() const = 0;
   };
-} // namespace RayOn
+} // namespace Rayon
 
 #endif // RAYON_IMETA_RTOBJECT_HH_

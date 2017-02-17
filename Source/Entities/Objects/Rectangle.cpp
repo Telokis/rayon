@@ -3,7 +3,7 @@
 
 #include <Json.h>
 
-namespace RayOn
+namespace Rayon
 {
   Rectangle::Rectangle(Float_t width, Float_t height)
     : _width(width)
@@ -88,4 +88,4 @@ namespace RayOn
     writeVal(root, "height", _height, 1);
   }
 
-} // namespace RayOn
+} // namespace Rayon

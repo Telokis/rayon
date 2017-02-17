@@ -5,7 +5,7 @@
 
 #include "Entities/Lights/RTLight.hh"
 
-namespace RayOn
+namespace Rayon
 {
   class IMetaRTLight
   {
@@ -14,6 +14,6 @@ namespace RayOn
 
     virtual const char* lightName() const = 0;
   };
-} // namespace RayOn
+} // namespace Rayon
 
 #endif // RAYON_IMETA_RTLIGHT_HH_

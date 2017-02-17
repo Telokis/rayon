@@ -11,7 +11,7 @@
 #include <memory>
 #include <map>
 
-namespace RayOn
+namespace Rayon
 {
   class Registry
   {
@@ -54,6 +54,6 @@ namespace RayOn
     static Registry reg;
     return reg;
   }
-} // namespace RayOn
+} // namespace Rayon
 
 #endif // RAYON_REGISTRY_HH_

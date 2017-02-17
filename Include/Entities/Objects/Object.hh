@@ -3,7 +3,7 @@
 
 #include "Entities/Objects/RTObject.hh"
 
-namespace RayOn
+namespace Rayon
 {
   template <class Derived>
   class   Object : public RTObject
@@ -62,6 +62,6 @@ namespace RayOn
     }
   };
 
-} // namespace RayOn
+} // namespace Rayon
 
 #endif // RTOBJECT_H

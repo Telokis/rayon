@@ -1,5 +1,5 @@
 cmake_minimum_required (VERSION 3.3.2)
-project(RayOn)
+project(Rayon)
 
 SET(RAYON_ROOT_DIR "${CMAKE_CURRENT_LIST_DIR}")
 SET(RAYON_HEADER_DIR "${CMAKE_CURRENT_LIST_DIR}/Include")
@@ -40,13 +40,13 @@ prefix_custom_list(RAYON_SOURCES "${RAYON_SOURCE_DIR}/" RAYON_SOURCE_FILES)
 
 link_directories("${RAYON_ROOT_DIR}/Dependencies/boost_1_63_0/lib")
 # Set sources
-add_executable(RayOn ${RAYON_SOURCES} ${RAYON_HEADERS})
+add_executable(Rayon ${RAYON_SOURCES} ${RAYON_HEADERS})
 
 if (UNIX)
-  target_link_libraries(RayOn "pthread")
+  target_link_libraries(Rayon "pthread")
 endif()
-target_link_libraries(RayOn "${JSON_LIBRARY}")
-include_directories(RayOn "${JSON_HEADER_DIR}")
+target_link_libraries(Rayon "${JSON_LIBRARY}")
+include_directories(Rayon "${JSON_HEADER_DIR}")
 
 # Find GLM
 find_package(GLM REQUIRED)
@@ -58,27 +58,27 @@ find_package(Boost 1.63.0 EXACT COMPONENTS program_options log)
 if(NOT Boost_FOUND)
 	message("Boost not found. Setting up download...")
 	include(${RAYON_CMAKE_FOLDER_DIR}/Build_Boost.cmake)
-	add_dependencies(RayOn Boost)
+	add_dependencies(Rayon Boost)
 endif()
 include_directories("${RAYON_ROOT_DIR}/Dependencies/boost_1_63_0/include")
 
 if (UNIX)
-	target_link_libraries(RayOn "${Boost_LIBRARIES}")
+	target_link_libraries(Rayon "${Boost_LIBRARIES}")
 else()
 	add_definitions(-DBOOST_AUTO_LINK_TAGGED)
 endif()
 
-target_include_directories(RayOn PUBLIC "${RAYON_HEADER_DIR}")
+target_include_directories(Rayon PUBLIC "${RAYON_HEADER_DIR}")
 
 # Files
-add_custom_command(TARGET RayOn POST_BUILD
+add_custom_command(TARGET Rayon POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory
         "${CMAKE_CURRENT_LIST_DIR}/files"
-        $<TARGET_FILE_DIR:RayOn>/files)
+        $<TARGET_FILE_DIR:Rayon>/files)
 
 if (WIN32)
 # Copies again the files for Windows
-    add_custom_command(TARGET RayOn POST_BUILD
+    add_custom_command(TARGET Rayon POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory
             "${CMAKE_CURRENT_LIST_DIR}/files"
             ${CMAKE_BINARY_DIR}/files)

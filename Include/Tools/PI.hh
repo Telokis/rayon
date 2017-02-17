@@ -5,12 +5,12 @@
 
 #include "Types.hh"
 
-namespace RayOn
+namespace Rayon
 {
   namespace Globals
   {
     static const constexpr Float_t PI = 3.14159265358979323846;
   } // namespace Globals
-} // namespace RayOn
+} // namespace Rayon
 
 #endif // RAYON_TOOLS_HELPERS_PI_HH

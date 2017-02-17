@@ -5,7 +5,7 @@
 
 #include "ImageFileHandlers/ImageFileHandler_PNG.hh"
 
-namespace RayOn
+namespace Rayon
 {
   bool ImageFileHandler_PNG::readFromFile(const char* path, RawImage& readInto) const
   {
@@ -28,4 +28,4 @@ namespace RayOn
   {
     return "png";
   }
-} // namespace RayOn
+} // namespace Rayon

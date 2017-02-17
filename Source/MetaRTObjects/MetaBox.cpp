@@ -1,7 +1,7 @@
 #include "MetaRTObjects/MetaBox.hh"
 #include "Entities/Objects/Box.hh"
 
-namespace RayOn
+namespace Rayon
 {
   RTObject*    MetaBox::make() const
   {
@@ -12,4 +12,4 @@ namespace RayOn
   {
     return Box::ObjectName;
   }
-} // namespace RayOn
+} // namespace Rayon

@@ -3,7 +3,7 @@
 
 #include <Json.h>
 
-namespace RayOn
+namespace Rayon
 {
   RTObject::RTObject()
   {
@@ -50,4 +50,4 @@ namespace RayOn
     _material.write(root["material"]);
   }
 
-} // namespace RayOn
+} // namespace Rayon

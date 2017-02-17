@@ -6,7 +6,7 @@
 #include <boost/program_options.hpp>
 #include "Tools/Helpers.hh"
 
-namespace RayOn
+namespace Rayon
 {
   class Config
   {
@@ -26,6 +26,6 @@ namespace RayOn
     RAYON_GENERATE_PROPERTY_DECLARATION(Config, uint32, _height, Height)
     RAYON_GENERATE_PROPERTY_DECLARATION(Config, uint32, _threadsCount, ThreadCount)
   };
-} // namespace RayOn
+} // namespace Rayon
 
 #endif // RAYON_CONFIG_HH_

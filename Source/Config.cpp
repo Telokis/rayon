@@ -7,11 +7,11 @@
 namespace po = boost::program_options;
 namespace fs = boost::filesystem;
 
-namespace RayOn
+namespace Rayon
 {
 
   Config::Config()
-    : _description("RayOn options")
+    : _description("Rayon options")
   {
   }
 
@@ -62,7 +62,7 @@ namespace RayOn
     }
     if (_variables.count("version"))
     {
-      std::cout << "RayOn v." << version() << '\n';
+      std::cout << "Rayon v." << version() << '\n';
       return true;
     }
     return false;
@@ -73,4 +73,4 @@ namespace RayOn
   RAYON_GENERATE_PROPERTY_DEFINITION(Config, uint32, _width, Width)
   RAYON_GENERATE_PROPERTY_DEFINITION(Config, uint32, _height, Height)
   RAYON_GENERATE_PROPERTY_DEFINITION(Config, uint32, _threadsCount, ThreadCount)
-} // namespace RayOn
+} // namespace Rayon

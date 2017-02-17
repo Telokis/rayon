@@ -5,7 +5,7 @@
 #include <iostream>
 #include <algorithm>
 
-namespace RayOn
+namespace Rayon
 {
   bool ImageFileHandler::readFromFileBasedOnExtension(const std::string& file,
                                                       RawImage& readInto)
@@ -62,4 +62,4 @@ namespace RayOn
     std::cout << "       Set force to true to default to another handler.\n";
     return false;
   }
-} // namespace RayOn
+} // namespace Rayon

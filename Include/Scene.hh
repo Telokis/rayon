@@ -7,13 +7,13 @@
 #include "CubeMap.hh"
 #include <vector>
 
-namespace RayOn
+namespace Rayon
 {
   class   RTLight;
   struct  IntersectionData;
-} // namespace RayOn
+} // namespace Rayon
 
-namespace RayOn
+namespace Rayon
 {
   /**
    * @brief   The Scene class is used to store lights,
@@ -208,7 +208,7 @@ namespace RayOn
 
     RAYON_GENERATE_PROPERTY_DECLARATION(Scene, Float_t, _ambient, Ambient)
   };
-} // namespace RayOn
+} // namespace Rayon
 
 #endif // RAYON_SCENE_HH_
 

@@ -1,7 +1,7 @@
 #include "Worker.hh"
 #include "IntersectionData.hh"
 
-namespace RayOn
+namespace Rayon
 {
   namespace
   {
@@ -181,4 +181,4 @@ namespace RayOn
     }
   }
 
-} // namespace RayOn
+} // namespace Rayon

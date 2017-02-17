@@ -3,7 +3,7 @@
 
 #include "Entity.hh"
 
-namespace RayOn
+namespace Rayon
 {
   class   Eye : public Entity
   {
@@ -20,6 +20,6 @@ namespace RayOn
 
   private:
   };
-} // namespace RayOn
+} // namespace Rayon
 
 #endif // RAYON_EYE_HH_

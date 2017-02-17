@@ -33,7 +33,7 @@ echo -n $chash >> $filename
 echo "\";" >> $filename
 echo "" >> $filename
 
-echo "const char* RayOn::version()" >> $filename
+echo "const char* Rayon::version()" >> $filename
 echo "{" >> $filename
 echo "  return \"$major.$minor.$build ($chash)\";" >> $filename
 echo "}" >> $filename

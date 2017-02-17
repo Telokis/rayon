@@ -5,7 +5,7 @@
 
 #include <Json.h>
 
-namespace RayOn
+namespace Rayon
 {
   Sphere::Sphere(Float_t radius)
     : _radius(radius)
@@ -73,4 +73,4 @@ namespace RayOn
     writeVal(root, "radius", _radius, 1);
   }
 
-} // namespace RayOn
+} // namespace Rayon

@@ -5,7 +5,7 @@
 
 #include "Tools/Types.hh"
 
-namespace RayOn
+namespace Rayon
 {
   class RTObject;
   class Material;
@@ -34,6 +34,6 @@ namespace RayOn
     Material*   material;
     bool        isInside;
   };
-} // namespace RayOn
+} // namespace Rayon
 
 #endif // RAYON_INTERSECTIONDATA_HH_

@@ -3,7 +3,7 @@
 #ifndef RAYON_TOOLS_HELPERS_POW_HH
 #define RAYON_TOOLS_HELPERS_POW_HH
 
-namespace RayOn
+namespace Rayon
 {
   namespace Tools
   {
@@ -46,6 +46,6 @@ namespace RayOn
       return Pow<3>(n);
     }
   } // namespace Tools
-} // namespace RayOn
+} // namespace Rayon
 
 #endif // RAYON_TOOLS_HELPERS_POW_HH

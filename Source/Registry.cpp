@@ -1,10 +1,10 @@
 #include "Registry.hh"
-#include "RayOn.hh"
+#include "Rayon.hh"
 
 #include <iostream>
 #include <Json.h>
 
-namespace RayOn
+namespace Rayon
 {
   Registry::Registry()
   {
@@ -77,4 +77,4 @@ namespace RayOn
     return _metaRTObjects;
   }
 
-} // namespace RayOn
+} // namespace Rayon

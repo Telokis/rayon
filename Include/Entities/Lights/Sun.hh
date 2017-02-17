@@ -6,7 +6,7 @@
 
 #include "Entities/Lights/Light.hh"
 
-namespace RayOn
+namespace Rayon
 {
   /**
    * @brief   The @ref Sun class represents a point light
@@ -82,6 +82,6 @@ namespace RayOn
 
     RAYON_GENERATE_PROPERTY_DECLARATION(Sun, Float_t, _power, Power)
   };
-} // namespace RayOn
+} // namespace Rayon
 
 #endif // RAYON_SUN_HH_

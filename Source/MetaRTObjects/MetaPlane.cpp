@@ -1,7 +1,7 @@
 #include "MetaRTObjects/MetaPlane.hh"
 #include "Entities/Objects/Plane.hh"
 
-namespace RayOn
+namespace Rayon
 {
   RTObject*    MetaPlane::make() const
   {
@@ -12,4 +12,4 @@ namespace RayOn
   {
     return Plane::ObjectName;
   }
-} // namespace RayOn
+} // namespace Rayon

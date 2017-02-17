@@ -4,7 +4,7 @@
 #include <iostream>
 #include <Json.h>
 
-namespace RayOn
+namespace Rayon
 {
 #define RAYON_DECLARE(side, name) \
     {Side::side, #name}
@@ -187,4 +187,4 @@ namespace RayOn
         root[sideToStr.at(static_cast<Side>(i))] = str;
     }
   }
-} // namespace RayOn
+} // namespace Rayon

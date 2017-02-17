@@ -7,7 +7,7 @@
  * @brief This namespace is used to store
  * equation solvers.
  */
-namespace RayOn
+namespace Rayon
 {
 namespace Tools
 {
@@ -39,6 +39,6 @@ namespace Solver
                        Float_t* args);
 } // namespace Solver
 } // namespace Tools
-} // namespace RayOn
+} // namespace Rayon
 
 #endif // RAYON_SOLVER_SECOND_HH_

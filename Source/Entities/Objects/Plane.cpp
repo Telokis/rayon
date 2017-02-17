@@ -4,7 +4,7 @@
 
 #include <Json.h>
 
-namespace RayOn
+namespace Rayon
 {
   Plane::Plane()
   {
@@ -61,4 +61,4 @@ namespace RayOn
     ParentType::write(root);
   }
 
-} // namespace RayOn
+} // namespace Rayon

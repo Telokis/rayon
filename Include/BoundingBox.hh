@@ -7,7 +7,7 @@
 #include "Tools/Helpers.hh"
 #include "Ray.hh"
 
-namespace RayOn
+namespace Rayon
 {
   class BoundingBox
   {
@@ -26,6 +26,6 @@ namespace RayOn
     mutable CachedValue<Vec_t> _size;
   };
 
-} // namespace RayOn
+} // namespace Rayon
 
 #endif // RAYON_TOOLS_BOUNDINGBOX_HH_

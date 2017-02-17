@@ -1,6 +1,6 @@
 #include "RawImage.hh"
 
-namespace RayOn
+namespace Rayon
 {
   RawImage::RawImage(const uint32 width, const uint32 height)
     : _width(width)
@@ -84,4 +84,4 @@ namespace RayOn
     }
   }
 
-} // namespace RayOn
+} // namespace Rayon

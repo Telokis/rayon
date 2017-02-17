@@ -1,7 +1,7 @@
 #include "MetaRTLights/MetaSun.hh"
 #include "Entities/Lights/Sun.hh"
 
-namespace RayOn
+namespace Rayon
 {
   RTLight*    MetaSun::make() const
   {
@@ -12,4 +12,4 @@ namespace RayOn
   {
     return Sun::LightName;
   }
-} // namespace RayOn
+} // namespace Rayon

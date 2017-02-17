@@ -6,7 +6,7 @@
 #include <string>
 #include <Json-forwards.h>
 
-namespace RayOn
+namespace Rayon
 {
   class Scene;
   class Material;
@@ -35,6 +35,6 @@ namespace RayOn
                 Color& color, const Color& def);
   void  readVal(const Json::Value& parent, const std::string& name,
                 Vec_t& vec, const Vec_t& def);
-} // namespace RayOn
+} // namespace Rayon
 
 #endif // RAYON_SCENEPARSE_HH_

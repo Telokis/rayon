@@ -6,7 +6,7 @@
 #include "Config.hh"
 #include "Scene.hh"
 
-namespace RayOn
+namespace Rayon
 {
   inline Config& config()
   {
@@ -14,10 +14,10 @@ namespace RayOn
     return config;
   }
 
-  class RayOn
+  class Rayon
   {
   public:
-    RayOn(int ac, char** av);
+    Rayon(int ac, char** av);
 
   public:
     int run();
@@ -25,6 +25,6 @@ namespace RayOn
   private:
     Scene _scene;
   };
-} // namespace RayOn
+} // namespace Rayon
 
 #endif // RAYON_RAYON_HH_

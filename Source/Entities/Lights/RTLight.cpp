@@ -4,7 +4,7 @@
 
 #include <Json.h>
 
-namespace RayOn
+namespace Rayon
 {
   RTLight::RTLight(const Color &color)
     : _color(color)
@@ -75,4 +75,4 @@ namespace RayOn
     writeVal(root, "color", _color, 0xffffffff);
   }
 
-} // namespace RayOn
+} // namespace Rayon

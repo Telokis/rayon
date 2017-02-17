@@ -5,7 +5,7 @@
 
 #include "ImageFileHandlers/ImageFileHandler_TGA.hh"
 
-namespace RayOn
+namespace Rayon
 {
   bool ImageFileHandler_TGA::readFromFile(const char* path, RawImage& readInto) const
   {
@@ -27,4 +27,4 @@ namespace RayOn
   {
     return "tga";
   }
-} // namespace RayOn
+} // namespace Rayon

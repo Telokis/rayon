@@ -4,7 +4,7 @@
 #include "Tools/Helpers.hh"
 #include <Json-forwards.h>
 
-namespace RayOn
+namespace Rayon
 {
   class   Entity
   {
@@ -40,6 +40,6 @@ namespace RayOn
     Mat_t _indirectMatrix;
   };
 
-} // namespace RayOn
+} // namespace Rayon
 
 #endif // RAYON_ENTITY_HH_

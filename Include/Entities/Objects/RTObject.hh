@@ -7,12 +7,12 @@
 #include "Material.hh"
 #include "IntersectionData.hh"
 
-namespace RayOn
+namespace Rayon
 {
   class Material;
 }
 
-namespace RayOn
+namespace Rayon
 {
   class   RTObject : public Entity
   {
@@ -42,6 +42,6 @@ namespace RayOn
     Material& getMaterial();
     const Material& getMaterial() const;
   };
-} // namespace RayOn
+} // namespace Rayon
 
 #endif // RAYON_RTOBJECT_HH_

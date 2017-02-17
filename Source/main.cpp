@@ -17,23 +17,23 @@
 #include "MetaRTObjects/MetaBox.hh"
 
 #include "Ray.hh"
-#include "RayOn.hh"
+#include "Rayon.hh"
 #include "Registry.hh"
 
 #include <iostream>
 
 void  setupDefaultRegistry()
 {
-  RayOn::registry().registerImageFileHandler(new RayOn::ImageFileHandler_BMP);
-  RayOn::registry().registerImageFileHandler(new RayOn::ImageFileHandler_PNG);
-  RayOn::registry().registerImageFileHandler(new RayOn::ImageFileHandler_TGA);
+  Rayon::registry().registerImageFileHandler(new Rayon::ImageFileHandler_BMP);
+  Rayon::registry().registerImageFileHandler(new Rayon::ImageFileHandler_PNG);
+  Rayon::registry().registerImageFileHandler(new Rayon::ImageFileHandler_TGA);
 
-  RayOn::registry().registerMetaRTLight(new RayOn::MetaSun);
+  Rayon::registry().registerMetaRTLight(new Rayon::MetaSun);
 
-  RayOn::registry().registerMetaRTObject(new RayOn::MetaSphere);
-  RayOn::registry().registerMetaRTObject(new RayOn::MetaPlane);
-  RayOn::registry().registerMetaRTObject(new RayOn::MetaRectangle);
-  RayOn::registry().registerMetaRTObject(new RayOn::MetaBox);
+  Rayon::registry().registerMetaRTObject(new Rayon::MetaSphere);
+  Rayon::registry().registerMetaRTObject(new Rayon::MetaPlane);
+  Rayon::registry().registerMetaRTObject(new Rayon::MetaRectangle);
+  Rayon::registry().registerMetaRTObject(new Rayon::MetaBox);
 }
 
 int  main(int ac, char** av)
@@ -42,7 +42,7 @@ int  main(int ac, char** av)
   {
     std::cout << std::hex;
     setupDefaultRegistry();
-    RayOn::RayOn  app(ac, av);
+    Rayon::Rayon  app(ac, av);
     return app.run();
   }
   catch (std::exception& except)

@@ -5,7 +5,7 @@
 
 #include "ImageFileHandlers/ImageFileHandler_BMP.hh"
 
-namespace RayOn
+namespace Rayon
 {
   bool ImageFileHandler_BMP::readFromFile(const char* path, RawImage& readInto) const
   {
@@ -27,4 +27,4 @@ namespace RayOn
   {
     return "bmp";
   }
-} // namespace RayOn
+} // namespace Rayon

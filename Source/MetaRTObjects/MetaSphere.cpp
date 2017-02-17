@@ -1,7 +1,7 @@
 #include "MetaRTObjects/MetaSphere.hh"
 #include "Entities/Objects/Sphere.hh"
 
-namespace RayOn
+namespace Rayon
 {
   RTObject*    MetaSphere::make() const
   {
@@ -12,4 +12,4 @@ namespace RayOn
   {
     return Sphere::ObjectName;
   }
-} // namespace RayOn
+} // namespace Rayon

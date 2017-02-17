@@ -9,7 +9,7 @@
 
 namespace fs = boost::filesystem;
 
-namespace RayOn
+namespace Rayon
 {
   namespace
   {
@@ -264,4 +264,4 @@ namespace RayOn
     else
       vec = def;
   }
-} // namespace RayOn
+} // namespace Rayon

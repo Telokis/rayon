@@ -5,7 +5,7 @@
 
 #include "IImageFileHandler.hh"
 
-namespace RayOn
+namespace Rayon
 {
   class ImageFileHandler_PNG : public IImageFileHandler
   {
@@ -16,6 +16,6 @@ namespace RayOn
 
     const char* extensionName() const final;
   };
-} // namespace RayOn
+} // namespace Rayon
 
 #endif // RAYON_IMAGEFILE_HANDLER_PNG_HH_

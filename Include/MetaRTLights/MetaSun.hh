@@ -5,7 +5,7 @@
 
 #include "MetaRTLights/IMetaRTLight.hh"
 
-namespace RayOn
+namespace Rayon
 {
   class MetaSun : public IMetaRTLight
   {
@@ -14,6 +14,6 @@ namespace RayOn
 
     const char* lightName() const final;
   };
-} // namespace RayOn
+} // namespace Rayon
 
 #endif // RAYON_META_SUN_HH_

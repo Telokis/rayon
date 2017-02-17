@@ -1,6 +1,6 @@
 #include "BoundingBox.hh"
 
-namespace RayOn
+namespace Rayon
 {
 
   BoundingBox::BoundingBox()
@@ -57,4 +57,4 @@ namespace RayOn
     return tmax > Tools::Max(tmin, 0.0);
   }
 
-} // namespace RayOn
+} // namespace Rayon

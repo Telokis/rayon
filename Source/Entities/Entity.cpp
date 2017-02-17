@@ -2,7 +2,7 @@
 #include "SceneParse.hh"
 #include <Json.h>
 
-namespace RayOn
+namespace Rayon
 {
   Entity::Entity()
     : _pos(0, 0, 0), _rot(0, 0, 0)
@@ -111,4 +111,4 @@ namespace RayOn
   RAYON_GENERATE_Vec_t_GETTERS_SETTERS_DEFINITION(Entity, _pos, Pos)
   RAYON_GENERATE_Vec_t_GETTERS_SETTERS_DEFINITION(Entity, _rot, Rot)
 
-} // namespace RayOn
+} // namespace Rayon

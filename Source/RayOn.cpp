@@ -1,4 +1,4 @@
-#include "RayOn.hh"
+#include "Rayon.hh"
 #include "Version.hh"
 #include "Worker.hh"
 #include "RawImage.hh"
@@ -15,10 +15,10 @@
 #include <thread>
 #include <vector>
 
-namespace RayOn
+namespace Rayon
 {
 
-  RayOn::RayOn(int ac, char** av)
+  Rayon::Rayon(int ac, char** av)
   {
     config().init(ac, av);
 
@@ -26,7 +26,7 @@ namespace RayOn
       sceneRead(_scene, config().getInputPath());
   }
 
-  int RayOn::run()
+  int Rayon::run()
   {
     if (config().handleStoppingArgs())
       return 0;
@@ -54,4 +54,4 @@ namespace RayOn
     return 0;
   }
 
-} // namespace RayOn
+} // namespace Rayon

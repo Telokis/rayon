@@ -5,12 +5,12 @@
 #include "Color.hh"
 #include "Entities/Objects/RTObject.hh"
 
-namespace RayOn
+namespace Rayon
 {
   class Scene;
-} // namespace RayOn
+} // namespace Rayon
 
-namespace RayOn
+namespace Rayon
 {
   class   RTLight : public Entity
   {
@@ -59,6 +59,6 @@ namespace RayOn
 
     RAYON_GENERATE_PROPERTY_DECLARATION(RTLight, Color, _color, Color)
   };
-} // namespace RayOn
+} // namespace Rayon
 
 #endif // RAYON_RTLIGHT_HH_

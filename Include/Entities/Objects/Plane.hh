@@ -3,7 +3,7 @@
 
 #include "Object.hh"
 
-namespace RayOn
+namespace Rayon
 {
 
   class   Plane : public Object<Plane>
@@ -33,6 +33,6 @@ namespace RayOn
     void  preprocessImpl();
   };
 
-} // namespace RayOn
+} // namespace Rayon
 
 #endif // RAYON_PLANE_HH_

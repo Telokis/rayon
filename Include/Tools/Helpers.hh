@@ -9,13 +9,13 @@
 #include <algorithm>
 #include <iostream>
 
-namespace RayOn
+namespace Rayon
 {
   namespace Tools
   {
     /**
      * @brief       Checks whether @a a is 0 or not based
-     *              on @ref RayOn::Globals::Epsilon
+     *              on @ref Rayon::Globals::Epsilon
      * @param[in] a Value to test.
      * @return      True if @a a is considered 0.
      *              False otherwise.
@@ -156,7 +156,7 @@ namespace RayOn
     }
 
   } // namespace Tools
-} // namespace RayOn
+} // namespace Rayon
 
 /**
  * @brief       Generates code for a property declaration inside a class.

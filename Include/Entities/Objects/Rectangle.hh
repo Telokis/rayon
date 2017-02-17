@@ -3,7 +3,7 @@
 
 #include "Object.hh"
 
-namespace RayOn
+namespace Rayon
 {
 
   class   Rectangle : public Object<Rectangle>
@@ -40,6 +40,6 @@ namespace RayOn
     RAYON_GENERATE_PROPERTY_DECLARATION(Rectangle, Float_t, _height, Height)
   };
 
-} // namespace RayOn
+} // namespace Rayon
 
 #endif // RAYON_RECTANGLE_HH_

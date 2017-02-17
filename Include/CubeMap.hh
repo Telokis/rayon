@@ -10,7 +10,7 @@
 #include <map>
 #include <Json-forwards.h>
 
-namespace RayOn
+namespace Rayon
 {
   enum class Side : size_t
   {
@@ -42,6 +42,6 @@ namespace RayOn
     std::array<std::string, 6> _paths;
     uint32  _size;
   };
-} // namespace RayOn
+} // namespace Rayon
 
 #endif // RAYON_CUBEMAP_HH_

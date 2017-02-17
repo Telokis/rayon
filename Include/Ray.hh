@@ -6,7 +6,7 @@
 #include "Tools/Helpers.hh"
 #include "CachedValue.hh"
 
-namespace RayOn
+namespace Rayon
 {
   enum class RayType : size_t
   {
@@ -100,6 +100,6 @@ namespace RayOn
     RayType _type;
     mutable CachedValue<Vec_t>  _invDirection;
   };
-} // namespace RayOn
+} // namespace Rayon
 
 #endif // RAYON_RAY_HH_

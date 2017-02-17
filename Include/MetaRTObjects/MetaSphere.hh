@@ -5,7 +5,7 @@
 
 #include "MetaRTObjects/IMetaRTObject.hh"
 
-namespace RayOn
+namespace Rayon
 {
   class MetaSphere : public IMetaRTObject
   {
@@ -14,6 +14,6 @@ namespace RayOn
 
     const char* objectName() const final;
   };
-} // namespace RayOn
+} // namespace Rayon
 
 #endif // RAYON_META_SPHERE_HH_
