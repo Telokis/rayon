@@ -30,7 +30,8 @@ namespace RayOn
 
   Color       Sun::applyImpl(const Color& color,
                              const Scene& scene,
-                             const IntersectionData& data) const
+                             const IntersectionData& data,
+                             Color& specular) const
   {
     Float_t cos_a;
     Vec_t   light_vec;
@@ -43,6 +44,7 @@ namespace RayOn
     cos_a = Tools::DotProduct(light_vec, data.normal);
     if (cos_a < Globals::Epsilon)
       return 0;
+    specular += getSpecular(light_vec, scene, _color, data);
     return color * cos_a * _power;
   }
 

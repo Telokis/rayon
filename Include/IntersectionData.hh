@@ -9,6 +9,7 @@ namespace RayOn
 {
   class RTObject;
   class Material;
+  class Ray;
 
   struct IntersectionData
   {
@@ -16,6 +17,7 @@ namespace RayOn
       : localPoint(0)
       , point(0)
       , normal(0)
+      , ray(nullptr)
       , k(0)
       , obj(nullptr)
       , material(nullptr)
@@ -23,13 +25,14 @@ namespace RayOn
     {
     }
 
-    Vec_t     localPoint;
-    Vec_t     point;
-    Vec_t     normal;
-    Float_t   k;
-    RTObject* obj;
-    Material* material;
-    bool      isInside;
+    Vec_t       localPoint;
+    Vec_t       point;
+    Vec_t       normal;
+    const Ray*  ray;
+    Float_t     k;
+    RTObject*   obj;
+    Material*   material;
+    bool        isInside;
   };
 } // namespace RayOn
 

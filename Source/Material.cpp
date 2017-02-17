@@ -33,6 +33,7 @@ namespace RayOn
     , _flags(0)
     , _glossiness(0)
     , _ambient(-1)
+    , _shininess(0)
   {
   }
 
@@ -87,6 +88,7 @@ namespace RayOn
     readVal(root, "glossiness", _glossiness, 0);
     readVal(root, "refraction", _refraction, 1);
     readVal(root, "transparency", _transparency, 0);
+    readVal(root, "shininess", _shininess, 0);
   }
 
   void Material::write(Json::Value& root) const
@@ -104,6 +106,7 @@ namespace RayOn
     writeVal(root, "glossiness", _glossiness, 0);
     writeVal(root, "refraction", _refraction, 1);
     writeVal(root, "transparency", _transparency, 0);
+    writeVal(root, "shininess", _shininess, 0);
   }
 
   RAYON_GENERATE_PROPERTY_DEFINITION(Material, Color, _color, Color)
@@ -112,4 +115,5 @@ namespace RayOn
   RAYON_GENERATE_PROPERTY_DEFINITION(Material, Float_t, _refraction, Refraction)
   RAYON_GENERATE_PROPERTY_DEFINITION(Material, Float_t, _glossiness, Glossiness)
   RAYON_GENERATE_PROPERTY_DEFINITION(Material, Float_t, _ambient, Ambient)
+  RAYON_GENERATE_PROPERTY_DEFINITION(Material, Float_t, _shininess, Shininess)
 } // namespace RayOn

@@ -96,7 +96,18 @@ namespace RayOn
       {"green", 0xff00},
       {"blue", 0xff},
       {"swimming pool", 0xFF67E6EC},
-      {"deeppink4", 0xFF8B0A50}
+      {"deeppink4", 0xFF8B0A50},
+      {"silver", 0xC0C0C0},
+      {"gray", 0x808080},
+      {"maroon", 0x800000},
+      {"yellow", 0xFFFF00},
+      {"olive", 0x808000},
+      {"lime", 0x00FF00},
+      {"aqua", 0x00FFFF},
+      {"teal", 0x008080},
+      {"navy", 0x000080},
+      {"fuchsia", 0xFF00FF},
+      {"purple", 0x800080}
     };
 
     return cols;

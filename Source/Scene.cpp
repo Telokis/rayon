@@ -147,12 +147,13 @@ namespace RayOn
       return _lights;
   }
 
-    Color   Scene::processLights(const IntersectionData& data) const
+  Color   Scene::processLights(const IntersectionData& data,
+                               Color& specular) const
   {
     const Color color = data.material->getColor();
     Color result;
     for (size_t i = 0; i < _lights.size(); ++i)
-      result += _lights[i]->apply(color, *this, data);
+      result += _lights[i]->apply(color, *this, data, specular);
     return result;
   }
 
@@ -160,13 +161,13 @@ namespace RayOn
   {
     for (auto& item : _objects)
     {
-      item->preprocess();
       item->computeRotation();
+      item->preprocess();
     }
     for (auto& item : _lights)
     {
-      item->preprocess();
       item->computeRotation();
+      item->preprocess();
     }
     _eye.computeRotation();
   }

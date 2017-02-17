@@ -121,15 +121,16 @@ namespace RayOn
       Color color = data.material->getColor();
       Color ambient = color * scene.getAmbient();
       Color lighting;
+      Color specular;
 
       if (data.material->getAmbient() > -Globals::Epsilon)
         ambient = color * data.material->getAmbient();
       if (!data.material->testFlag(Flags::NoShading))
-        lighting = scene.processLights(data);
+        lighting = scene.processLights(data, specular);
       Color reflectionRefraction = handleReflectionAndRefraction(scene, ray, data, depth);
 
       Float_t coef = Tools::Max(data.material->getTransparency(), data.material->getReflexion());
-      return (ambient + lighting) * (1.0 - coef) + reflectionRefraction * coef;
+      return specular + (ambient + lighting) * (1.0 - coef) + reflectionRefraction * coef;
     }
 
     Color inter(const Scene& scene,
@@ -144,7 +145,8 @@ namespace RayOn
         data.material = &data.obj->getMaterial();
         data.point = ray.evaluate(data.k);
         data.obj->fillData(data);
-        if (data.isInside)
+        data.ray = &ray;
+          if (data.isInside)
           data.normal *= -1;
         return getColor(scene, ray, data, depth);
       }

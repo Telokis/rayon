@@ -39,6 +39,11 @@ namespace RayOn
                        const Vec_t& point,
                        RTObject* obj) const;
 
+    Color    getSpecular(const Vec_t& lightVec,
+                         const Scene& scene,
+                         const Color& lightColor,
+                         const IntersectionData& data) const;
+
   public:
     void    read(const Json::Value& root) override;
     void    write(Json::Value& root) const override;
@@ -48,7 +53,8 @@ namespace RayOn
     virtual RTLight     *clone() const = 0;
     virtual Color       apply(const Color& color,
                               const Scene& scene,
-                              const IntersectionData& data) const = 0;
+                              const IntersectionData& data,
+                              Color& specular) const = 0;
     virtual const char* name() const = 0;
 
     RAYON_GENERATE_PROPERTY_DECLARATION(RTLight, Color, _color, Color)

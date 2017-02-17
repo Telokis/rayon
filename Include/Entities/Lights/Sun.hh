@@ -77,7 +77,8 @@ namespace RayOn
      */
     Color   applyImpl(const Color& color,
                       const Scene& scene,
-                      const IntersectionData& data) const;
+                      const IntersectionData& data,
+                      Color& specular) const;
 
     RAYON_GENERATE_PROPERTY_DECLARATION(Sun, Float_t, _power, Power)
   };

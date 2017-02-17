@@ -44,9 +44,10 @@ namespace RayOn
 
     Color       apply(const Color& color,
                       const Scene& scene,
-                      const IntersectionData& data) const final
+                      const IntersectionData& data,
+                      Color& specular) const final
     {
-      return static_cast<Derived const*>(this)->applyImpl(color, scene, data);
+      return static_cast<Derived const*>(this)->applyImpl(color, scene, data, specular);
     }
 
     void        preprocess() final

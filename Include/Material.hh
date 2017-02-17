@@ -48,6 +48,7 @@ namespace RayOn
     RAYON_GENERATE_PROPERTY_DECLARATION(Material, Float_t, _refraction, Refraction)
     RAYON_GENERATE_PROPERTY_DECLARATION(Material, Float_t, _glossiness, Glossiness)
     RAYON_GENERATE_PROPERTY_DECLARATION(Material, Float_t, _ambient, Ambient)
+    RAYON_GENERATE_PROPERTY_DECLARATION(Material, Float_t, _shininess, Shininess)
 
   private:
     std::bitset<static_cast<size_t>(Flags::COUNT)>  _flags;

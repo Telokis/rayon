@@ -48,6 +48,19 @@ namespace RayOn
     return false;
   }
 
+  Color    RTLight::getSpecular(const Vec_t& lightVec,
+                                const Scene& scene,
+                                const Color& lightColor,
+                                const IntersectionData& data) const
+  {
+    Vec_t   refLight = Tools::Reflect(lightVec, data.normal);
+    Float_t dot = Tools::DotProduct(data.ray->getDirection(), refLight);
+
+    if (dot > Globals::Epsilon)
+      return lightColor * Tools::Pow<15>(dot) * data.material->getShininess();
+    return 0;
+  }
+
   RAYON_GENERATE_PROPERTY_DEFINITION(RTLight, Color, _color, Color)
 
   void RTLight::read(const Json::Value& root)

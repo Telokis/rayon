@@ -169,10 +169,12 @@ namespace RayOn
      *          If no object hides the light, computes light's
      *          color influence. Otherwise, uses black for the
      *          current light.
-     * @param[in] data The data.
+     * @param[in]   data      The data.
+     * @param[out]  specular  The specular color.
      * @return  The computed color to use.
      */
-    Color       processLights(const IntersectionData& data) const;
+    Color       processLights(const IntersectionData& data,
+                              Color& specular) const;
 
   public:
     /**
@@ -203,7 +205,7 @@ namespace RayOn
     LightsContainer   _lights;    /**< Collection of @ref RTLight * */
     Eye               _eye;       /**< @ref Eye of the Scene */
     CubeMap           _cubemap;   /**< @ref CubeMap of the Scene */
-    
+
     RAYON_GENERATE_PROPERTY_DECLARATION(Scene, Float_t, _ambient, Ambient)
   };
 } // namespace RayOn
