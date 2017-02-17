@@ -53,6 +53,8 @@ namespace Rayon
                                 const Color& lightColor,
                                 const IntersectionData& data) const
   {
+    if (data.material->getShininess() < Globals::Epsilon)
+      return 0;
     Vec_t   refLight = Tools::Reflect(lightVec, data.normal);
     Float_t dot = Tools::DotProduct(data.ray->getDirection(), refLight);
 
