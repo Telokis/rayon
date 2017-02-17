@@ -57,7 +57,7 @@ namespace RayOn
     Float_t dot = Tools::DotProduct(data.ray->getDirection(), refLight);
 
     if (dot > Globals::Epsilon)
-      return lightColor * Tools::Pow<15>(dot) * data.material->getShininess();
+      return lightColor * std::pow(dot, data.material->getShininess());
     return 0;
   }
 

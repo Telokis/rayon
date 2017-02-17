@@ -1,0 +1,157 @@
+{
+	"eye" : 
+	{
+		"position" : 
+		{
+			"y" : -5,
+			"z" : -4
+		}
+	},
+	"lights" : 
+	[
+		{
+			"position" : 
+			{
+				"x" : 0,
+				"y" : 19,
+				"z" : 0
+			},
+			"color":"white",
+			"type" : "Sun"
+		}
+	],
+	"objects" : 
+	[
+		{
+			"material" : 
+			{
+				"color" : "swimming pool",
+				"shininess" : 1
+			},
+			"position" : 
+			{
+				"z":30
+			},
+			"rotation" : 
+			{
+				"x":90
+			},
+			"width":60,
+			"height":40,
+			"type" : "Rectangle"
+		},
+		{
+			"material" : 
+			{
+				"color" : "red",
+				"shininess" : 1
+			},
+			"position" : 
+			{
+				"z":30,
+				"x":20
+			},
+			"rotation" : 
+			{
+				"x":90,
+				"y":90
+			},
+			"width":40,
+			"height":40,
+			"type" : "Rectangle"
+		},
+		{
+			"material" : 
+			{
+				"color" : "deeppink4",
+				"ambient":1,
+				"shininess" : 1
+			},
+			"position" : 
+			{
+				"z":30,
+				"x":-20
+			},
+			"rotation" : 
+			{
+				"x":90,
+				"y":-90
+			},
+			"width":40,
+			"height":40,
+			"type" : "Rectangle"
+		},
+		{
+			"material" : 
+			{
+				"color" : "yellow",
+				"shininess" : 1
+			},
+			"position" : 
+			{
+				"z":30,
+				"y":-20
+			},
+			"width":40,
+			"height":40,
+			"type" : "Rectangle"
+		},
+		{
+			"material" : 
+			{
+				"color" : "navy",
+				"shininess" : 1
+			},
+			"position" : 
+			{
+				"z":30,
+				"y":20
+			},
+			"rotation" : 
+			{
+				"x":180
+			},
+			"width":40,
+			"height":40,
+			"type" : "Rectangle"
+		},
+		{
+			"material" : 
+			{
+				"color" : "deeppink4",
+				"reflexion" : 1,
+				"shininess" : 1
+			},
+			"position" : 
+			{
+				"x":7,
+				"y":-17,
+				"z":18
+			},
+			"radius":3,
+			"type" : "Sphere"
+		},
+		{
+			"material" : 
+			{
+				"color" : "purple",
+				"reflexion" : 0.9,
+				"shininess" : 1
+			},
+			"position" : 
+			{
+				"x":-13,
+				"y":-10,
+				"z":20
+			},
+			"rotation" : 
+			{
+				"y":60
+			},
+			"width":7,
+			"height":20,
+			"depth":1,
+			"type" : "Box"
+		}
+	]
+}
