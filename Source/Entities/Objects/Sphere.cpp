@@ -46,6 +46,8 @@ namespace RayOn
                               Pow2(tmp_pos.x) + Pow2(tmp_pos.y) + Pow2(tmp_pos.z) - Pow2(_radius)))
     {
       data.k = Tools::Smallest(results[0], results[1]);
+      if (data.k == results[1])
+        data.isInside = true;
       data.localPoint = tmp_pos + data.k * tmp_dir;
       return data.k != Globals::Invalid;
     }
@@ -62,13 +64,13 @@ namespace RayOn
   void Sphere::read(const Json::Value& root)
   {
     ParentType::read(root);
-    readVal(root, "radius", _radius);
+    readVal(root, "radius", _radius, 1);
   }
 
   void Sphere::write(Json::Value& root) const
   {
     ParentType::write(root);
-    writeVal(root, "radius", _radius);
+    writeVal(root, "radius", _radius, 1);
   }
 
 } // namespace RayOn

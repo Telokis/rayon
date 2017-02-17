@@ -84,14 +84,14 @@ namespace RayOn
 
   void Entity::read(const Json::Value& root)
   {
-    readVal(root, "position", _pos);
-    readVal(root, "rotation", _rot);
+    readVal(root, "position", _pos, {0, 0, 0});
+    readVal(root, "rotation", _rot, {0, 0, 0});
   }
 
   void Entity::write(Json::Value& root) const
   {
-    writeVal(root, "position", _pos);
-    writeVal(root, "rotation", _rot);
+    writeVal(root, "position", _pos, {0, 0, 0});
+    writeVal(root, "rotation", _rot, {0, 0, 0});
   }
 
   Vec_t      Entity::directRotation(const Vec_t &vec) const

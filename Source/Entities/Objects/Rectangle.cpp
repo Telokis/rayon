@@ -77,15 +77,15 @@ namespace RayOn
   void Rectangle::read(const Json::Value& root)
   {
     ParentType::read(root);
-    readVal(root, "width", _width);
-    readVal(root, "height", _height);
+    readVal(root, "width", _width, 1);
+    readVal(root, "height", _height, 1);
   }
 
   void Rectangle::write(Json::Value& root) const
   {
     ParentType::write(root);
-    writeVal(root, "width", _width);
-    writeVal(root, "height", _height);
+    writeVal(root, "width", _width, 1);
+    writeVal(root, "height", _height, 1);
   }
 
 } // namespace RayOn

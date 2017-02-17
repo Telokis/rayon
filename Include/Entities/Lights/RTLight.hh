@@ -23,6 +23,22 @@ namespace RayOn
             const Color &color = 0xffffffff);
     virtual ~RTLight();
 
+  protected:
+    /**
+    * @brief       Internally used to check shadows.
+    *              Iterates through all objects in the given @a scene
+    *              and tests if there is an object between @a point and
+    *              the @ref Sun's position.
+    * @param scene The scene to use to retrieve @ref RTObject.
+    * @param point The point from which we should "look".
+    * @return      True if an opaque object is in the way.
+    *              False if no opaque object were found.
+    */
+    bool    doesShadow(const Vec_t& pos,
+                       const Scene& scene,
+                       const Vec_t& point,
+                       RTObject* obj) const;
+
   public:
     void    read(const Json::Value& root) override;
     void    write(Json::Value& root) const override;

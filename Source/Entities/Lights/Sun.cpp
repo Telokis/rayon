@@ -28,25 +28,6 @@ namespace RayOn
   {
   }
 
-  bool    Sun::doesShadow(const Scene& scene,
-                          const Vec_t& point,
-                          RTObject* obj) const
-  {
-    Vec_t   light_vec(_pos - point);
-    Vec_t   tmp_pos(point + light_vec * Globals::Epsilon);
-    IntersectionData  data;
-
-    data.k = Globals::Invalid;
-    Ray shadowRay(RayType::Shadow, tmp_pos, light_vec);
-
-    for (const auto& object : scene.objects())
-    {
-      if (obj != object && object->inter(shadowRay, data) && data.k < 1.0)
-        return true;
-    }
-    return false;
-  }
-
   Color       Sun::applyImpl(const Color& color,
                              const Scene& scene,
                              const IntersectionData& data) const
@@ -54,7 +35,7 @@ namespace RayOn
     Float_t cos_a;
     Vec_t   light_vec;
 
-    if (doesShadow(scene, data.point, data.obj))
+    if (doesShadow(_pos, scene, data.point, data.obj))
       return 0;
     cos_a = 0;
     light_vec = getPos() - data.point;
@@ -70,13 +51,13 @@ namespace RayOn
   void Sun::read(const Json::Value& root)
   {
     ParentType::read(root);
-    readVal(root, "power", _power);
+    readVal(root, "power", _power, 0.5);
   }
 
   void Sun::write(Json::Value& root) const
   {
     ParentType::write(root);
-    writeVal(root, "power", _power);
+    writeVal(root, "power", _power, 0.5);
   }
 
 } // namespace RayOn

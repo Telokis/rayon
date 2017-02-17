@@ -3,12 +3,12 @@
 #ifndef RAYON_INTERSECTIONDATA_HH_
 #define RAYON_INTERSECTIONDATA_HH_
 
-#include "Tools/Helpers.hh"
-#include "Entities/Objects/RTObject.hh"
+#include "Tools/Types.hh"
 
 namespace RayOn
 {
   class RTObject;
+  class Material;
 
   struct IntersectionData
   {
@@ -18,6 +18,8 @@ namespace RayOn
       , normal(0)
       , k(0)
       , obj(nullptr)
+      , material(nullptr)
+      , isInside(false)
     {
     }
 
@@ -27,6 +29,7 @@ namespace RayOn
     Float_t   k;
     RTObject* obj;
     Material* material;
+    bool      isInside;
   };
 } // namespace RayOn
 

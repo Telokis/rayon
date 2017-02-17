@@ -69,8 +69,8 @@ namespace RayOn
   }
 
   RAYON_GENERATE_PROPERTY_DEFINITION(Config, std::string, _outputPath, OutputPath)
-    RAYON_GENERATE_PROPERTY_DEFINITION(Config, std::string, _inputPath, InputPath)
-    RAYON_GENERATE_PROPERTY_DEFINITION(Config, uint32, _width, Width)
-    RAYON_GENERATE_PROPERTY_DEFINITION(Config, uint32, _height, Height)
-    RAYON_GENERATE_PROPERTY_DEFINITION(Config, uint32, _threadsCount, ThreadCount)
+  RAYON_GENERATE_PROPERTY_DEFINITION(Config, std::string, _inputPath, InputPath)
+  RAYON_GENERATE_PROPERTY_DEFINITION(Config, uint32, _width, Width)
+  RAYON_GENERATE_PROPERTY_DEFINITION(Config, uint32, _height, Height)
+  RAYON_GENERATE_PROPERTY_DEFINITION(Config, uint32, _threadsCount, ThreadCount)
 } // namespace RayOn

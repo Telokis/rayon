@@ -135,61 +135,133 @@ namespace RayOn
     writeJson(filename, root);
   }
 
+  void materialRead(Material& material, const std::string& filename)
+  {
+    Json::Value root;
+
+    readJson(filename, root);
+    material.read(root);
+  }
+
+  void materialWrite(const Material& material, const std::string& filename)
+  {
+    Json::Value root;
+
+    material.write(root);
+    writeJson(filename, root);
+  }
+
   /*
    *  Write
    */
-  void  writeVal(Json::Value& node, const std::string& name, const Float_t& val)
+  void  writeVal(Json::Value& node, const std::string& name,
+                 const Float_t& val, const Float_t& def)
   {
-    node[name] = static_cast<double>(val);
+    if (val != def)
+      node[name] = static_cast<double>(val);
   }
 
-  void  writeVal(Json::Value& node, const std::string& name, const Color& color)
+  void  writeVal(Json::Value& node, const std::string& name,
+                 const uint32& val, const uint32& def)
   {
-    Json::Value& subNode = node[name];
-    subNode["red"] = color.red();
-    subNode["green"] = color.green();
-    subNode["blue"] = color.blue();
+    if (val != def)
+      node[name] = val;
   }
 
-  void  writeVal(Json::Value& node, const std::string& name, const Vec_t& vec)
+  void  writeVal(Json::Value& node, const std::string& name,
+                 const Color& color, const Color& def)
   {
-    Json::Value& subNode = node[name];
-    writeVal(subNode, "x", vec.x);
-    writeVal(subNode, "y", vec.y);
-    writeVal(subNode, "z", vec.z);
+    if (color.intValue() != def.intValue())
+    {
+      Json::Value& subNode = node[name];
+      const auto value = color.intValue();
+      const auto& cols = colors();
+      for (const auto& pair : cols)
+      {
+        if (value == pair.second.intValue())
+        {
+          subNode = pair.first;
+          return;
+        }
+      }
+      writeVal(subNode, "red", uint32(color.red()), uint32(def.red()));
+      writeVal(subNode, "green", uint32(color.green()), uint32(def.green()));
+      writeVal(subNode, "blue", uint32(color.blue()), uint32(def.blue()));
+    }
+  }
+
+  void  writeVal(Json::Value& node, const std::string& name,
+                 const Vec_t& vec, const Vec_t& def)
+  {
+    if (vec != def)
+    {
+      Json::Value& subNode = node[name];
+      writeVal(subNode, "x", vec.x, def.x);
+      writeVal(subNode, "y", vec.y, def.y);
+      writeVal(subNode, "z", vec.z, def.z);
+    }
   }
 
   /*
    *  Read
    */
-  void  readVal(const Json::Value& parent, const std::string& name, Float_t& val)
+  void  readVal(const Json::Value& parent, const std::string& name,
+                uint32& val, const uint32& def)
+  {
+    if (parent.isMember(name) && parent[name].isUInt())
+      val = parent[name].asUInt();
+    else
+      val = def;
+  }
+
+  void  readVal(const Json::Value& parent, const std::string& name,
+                Float_t& val, const Float_t& def)
   {
     if (parent.isMember(name) && parent[name].isDouble())
       val = parent[name].asDouble();
+    else
+      val = def;
   }
 
-  void  readVal(const Json::Value& parent, const std::string& name, Color& color)
+  void  readVal(const Json::Value& parent, const std::string& name,
+                Color& color, const Color& def)
   {
-    if (parent.isMember(name) && parent[name].isObject())
+    if (parent.isMember(name))
     {
-      const Json::Value& colorNode = parent[name];
-      if (colorNode.isMember("red") && colorNode["red"].isUInt())
-        color.red() = colorNode["red"].asUInt();
-      if (colorNode.isMember("green") && colorNode["green"].isUInt())
-        color.green() = colorNode["green"].asUInt();
-      if (colorNode.isMember("blue") && colorNode["blue"].isUInt())
-        color.blue() = colorNode["blue"].asUInt();
+      if (parent[name].isObject())
+      {
+        const Json::Value& colorNode = parent[name];
+        readVal(colorNode, "red", color.red(), def.red());
+        readVal(colorNode, "green", color.green(), def.green());
+        readVal(colorNode, "blue", color.blue(), def.blue());
+        return;
+      }
+      else if (parent[name].isString())
+      {
+        const std::string str = parent[name].asString();
+        if (colors().count(str))
+        {
+          color = colors().at(str);
+          return;
+        }
+        else
+          std::cout << "[Warning] Color `" << str << "` unknown. Skipping...\n";
+      }
     }
+    color = def;
   }
 
-  void  readVal(const Json::Value& parent, const std::string& name, Vec_t& vec)
+  void  readVal(const Json::Value& parent, const std::string& name,
+                Vec_t& vec, const Vec_t& def)
   {
     if (parent.isMember(name) && parent[name].isObject())
     {
       const Json::Value& node = parent[name];
-      readVal(node, "x", vec.x);
-      readVal(node, "y", vec.y);
-      readVal(node, "z", vec.z);
+      readVal(node, "x", vec.x, def.x);
+      readVal(node, "y", vec.y, def.y);
+      readVal(node, "z", vec.z, def.z);
     }
+    else
+      vec = def;
   }
 } // namespace RayOn

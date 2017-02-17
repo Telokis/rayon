@@ -107,17 +107,17 @@ namespace RayOn
   void Box::read(const Json::Value& root)
   {
     ParentType::read(root);
-    readVal(root, "width", _width);
-    readVal(root, "height", _height);
-    readVal(root, "depth", _depth);
+    readVal(root, "width", _width, 1);
+    readVal(root, "height", _height, 1);
+    readVal(root, "depth", _depth, 1);
   }
 
   void Box::write(Json::Value& root) const
   {
     ParentType::write(root);
-    writeVal(root, "width", _width);
-    writeVal(root, "height", _height);
-    writeVal(root, "depth", _depth);
+    writeVal(root, "width", _width, 1);
+    writeVal(root, "height", _height, 1);
+    writeVal(root, "depth", _depth, 1);
   }
 
 } // namespace RayOn

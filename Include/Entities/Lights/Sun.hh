@@ -59,21 +59,6 @@ namespace RayOn
      */
     static const constexpr auto LightName = "Sun";
 
-  private:
-    /**
-     * @brief       Internally used to check shadows.
-     *              Iterates through all objects in the given @a scene
-     *              and tests if there is an object between @a point and
-     *              the @ref Sun's position.
-     * @param scene The scene to use to retrieve @ref RTObject.
-     * @param point The point from which we should "look".
-     * @return      True if an opaque object is in the way.
-     *              False if no opaque object were found.
-     */
-    bool    doesShadow(const Scene& scene,
-                       const Vec_t& point,
-                       RTObject* obj) const;
-
     /**
      * @brief           This method transforms the given @a color
      *                  to "apply" the light on it.

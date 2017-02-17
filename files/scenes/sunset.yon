@@ -12,104 +12,49 @@
 	{
 		"position" : 
 		{
-			"x" : 0,
 			"y" : 3,
 			"z" : -4
 		},
 		"rotation" : 
 		{
-			"x" : 20,
-			"y" : 0,
-			"z" : 0
+			"x" : 20
 		}
 	},
 	"lights" : 
 	[
 		{
-			"color" : 
-			{
-				"blue" : 255,
-				"green" : 255,
-				"red" : 255
-			},
 			"position" : 
 			{
 				"x" : 10,
 				"y" : 10,
 				"z" : -20
 			},
-			"power" : 0.5,
-			"rotation" : 
-			{
-				"x" : 0,
-				"y" : 0,
-				"z" : 0
-			},
 			"type" : "Sun"
 		},
 		{
-			"color" : 
-			{
-				"blue" : 255,
-				"green" : 255,
-				"red" : 255
-			},
 			"position" : 
 			{
 				"x" : -10,
 				"y" : 10,
 				"z" : -20
 			},
-			"power" : 0.5,
-			"rotation" : 
-			{
-				"x" : 0,
-				"y" : 0,
-				"z" : 0
-			},
 			"type" : "Sun"
 		},
 		{
-			"color" : 
-			{
-				"blue" : 255,
-				"green" : 255,
-				"red" : 255
-			},
 			"position" : 
 			{
 				"x" : 10,
 				"y" : 50,
 				"z" : -20
 			},
-			"power" : 0.5,
-			"rotation" : 
-			{
-				"x" : 0,
-				"y" : 0,
-				"z" : 0
-			},
 			"type" : "Sun"
 		},
 		{
-			"color" : 
-			{
-				"blue" : 255,
-				"green" : 255,
-				"red" : 255
-			},
 			"position" : 
 			{
 				"x" : -10,
 				"y" : 30,
 				"z" : -20
-			},
-			"power" : 0.5,
-			"rotation" : 
-			{
-				"x" : 0,
-				"y" : 0,
-				"z" : 0
 			},
 			"type" : "Sun"
 		}
@@ -117,164 +62,81 @@
 	"objects" : 
 	[
 		{
-			"depth" : 1,
-			"height" : 1,
 			"material" : 
 			{
-				"ambient" : -1,
 				"color" : 
 				{
 					"blue" : 139,
 					"green" : 139,
 					"red" : 0
-				},
-				"flags" : null,
-				"glossiness" : 0,
-				"reflexion" : 0,
-				"refraction" : 1,
-				"transparency" : 0
+				}
 			},
 			"position" : 
 			{
-				"x" : 0,
 				"y" : 2.6846999999999999,
 				"z" : 2.5
 			},
 			"rotation" : 
 			{
-				"x" : 0,
-				"y" : 45,
-				"z" : 0
+				"y" : 45
 			},
-			"type" : "Box",
-			"width" : 1
+			"type" : "Box"
 		},
 		{
 			"material" : 
 			{
-				"ambient" : -1,
-				"color" : 
-				{
-					"blue" : 80,
-					"green" : 10,
-					"red" : 139
-				},
-				"flags" : null,
-				"glossiness" : 0,
-				"reflexion" : 1,
-				"refraction" : 1,
-				"transparency" : 0
+				"color" : "deeppink4",
+				"reflexion" : 1
 			},
 			"position" : 
 			{
-				"x" : 2.5,
-				"y" : 0,
-				"z" : 0
+				"x" : 2.5
 			},
 			"radius" : 1,
-			"rotation" : 
-			{
-				"x" : 0,
-				"y" : 0,
-				"z" : 0
-			},
 			"type" : "Sphere"
 		},
 		{
 			"material" : 
 			{
 				"ambient" : 1,
-				"color" : 
-				{
-					"blue" : 80,
-					"green" : 10,
-					"red" : 139
-				},
+				"color" : "deeppink4",
 				"flags" : 
 				[
 					"NoShading"
 				],
 				"glossiness" : 2.5,
-				"reflexion" : 1,
-				"refraction" : 1,
-				"transparency" : 0
+				"reflexion" : 1
 			},
 			"position" : 
 			{
-				"x" : -2.5,
-				"y" : 0,
-				"z" : 0
-			},
-			"radius" : 1,
-			"rotation" : 
-			{
-				"x" : 0,
-				"y" : 0,
-				"z" : 0
+				"x" : -2.5
 			},
 			"type" : "Sphere"
 		},
 		{
 			"material" : 
 			{
-				"ambient" : -1,
-				"color" : 
-				{
-					"blue" : 80,
-					"green" : 10,
-					"red" : 139
-				},
+				"color" : "deeppink4",
 				"flags" : 
 				[
 					"NoShadow"
-				],
-				"glossiness" : 0,
-				"reflexion" : 0,
-				"refraction" : 1,
-				"transparency" : 0
+				]
 			},
 			"position" : 
 			{
-				"x" : 0,
-				"y" : 0,
 				"z" : 5
-			},
-			"radius" : 1,
-			"rotation" : 
-			{
-				"x" : 0,
-				"y" : 0,
-				"z" : 0
 			},
 			"type" : "Sphere"
 		},
 		{
 			"material" : 
 			{
-				"ambient" : -1,
-				"color" : 
-				{
-					"blue" : 236,
-					"green" : 230,
-					"red" : 103
-				},
-				"flags" : null,
-				"glossiness" : 0,
-				"reflexion" : 0.80000000000000004,
-				"refraction" : 1,
-				"transparency" : 0
+				"color" : "swimming pool",
+				"reflexion" : 0.80000000000000004
 			},
 			"position" : 
 			{
-				"x" : 0,
-				"y" : -0.80000000000000004,
-				"z" : 0
-			},
-			"rotation" : 
-			{
-				"x" : 0,
-				"y" : 0,
-				"z" : 0
+				"y" : -0.80000000000000004
 			},
 			"type" : "Plane"
 		}

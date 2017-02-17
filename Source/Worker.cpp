@@ -6,6 +6,7 @@ namespace RayOn
   namespace
   {
     static constexpr const uint8 MAX_DEPTH = 5;
+    static constexpr const uint8 MAX_GLOSSY = 5;
     Color inter(const Scene& scene,
                 const Ray& ray,
                 uint8 depth = 0);
@@ -19,13 +20,20 @@ namespace RayOn
                     Tools::Reflect(ray.getDirection(), data.normal));
       if (data.material->getGlossiness() > Globals::Epsilon)
       {
+        Color color;
         Float_t g = data.material->getGlossiness();
-        Vec_t tmp(((rand() % 100) - 50.0) / (100.0 * g),
-                  1.0 * ((rand() % 100) - 50.0) / (100.0 * g),
-                  ((rand() % 100) - 50.0) / (100.0 * g));
-        reflected.setDirection(reflected.getDirection() + tmp);
-        reflected.normalize();
-        reflected.setOrigin(data.point + Globals::Epsilon * reflected.getDirection());
+        Vec_t reflectedDir = reflected.getDirection();
+        for (auto i = 0u; i < MAX_GLOSSY; ++i)
+        {
+          Vec_t tmp(((rand() % 100) - 50.0) / (100.0 * g),
+                    1.0 * ((rand() % 100) - 50.0) / (100.0 * g),
+                    ((rand() % 100) - 50.0) / (100.0 * g));
+          reflected.setDirection(reflectedDir + tmp);
+          reflected.normalize();
+          reflected.setOrigin(data.point + Globals::Epsilon * reflected.getDirection());
+          color += inter(scene, reflected, depth + 1);
+        }
+        return color * (Float_t(1.0) / MAX_GLOSSY);
       }
       reflected.setOrigin(data.point + Globals::Epsilon * reflected.getDirection());
       return inter(scene, reflected, depth + 1);
@@ -40,7 +48,7 @@ namespace RayOn
       Float_t eta = data.material->getRefraction();
 
       if (eta != 1 && eta > Globals::Epsilon)
-        refracted.setDirection(Tools::Refract(ray.getDirection(), data.normal, eta));
+        refracted.setDirection(Tools::Refract(ray.getDirection(), data, eta));
       refracted.setOrigin(data.point + Globals::Epsilon * refracted.getDirection());
       return inter(scene, refracted, depth + 1);
     }
@@ -48,8 +56,19 @@ namespace RayOn
     // http://graphics.stanford.edu/courses/cs148-10-summer/docs/2006--degreve--reflection_refraction.pdf
     Float_t getFresnelReflectance(const IntersectionData& data, const Ray& ray)
     {
-      Float_t n = data.material->getRefraction();
+      Float_t n1 = data.material->getRefraction();
+      Float_t n2 = 1.0;
+
       Float_t cosI = -Tools::DotProduct(ray.getDirection(), data.normal);
+      if (cosI > Globals::Epsilon)
+      {
+        n2 = n1;
+        n1 = 1.0;
+      }
+      else
+        cosI *= -1;
+
+      Float_t n = n1 / n2;
       Float_t sin2T = n * n * (Float_t(1.0) - cosI * cosI);
 
       if (sin2T > 1.0)
@@ -57,9 +76,9 @@ namespace RayOn
 
       using std::sqrt;
       Float_t cosT = sqrt(1.0 - sin2T);
-      Float_t rPer = (n * cosI - cosT) / (n * cosI + cosT);
-      Float_t rPar = (cosI - n * cosT) / (cosI + n * cosT);
-      return (rPer * rPer + rPar * rPar) / Float_t(2.0);
+      Float_t rPer = (n1 * cosI - n2 * cosT) / (n1 * cosI + n2 * cosT);
+      Float_t rPar = (n2 * cosI - n1 * cosT) / (n2 * cosI + n1 * cosT);
+      return (rPer * rPer + rPar * rPar) * Float_t(0.5);
     }
 
     Color handleReflectionAndRefraction(const Scene& scene,
@@ -85,10 +104,10 @@ namespace RayOn
         transmittance = 1.0 - reflectance;
       }
 
-      if (hasReflexion)
+      if (hasReflexion && reflectance > Globals::Epsilon)
         reflexion = handleReflection(scene, ray, data, depth) * reflectance;
 
-      if (hasTransparency)
+      if (hasTransparency && transmittance > Globals::Epsilon)
         transparency = handleTransparency(scene, ray, data, depth) * transmittance;
 
       return reflexion + transparency;
@@ -125,6 +144,8 @@ namespace RayOn
         data.material = &data.obj->getMaterial();
         data.point = ray.evaluate(data.k);
         data.obj->fillData(data);
+        if (data.isInside)
+          data.normal *= -1;
         return getColor(scene, ray, data, depth);
       }
       return scene.cubemap().interceptRay(ray);

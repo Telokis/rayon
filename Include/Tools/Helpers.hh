@@ -5,8 +5,9 @@
 
 #include "Tools/Globals.hh"
 #include "Tools/Pow.hh"
-#include "Tools/Types.hh"
+#include "IntersectionData.hh"
 #include <algorithm>
+#include <iostream>
 
 namespace RayOn
 {
@@ -64,6 +65,11 @@ namespace RayOn
       return glm::dot(a, b);
     }
 
+    inline Vec_t Cross(Vec_t a, Vec_t b)
+    {
+      return glm::cross(a, b);
+    }
+
     inline Vec_t Normalize(Vec_t v)
     {
       return glm::normalize(v);
@@ -74,9 +80,15 @@ namespace RayOn
       return glm::reflect(v, n);
     }
 
-    inline Vec_t Refract(Vec_t v, Vec_t n, Float_t eta)
+    inline Vec_t Refract(Vec_t v, const IntersectionData& data, Float_t eta)
     {
-      return glm::refract(v, n, eta);
+      Float_t n = eta;
+
+      if (data.isInside)
+        n = 1.0 / n;
+      double cosI = Tools::DotProduct(v, data.normal);
+
+      return v * n - data.normal * (-cosI + n * cosI);
     }
 
     inline uint32 Floor(Float_t val)

@@ -5,10 +5,12 @@
 
 #include "Tools/Helpers.hh"
 #include <vector>
+#include <map>
 #include <iostream>
 
 namespace RayOn
 {
+
   class   Color
   {
   public:
@@ -84,6 +86,21 @@ namespace RayOn
   private:
     uint32  _charValues[4];
   };
+
+  inline  const std::map<std::string, Color>& colors()
+  {
+    static std::map<std::string, Color> cols{
+      {"black", 0},
+      {"white", 0xffffff},
+      {"red", 0xff0000},
+      {"green", 0xff00},
+      {"blue", 0xff},
+      {"swimming pool", 0xFF67E6EC},
+      {"deeppink4", 0xFF8B0A50}
+    };
+
+    return cols;
+  }
 
   std::ostream& operator<<(std::ostream& stream, const Color& color);
 
