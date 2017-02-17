@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 filename="./Source/Version.cpp"
 major=$(cat Include/Version.hh | tr -d '\n' | sed -r 's/.*RAYON_MAJOR_VERSION ([0-9]+).*/\1/')

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 if [ "${PWD##*/}" != "scripts" ] ; then
     echo "Error, this script must run from the scripts folder."

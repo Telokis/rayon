@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 filename="./Include/Version.hh"
 major=$(cat $filename | tr -d '\n' | sed -r 's/.*RAYON_MAJOR_VERSION ([0-9]+).*/\1/')
