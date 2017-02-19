@@ -1,5 +1,5 @@
 # Rayon
-_Current repository version : v1.3.22_
+_Current repository version : v1.3.23_
 <br>A RayTracer to enlighten the world and moree
 
 [<img src="https://raw.githubusercontent.com/Telokis/Rayon/master/files/rendered/very_basic.bmp" />](https://raw.githubusercontent.com/Telokis/Rayon/master/files/rendered/very_basic.bmp)

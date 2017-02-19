@@ -49,8 +49,7 @@ namespace Rayon
     for (std::thread& thread : threads)
       thread.join();
 
-    bool success = ImageFileHandler::writeToFileBasedOnExtension(config().getOutputPath(), img);
-    std::cout << std::boolalpha << "Success : " << success << '\n';
+    ImageFileHandler::writeToFileBasedOnExtension(config().getOutputPath(), img);
     return 0;
   }
 
