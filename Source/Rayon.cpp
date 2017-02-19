@@ -36,7 +36,7 @@ namespace Rayon
     RawImage  img(width, height);
 
     uint8 jn = config().getThreadCount();
-    jn=1;
+
     std::vector<std::thread> threads;
     for (uint8 i = 0; i < jn; ++i)
     {

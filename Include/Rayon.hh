@@ -8,12 +8,6 @@
 
 namespace Rayon
 {
-  inline Config& config()
-  {
-    static Config config;
-    return config;
-  }
-
   class Rayon
   {
   public:

@@ -26,6 +26,13 @@ namespace Rayon
     RAYON_GENERATE_PROPERTY_DECLARATION(Config, uint32, _height, Height)
     RAYON_GENERATE_PROPERTY_DECLARATION(Config, uint32, _threadsCount, ThreadCount)
   };
+
+  inline Config& config()
+  {
+    static Config config;
+    return config;
+  }
+
 } // namespace Rayon
 
 #endif // RAYON_CONFIG_HH_
