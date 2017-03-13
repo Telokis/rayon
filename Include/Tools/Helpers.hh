@@ -75,6 +75,11 @@ namespace Rayon
       return glm::normalize(v);
     }
 
+    inline Float_t Length(Vec_t v)
+    {
+      return glm::length(v);
+    }
+
     inline Vec_t Reflect(Vec_t v, Vec_t n)
     {
       return glm::reflect(v, n);
@@ -82,13 +87,12 @@ namespace Rayon
 
     inline Vec_t Refract(Vec_t v, const IntersectionData& data, Float_t eta)
     {
-      Float_t n = eta;
-
-      if (data.isInside)
-        n = 1.0 / n;
-      double cosI = Tools::DotProduct(v, data.normal);
-
-      return v * n - data.normal * (-cosI + n * cosI);
+      Float_t _eta = 2.0f - eta;
+      Vec_t   n = data.normal;
+      Float_t sgn = (eta > 1.0f ? _eta : eta) > 1.0f ? -1.0f : 1.0f;
+      Float_t cosi = sgn * Tools::DotProduct(n, v);
+      Vec_t o = (sgn * v * _eta - sgn * n * (-cosi + _eta * cosi));
+      return o;
     }
 
     inline uint32 Floor(Float_t val)

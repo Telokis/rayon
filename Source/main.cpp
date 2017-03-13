@@ -15,6 +15,7 @@
 #include "MetaRTObjects/MetaPlane.hh"
 #include "MetaRTObjects/MetaRectangle.hh"
 #include "MetaRTObjects/MetaBox.hh"
+#include "MetaRTObjects/MetaMobius.hh"
 
 #include "Ray.hh"
 #include "Rayon.hh"
@@ -34,6 +35,7 @@ void  setupDefaultRegistry()
   Rayon::registry().registerMetaRTObject(new Rayon::MetaPlane);
   Rayon::registry().registerMetaRTObject(new Rayon::MetaRectangle);
   Rayon::registry().registerMetaRTObject(new Rayon::MetaBox);
+  Rayon::registry().registerMetaRTObject(new Rayon::MetaMobius);
 }
 
 int  main(int ac, char** av)
@@ -54,6 +56,7 @@ int  main(int ac, char** av)
     std::cerr << "_____________________________________________________\n";
     std::cerr << "ERROR ERROR ERROR ERROR ERROR ERROR ERROR ERROR ERROR\n";
     std::cerr << "*****************************************************\n";
+    std::cin.get();
     return 1;
   }
 }
