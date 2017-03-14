@@ -1,6 +1,7 @@
 #include "Entities/Lights/Sun.hh"
 #include "Scene.hh"
 #include "SceneParse.hh"
+#include "Object.hh"
 
 #include <iostream>
 #include <Json.h>
@@ -36,7 +37,7 @@ namespace Rayon
     Float_t cos_a;
     Vec_t   light_vec;
 
-    if (doesShadow(_pos, scene, data.point, data.obj))
+    if (doesShadow(_pos, scene, data.point, data.obj->getShape()))
       return 0;
     cos_a = 0;
     light_vec = getPos() - data.point;

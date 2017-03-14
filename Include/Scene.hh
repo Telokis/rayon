@@ -1,8 +1,6 @@
 #ifndef RAYON_SCENE_HH_
 #define RAYON_SCENE_HH_
 
-#include "Entities/Objects/Plane.hh"
-#include "Entities/Objects/Sphere.hh"
 #include "Entities/Eye.hh"
 #include "CubeMap.hh"
 #include <vector>
@@ -10,6 +8,7 @@
 namespace Rayon
 {
   class   RTLight;
+  class   Object;
   struct  IntersectionData;
 } // namespace Rayon
 
@@ -24,8 +23,8 @@ namespace Rayon
    */
   class   Scene
   {
-    typedef std::vector<RTObject*> ObjectsContainer;   /**< Typedef for the @ref RTObject container */
-    typedef std::vector<RTLight*>  LightsContainer;    /**< Typedef for the @ref RTLight container */
+    typedef std::vector<Object*>  ObjectsContainer; /**< Typedef for the @ref Object container */
+    typedef std::vector<RTLight*> LightsContainer;  /**< Typedef for the @ref RTLight container */
 
   public:
     /**
@@ -76,41 +75,41 @@ namespace Rayon
 
   public:
     /**
-     * @brief   Adds a new @ref RTObject into the Scene.
+     * @brief   Adds a new @ref Object into the Scene.
      *          The Scene will add the pointer as is (no
-     *          RTObject::clone involved) and will take
+     *          Object::clone involved) and will take
      *          care of its deletion.
-     * @param[in] object    The @ref RTObject to add to
+     * @param[in] object    The @ref Object to add to
      *                      the Scene.
      */
-    void        addObject(RTObject* object);
+    void        addObject(const Object& object);
 
     /**
-     * @brief   Will return the last @ref RTObject added
+     * @brief   Will return the last @ref Object added
      *          to the Scene.
-     * @return  The last @ref RTObject added to the Scene
-     *          or nullptr if no @ref RTObject is held.
+     * @return  The last @ref Object added to the Scene
+     *          or nullptr if no @ref Object is held.
      */
-    RTObject*   lastObject() const;
+    Object*     lastObject() const;
 
     /**
-     * @brief   Will return the @ref RTObject container to
+     * @brief   Will return the @ref Object container to
      *          allow outside read access.
      * @return  A const reference on the container.
      */
     const ObjectsContainer& objects() const;
 
     /**
-     * @brief       Will return the nearest @ref RTObject
+     * @brief       Will return the nearest @ref Object
      *              intersected for this @a origin and
      *              @a direction.
      * @param[in]   ray   The ray to shoot.
      * @param[out]  data  Data to be filled by the object.
-     * @return      The nearest @ref RTObject found.
+     * @return      The nearest @ref Object found.
      *              nullptr if no intersection was found.
-     *              nullptr if no @ref RTObject is in the Scene.
+     *              nullptr if no @ref Object is in the Scene.
      */
-    RTObject*   getNearest(const Ray& ray,
+    Object*     getNearest(const Ray& ray,
                            IntersectionData& data) const;
 
   public:
@@ -183,25 +182,8 @@ namespace Rayon
      */
     void        preprocess();
 
-  public:
-    /**
-     * @brief   Adds an @ref RTObject to the Scene.
-     * @param[in] object  The @ref RTObject to add.
-     * @return  *this for chaining.
-     * @see     Scene::addObject
-     */
-    Scene   &operator<<(RTObject* object);
-
-    /**
-     * @brief   Adds an @ref RTLight to the Scene.
-     * @param[in] light The @ref RTLight to add.
-     * @return  *this for chaining.
-     * @see     Scene::addLight
-     */
-    Scene   &operator<<(RTLight* light);
-
   private:
-    ObjectsContainer  _objects;   /**< Collection of @ref RTObject * */
+    ObjectsContainer  _objects;   /**< Collection of @ref Object * */
     LightsContainer   _lights;    /**< Collection of @ref RTLight * */
     Eye               _eye;       /**< @ref Eye of the Scene */
     CubeMap           _cubemap;   /**< @ref CubeMap of the Scene */

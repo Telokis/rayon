@@ -3,16 +3,16 @@
 #ifndef RAYON_META_RECTANGLE_HH_
 #define RAYON_META_RECTANGLE_HH_
 
-#include "MetaRTObjects/IMetaRTObject.hh"
+#include "MetaRTShapes/IMetaRTShape.hh"
 
 namespace Rayon
 {
-  class MetaRectangle : public IMetaRTObject
+  class MetaRectangle : public IMetaRTShape
   {
   public:
-    RTObject*   make() const final;
+    RTShape*   make() const final;
 
-    const char* objectName() const final;
+    const char* shapeName() const final;
   };
 } // namespace Rayon
 

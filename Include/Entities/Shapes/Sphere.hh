@@ -1,13 +1,13 @@
 #ifndef RAYON_SPHERE_HH_
 #define RAYON_SPHERE_HH_
 
-#include "Object.hh"
+#include "Shape.hh"
 
 namespace Rayon
 {
-  class   Sphere : public Object<Sphere>
+  class   Sphere : public Shape<Sphere>
   {
-    using ParentType = Object<Sphere>;
+    using ParentType = Shape<Sphere>;
     friend  ParentType;
 
   public:
@@ -21,7 +21,7 @@ namespace Rayon
     void    write(Json::Value& root) const override;
 
   public:
-    static constexpr const auto ObjectName = "Sphere";
+    static constexpr const auto ShapeName = "Sphere";
 
   private:
     bool  interImpl(const Ray& ray, IntersectionData& data) const;

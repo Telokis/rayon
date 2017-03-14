@@ -1,4 +1,4 @@
-#include "Entities/Objects/Rectangle.hh"
+#include "Entities/Shapes/Rectangle.hh"
 #include "SceneParse.hh"
 
 #include <Json.h>

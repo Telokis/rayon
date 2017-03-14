@@ -7,8 +7,7 @@
 
 namespace Rayon
 {
-  class RTObject;
-  class Material;
+  class Object;
   class Ray;
 
   struct IntersectionData
@@ -20,7 +19,6 @@ namespace Rayon
       , ray(nullptr)
       , k(0)
       , obj(nullptr)
-      , material(nullptr)
       , isInside(false)
     {
     }
@@ -30,8 +28,7 @@ namespace Rayon
     Vec_t       normal;
     const Ray*  ray;
     Float_t     k;
-    RTObject*   obj;
-    Material*   material;
+    Object*     obj;
     bool        isInside;
   };
 } // namespace Rayon

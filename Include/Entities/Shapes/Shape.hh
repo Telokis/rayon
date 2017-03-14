@@ -1,30 +1,30 @@
 #ifndef RAYON_OBJECT_HH_
 #define RAYON_OBJECT_HH_
 
-#include "Entities/Objects/RTObject.hh"
+#include "Entities/Shapes/RTShape.hh"
 
 namespace Rayon
 {
   template <class Derived>
-  class   Object : public RTObject
+  class   Shape : public RTShape
   {
   public:
-    Object()
+    Shape()
     {
     }
 
-    Object(const Vec_t &pos,
+    Shape(const Vec_t &pos,
            const Vec_t &rot)
-      : RTObject(pos, rot)
+      : RTShape(pos, rot)
     {
     }
 
-    Object(Float_t x, Float_t y, Float_t z)
-      : RTObject(x, y, z)
+    Shape(Float_t x, Float_t y, Float_t z)
+      : RTShape(x, y, z)
     {
     }
 
-    virtual ~Object()
+    virtual ~Shape()
     {
     }
 
@@ -34,15 +34,13 @@ namespace Rayon
     }
 
   public:
-    RTObject*   clone() const final
+    RTShape*   clone() const final
     {
       return new Derived(static_cast<Derived const&>(*this));
     }
 
     bool  inter(const Ray &ray, IntersectionData& data) const final
     {
-      if (getMaterial().testFlag(ray.getType()))
-        return Globals::Invalid;
       return static_cast<Derived const*>(this)->interImpl(ray, data);
     }
 
@@ -53,7 +51,7 @@ namespace Rayon
 
     const char* name() const final
     {
-      return Derived::ObjectName;
+      return Derived::ShapeName;
     }
 
     void        preprocess() final

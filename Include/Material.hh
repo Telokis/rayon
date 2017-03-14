@@ -33,6 +33,8 @@ namespace Rayon
 
   public:
     Material();
+    Material(const Material&) = default;
+    Material& operator=(const Material&) = default;
 
     void  setFlag(Flags flag, bool value = true);
     bool  testFlag(Flags flag) const;

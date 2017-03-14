@@ -1,16 +1,16 @@
 #ifndef RAYON_MOBIUS_HH_
 #define RAYON_MOBIUS_HH_
 
-#include "Entities/Objects/Sphere.hh"
+#include "Entities/Shapes/Sphere.hh"
 
 #include <vector>
 
 namespace Rayon
 {
 
-  class   Mobius : public Object<Mobius>
+  class   Mobius : public Shape<Mobius>
   {
-    typedef Object<Mobius> ParentType;
+    typedef Shape<Mobius> ParentType;
     friend  ParentType;
 
   public:
@@ -28,7 +28,7 @@ namespace Rayon
     mutable const Sphere* _last;
 
   public:
-    static const constexpr auto ObjectName = "Mobius";
+    static const constexpr auto ShapeName = "Mobius";
 
   private:
     bool  interImpl(const Ray& ray, IntersectionData& data) const;

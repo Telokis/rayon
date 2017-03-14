@@ -14,14 +14,14 @@ namespace Rayon
 
 namespace Rayon
 {
-  class   RTObject : public Entity
+  class   RTShape : public Entity
   {
   public:
-    RTObject();
-    RTObject(const Vec_t& pos,
+    RTShape();
+    RTShape(const Vec_t& pos,
              const Vec_t& rot);
-    RTObject(Float_t x, Float_t y, Float_t z);
-    virtual ~RTObject();
+    RTShape(Float_t x, Float_t y, Float_t z);
+    virtual ~RTShape();
 
   public:
     void    read(const Json::Value& root) override;
@@ -30,17 +30,9 @@ namespace Rayon
   public:
     virtual bool        inter(const Ray& ray, IntersectionData& data) const = 0;
     virtual void        preprocess() = 0;
-    virtual RTObject*   clone() const = 0;
+    virtual RTShape*    clone() const = 0;
     virtual void        fillData(IntersectionData& data) const = 0;
     virtual const char* name() const = 0;
-
-  protected:
-    Material  _material;
-
-  public:
-    void  setMaterial(const Material& material);
-    Material& getMaterial();
-    const Material& getMaterial() const;
   };
 } // namespace Rayon
 

@@ -1,14 +1,14 @@
 #ifndef RAYON_RECTANGLE_HH_
 #define RAYON_RECTANGLE_HH_
 
-#include "Object.hh"
+#include "Shape.hh"
 
 namespace Rayon
 {
 
-  class   Rectangle : public Object<Rectangle>
+  class   Rectangle : public Shape<Rectangle>
   {
-    typedef Object<Rectangle> ParentType;
+    typedef Shape<Rectangle> ParentType;
     friend  ParentType;
 
   public:
@@ -28,7 +28,7 @@ namespace Rayon
     Float_t _halfH;
 
   public:
-    static const constexpr auto ObjectName = "Rectangle";
+    static const constexpr auto ShapeName = "Rectangle";
 
   private:
     bool  interImpl(const Ray& ray, IntersectionData& data) const;

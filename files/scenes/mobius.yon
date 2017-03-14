@@ -45,6 +45,8 @@
 			{
 				"y" : 2
 			},
+            "width":2,
+            "torsion":3,
 			"type" : "Mobius"
 		},
 		{

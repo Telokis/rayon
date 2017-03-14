@@ -1,5 +1,7 @@
 #include "Worker.hh"
 #include "IntersectionData.hh"
+#include "Object.hh"
+#include "Entities/Shapes/RTShape.hh"
 
 namespace Rayon
 {
@@ -18,10 +20,10 @@ namespace Rayon
     {
       Ray reflected(RayType::Reflected, data.point,
                     Tools::Reflect(ray.getDirection(), data.normal));
-      if (data.material->getGlossiness() > Globals::Epsilon)
+      if (data.obj->getMaterial().getGlossiness() > Globals::Epsilon)
       {
         Color color;
-        Float_t g = data.material->getGlossiness();
+        Float_t g = data.obj->getMaterial().getGlossiness();
         Vec_t reflectedDir = reflected.getDirection();
         for (auto i = 0u; i < MAX_GLOSSY; ++i)
         {
@@ -45,7 +47,7 @@ namespace Rayon
                              uint8 depth)
     {
       Ray refracted(RayType::Transparency, data.point, ray.getDirection());
-      Float_t eta = data.material->getRefraction();
+      Float_t eta = data.obj->getMaterial().getRefraction();
 
       if (eta != 1 && eta > Globals::Epsilon)
         refracted.setDirection(Tools::Refract(ray.getDirection(), data, eta));
@@ -56,7 +58,7 @@ namespace Rayon
     // http://graphics.stanford.edu/courses/cs148-10-summer/docs/2006--degreve--reflection_refraction.pdf
     Float_t getFresnelReflectance(const IntersectionData& data, const Ray& ray)
     {
-      Float_t n1 = data.material->getRefraction();
+      Float_t n1 = data.obj->getMaterial().getRefraction();
       Float_t n2 = 1.0;
 
       Float_t cosI = -Tools::DotProduct(ray.getDirection(), data.normal);
@@ -86,14 +88,14 @@ namespace Rayon
                                         const IntersectionData& data,
                                         uint8 depth)
     {
-      bool hasReflexion = data.material->getReflexion() > Globals::Epsilon;
-      bool hasTransparency = data.material->getTransparency() > Globals::Epsilon;
+      bool hasReflexion = data.obj->getMaterial().getReflexion() > Globals::Epsilon;
+      bool hasTransparency = data.obj->getMaterial().getTransparency() > Globals::Epsilon;
 
       if (!(hasReflexion || hasTransparency) || depth >= MAX_DEPTH)
         return 0;
 
-      Float_t reflectance = data.material->getReflexion();
-      Float_t transmittance = data.material->getTransparency();
+      Float_t reflectance = data.obj->getMaterial().getReflexion();
+      Float_t transmittance = data.obj->getMaterial().getTransparency();
 
       Color reflexion;
       Color transparency;
@@ -118,18 +120,19 @@ namespace Rayon
                      const IntersectionData& data,
                      uint8 depth)
     {
-      Color color = data.material->getColor();
+      Color color = data.obj->getMaterial().getColor();
       Color ambient = color * scene.getAmbient();
       Color lighting;
       Color specular;
 
-      if (data.material->getAmbient() > -Globals::Epsilon)
-        ambient = color * data.material->getAmbient();
-      if (!data.material->testFlag(Flags::NoShading))
+      if (data.obj->getMaterial().getAmbient() > -Globals::Epsilon)
+        ambient = color * data.obj->getMaterial().getAmbient();
+      if (!data.obj->getMaterial().testFlag(Flags::NoShading))
         lighting = scene.processLights(data, specular);
       Color reflectionRefraction = handleReflectionAndRefraction(scene, ray, data, depth);
 
-      Float_t coef = Tools::Max(data.material->getTransparency(), data.material->getReflexion());
+      Float_t coef = Tools::Max(data.obj->getMaterial().getTransparency(),
+                                data.obj->getMaterial().getReflexion());
       return specular + (ambient + lighting) * (1.0 - coef) + reflectionRefraction * coef;
     }
 
@@ -142,11 +145,10 @@ namespace Rayon
       data.obj = scene.getNearest(ray, data);
       if (data.obj)
       {
-        data.material = &data.obj->getMaterial();
         data.point = ray.evaluate(data.k);
-        data.obj->fillData(data);
+        data.obj->getShape()->fillData(data);
         data.ray = &ray;
-          if (data.isInside)
+        if (data.isInside)
           data.normal *= -1;
         return getColor(scene, ray, data, depth);
       }

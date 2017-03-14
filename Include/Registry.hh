@@ -5,7 +5,7 @@
 
 #include "ImageFileHandlers/IImageFileHandler.hh"
 #include "MetaRTLights/IMetaRTLight.hh"
-#include "MetaRTObjects/IMetaRTObject.hh"
+#include "MetaRTShapes/IMetaRTShape.hh"
 
 #include <vector>
 #include <memory>
@@ -21,8 +21,8 @@ namespace Rayon
     using MetaRTLightType = std::unique_ptr<IMetaRTLight>;
     using MetaRTLightContainer = std::map<std::string, MetaRTLightType>;
 
-    using MetaRTObjectType = std::unique_ptr<IMetaRTObject>;
-    using MetaRTObjectContainer = std::map<std::string, MetaRTObjectType>;
+    using MetaRTShapeType = std::unique_ptr<IMetaRTShape>;
+    using MetaRTShapeContainer = std::map<std::string, MetaRTShapeType>;
 
   public:
     Registry();
@@ -39,14 +39,14 @@ namespace Rayon
     const MetaRTLightContainer& getMetaRTLights() const;
 
   public:
-    bool  registerMetaRTObject(IMetaRTObject* meta);
-    const IMetaRTObject*         getMetaRTObject(const std::string& id) const;
-    const MetaRTObjectContainer& getMetaRTObjects() const;
+    bool  registerMetaRTShape(IMetaRTShape* meta);
+    const IMetaRTShape*           getMetaRTShape(const std::string& id) const;
+    const MetaRTShapeContainer&  getMetaRTShapes() const;
 
   private:
     ImageFileHandlerContainer _imgHandlers;
     MetaRTLightContainer      _metaRTLights;
-    MetaRTObjectContainer     _metaRTObjects;
+    MetaRTShapeContainer      _metaRTShapes;
   };
 
   inline Registry& registry()

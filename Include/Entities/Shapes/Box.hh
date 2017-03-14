@@ -1,14 +1,14 @@
 #ifndef RAYON_BOX_HH_
 #define RAYON_BOX_HH_
 
-#include "Object.hh"
+#include "Shape.hh"
 
 namespace Rayon
 {
 
-  class   Box : public Object<Box>
+  class   Box : public Shape<Box>
   {
-    typedef Object<Box> ParentType;
+    typedef Shape<Box> ParentType;
     friend  ParentType;
 
   public:
@@ -28,7 +28,7 @@ namespace Rayon
     Vec_t   _max;
 
   public:
-    static const constexpr auto ObjectName = "Box";
+    static const constexpr auto ShapeName = "Box";
 
   private:
     bool    interImpl(const Ray& ray, IntersectionData& data) const;

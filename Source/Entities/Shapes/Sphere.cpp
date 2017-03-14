@@ -1,4 +1,4 @@
-#include "Entities/Objects/Sphere.hh"
+#include "Entities/Shapes/Sphere.hh"
 #include "SolverSecond.hh"
 #include "Tools/Helpers.hh"
 #include "SceneParse.hh"

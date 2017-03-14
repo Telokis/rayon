@@ -3,7 +3,7 @@
 
 #include "Entities/Entity.hh"
 #include "Color.hh"
-#include "Entities/Objects/RTObject.hh"
+#include "Entities/Shapes/RTShape.hh"
 
 namespace Rayon
 {
@@ -29,7 +29,7 @@ namespace Rayon
     *              Iterates through all objects in the given @a scene
     *              and tests if there is an object between @a point and
     *              the @ref Sun's position.
-    * @param scene The scene to use to retrieve @ref RTObject.
+    * @param scene The scene to use to retrieve @ref RTShape.
     * @param point The point from which we should "look".
     * @return      True if an opaque object is in the way.
     *              False if no opaque object were found.
@@ -37,7 +37,7 @@ namespace Rayon
     bool    doesShadow(const Vec_t& pos,
                        const Scene& scene,
                        const Vec_t& point,
-                       RTObject* obj) const;
+                       RTShape* obj) const;
 
     Color    getSpecular(const Vec_t& lightVec,
                          const Scene& scene,

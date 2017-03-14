@@ -1,6 +1,7 @@
 #include "SceneParse.hh"
 #include "Scene.hh"
 #include "Registry.hh"
+#include "Object.hh"
 #include "Entities/Lights/RTLight.hh"
 
 #include <Json.h>
@@ -62,24 +63,9 @@ namespace Rayon
 
       for (const Json::Value& object : objects)
       {
-        if (object.isMember("type") && object["type"].isString())
-        {
-          std::string name = object["type"].asString();
-          const IMetaRTObject* meta = registry().getMetaRTObject(name);
-          if (meta)
-          {
-            RTObject* obj = meta->make();
-            obj->read(object);
-            scene.addObject(obj);
-          }
-          else
-          {
-            std::cout << "[Warning] Unknown type `" << name << "` for object. Skipping...\n";
-            continue;
-          }
-        }
-        else
-          std::cout << "[Warning] Invalid `type` for object. Skipping...\n";
+        Object  obj;
+        if (obj.read(object))
+          scene.addObject(obj);
       }
     }
     if (root.isMember("lights") && root["lights"].isArray())
@@ -125,10 +111,10 @@ namespace Rayon
       lights.append(val);
     }
     Json::Value& objects = root["objects"];
-    for (const auto& obj : scene.objects())
+    for (const Object* obj : scene.objects())
     {
       Json::Value val;
-      val["type"] = obj->name();
+      val["type"] = obj->getShape()->name();
       obj->write(val);
       objects.append(val);
     }

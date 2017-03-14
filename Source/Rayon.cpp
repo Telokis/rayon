@@ -4,12 +4,6 @@
 #include "RawImage.hh"
 #include "SceneParse.hh"
 #include "ImageFileHandlers/ImageFileHandler.hh"
-#include "Entities/Objects/Sphere.hh"
-#include "Entities/Objects/Plane.hh"
-#include "Entities/Objects/Rectangle.hh"
-#include "Entities/Objects/Box.hh"
-#include "Entities/Lights/Sun.hh"
-#include "Entities/Eye.hh"
 
 #include <iostream>
 #include <thread>

@@ -11,11 +11,11 @@
 
 #include "MetaRTLights/MetaSun.hh"
 
-#include "MetaRTObjects/MetaSphere.hh"
-#include "MetaRTObjects/MetaPlane.hh"
-#include "MetaRTObjects/MetaRectangle.hh"
-#include "MetaRTObjects/MetaBox.hh"
-#include "MetaRTObjects/MetaMobius.hh"
+#include "MetaRTShapes/MetaSphere.hh"
+#include "MetaRTShapes/MetaPlane.hh"
+#include "MetaRTShapes/MetaRectangle.hh"
+#include "MetaRTShapes/MetaBox.hh"
+#include "MetaRTShapes/MetaMobius.hh"
 
 #include "Ray.hh"
 #include "Rayon.hh"
@@ -31,11 +31,11 @@ void  setupDefaultRegistry()
 
   Rayon::registry().registerMetaRTLight(new Rayon::MetaSun);
 
-  Rayon::registry().registerMetaRTObject(new Rayon::MetaSphere);
-  Rayon::registry().registerMetaRTObject(new Rayon::MetaPlane);
-  Rayon::registry().registerMetaRTObject(new Rayon::MetaRectangle);
-  Rayon::registry().registerMetaRTObject(new Rayon::MetaBox);
-  Rayon::registry().registerMetaRTObject(new Rayon::MetaMobius);
+  Rayon::registry().registerMetaRTShape(new Rayon::MetaSphere);
+  Rayon::registry().registerMetaRTShape(new Rayon::MetaPlane);
+  Rayon::registry().registerMetaRTShape(new Rayon::MetaRectangle);
+  Rayon::registry().registerMetaRTShape(new Rayon::MetaBox);
+  Rayon::registry().registerMetaRTShape(new Rayon::MetaMobius);
 }
 
 int  main(int ac, char** av)
@@ -44,7 +44,7 @@ int  main(int ac, char** av)
   {
     std::cout << std::hex;
     setupDefaultRegistry();
-    Rayon::Rayon  app(ac, av);
+    Rayon::Rayon app(ac, av);
     return app.run();
   }
   catch (std::exception& except)

@@ -3,16 +3,16 @@
 #ifndef RAYON_META_PLANE_HH_
 #define RAYON_META_PLANE_HH_
 
-#include "MetaRTObjects/IMetaRTObject.hh"
+#include "MetaRTShapes/IMetaRTShape.hh"
 
 namespace Rayon
 {
-  class MetaPlane : public IMetaRTObject
+  class MetaPlane : public IMetaRTShape
   {
   public:
-    RTObject*   make() const final;
+    RTShape*   make() const final;
 
-    const char* objectName() const final;
+    const char* shapeName() const final;
   };
 } // namespace Rayon
 

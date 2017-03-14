@@ -56,25 +56,25 @@ namespace Rayon
     return _metaRTLights;
   }
 
-  bool Registry::registerMetaRTObject(IMetaRTObject* meta)
+  bool Registry::registerMetaRTShape(IMetaRTShape* meta)
   {
-    std::string id = meta->objectName();
-    if (_metaRTObjects.count(id))
+    std::string id = meta->shapeName();
+    if (_metaRTShapes.count(id))
       return false;
-    _metaRTObjects[id].reset(meta);
+    _metaRTShapes[id].reset(meta);
     return true;
   }
 
-  const IMetaRTObject*  Registry::getMetaRTObject(const std::string& id) const
+  const IMetaRTShape*  Registry::getMetaRTShape(const std::string& id) const
   {
-    if (!_metaRTObjects.count(id))
+    if (!_metaRTShapes.count(id))
       return nullptr;
-    return _metaRTObjects.at(id).get();
+    return _metaRTShapes.at(id).get();
   }
 
-  auto  Registry::getMetaRTObjects() const -> const MetaRTObjectContainer&
+  auto  Registry::getMetaRTShapes() const -> const MetaRTShapeContainer&
   {
-    return _metaRTObjects;
+    return _metaRTShapes;
   }
 
 } // namespace Rayon

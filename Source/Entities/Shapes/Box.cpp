@@ -1,4 +1,4 @@
-#include "Entities/Objects/Box.hh"
+#include "Entities/Shapes/Box.hh"
 #include "SceneParse.hh"
 
 #include <Json.h>

@@ -1,6 +1,7 @@
 #include "Entities/Lights/RTLight.hh"
 #include "SceneParse.hh"
 #include "Scene.hh"
+#include "Object.hh"
 
 #include <Json.h>
 
@@ -31,7 +32,7 @@ namespace Rayon
   bool    RTLight::doesShadow(const Vec_t& pos,
                               const Scene& scene,
                               const Vec_t& point,
-                              RTObject* obj) const
+                              RTShape* obj) const
   {
     Vec_t   light_vec(pos - point);
     Vec_t   tmp_pos(point + light_vec * Globals::Epsilon);
@@ -42,7 +43,9 @@ namespace Rayon
 
     for (const auto& object : scene.objects())
     {
-      if (obj != object && object->inter(shadowRay, data) && data.k < 1.0)
+      if (obj != object->getShape()
+          && object->inter(shadowRay, data)
+          && data.k < 1.0)
         return true;
     }
     return false;
@@ -53,13 +56,13 @@ namespace Rayon
                                 const Color& lightColor,
                                 const IntersectionData& data) const
   {
-    if (data.material->getShininess() < Globals::Epsilon)
+    if (data.obj->getMaterial().getShininess() < Globals::Epsilon)
       return 0;
     Vec_t   refLight = Tools::Reflect(lightVec, data.normal);
     Float_t dot = Tools::DotProduct(data.ray->getDirection(), refLight);
 
     if (dot > Globals::Epsilon)
-      return lightColor * std::pow(dot, data.material->getShininess());
+      return lightColor * std::pow(dot, data.obj->getMaterial().getShininess());
     return 0;
   }
 

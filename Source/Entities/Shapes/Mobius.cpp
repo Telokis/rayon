@@ -1,4 +1,4 @@
-#include "Entities/Objects/Mobius.hh"
+#include "Entities/Shapes/Mobius.hh"
 #include "SolverSecond.hh"
 #include "SceneParse.hh"
 
@@ -67,6 +67,7 @@ namespace Rayon
   {
     Float_t step = .1;
     Vec_t p;
+    Float_t halW = _width / 2;
 
     _facets.clear();
 
@@ -75,7 +76,7 @@ namespace Rayon
       if (v > Globals::PI)
         v = Globals::PI;
 
-      for (Float_t t = -0.5; t <= 0.5; t += step)
+      for (Float_t t = -halW; t <= halW; t += step)
       {
         if (t > 1)
           t = 1;

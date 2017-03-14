@@ -1,4 +1,4 @@
-#include "Entities/Objects/Plane.hh"
+#include "Entities/Shapes/Plane.hh"
 #include "SolverSecond.hh"
 #include "SceneParse.hh"
 

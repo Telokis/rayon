@@ -3,16 +3,16 @@
 #ifndef RAYON_META_MOBIUS_HH_
 #define RAYON_META_MOBIUS_HH_
 
-#include "MetaRTObjects/IMetaRTObject.hh"
+#include "MetaRTShapes/IMetaRTShape.hh"
 
 namespace Rayon
 {
-  class MetaMobius : public IMetaRTObject
+  class MetaMobius : public IMetaRTShape
   {
   public:
-    RTObject*   make() const final;
+    RTShape*   make() const final;
 
-    const char* objectName() const final;
+    const char* shapeName() const final;
   };
 } // namespace Rayon
 

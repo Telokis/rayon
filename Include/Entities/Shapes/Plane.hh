@@ -1,14 +1,14 @@
 #ifndef RAYON_PLANE_HH_
 #define RAYON_PLANE_HH_
 
-#include "Object.hh"
+#include "Shape.hh"
 
 namespace Rayon
 {
 
-  class   Plane : public Object<Plane>
+  class   Plane : public Shape<Plane>
   {
-    typedef Object<Plane> ParentType;
+    typedef Shape<Plane> ParentType;
     friend  ParentType;
 
   public:
@@ -25,7 +25,7 @@ namespace Rayon
     Vec_t              _norm;
 
   public:
-    static const constexpr auto ObjectName = "Plane";
+    static const constexpr auto ShapeName = "Plane";
 
   private:
     bool  interImpl(const Ray& ray, IntersectionData& data) const;
