@@ -6,19 +6,18 @@
 
 namespace Rayon
 {
+
   Mobius::Mobius()
   {
   }
 
   Mobius::Mobius(const Vec_t &pos, const Vec_t &rot)
     : ParentType(pos, rot)
-    , _last(nullptr)
   {
   }
 
   Mobius::Mobius(Float_t x, Float_t y, Float_t z)
     : ParentType(x, y, z)
-    , _last(nullptr)
   {
   }
 
@@ -42,17 +41,19 @@ namespace Rayon
     transformed.setOrigin(tmp_pos);
     transformed.setDirection(tmp_dir);
 
-    for (const Sphere& sphere : _facets)
+    size_t i = 0;
+    for (const Triangle& tri : _facets)
     {
-      if (sphere.inter(transformed, data))
+      if (tri.inter(transformed, data))
       {
         if (data.k < realData.k && data.k > Globals::Epsilon)
         {
           found = true;
           realData = data;
-          _last = &sphere;
+          _last = i;
         }
       }
+      ++i;
     }
     data = realData;
     return found;
@@ -60,36 +61,52 @@ namespace Rayon
 
   void    Mobius::fillDataImpl(IntersectionData& data) const
   {
-    _last->fillData(data);
+    _facets.at(_last).fillData(data);
+    data.normal = Tools::Normalize(directRotation(data.normal));
   }
 
   void      Mobius::preprocessImpl()
   {
     Float_t step = .1;
-    Vec_t p;
     Float_t halW = _width / 2;
 
     _facets.clear();
 
-    for (Float_t v = 0; v <= Globals::PI; v += (step / 2))
+    auto lambda = [this] (Float_t v, Float_t t) {
+      Vec_t p;
+
+      Float_t cdv = Tools::Cos(2 * v);
+      Float_t sdv = Tools::Sin(2 * v);
+      Float_t ctv = Tools::Cos(_torsion * v);
+      Float_t stv = Tools::Sin(_torsion * v);
+
+      Float_t c = 2 + t * ctv;
+
+      p.x = c * cdv;
+      p.z = c * sdv;
+      p.y = t * stv;
+
+      return p;
+    };
+
+    for (Float_t v = 0; v < Globals::PI; v += (step / 2))
     {
       if (v > Globals::PI)
         v = Globals::PI;
 
-      for (Float_t t = -halW; t <= halW; t += step)
+      for (Float_t t = -halW; t < halW; t += step)
       {
-        if (t > 1)
-          t = 1;
+        if (t > halW)
+          t = halW;
 
-        Float_t dv = 2 * v;
-        Float_t tv = _torsion * v;
-        Float_t c = 2 + t * Tools::Cos(tv);
-
-        p.x = c * Tools::Cos(dv);
-        p.z = c * Tools::Sin(dv);
-        p.y = t * Tools::Sin(tv);
-
-        _facets.emplace_back(p, Vec_t(0), step);
+        Vec_t p1 = lambda(v, t);
+        Vec_t p2 = lambda(v + step, t);
+        Vec_t p3 = lambda(v, t + step);
+        Vec_t p4 = lambda(v + step, t + step);
+        _facets.emplace_back(p1, p2, p3);
+        _facets.back().preprocess();
+        _facets.emplace_back(p3, p2, p4);
+        _facets.back().preprocess();
       }
     }
   }

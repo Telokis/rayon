@@ -160,6 +160,12 @@ namespace Rayon
     }
 
   } // namespace Tools
+
+  inline std::ostream& operator<<(std::ostream& stream, const Rayon::Vec_t& vec)
+  {
+    stream << "{ " << vec.x << ", " << vec.y << ", " << vec.z << " }";
+    return stream;
+  }
 } // namespace Rayon
 
 /**

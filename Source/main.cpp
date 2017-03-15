@@ -16,6 +16,7 @@
 #include "MetaRTShapes/MetaRectangle.hh"
 #include "MetaRTShapes/MetaBox.hh"
 #include "MetaRTShapes/MetaMobius.hh"
+#include "MetaRTShapes/MetaTriangle.hh"
 
 #include "Ray.hh"
 #include "Rayon.hh"
@@ -36,6 +37,7 @@ void  setupDefaultRegistry()
   Rayon::registry().registerMetaRTShape(new Rayon::MetaRectangle);
   Rayon::registry().registerMetaRTShape(new Rayon::MetaBox);
   Rayon::registry().registerMetaRTShape(new Rayon::MetaMobius);
+  Rayon::registry().registerMetaRTShape(new Rayon::MetaTriangle);
 }
 
 int  main(int ac, char** av)

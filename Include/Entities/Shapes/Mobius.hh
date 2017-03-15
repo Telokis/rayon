@@ -1,7 +1,7 @@
 #ifndef RAYON_MOBIUS_HH_
 #define RAYON_MOBIUS_HH_
 
-#include "Entities/Shapes/Sphere.hh"
+#include "Entities/Shapes/Triangle.hh"
 
 #include <vector>
 
@@ -24,8 +24,8 @@ namespace Rayon
     void    write(Json::Value& root) const override;
 
   private:
-    std::vector<Sphere>   _facets;
-    mutable const Sphere* _last;
+    std::vector<Triangle> _facets;
+    mutable std::size_t   _last = -1;
 
   public:
     static const constexpr auto ShapeName = "Mobius";
