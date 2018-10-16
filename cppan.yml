@@ -1,0 +1,19 @@
+common_settings:
+    c++: 14
+
+files:
+    - Source/.*
+    - Include/.*
+    - Dependencies/json/Json.cpp
+    - Dependencies/json/Json.h
+    - Dependencies/json/Json-forwards.h
+
+include_directories:
+    private:
+        - Include/
+        - Dependencies/json
+        - Dependencies/glm/include
+
+dependencies:
+    - pvt.cppan.demo.boost.program_options: 1.63.0
+    - pvt.cppan.demo.boost.log: 1.63.0
