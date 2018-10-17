@@ -10,10 +10,10 @@ namespace Rayon
   class MetaRectangle : public IMetaRTShape
   {
   public:
-    RTShape*   make() const final;
+    RTShape* make() const final;
 
     const char* shapeName() const final;
   };
-} // namespace Rayon
+}  // namespace Rayon
 
-#endif // RAYON_META_RECTANGLE_HH_
+#endif  // RAYON_META_RECTANGLE_HH_

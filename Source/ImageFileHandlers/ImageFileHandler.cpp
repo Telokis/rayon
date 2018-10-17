@@ -1,14 +1,14 @@
 #include "ImageFileHandlers/ImageFileHandler.hh"
-#include "Registry.hh"
-#include "RawImage.hh"
 
-#include <iostream>
 #include <algorithm>
+#include <iostream>
+
+#include "RawImage.hh"
+#include "Registry.hh"
 
 namespace Rayon
 {
-  bool ImageFileHandler::readFromFileBasedOnExtension(const std::string& file,
-                                                      RawImage& readInto)
+  bool ImageFileHandler::readFromFileBasedOnExtension(const std::string& file, RawImage& readInto)
   {
     std::string ext = file.substr(file.find_last_of('.') + 1);
     std::transform(ext.begin(), ext.end(), ext.begin(), ::tolower);
@@ -28,8 +28,8 @@ namespace Rayon
   }
 
   bool ImageFileHandler::writeToFileBasedOnExtension(const std::string& file,
-                                                     const RawImage& readFrom,
-                                                     bool force)
+                                                     const RawImage&    readFrom,
+                                                     bool               force)
   {
     std::string ext = file.substr(file.find_last_of('.') + 1);
     std::transform(ext.begin(), ext.end(), ext.begin(), ::tolower);
@@ -40,9 +40,9 @@ namespace Rayon
       ext = "bmp";
     }
 
-    const auto& handlers = registry().getImageFileHandlers();
-    const IImageFileHandler* def = handlers.empty() ? nullptr : handlers.begin()->second.get();
-    const IImageFileHandler* handler = registry().getImageFileHandler(ext);
+    const auto&              handlers = registry().getImageFileHandlers();
+    const IImageFileHandler* def      = handlers.empty() ? nullptr : handlers.begin()->second.get();
+    const IImageFileHandler* handler  = registry().getImageFileHandler(ext);
     if (handler)
       return handler->writeToFile(file.c_str(), readFrom);
 
@@ -50,8 +50,10 @@ namespace Rayon
     {
       if (def)
       {
-        std::cout << "[Info]No handler found for extension [" << ext << "]."
-          " Forcing to " << def->extensionName() << "...\n";
+        std::cout << "[Info]No handler found for extension [" << ext
+                  << "]."
+                     " Forcing to "
+                  << def->extensionName() << "...\n";
         return def->writeToFile((file + def->extensionName()).c_str(), readFrom);
       }
       std::cout << "[SEVERE]No handler registered.\n";
@@ -62,4 +64,4 @@ namespace Rayon
     std::cout << "       Set force to true to default to another handler.\n";
     return false;
   }
-} // namespace Rayon
+}  // namespace Rayon

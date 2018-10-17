@@ -10,10 +10,10 @@ namespace Rayon
   class IMetaRTShape
   {
   public:
-    virtual RTShape*    make() const = 0;
+    virtual RTShape* make() const = 0;
 
     virtual const char* shapeName() const = 0;
   };
-} // namespace Rayon
+}  // namespace Rayon
 
-#endif // RAYON_IMETA_RTSHAPE_HH_
+#endif  // RAYON_IMETA_RTSHAPE_HH_

@@ -3,9 +3,9 @@
 #ifndef RAYON_OBJECT_HH_
 #define RAYON_OBJECT_HH_
 
-#include "Material.hh"
-
 #include <Json-forwards.h>
+
+#include "Material.hh"
 
 namespace Rayon
 {
@@ -24,24 +24,24 @@ namespace Rayon
     Object& operator=(Object&& object);
 
   public:
-    const RTShape*  getShape() const;
-    const Material  getMaterial() const;
-    RTShape*        getShape();
+    const RTShape* getShape() const;
+    const Material getMaterial() const;
+    RTShape*       getShape();
 
-    void            setShape(RTShape* shape);
-    void            setMaterial(Material material);
-
-  public:
-    bool    inter(const Ray &ray, IntersectionData& data) const;
+    void setShape(RTShape* shape);
+    void setMaterial(Material material);
 
   public:
-    bool    read(const Json::Value& root);
-    void    write(Json::Value& root) const;
+    bool inter(const Ray& ray, IntersectionData& data) const;
+
+  public:
+    bool read(const Json::Value& root);
+    void write(Json::Value& root) const;
 
   private:
-    RTShape*  _shape;
-    Material  _material;
+    RTShape* _shape;
+    Material _material;
   };
-} // namespace Rayon
+}  // namespace Rayon
 
-#endif // RAYON_OBJECT_HH_
+#endif  // RAYON_OBJECT_HH_

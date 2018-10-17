@@ -10,7 +10,7 @@ namespace Rayon
   namespace Globals
   {
     static const constexpr Float_t PI = 3.14159265358979323846;
-  } // namespace Globals
-} // namespace Rayon
+  }  // namespace Globals
+}  // namespace Rayon
 
-#endif // RAYON_TOOLS_HELPERS_PI_HH
+#endif  // RAYON_TOOLS_HELPERS_PI_HH

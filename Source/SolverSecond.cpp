@@ -15,20 +15,19 @@ namespace Rayon
        * @return  True if the equation has one or two solutions.
        *          false otherwise.
        */
-      bool    Second(Float_t* results,
-                     Float_t a, Float_t b, Float_t c)
+      bool Second(Float_t* results, Float_t a, Float_t b, Float_t c)
       {
         using std::sqrt;
 
-        Float_t  delta = Pow2(b) - 4.0 * a * c;
-        Float_t  sqrtDelta;
+        Float_t delta = Pow2(b) - 4.0 * a * c;
+        Float_t sqrtDelta;
 
         if (delta < 0)
           return false;
         if (!results)
           return true;
 
-        sqrtDelta = sqrt(delta);
+        sqrtDelta  = sqrt(delta);
         results[1] = 2.0 * a;
         results[0] = (-b - sqrtDelta) / results[1];
         results[1] = (-b + sqrtDelta) / results[1];
@@ -45,12 +44,11 @@ namespace Rayon
        * @return  True if the equation has one or two solutions.
        *          false otherwise.
        */
-      bool    Second(Float_t* results,
-                     Float_t* args)
+      bool Second(Float_t* results, Float_t* args)
       {
         return Second(results, args[0], args[1], args[2]);
       }
 
-    } // namespace Solver
-  } // namespace Tools
-} // namespace Rayon
+    }  // namespace Solver
+  }    // namespace Tools
+}  // namespace Rayon

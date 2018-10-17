@@ -1,26 +1,23 @@
 #include "Entities/Lights/RTLight.hh"
-#include "SceneParse.hh"
-#include "Scene.hh"
-#include "Object.hh"
 
 #include <Json.h>
 
+#include "Object.hh"
+#include "Scene.hh"
+#include "SceneParse.hh"
+
 namespace Rayon
 {
-  RTLight::RTLight(const Color &color)
-    : _color(color)
+  RTLight::RTLight(const Color& color) : _color(color)
   {
   }
 
-  RTLight::RTLight(const Vec_t &pos,
-                   const Vec_t &rot,
-                   const Color &color)
+  RTLight::RTLight(const Vec_t& pos, const Vec_t& rot, const Color& color)
     : Entity(pos, rot), _color(color)
   {
   }
 
-  RTLight::RTLight(Float_t x, Float_t y, Float_t z,
-                   const Color &color)
+  RTLight::RTLight(Float_t x, Float_t y, Float_t z, const Color& color)
     : Entity(x, y, z), _color(color)
   {
   }
@@ -29,37 +26,35 @@ namespace Rayon
   {
   }
 
-  bool    RTLight::doesShadow(const Vec_t& pos,
-                              const Scene& scene,
-                              const Vec_t& point,
-                              RTShape* obj) const
+  bool RTLight::doesShadow(const Vec_t& pos,
+                           const Scene& scene,
+                           const Vec_t& point,
+                           RTShape*     obj) const
   {
-    Vec_t   light_vec(pos - point);
-    Vec_t   tmp_pos(point + light_vec * Globals::Epsilon);
-    IntersectionData  data;
+    Vec_t            light_vec(pos - point);
+    Vec_t            tmp_pos(point + light_vec * Globals::Epsilon);
+    IntersectionData data;
 
     data.k = Globals::Invalid;
     Ray shadowRay(RayType::Shadow, tmp_pos, light_vec);
 
     for (const auto& object : scene.objects())
     {
-      if (obj != object->getShape()
-          && object->inter(shadowRay, data)
-          && data.k < 1.0)
+      if (obj != object->getShape() && object->inter(shadowRay, data) && data.k < 1.0)
         return true;
     }
     return false;
   }
 
-  Color    RTLight::getSpecular(const Vec_t& lightVec,
-                                const Scene& scene,
-                                const Color& lightColor,
-                                const IntersectionData& data) const
+  Color RTLight::getSpecular(const Vec_t&            lightVec,
+                             const Scene&            scene,
+                             const Color&            lightColor,
+                             const IntersectionData& data) const
   {
     if (data.obj->getMaterial().getShininess() < Globals::Epsilon)
       return 0;
     Vec_t   refLight = Tools::Reflect(lightVec, data.normal);
-    Float_t dot = Tools::DotProduct(data.ray->getDirection(), refLight);
+    Float_t dot      = Tools::DotProduct(data.ray->getDirection(), refLight);
 
     if (dot > Globals::Epsilon)
       return lightColor * std::pow(dot, data.obj->getMaterial().getShininess());
@@ -80,4 +75,4 @@ namespace Rayon
     writeVal(root, "color", _color, 0xffffffff);
   }
 
-} // namespace Rayon
+}  // namespace Rayon

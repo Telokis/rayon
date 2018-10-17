@@ -4,6 +4,7 @@
 #define RAYON_CONFIG_HH_
 
 #include <boost/program_options.hpp>
+
 #include "Tools/Helpers.hh"
 
 namespace Rayon
@@ -12,19 +13,28 @@ namespace Rayon
   {
   public:
     Config();
-    void  init(int ac, char** av);
-    bool  handleStoppingArgs() const;
+    void init(int ac, char** av);
+    bool handleStoppingArgs() const;
 
   private:
     boost::program_options::options_description _description;
     boost::program_options::variables_map       _variables;
 
   private:
-    RAYON_GENERATE_PROPERTY_DECLARATION(Config, std::string, _outputPath, OutputPath)
-    RAYON_GENERATE_PROPERTY_DECLARATION(Config, std::string, _inputPath, InputPath)
+    RAYON_GENERATE_PROPERTY_DECLARATION(Config,
+                                        std::string,
+                                        _outputPath,
+                                        OutputPath)
+    RAYON_GENERATE_PROPERTY_DECLARATION(Config,
+                                        std::string,
+                                        _inputPath,
+                                        InputPath)
     RAYON_GENERATE_PROPERTY_DECLARATION(Config, uint32, _width, Width)
     RAYON_GENERATE_PROPERTY_DECLARATION(Config, uint32, _height, Height)
-    RAYON_GENERATE_PROPERTY_DECLARATION(Config, uint32, _threadsCount, ThreadCount)
+    RAYON_GENERATE_PROPERTY_DECLARATION(Config,
+                                        uint32,
+                                        _threadsCount,
+                                        ThreadCount)
   };
 
   inline Config& config()
@@ -33,6 +43,6 @@ namespace Rayon
     return config;
   }
 
-} // namespace Rayon
+}  // namespace Rayon
 
-#endif // RAYON_CONFIG_HH_
+#endif  // RAYON_CONFIG_HH_

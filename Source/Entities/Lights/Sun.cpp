@@ -1,27 +1,24 @@
 #include "Entities/Lights/Sun.hh"
-#include "Scene.hh"
-#include "SceneParse.hh"
-#include "Object.hh"
+
+#include <Json.h>
 
 #include <iostream>
-#include <Json.h>
+
+#include "Object.hh"
+#include "Scene.hh"
+#include "SceneParse.hh"
 
 namespace Rayon
 {
-  Sun::Sun()
-    : _power(0.5)
+  Sun::Sun() : _power(0.5)
   {
   }
 
-  Sun::Sun(const Vec_t &pos)
-    : ParentType(pos, Vec_t(0, 0, 0)),
-    _power(0.5)
+  Sun::Sun(const Vec_t& pos) : ParentType(pos, Vec_t(0, 0, 0)), _power(0.5)
   {
   }
 
-  Sun::Sun(Float_t x, Float_t y, Float_t z)
-    : ParentType(x, y, z),
-    _power(0.5)
+  Sun::Sun(Float_t x, Float_t y, Float_t z) : ParentType(x, y, z), _power(0.5)
   {
   }
 
@@ -29,20 +26,20 @@ namespace Rayon
   {
   }
 
-  Color       Sun::applyImpl(const Color& color,
-                             const Scene& scene,
-                             const IntersectionData& data,
-                             Color& specular) const
+  Color Sun::applyImpl(const Color&            color,
+                       const Scene&            scene,
+                       const IntersectionData& data,
+                       Color&                  specular) const
   {
     Float_t cos_a;
     Vec_t   light_vec;
 
     if (doesShadow(_pos, scene, data.point, data.obj->getShape()))
       return 0;
-    cos_a = 0;
+    cos_a     = 0;
     light_vec = getPos() - data.point;
     light_vec = Tools::Normalize(light_vec);
-    cos_a = Tools::DotProduct(light_vec, data.normal);
+    cos_a     = Tools::DotProduct(light_vec, data.normal);
     if (cos_a < Globals::Epsilon)
       return 0;
     specular += getSpecular(light_vec, scene, _color, data);
@@ -63,4 +60,4 @@ namespace Rayon
     writeVal(root, "power", _power, 0.5);
   }
 
-} // namespace Rayon
+}  // namespace Rayon

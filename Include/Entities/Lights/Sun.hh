@@ -14,10 +14,11 @@ namespace Rayon
    *          For this @ref Entity, the rotation doesn't
    *          matter.
    */
-  class   Sun : public Light<Sun>
+  class Sun : public Light<Sun>
   {
-    typedef Light<Sun> ParentType;  /**< Typedef for easier access to parent's type */
-    friend  ParentType;             /**< Required for CRTP used by @ref Light */
+    typedef Light<Sun>
+      ParentType;      /**< Typedef for easier access to parent's type */
+    friend ParentType; /**< Required for CRTP used by @ref Light */
 
   public:
     /**
@@ -49,8 +50,8 @@ namespace Rayon
     ~Sun();
 
   public:
-    void    read(const Json::Value& root) override;
-    void    write(Json::Value& root) const override;
+    void read(const Json::Value& root) override;
+    void write(Json::Value& root) const override;
 
   public:
     /**
@@ -75,13 +76,13 @@ namespace Rayon
      * @param[in] point The impact point.
      * @return          The transformed color.
      */
-    Color   applyImpl(const Color& color,
-                      const Scene& scene,
-                      const IntersectionData& data,
-                      Color& specular) const;
+    Color applyImpl(const Color&            color,
+                    const Scene&            scene,
+                    const IntersectionData& data,
+                    Color&                  specular) const;
 
     RAYON_GENERATE_PROPERTY_DECLARATION(Sun, Float_t, _power, Power)
   };
-} // namespace Rayon
+}  // namespace Rayon
 
-#endif // RAYON_SUN_HH_
+#endif  // RAYON_SUN_HH_

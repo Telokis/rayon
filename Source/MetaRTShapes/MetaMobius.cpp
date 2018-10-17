@@ -1,9 +1,10 @@
 #include "MetaRTShapes/MetaMobius.hh"
+
 #include "Entities/Shapes/Mobius.hh"
 
 namespace Rayon
 {
-  RTShape*    MetaMobius::make() const
+  RTShape* MetaMobius::make() const
   {
     return new Mobius;
   }
@@ -12,4 +13,4 @@ namespace Rayon
   {
     return Mobius::ShapeName;
   }
-} // namespace Rayon
+}  // namespace Rayon

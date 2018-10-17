@@ -13,24 +13,18 @@ namespace Rayon
   struct IntersectionData
   {
     IntersectionData()
-      : localPoint(0)
-      , point(0)
-      , normal(0)
-      , ray(nullptr)
-      , k(0)
-      , obj(nullptr)
-      , isInside(false)
+      : localPoint(0), point(0), normal(0), ray(nullptr), k(0), obj(nullptr), isInside(false)
     {
     }
 
-    Vec_t       localPoint;
-    Vec_t       point;
-    Vec_t       normal;
-    const Ray*  ray;
-    Float_t     k;
-    Object*     obj;
-    bool        isInside;
+    Vec_t      localPoint;
+    Vec_t      point;
+    Vec_t      normal;
+    const Ray* ray;
+    Float_t    k;
+    Object*    obj;
+    bool       isInside;
   };
-} // namespace Rayon
+}  // namespace Rayon
 
-#endif // RAYON_INTERSECTIONDATA_HH_
+#endif  // RAYON_INTERSECTIONDATA_HH_

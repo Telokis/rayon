@@ -1,17 +1,17 @@
 #include "Rayon.hh"
-#include "Version.hh"
-#include "Worker.hh"
-#include "RawImage.hh"
-#include "SceneParse.hh"
-#include "ImageFileHandlers/ImageFileHandler.hh"
 
 #include <iostream>
 #include <thread>
 #include <vector>
 
+#include "ImageFileHandlers/ImageFileHandler.hh"
+#include "RawImage.hh"
+#include "SceneParse.hh"
+#include "Version.hh"
+#include "Worker.hh"
+
 namespace Rayon
 {
-
   Rayon::Rayon(int ac, char** av)
   {
     config().init(ac, av);
@@ -25,9 +25,9 @@ namespace Rayon
     if (config().handleStoppingArgs())
       return 0;
 
-    auto width = config().getWidth();
-    auto height = config().getHeight();
-    RawImage  img(width, height);
+    auto     width  = config().getWidth();
+    auto     height = config().getHeight();
+    RawImage img(width, height);
 
     uint8 jn = config().getThreadCount();
 
@@ -35,9 +35,8 @@ namespace Rayon
     for (uint8 i = 0; i < jn; ++i)
     {
       uint32 yStart = i * height / jn;
-      uint32 yStop = (i + 1) * height / jn;
-      threads.push_back(std::thread(Worker(&img, yStart, yStop),
-                                    width, height, &_scene));
+      uint32 yStop  = (i + 1) * height / jn;
+      threads.push_back(std::thread(Worker(&img, yStart, yStop), width, height, &_scene));
     }
 
     for (std::thread& thread : threads)
@@ -47,4 +46,4 @@ namespace Rayon
     return 0;
   }
 
-} // namespace Rayon
+}  // namespace Rayon

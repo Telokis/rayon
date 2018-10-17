@@ -1,26 +1,24 @@
 #include "Entities/Shapes/Sphere.hh"
-#include "SolverSecond.hh"
-#include "Tools/Helpers.hh"
-#include "SceneParse.hh"
 
 #include <Json.h>
 
+#include "SceneParse.hh"
+#include "SolverSecond.hh"
+#include "Tools/Helpers.hh"
+
 namespace Rayon
 {
-  Sphere::Sphere(Float_t radius)
-    : _radius(radius)
+  Sphere::Sphere(Float_t radius) : _radius(radius)
   {
   }
 
   Sphere::Sphere(const Vec_t& pos, const Vec_t& rot, Float_t radius)
-    : ParentType(pos, rot),
-    _radius(radius)
+    : ParentType(pos, rot), _radius(radius)
   {
   }
 
   Sphere::Sphere(Float_t x, Float_t y, Float_t z, Float_t radius)
-    : ParentType(x, y, z),
-    _radius(radius)
+    : ParentType(x, y, z), _radius(radius)
   {
   }
 
@@ -28,7 +26,7 @@ namespace Rayon
   {
   }
 
-  bool      Sphere::interImpl(const Ray& ray, IntersectionData& data) const
+  bool Sphere::interImpl(const Ray& ray, IntersectionData& data) const
   {
     using Tools::Pow2;
 
@@ -54,7 +52,7 @@ namespace Rayon
     return false;
   }
 
-  void    Sphere::fillDataImpl(IntersectionData& data) const
+  void Sphere::fillDataImpl(IntersectionData& data) const
   {
     data.normal = Tools::Normalize(data.point - _pos);
   }
@@ -73,4 +71,4 @@ namespace Rayon
     writeVal(root, "radius", _radius, 1);
   }
 
-} // namespace Rayon
+}  // namespace Rayon

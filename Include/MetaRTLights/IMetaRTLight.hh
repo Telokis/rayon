@@ -10,10 +10,10 @@ namespace Rayon
   class IMetaRTLight
   {
   public:
-    virtual RTLight*    make() const = 0;
+    virtual RTLight* make() const = 0;
 
     virtual const char* lightName() const = 0;
   };
-} // namespace Rayon
+}  // namespace Rayon
 
-#endif // RAYON_IMETA_RTLIGHT_HH_
+#endif  // RAYON_IMETA_RTLIGHT_HH_

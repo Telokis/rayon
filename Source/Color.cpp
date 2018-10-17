@@ -4,9 +4,7 @@ using Rayon::Tools::Clamp;
 
 namespace Rayon
 {
-
-  Color::Color()
-    : _charValues{0xff, 0, 0, 0}
+  Color::Color() : _charValues{0xff, 0, 0, 0}
   {
   }
 
@@ -18,19 +16,17 @@ namespace Rayon
     _charValues[3] = (v & uint32(0xFF));
   }
 
-  Color::Color(uint8 r, uint8 g, uint8 b)
-    : _charValues{0xff, r, g, b}
+  Color::Color(uint8 r, uint8 g, uint8 b) : _charValues{0xff, r, g, b}
   {
   }
 
-  Color::Color(uint8 a, uint8 r, uint8 g, uint8 b)
-    : _charValues{a, r, g, b}
+  Color::Color(uint8 a, uint8 r, uint8 g, uint8 b) : _charValues{a, r, g, b}
   {
   }
 
-  Color   &Color::operator*=(double val)
+  Color& Color::operator*=(double val)
   {
-    val = Clamp(val, 0, 1);
+    val            = Clamp(val, 0, 1);
     _charValues[1] = Tools::Floor(_charValues[1] * val + 0.5);
     _charValues[2] = Tools::Floor(_charValues[2] * val + 0.5);
     _charValues[3] = Tools::Floor(_charValues[3] * val + 0.5);
@@ -41,9 +37,9 @@ namespace Rayon
   {
   }
 
-  Color       Color::operator*(double val) const
+  Color Color::operator*(double val) const
   {
-    Color   result = *this;
+    Color result = *this;
 
     result *= val;
     return result;
@@ -51,30 +47,30 @@ namespace Rayon
 
   Color& Color::operator+=(const Color& c)
   {
-    red() = red() + c.red();
+    red()   = red() + c.red();
     green() = green() + c.green();
-    blue() = blue() + c.blue();
+    blue()  = blue() + c.blue();
     return *this;
   }
 
   Color Color::operator+(const Color& c) const
   {
-    Color   result = *this;
+    Color result = *this;
 
     result += c;
     return result;
   }
 
-  Color       Color::interpolate(const Color& c1, const Color& c2, double val)
+  Color Color::interpolate(const Color& c1, const Color& c2, double val)
   {
     val = Clamp(val, 0, 1);
     return Tools::Interp(val, c1, c2);
   }
 
-  Color       Color::average(const Color* colors, size_t size)
+  Color Color::average(const Color* colors, size_t size)
   {
-    Color   result;
-    uint64  tmp[3] = {0};
+    Color  result;
+    uint64 tmp[3] = {0};
 
     if (!size)
       return result;
@@ -86,13 +82,13 @@ namespace Rayon
       tmp[2] += colors[i].blue();
     }
 
-    result.red() = static_cast<uint8>(tmp[0] / size);
+    result.red()   = static_cast<uint8>(tmp[0] / size);
     result.green() = static_cast<uint8>(tmp[1] / size);
-    result.blue() = static_cast<uint8>(tmp[2] / size);
+    result.blue()  = static_cast<uint8>(tmp[2] / size);
     return result;
   }
 
-  Color       Color::average(const std::vector<Color>& colors)
+  Color Color::average(const std::vector<Color>& colors)
   {
     return average(colors.data(), colors.size());
   }
@@ -102,4 +98,4 @@ namespace Rayon
     return stream << color.intValue();
   }
 
-} // namespace Rayon
+}  // namespace Rayon

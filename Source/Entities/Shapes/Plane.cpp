@@ -1,8 +1,9 @@
 #include "Entities/Shapes/Plane.hh"
-#include "SolverSecond.hh"
-#include "SceneParse.hh"
 
 #include <Json.h>
+
+#include "SceneParse.hh"
+#include "SolverSecond.hh"
 
 namespace Rayon
 {
@@ -10,13 +11,11 @@ namespace Rayon
   {
   }
 
-  Plane::Plane(const Vec_t &pos, const Vec_t &rot)
-    : ParentType(pos, rot)
+  Plane::Plane(const Vec_t& pos, const Vec_t& rot) : ParentType(pos, rot)
   {
   }
 
-  Plane::Plane(Float_t x, Float_t y, Float_t z)
-    : ParentType(x, y, z)
+  Plane::Plane(Float_t x, Float_t y, Float_t z) : ParentType(x, y, z)
   {
   }
 
@@ -24,7 +23,7 @@ namespace Rayon
   {
   }
 
-  bool        Plane::interImpl(const Ray& ray, IntersectionData& data) const
+  bool Plane::interImpl(const Ray& ray, IntersectionData& data) const
   {
     Vec_t tmp_pos;
     Vec_t tmp_dir;
@@ -41,12 +40,12 @@ namespace Rayon
     return true;
   }
 
-  void    Plane::fillDataImpl(IntersectionData& data) const
+  void Plane::fillDataImpl(IntersectionData& data) const
   {
     data.normal = _norm;
   }
 
-  void        Plane::preprocessImpl()
+  void Plane::preprocessImpl()
   {
     _norm = Tools::Normalize(directRotation(Vec_t(0, 1, 0)));
   }
@@ -61,4 +60,4 @@ namespace Rayon
     ParentType::write(root);
   }
 
-} // namespace Rayon
+}  // namespace Rayon

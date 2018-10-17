@@ -2,24 +2,22 @@
 
 namespace Rayon
 {
-
   BoundingBox::BoundingBox()
   {
   }
 
-  BoundingBox::BoundingBox(const Vec_t& min, const Vec_t& max)
-    : _min(min), _max(max)
+  BoundingBox::BoundingBox(const Vec_t& min, const Vec_t& max) : _min(min), _max(max)
   {
   }
 
-  const Vec_t  BoundingBox::getSize() const
+  const Vec_t BoundingBox::getSize() const
   {
     if (!_size.isValid())
       _size = _max - _min;
     return _size();
   }
 
-  bool              BoundingBox::isInside(const Vec_t& point) const
+  bool BoundingBox::isInside(const Vec_t& point) const
   {
     if (point.x < _min.x)
       return false;
@@ -37,7 +35,7 @@ namespace Rayon
     return true;
   }
 
-  bool  BoundingBox::intersectRay(const Ray& ray) const
+  bool BoundingBox::intersectRay(const Ray& ray) const
   {
     Float_t t1 = (_min[0] - ray.getOrigin().x) * ray.getInvDirection().x;
     Float_t t2 = (_max[0] - ray.getOrigin().x) * ray.getInvDirection().x;
@@ -57,4 +55,4 @@ namespace Rayon
     return tmax > Tools::Max(tmin, 0.0);
   }
 
-} // namespace Rayon
+}  // namespace Rayon

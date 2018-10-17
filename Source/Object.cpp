@@ -1,15 +1,15 @@
 #include "Object.hh"
-#include "Entities/Shapes/RTShape.hh"
-#include "Registry.hh"
-#include "IntersectionData.hh"
-#include "Ray.hh"
 
 #include <Json.h>
 
+#include "Entities/Shapes/RTShape.hh"
+#include "IntersectionData.hh"
+#include "Ray.hh"
+#include "Registry.hh"
+
 namespace Rayon
 {
-  Object::Object()
-    : _shape(nullptr)
+  Object::Object() : _shape(nullptr)
   {
   }
 
@@ -18,65 +18,62 @@ namespace Rayon
     delete _shape;
   }
 
-  Object::Object(const Object& object)
-    : _shape(object._shape->clone())
-    , _material(object._material)
+  Object::Object(const Object& object) : _shape(object._shape->clone()), _material(object._material)
   {
   }
 
   Object& Object::operator=(const Object& object)
   {
     delete _shape;
-    _shape = object._shape->clone();
+    _shape    = object._shape->clone();
     _material = object._material;
     return *this;
   }
 
   Object::Object(Object&& object)
-    : _shape(std::exchange(object._shape, nullptr))
-    , _material(object._material)
+    : _shape(std::exchange(object._shape, nullptr)), _material(object._material)
   {
   }
 
   Object& Object::operator=(Object&& object)
   {
     delete _shape;
-    _shape = std::exchange(object._shape, nullptr);
+    _shape    = std::exchange(object._shape, nullptr);
     _material = object._material;
     return *this;
   }
 
-  const RTShape*  Object::getShape() const
+  const RTShape* Object::getShape() const
   {
     return _shape;
   }
 
-  const Material  Object::getMaterial() const
+  const Material Object::getMaterial() const
   {
     return _material;
   }
 
-  RTShape*  Object::getShape()
+  RTShape* Object::getShape()
   {
     return _shape;
   }
 
-  void            Object::setShape(RTShape* shape)
+  void Object::setShape(RTShape* shape)
   {
     delete _shape;
     _shape = shape;
   }
 
-  void            Object::setMaterial(Material material)
+  void Object::setMaterial(Material material)
   {
     _material = material;
   }
 
-  bool  Object::read(const Json::Value& root)
+  bool Object::read(const Json::Value& root)
   {
     if (root.isMember("type") && root["type"].isString())
     {
-      std::string name = root["type"].asString();
+      std::string         name = root["type"].asString();
       const IMetaRTShape* meta = registry().getMetaRTShape(name);
       if (meta)
       {
@@ -104,10 +101,10 @@ namespace Rayon
     _material.write(root["material"]);
   }
 
-  bool  Object::inter(const Ray &ray, IntersectionData& data) const
+  bool Object::inter(const Ray& ray, IntersectionData& data) const
   {
     if (getMaterial().testFlag(ray.getType()))
       return false;
     return _shape->inter(ray, data);
   }
-} // namespace Rayon
+}  // namespace Rayon

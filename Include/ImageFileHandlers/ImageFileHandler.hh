@@ -12,12 +12,12 @@ namespace Rayon
   class ImageFileHandler
   {
   public:
-    static bool  readFromFileBasedOnExtension(const std::string& file,
-                                              RawImage& readInto);
-    static bool  writeToFileBasedOnExtension(const std::string& file,
-                                             const RawImage& readFrom,
-                                             bool force = true);
+    static bool readFromFileBasedOnExtension(const std::string& file,
+                                             RawImage&          readInto);
+    static bool writeToFileBasedOnExtension(const std::string& file,
+                                            const RawImage&    readFrom,
+                                            bool               force = true);
   };
-} // namespace Rayon
+}  // namespace Rayon
 
-#endif // RAYON_IMAGEFILE_HANDLER_HH_
+#endif  // RAYON_IMAGEFILE_HANDLER_HH_
