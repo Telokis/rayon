@@ -7,6 +7,7 @@
 bin
 *.lnk
 /*.png
+/.vscode
 
 # Precompiled Headers
 *.gch
