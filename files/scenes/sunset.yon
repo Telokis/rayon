@@ -12,49 +12,84 @@
 	{
 		"position" : 
 		{
+			"x" : 0,
 			"y" : 3,
 			"z" : -4
 		},
 		"rotation" : 
 		{
-			"x" : 20
+			"x" : 20,
+			"y" : 0,
+			"z" : 0
 		}
 	},
 	"lights" : 
 	[
 		{
+			"color" : "white",
 			"position" : 
 			{
 				"x" : 10,
 				"y" : 10,
 				"z" : -20
 			},
+			"power" : 0.5,
+			"rotation" : 
+			{
+				"x" : 0,
+				"y" : 0,
+				"z" : 0
+			},
 			"type" : "Sun"
 		},
 		{
+			"color" : "white",
 			"position" : 
 			{
 				"x" : -10,
 				"y" : 10,
 				"z" : -20
 			},
+			"power" : 0.5,
+			"rotation" : 
+			{
+				"x" : 0,
+				"y" : 0,
+				"z" : 0
+			},
 			"type" : "Sun"
 		},
 		{
+			"color" : "white",
 			"position" : 
 			{
 				"x" : 10,
 				"y" : 50,
 				"z" : -20
 			},
+			"power" : 0.5,
+			"rotation" : 
+			{
+				"x" : 0,
+				"y" : 0,
+				"z" : 0
+			},
 			"type" : "Sun"
 		},
 		{
+			"color" : "white",
 			"position" : 
 			{
 				"x" : -10,
 				"y" : 30,
 				"z" : -20
+			},
+			"power" : 0.5,
+			"rotation" : 
+			{
+				"x" : 0,
+				"y" : 0,
+				"z" : 0
 			},
 			"type" : "Sun"
 		}
@@ -62,37 +97,62 @@
 	"objects" : 
 	[
 		{
+			"depth" : 1,
+			"height" : 1,
 			"material" : 
 			{
+				"ambient" : -1,
 				"color" : 
 				{
 					"blue" : 139,
 					"green" : 139,
 					"red" : 0
-				}
+				},
+				"glossiness" : 0,
+				"reflexion" : 0,
+				"refraction" : 1,
+				"shininess" : 0,
+				"transparency" : 0
 			},
 			"position" : 
 			{
-				"y" : 2.6846999999999999,
+				"x" : 0,
+				"y" : 2.7,
 				"z" : 2.5
 			},
 			"rotation" : 
 			{
-				"y" : 45
+				"x" : 0,
+				"y" : 45,
+				"z" : 0
 			},
-			"type" : "Box"
+			"type" : "Box",
+			"width" : 1
 		},
 		{
 			"material" : 
 			{
+				"ambient" : -1,
 				"color" : "deeppink4",
-				"reflexion" : 1
+				"glossiness" : 0,
+				"reflexion" : 1,
+				"refraction" : 1,
+				"shininess" : 0,
+				"transparency" : 0
 			},
 			"position" : 
 			{
-				"x" : 2.5
+				"x" : 2.5,
+				"y" : 0,
+				"z" : 0
 			},
 			"radius" : 1,
+			"rotation" : 
+			{
+				"x" : 0,
+				"y" : 0,
+				"z" : 0
+			},
 			"type" : "Sphere"
 		},
 		{
@@ -105,38 +165,78 @@
 					"NoShading"
 				],
 				"glossiness" : 2.5,
-				"reflexion" : 1
+				"reflexion" : 1,
+				"refraction" : 1,
+				"shininess" : 0,
+				"transparency" : 0
 			},
 			"position" : 
 			{
-				"x" : -2.5
+				"x" : -2.5,
+				"y" : 0,
+				"z" : 0
+			},
+			"radius" : 1,
+			"rotation" : 
+			{
+				"x" : 0,
+				"y" : 0,
+				"z" : 0
 			},
 			"type" : "Sphere"
 		},
 		{
 			"material" : 
 			{
+				"ambient" : -1,
 				"color" : "deeppink4",
 				"flags" : 
 				[
 					"NoShadow"
-				]
+				],
+				"glossiness" : 0,
+				"reflexion" : 0,
+				"refraction" : 1,
+				"shininess" : 0,
+				"transparency" : 0
 			},
 			"position" : 
 			{
+				"x" : 0,
+				"y" : 0,
 				"z" : 5
+			},
+			"radius" : 1,
+			"rotation" : 
+			{
+				"x" : 0,
+				"y" : 0,
+				"z" : 0
 			},
 			"type" : "Sphere"
 		},
 		{
 			"material" : 
 			{
+				"ambient" : -1,
 				"color" : "swimming pool",
-				"reflexion" : 0.80000000000000004
+				"glossiness" : 0,
+				"reflexion" : 0.8,
+				"refraction" : 1,
+				"shininess" : 0,
+				"transparency" : 0
 			},
 			"position" : 
 			{
-				"y" : -0.80000000000000004
+				"x" : 0,
+				"y" : -0.8,
+				"z" : 0
+			},
+			"rotation" : 
+			{
+				"x" : 0,
+				"y" : 0,
+				"z" : 0
 			},
 			"type" : "Plane"
 		}

@@ -3,6 +3,10 @@
 *.lo
 *.o
 *.obj
+.cppan
+bin
+*.lnk
+/*.png
 
 # Precompiled Headers
 *.gch

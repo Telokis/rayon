@@ -143,49 +143,41 @@ namespace Rayon
   void  writeVal(Json::Value& node, const std::string& name,
                  const Float_t& val, const Float_t& def)
   {
-    if (val != def)
-      node[name] = static_cast<double>(val);
+    node[name] = static_cast<double>(val);
   }
 
   void  writeVal(Json::Value& node, const std::string& name,
                  const uint32& val, const uint32& def)
   {
-    if (val != def)
-      node[name] = val;
+    node[name] = val;
   }
 
   void  writeVal(Json::Value& node, const std::string& name,
                  const Color& color, const Color& def)
   {
-    if (color.intValue() != def.intValue())
+    Json::Value& subNode = node[name];
+    const auto value = color.intValue();
+    const auto& cols = colors();
+    for (const auto& pair : cols)
     {
-      Json::Value& subNode = node[name];
-      const auto value = color.intValue();
-      const auto& cols = colors();
-      for (const auto& pair : cols)
+      if (value == pair.second.intValue())
       {
-        if (value == pair.second.intValue())
-        {
-          subNode = pair.first;
-          return;
-        }
+        subNode = pair.first;
+        return;
       }
-      writeVal(subNode, "red", uint32(color.red()), uint32(def.red()));
-      writeVal(subNode, "green", uint32(color.green()), uint32(def.green()));
-      writeVal(subNode, "blue", uint32(color.blue()), uint32(def.blue()));
     }
+    writeVal(subNode, "red", uint32(color.red()), uint32(def.red()));
+    writeVal(subNode, "green", uint32(color.green()), uint32(def.green()));
+    writeVal(subNode, "blue", uint32(color.blue()), uint32(def.blue()));
   }
 
   void  writeVal(Json::Value& node, const std::string& name,
                  const Vec_t& vec, const Vec_t& def)
   {
-    if (vec != def)
-    {
-      Json::Value& subNode = node[name];
-      writeVal(subNode, "x", vec.x, def.x);
-      writeVal(subNode, "y", vec.y, def.y);
-      writeVal(subNode, "z", vec.z, def.z);
-    }
+    Json::Value& subNode = node[name];
+    writeVal(subNode, "x", vec.x, def.x);
+    writeVal(subNode, "y", vec.y, def.y);
+    writeVal(subNode, "z", vec.z, def.z);
   }
 
   /*
