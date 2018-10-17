@@ -7245,7 +7245,7 @@ const makeSphere = (x, z, r) => {
 const data = {
     eye: {
         position: {
-            y: 10,
+            y: 30,
             z: -90,
         },
         rotation: {
