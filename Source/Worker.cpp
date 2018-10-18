@@ -209,6 +209,7 @@ namespace Rayon
         cameraRay.setDirection(tmp);
         cameraRay.setDirection(scene.eye().indirectRotation(tmp));
         cameraRay.normalize();
+
         auto color        = inter(scene, cameraRay);
         _img->pixel(x, y) = color;
       }
