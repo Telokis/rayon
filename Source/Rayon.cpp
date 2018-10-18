@@ -1,5 +1,6 @@
 #include "Rayon.hh"
 
+#include <chrono>
 #include <iostream>
 #include <thread>
 #include <vector>
@@ -31,6 +32,7 @@ namespace Rayon
 
     uint8 jn = config().getThreadCount();
 
+    auto                     start = std::chrono::steady_clock::now();
     std::vector<std::thread> threads;
     for (uint8 i = 0; i < jn; ++i)
     {
@@ -41,6 +43,11 @@ namespace Rayon
 
     for (std::thread& thread : threads)
       thread.join();
+
+    auto                          end  = std::chrono::steady_clock::now();
+    std::chrono::duration<double> diff = end - start;
+
+    std::cout << "Took " << diff.count() << "s.\n";
 
     ImageFileHandler::writeToFileBasedOnExtension(config().getOutputPath(), img);
     return 0;
