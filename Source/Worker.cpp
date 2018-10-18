@@ -155,30 +155,6 @@ namespace Rayon
   {
   }
 
-  // void Worker::operator()(uint32 width, uint32 height, Scene *scene_) const
-  // {
-  //   Scene scene = *scene_;
-  //   scene.preprocess();
-  //   Ray cameraRay(RayType::Primary, scene.eye().getPos(), Vec_t());
-
-  //   Float_t scale = Tools::Tan(Tools::DegToRad(120.0 * 0.5));
-  //   Float_t imageAspectRatio = width / (Float_t)height;
-
-  //   for (uint32 x = 0; x < width; ++x)
-  //   {
-  //     for (uint32 y = _yStart; y < _yStop; ++y)
-  //     {
-  //       Float_t i = (2 * (x + 0.5) / (Float_t)width - 1) * scale;
-  //       Float_t j = (1 - 2 * (y + 0.5) / (Float_t)height) * scale * 1 / imageAspectRatio;
-
-  //       cameraRay.setDirection(scene.eye().indirectRotation(Vec_t(i, j, 1)));
-  //       cameraRay.normalize();
-  //       auto color = inter(scene, cameraRay);
-  //       _img->pixel(x, y) = color;
-  //     }
-  //   }
-  // }
-
   void Worker::operator()(uint32 width, uint32 height, Scene* scene_) const
   {
     Scene scene = *scene_;
