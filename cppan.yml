@@ -1,5 +1,5 @@
 common_settings:
-  c++: 17
+  c++: 14
 
 local_settings:
   local_build: true
@@ -23,3 +23,7 @@ include_directories:
 dependencies:
   - pvt.cppan.demo.boost.program_options: 1.63.0
   - pvt.cppan.demo.boost.log: 1.63.0
+
+post_sources: |
+  set_target_properties(${this} PROPERTIES PDB_NAME Rayon)
+  set_target_properties(${this} PROPERTIES PDB_OUTPUT_DIRECTORY_DEBUG "${CPPAN_BUILD_OUTPUT_DIR}")
