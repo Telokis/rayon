@@ -1,8 +1,10 @@
 #include "Registry.hh"
-#include "Rayon.hh"
+
+#include <Json.h>
 
 #include <iostream>
-#include <Json.h>
+
+#include "Rayon.hh"
 
 namespace Rayon
 {
@@ -23,14 +25,14 @@ namespace Rayon
     return true;
   }
 
-  const IImageFileHandler*  Registry::getImageFileHandler(const std::string& id) const
+  const IImageFileHandler* Registry::getImageFileHandler(const std::string& id) const
   {
     if (!_imgHandlers.count(id))
       return nullptr;
     return _imgHandlers.at(id).get();
   }
 
-  auto  Registry::getImageFileHandlers() const -> const ImageFileHandlerContainer&
+  auto Registry::getImageFileHandlers() const -> const ImageFileHandlerContainer&
   {
     return _imgHandlers;
   }
@@ -44,14 +46,14 @@ namespace Rayon
     return true;
   }
 
-  const IMetaRTLight*  Registry::getMetaRTLight(const std::string& id) const
+  const IMetaRTLight* Registry::getMetaRTLight(const std::string& id) const
   {
     if (!_metaRTLights.count(id))
       return nullptr;
     return _metaRTLights.at(id).get();
   }
 
-  auto  Registry::getMetaRTLights() const -> const MetaRTLightContainer&
+  auto Registry::getMetaRTLights() const -> const MetaRTLightContainer&
   {
     return _metaRTLights;
   }
@@ -65,16 +67,16 @@ namespace Rayon
     return true;
   }
 
-  const IMetaRTShape*  Registry::getMetaRTShape(const std::string& id) const
+  const IMetaRTShape* Registry::getMetaRTShape(const std::string& id) const
   {
     if (!_metaRTShapes.count(id))
       return nullptr;
     return _metaRTShapes.at(id).get();
   }
 
-  auto  Registry::getMetaRTShapes() const -> const MetaRTShapeContainer&
+  auto Registry::getMetaRTShapes() const -> const MetaRTShapeContainer&
   {
     return _metaRTShapes;
   }
 
-} // namespace Rayon
+}  // namespace Rayon

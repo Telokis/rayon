@@ -7,9 +7,9 @@ namespace Rayon
 {
   namespace Tools
   {
-    namespace // Anonymous namespace
+    namespace  // Anonymous namespace
     {
-      template<unsigned int P, typename T>
+      template <unsigned int P, typename T>
       struct PowImpl
       {
         static const constexpr T Compute(const T& n)
@@ -18,7 +18,7 @@ namespace Rayon
         }
       };
 
-      template<typename T>
+      template <typename T>
       struct PowImpl<1, T>
       {
         static const constexpr T Compute(const T& n)
@@ -26,26 +26,26 @@ namespace Rayon
           return n;
         }
       };
-    } // Anonymous namespace
+    }  // Anonymous namespace
 
-    template<unsigned int P, typename T>
+    template <unsigned int P, typename T>
     constexpr inline T Pow(const T& n)
     {
       return PowImpl<P, T>::Compute(n);
     }
 
-    template<typename T>
+    template <typename T>
     constexpr inline T Pow2(const T& n)
     {
       return Pow<2>(n);
     }
 
-    template<typename T>
+    template <typename T>
     constexpr inline T Pow3(const T& n)
     {
       return Pow<3>(n);
     }
-  } // namespace Tools
-} // namespace Rayon
+  }  // namespace Tools
+}  // namespace Rayon
 
-#endif // RAYON_TOOLS_HELPERS_POW_HH
+#endif  // RAYON_TOOLS_HELPERS_POW_HH

@@ -5,11 +5,10 @@
 
 namespace Rayon
 {
-
-  class   Plane : public Shape<Plane>
+  class Plane : public Shape<Plane>
   {
     typedef Shape<Plane> ParentType;
-    friend  ParentType;
+    friend ParentType;
 
   public:
     Plane();
@@ -18,21 +17,21 @@ namespace Rayon
     ~Plane();
 
   public:
-    void    read(const Json::Value& root) override;
-    void    write(Json::Value& root) const override;
+    void read(const Json::Value& root) override;
+    void write(Json::Value& root) const override;
 
   private:
-    Vec_t              _norm;
+    Vec_t _norm;
 
   public:
     static const constexpr auto ShapeName = "Plane";
 
   private:
-    bool  interImpl(const Ray& ray, IntersectionData& data) const;
-    void  fillDataImpl(IntersectionData& data) const;
-    void  preprocessImpl();
+    bool interImpl(const Ray& ray, IntersectionData& data) const;
+    void fillDataImpl(IntersectionData& data) const;
+    void preprocessImpl();
   };
 
-} // namespace Rayon
+}  // namespace Rayon
 
-#endif // RAYON_PLANE_HH_
+#endif  // RAYON_PLANE_HH_

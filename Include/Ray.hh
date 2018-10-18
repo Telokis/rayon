@@ -3,18 +3,12 @@
 #ifndef RAYON_RAY_HH_
 #define RAYON_RAY_HH_
 
-#include "Tools/Helpers.hh"
 #include "CachedValue.hh"
+#include "Tools/Helpers.hh"
 
 namespace Rayon
 {
-  enum class RayType : size_t
-  {
-    Shadow,
-    Primary,
-    Reflected,
-    Transparency
-  };
+  enum class RayType : size_t { Shadow, Primary, Reflected, Transparency };
 
   class Ray
   {
@@ -24,24 +18,20 @@ namespace Rayon
     }
 
     inline Ray(const Ray& obj)
-      : _origin(obj._origin)
-      , _direction(obj._direction)
-      , _type(obj._type)
+      : _origin(obj._origin), _direction(obj._direction), _type(obj._type)
     {
     }
 
     inline Ray(RayType type, const Vec_t& origin, const Vec_t& direction)
-      : _origin(origin)
-      , _direction(direction)
-      , _type(type)
+      : _origin(origin), _direction(direction), _type(type)
     {
     }
 
     inline void set(RayType type, const Vec_t& origin, const Vec_t& direction)
     {
-      _origin = origin;
+      _origin    = origin;
       _direction = direction;
-      _type = type;
+      _type      = type;
       _invDirection.invalidate();
     }
 
@@ -95,11 +85,11 @@ namespace Rayon
     }
 
   private:
-    Vec_t   _origin;
-    Vec_t   _direction;
-    RayType _type;
-    mutable CachedValue<Vec_t>  _invDirection;
+    Vec_t                      _origin;
+    Vec_t                      _direction;
+    RayType                    _type;
+    mutable CachedValue<Vec_t> _invDirection;
   };
-} // namespace Rayon
+}  // namespace Rayon
 
-#endif // RAYON_RAY_HH_
+#endif  // RAYON_RAY_HH_

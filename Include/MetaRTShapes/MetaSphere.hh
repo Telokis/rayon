@@ -10,10 +10,10 @@ namespace Rayon
   class MetaSphere : public IMetaRTShape
   {
   public:
-    RTShape*   make() const final;
+    RTShape* make() const final;
 
     const char* shapeName() const final;
   };
-} // namespace Rayon
+}  // namespace Rayon
 
-#endif // RAYON_META_SPHERE_HH_
+#endif  // RAYON_META_SPHERE_HH_

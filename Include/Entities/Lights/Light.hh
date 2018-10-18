@@ -6,23 +6,19 @@
 namespace Rayon
 {
   template <class Derived>
-  class   Light : public RTLight
+  class Light : public RTLight
   {
   public:
-    Light(const Color& color = 0xffffffff)
-      : RTLight(color)
+    Light(const Color& color = 0xffffffff) : RTLight(color)
     {
     }
 
-    Light(const Vec_t& pos,
-          const Vec_t& rot,
-          const Color& color = 0xffffffff)
+    Light(const Vec_t& pos, const Vec_t& rot, const Color& color = 0xffffffff)
       : RTLight(pos, rot, color)
     {
     }
 
-    Light(Float_t x, Float_t y, Float_t z,
-          const Color& color = 0xffffffff)
+    Light(Float_t x, Float_t y, Float_t z, const Color& color = 0xffffffff)
       : RTLight(x, y, z, color)
     {
     }
@@ -32,25 +28,26 @@ namespace Rayon
     }
 
   protected:
-    void    preprocessImpl()
+    void preprocessImpl()
     {
     }
 
   public:
-    RTLight*  clone() const final
+    RTLight* clone() const final
     {
       return new Derived(static_cast<Derived const&>(*this));
     }
 
-    Color       apply(const Color& color,
-                      const Scene& scene,
-                      const IntersectionData& data,
-                      Color& specular) const final
+    Color apply(const Color&            color,
+                const Scene&            scene,
+                const IntersectionData& data,
+                Color&                  specular) const final
     {
-      return static_cast<Derived const*>(this)->applyImpl(color, scene, data, specular);
+      return static_cast<Derived const*>(this)->applyImpl(
+        color, scene, data, specular);
     }
 
-    void        preprocess() final
+    void preprocess() final
     {
       static_cast<Derived*>(this)->preprocessImpl();
     }
@@ -60,6 +57,6 @@ namespace Rayon
       return Derived::LightName;
     }
   };
-} // namespace Rayon
+}  // namespace Rayon
 
-#endif // RAYON_LIGHT_HH_
+#endif  // RAYON_LIGHT_HH_

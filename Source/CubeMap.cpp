@@ -1,44 +1,45 @@
 #include "CubeMap.hh"
-#include "ImageFileHandlers/ImageFileHandler.hh"
+
+#include <Json.h>
 
 #include <iostream>
-#include <Json.h>
+
+#include "ImageFileHandlers/ImageFileHandler.hh"
 
 namespace Rayon
 {
 #define RAYON_DECLARE(side, name) \
-    {Side::side, #name}
-  const std::map<Side, std::string> CubeMap::sideToStr {
-    RAYON_DECLARE(Front, front),
-    RAYON_DECLARE(Back, back),
-    RAYON_DECLARE(Left, left),
-    RAYON_DECLARE(Right, right),
-    RAYON_DECLARE(Up, up),
-    RAYON_DECLARE(Down, down)
-  };
+  {                               \
+    Side::side, #name             \
+  }
+  const std::map<Side, std::string> CubeMap::sideToStr{RAYON_DECLARE(Front, front),
+                                                       RAYON_DECLARE(Back, back),
+                                                       RAYON_DECLARE(Left, left),
+                                                       RAYON_DECLARE(Right, right),
+                                                       RAYON_DECLARE(Up, up),
+                                                       RAYON_DECLARE(Down, down)};
 #undef RAYON_DECLARE
 #define RAYON_DECLARE(side, name) \
-    {#name, Side::side}
-  const std::map<std::string, Side> CubeMap::strToSide {
-    RAYON_DECLARE(Front, front),
-    RAYON_DECLARE(Back, back),
-    RAYON_DECLARE(Left, left),
-    RAYON_DECLARE(Right, right),
-    RAYON_DECLARE(Up, up),
-    RAYON_DECLARE(Down, down)
-  };
+  {                               \
+#name, Side::side             \
+  }
+  const std::map<std::string, Side> CubeMap::strToSide{RAYON_DECLARE(Front, front),
+                                                       RAYON_DECLARE(Back, back),
+                                                       RAYON_DECLARE(Left, left),
+                                                       RAYON_DECLARE(Right, right),
+                                                       RAYON_DECLARE(Up, up),
+                                                       RAYON_DECLARE(Down, down)};
 #undef RAYON_DECLARE
 
-  CubeMap::CubeMap()
-    : _size(0)
+  CubeMap::CubeMap() : _size(0)
   {
   }
 
-  bool  CubeMap::loadSide(Side side, const std::string& path)
+  bool CubeMap::loadSide(Side side, const std::string& path)
   {
-    RawImage& img = _images.at(static_cast<size_t>(side));
+    RawImage&    img  = _images.at(static_cast<size_t>(side));
     std::string& file = _paths.at(static_cast<size_t>(side));
-    bool res = ImageFileHandler::readFromFileBasedOnExtension(path, img);
+    bool         res  = ImageFileHandler::readFromFileBasedOnExtension(path, img);
     if (!res)
     {
       std::cout << "[Error]Unable to load image [" << path << "] for cubemap.\n";
@@ -53,12 +54,13 @@ namespace Rayon
 
     if (_size != 0 && img.width() != _size)
     {
-      std::cout << "[Error]Image [" << path << "]. All sides of the cubemap must be the same size.\n";
+      std::cout << "[Error]Image [" << path
+                << "]. All sides of the cubemap must be the same size.\n";
       return false;
     }
 
     _size = img.width();
-    file = path;
+    file  = path;
 
     return true;
   }
@@ -67,12 +69,12 @@ namespace Rayon
   {
     Color getColor(const RawImage& img, Float_t u, Float_t v, uint32 size)
     {
-      u = Tools::Abs(u);
-      v = 1 - Tools::Abs(v);
-      uint32 umin = Tools::Floor(size * u);
-      uint32 vmin = Tools::Floor(size * v);
-      uint32 umax = umin + 1;
-      uint32 vmax = vmin + 1;
+      u             = Tools::Abs(u);
+      v             = 1 - Tools::Abs(v);
+      uint32  umin  = Tools::Floor(size * u);
+      uint32  vmin  = Tools::Floor(size * v);
+      uint32  umax  = umin + 1;
+      uint32  vmax  = vmin + 1;
       Float_t ucoef = Tools::Abs(size * u - umin);
       Float_t vcoef = Tools::Abs(size * v - vmin);
 
@@ -90,15 +92,15 @@ namespace Rayon
       Color ci2 = Color::interpolate(c3, c4, ucoef);
       return Color::interpolate(ci1, ci2, vcoef);
     }
-  }
+  }  // namespace
 
   Color CubeMap::interceptRay(const Ray& ray) const
   {
     Color res;
-#define RAYON_TMP_CODE_GENERATE_SETUP(s) \
-    const RawImage& img = _images.at(static_cast<size_t>(Side::s)); \
-    if (img.width() == 0) \
-      return res
+#define RAYON_TMP_CODE_GENERATE_SETUP(s)                          \
+  const RawImage& img = _images.at(static_cast<size_t>(Side::s)); \
+  if (img.width() == 0)                                           \
+  return res
 
     if ((Tools::Abs(ray.getDirection().x) >= Tools::Abs(ray.getDirection().y))
         && (Tools::Abs(ray.getDirection().x) >= Tools::Abs(ray.getDirection().z)))
@@ -187,4 +189,4 @@ namespace Rayon
         root[sideToStr.at(static_cast<Side>(i))] = str;
     }
   }
-} // namespace Rayon
+}  // namespace Rayon

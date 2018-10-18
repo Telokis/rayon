@@ -1,20 +1,19 @@
 #include "Scene.hh"
-#include "IntersectionData.hh"
-#include "Entities/Lights/RTLight.hh"
-#include "Object.hh"
+
 #include <iostream>
+
+#include "Entities/Lights/RTLight.hh"
+#include "IntersectionData.hh"
+#include "Object.hh"
 
 namespace Rayon
 {
-  Scene::Scene()
-    : _ambient(0.2)
+  Scene::Scene() : _ambient(0.2)
   {
   }
 
   Scene::Scene(const Scene& other)
-    : _ambient(other._ambient)
-    , _eye(other._eye)
-    , _cubemap(other._cubemap)
+    : _ambient(other._ambient), _eye(other._eye), _cubemap(other._cubemap)
   {
     for (const Object* object : other._objects)
       _objects.push_back(new Object(*object));
@@ -22,12 +21,12 @@ namespace Rayon
       _lights.push_back(light->clone());
   }
 
-  Scene&  Scene::operator=(const Scene& other)
+  Scene& Scene::operator=(const Scene& other)
   {
     if (this != &other)
     {
       _ambient = other._ambient;
-      _eye = other._eye;
+      _eye     = other._eye;
       _cubemap = other._cubemap;
       for (const Object* object : other._objects)
         _objects.push_back(new Object(*object));
@@ -39,22 +38,22 @@ namespace Rayon
 
   Scene::Scene(Scene&& other)
   {
-    _eye = other._eye;
+    _eye     = other._eye;
     _cubemap = other._cubemap;
     _ambient = other._ambient;
     _objects = std::move(other._objects);
-    _lights = std::move(other._lights);
+    _lights  = std::move(other._lights);
   }
 
-  Scene&    Scene::operator=(Scene&& other)
+  Scene& Scene::operator=(Scene&& other)
   {
     if (this != &other)
     {
-      _eye = other._eye;
+      _eye     = other._eye;
       _cubemap = other._cubemap;
       _ambient = other._ambient;
       _objects = std::move(other._objects);
-      _lights = std::move(other._lights);
+      _lights  = std::move(other._lights);
     }
     return *this;
   }
@@ -73,37 +72,34 @@ namespace Rayon
     }
   }
 
-  void    Scene::addObject(const Object& object)
+  void Scene::addObject(const Object& object)
   {
     _objects.push_back(new Object(object));
   }
 
-  Object*   Scene::lastObject() const
+  Object* Scene::lastObject() const
   {
-    return (_objects.empty() ?
-            nullptr :
-            _objects.back());
+    return (_objects.empty() ? nullptr : _objects.back());
   }
 
   auto Scene::objects() const -> const ObjectsContainer&
   {
-      return _objects;
+    return _objects;
   }
 
-  Object*   Scene::getNearest(const Ray& ray,
-                              IntersectionData& data) const
+  Object* Scene::getNearest(const Ray& ray, IntersectionData& data) const
   {
-    Object* result = nullptr;
-    IntersectionData  tmp;
+    Object*          result = nullptr;
+    IntersectionData tmp;
 
     data.k = Globals::Invalid;
-    tmp.k = Globals::Invalid;
+    tmp.k  = Globals::Invalid;
     for (Object* item : _objects)
     {
       bool res = item->inter(ray, data);
       if (res && data.k < tmp.k)
       {
-        tmp = data;
+        tmp    = data;
         result = item;
       }
       else
@@ -113,12 +109,12 @@ namespace Rayon
     return result;
   }
 
-  void        Scene::setEye(const Eye& eye)
+  void Scene::setEye(const Eye& eye)
   {
     _eye = eye;
   }
 
-  const Eye&  Scene::eye() const
+  const Eye& Scene::eye() const
   {
     return _eye;
   }
@@ -128,37 +124,36 @@ namespace Rayon
     _cubemap = cubemap;
   }
 
-  const CubeMap&  Scene::cubemap() const
+  const CubeMap& Scene::cubemap() const
   {
     return _cubemap;
   }
 
-  void        Scene::addLight(RTLight* light)
+  void Scene::addLight(RTLight* light)
   {
     _lights.push_back(light);
   }
 
-  RTLight*    Scene::lastLight() const
+  RTLight* Scene::lastLight() const
   {
     return _lights.back();
   }
 
   auto Scene::lights() const -> const LightsContainer&
   {
-      return _lights;
+    return _lights;
   }
 
-  Color   Scene::processLights(const IntersectionData& data,
-                               Color& specular) const
+  Color Scene::processLights(const IntersectionData& data, Color& specular) const
   {
     const Color color = data.obj->getMaterial().getColor();
-    Color result;
+    Color       result;
     for (size_t i = 0; i < _lights.size(); ++i)
       result += _lights[i]->apply(color, *this, data, specular);
     return result;
   }
 
-  void        Scene::preprocess()
+  void Scene::preprocess()
   {
     for (Object* item : _objects)
     {
@@ -174,4 +169,4 @@ namespace Rayon
   }
 
   RAYON_GENERATE_PROPERTY_DEFINITION(Scene, Float_t, _ambient, Ambient)
-} // namespace Rayon
+}  // namespace Rayon

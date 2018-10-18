@@ -1,19 +1,17 @@
 #include "Tools/Random.hh"
 
-#include <numeric>
 #include <cassert>
+#include <numeric>
 
 namespace Rayon
 {
   namespace Tools
   {
-    Random::Random()
-      : Random(std::random_device{}())
+    Random::Random() : Random(std::random_device{}())
     {
     }
 
-    Random::Random(unsigned int seed)
-      : _generator(seed)
+    Random::Random(unsigned int seed) : _generator(seed)
     {
     }
 
@@ -55,5 +53,5 @@ namespace Rayon
       std::uniform_real_distribution<> distribution(min, max);
       return distribution(_generator);
     }
-  }
-}
+  }  // namespace Tools
+}  // namespace Rayon

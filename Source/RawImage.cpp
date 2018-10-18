@@ -3,21 +3,17 @@
 namespace Rayon
 {
   RawImage::RawImage(const uint32 width, const uint32 height)
-    : _width(width)
-    , _height(height)
-    , _pixels(width * height)
+    : _width(width), _height(height), _pixels(width * height)
   {
   }
 
-  RawImage::RawImage()
-    : _width(0)
-    , _height(0)
+  RawImage::RawImage() : _width(0), _height(0)
   {
   }
 
-  void  RawImage::resize(const uint32 width, const uint32 height)
+  void RawImage::resize(const uint32 width, const uint32 height)
   {
-    _width = width;
+    _width  = width;
     _height = height;
     _pixels.resize(width * height);
   }
@@ -29,8 +25,8 @@ namespace Rayon
     size_t i = 0;
     for (const Color& color : _pixels)
     {
-      auto index = i * 4;
-      data[index] = color.red();
+      auto index      = i * 4;
+      data[index]     = color.red();
       data[index + 1] = color.green();
       data[index + 2] = color.blue();
       data[index + 3] = color.alpha();
@@ -45,10 +41,10 @@ namespace Rayon
     size_t i = 0;
     for (Color& color : _pixels)
     {
-      auto index = i * 4;
-      color.red() = data[index];
+      auto index    = i * 4;
+      color.red()   = data[index];
       color.green() = data[index + 1];
-      color.blue() = data[index + 2];
+      color.blue()  = data[index + 2];
       color.alpha() = data[index + 3];
       ++i;
     }
@@ -61,8 +57,8 @@ namespace Rayon
     size_t i = 0;
     for (const Color& color : _pixels)
     {
-      auto index = i * 3;
-      data[index] = color.red();
+      auto index      = i * 3;
+      data[index]     = color.red();
       data[index + 1] = color.green();
       data[index + 2] = color.blue();
       ++i;
@@ -76,12 +72,12 @@ namespace Rayon
     size_t i = 0;
     for (Color& color : _pixels)
     {
-      auto index = i * 3;
-      color.red() = data[index];
+      auto index    = i * 3;
+      color.red()   = data[index];
       color.green() = data[index + 1];
-      color.blue() = data[index + 2];
+      color.blue()  = data[index + 2];
       ++i;
     }
   }
 
-} // namespace Rayon
+}  // namespace Rayon

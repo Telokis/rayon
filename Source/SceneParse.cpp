@@ -1,12 +1,14 @@
 #include "SceneParse.hh"
-#include "Scene.hh"
-#include "Registry.hh"
-#include "Object.hh"
-#include "Entities/Lights/RTLight.hh"
 
 #include <Json.h>
-#include <fstream>
+
 #include <boost/filesystem.hpp>
+#include <fstream>
+
+#include "Entities/Lights/RTLight.hh"
+#include "Object.hh"
+#include "Registry.hh"
+#include "Scene.hh"
 
 namespace fs = boost::filesystem;
 
@@ -14,23 +16,23 @@ namespace Rayon
 {
   namespace
   {
-    void        readJson(const fs::path& path, Json::Value& root)
+    void readJson(const fs::path& path, Json::Value& root)
     {
-      std::string str = path.string();
+      std::string   str = path.string();
       std::ifstream file(str);
 
       if (!file.is_open())
         throw std::runtime_error("Unable to open `" + str + "`");
 
-      Json::Reader    reader;
+      Json::Reader reader;
       if (!reader.parse(file, root))
-        throw std::runtime_error("Error while parsing `" + str + "`: "
-                                 + reader.getFormattedErrorMessages());
+        throw std::runtime_error("Error while parsing `" + str
+                                 + "`: " + reader.getFormattedErrorMessages());
     }
 
-    void        writeJson(const fs::path& path, Json::Value& root)
+    void writeJson(const fs::path& path, Json::Value& root)
     {
-      std::string str = path.string();
+      std::string   str = path.string();
       std::ofstream file(str);
 
       if (!file.is_open())
@@ -38,9 +40,9 @@ namespace Rayon
 
       file << root;
     }
-  }
+  }  // namespace
 
-  void  sceneRead(Scene& scene, const std::string& filename)
+  void sceneRead(Scene& scene, const std::string& filename)
   {
     Json::Value root;
 
@@ -63,7 +65,7 @@ namespace Rayon
 
       for (const Json::Value& object : objects)
       {
-        Object  obj;
+        Object obj;
         if (obj.read(object))
           scene.addObject(obj);
       }
@@ -76,7 +78,7 @@ namespace Rayon
       {
         if (light.isMember("type") && light["type"].isString())
         {
-          std::string name = light["type"].asString();
+          std::string         name = light["type"].asString();
           const IMetaRTLight* meta = registry().getMetaRTLight(name);
           if (meta)
           {
@@ -96,7 +98,7 @@ namespace Rayon
     }
   }
 
-  void  sceneWrite(const Scene& scene, const std::string& filename)
+  void sceneWrite(const Scene& scene, const std::string& filename)
   {
     Json::Value root;
 
@@ -140,24 +142,21 @@ namespace Rayon
   /*
    *  Write
    */
-  void  writeVal(Json::Value& node, const std::string& name,
-                 const Float_t& val, const Float_t& def)
+  void writeVal(Json::Value& node, const std::string& name, const Float_t& val, const Float_t& def)
   {
     node[name] = static_cast<double>(val);
   }
 
-  void  writeVal(Json::Value& node, const std::string& name,
-                 const uint32& val, const uint32& def)
+  void writeVal(Json::Value& node, const std::string& name, const uint32& val, const uint32& def)
   {
     node[name] = val;
   }
 
-  void  writeVal(Json::Value& node, const std::string& name,
-                 const Color& color, const Color& def)
+  void writeVal(Json::Value& node, const std::string& name, const Color& color, const Color& def)
   {
     Json::Value& subNode = node[name];
-    const auto value = color.intValue();
-    const auto& cols = colors();
+    const auto   value   = color.intValue();
+    const auto&  cols    = colors();
     for (const auto& pair : cols)
     {
       if (value == pair.second.intValue())
@@ -171,8 +170,7 @@ namespace Rayon
     writeVal(subNode, "blue", uint32(color.blue()), uint32(def.blue()));
   }
 
-  void  writeVal(Json::Value& node, const std::string& name,
-                 const Vec_t& vec, const Vec_t& def)
+  void writeVal(Json::Value& node, const std::string& name, const Vec_t& vec, const Vec_t& def)
   {
     Json::Value& subNode = node[name];
     writeVal(subNode, "x", vec.x, def.x);
@@ -183,8 +181,7 @@ namespace Rayon
   /*
    *  Read
    */
-  void  readVal(const Json::Value& parent, const std::string& name,
-                uint32& val, const uint32& def)
+  void readVal(const Json::Value& parent, const std::string& name, uint32& val, const uint32& def)
   {
     if (parent.isMember(name) && parent[name].isUInt())
       val = parent[name].asUInt();
@@ -192,8 +189,7 @@ namespace Rayon
       val = def;
   }
 
-  void  readVal(const Json::Value& parent, const std::string& name,
-                Float_t& val, const Float_t& def)
+  void readVal(const Json::Value& parent, const std::string& name, Float_t& val, const Float_t& def)
   {
     if (parent.isMember(name) && parent[name].isDouble())
       val = parent[name].asDouble();
@@ -201,8 +197,7 @@ namespace Rayon
       val = def;
   }
 
-  void  readVal(const Json::Value& parent, const std::string& name,
-                Color& color, const Color& def)
+  void readVal(const Json::Value& parent, const std::string& name, Color& color, const Color& def)
   {
     if (parent.isMember(name))
     {
@@ -229,8 +224,7 @@ namespace Rayon
     color = def;
   }
 
-  void  readVal(const Json::Value& parent, const std::string& name,
-                Vec_t& vec, const Vec_t& def)
+  void readVal(const Json::Value& parent, const std::string& name, Vec_t& vec, const Vec_t& def)
   {
     if (parent.isMember(name) && parent[name].isObject())
     {
@@ -242,4 +236,4 @@ namespace Rayon
     else
       vec = def;
   }
-} // namespace Rayon
+}  // namespace Rayon

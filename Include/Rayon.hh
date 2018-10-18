@@ -19,6 +19,6 @@ namespace Rayon
   private:
     Scene _scene;
   };
-} // namespace Rayon
+}  // namespace Rayon
 
-#endif // RAYON_RAYON_HH_
+#endif  // RAYON_RAYON_HH_

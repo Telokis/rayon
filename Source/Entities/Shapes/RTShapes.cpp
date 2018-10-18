@@ -1,7 +1,7 @@
+#include <Json.h>
+
 #include "Entities/Shapes/RTShape.hh"
 #include "SceneParse.hh"
-
-#include <Json.h>
 
 namespace Rayon
 {
@@ -9,13 +9,11 @@ namespace Rayon
   {
   }
 
-  RTShape::RTShape(const Vec_t& pos, const Vec_t& rot)
-    : Entity(pos, rot)
+  RTShape::RTShape(const Vec_t& pos, const Vec_t& rot) : Entity(pos, rot)
   {
   }
 
-  RTShape::RTShape(Float_t x, Float_t y, Float_t z)
-    : Entity(x, y, z)
+  RTShape::RTShape(Float_t x, Float_t y, Float_t z) : Entity(x, y, z)
   {
   }
 
@@ -33,4 +31,4 @@ namespace Rayon
     Entity::write(root);
   }
 
-} // namespace Rayon
+}  // namespace Rayon

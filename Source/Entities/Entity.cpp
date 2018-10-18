@@ -1,21 +1,20 @@
 #include "Entities/Entity.hh"
-#include "SceneParse.hh"
+
 #include <Json.h>
+
+#include "SceneParse.hh"
 
 namespace Rayon
 {
-  Entity::Entity()
-    : _pos(0, 0, 0), _rot(0, 0, 0)
+  Entity::Entity() : _pos(0, 0, 0), _rot(0, 0, 0)
   {
   }
 
-  Entity::Entity(const Vec_t &pos, const Vec_t &rot)
-    : _pos(pos), _rot(rot)
+  Entity::Entity(const Vec_t& pos, const Vec_t& rot) : _pos(pos), _rot(rot)
   {
   }
 
-  Entity::Entity(Float_t x, Float_t y, Float_t z)
-    : _pos(x, y, z), _rot(0, 0, 0)
+  Entity::Entity(Float_t x, Float_t y, Float_t z) : _pos(x, y, z), _rot(0, 0, 0)
   {
   }
 
@@ -23,30 +22,23 @@ namespace Rayon
   {
   }
 
-  void            Entity::computeRotation()
+  void Entity::computeRotation()
   {
-    _rotIsIdentity =
-      Tools::IsZero(_rot.x) &&
-      Tools::IsZero(_rot.y) &&
-      Tools::IsZero(_rot.z);
-    _rot.x = Tools::DegToRad(_rot.x);
-    _rot.y = Tools::DegToRad(_rot.y);
-    _rot.z = Tools::DegToRad(_rot.z);
+    _rotIsIdentity = Tools::IsZero(_rot.x) && Tools::IsZero(_rot.y) && Tools::IsZero(_rot.z);
+    _rot.x         = Tools::DegToRad(_rot.x);
+    _rot.y         = Tools::DegToRad(_rot.y);
+    _rot.z         = Tools::DegToRad(_rot.z);
     computeDirectRotation();
     computeIndirectRotation();
   }
 
-  void            Entity::computeDirectRotation()
+  void Entity::computeDirectRotation()
   {
     using std::cos;
     using std::sin;
 
-    Vec_t   c(cos(-1 * _rot.x),
-              cos(-1 * _rot.y),
-              cos(-1 * _rot.z));
-    Vec_t   s(sin(-1 * _rot.x),
-              sin(-1 * _rot.y),
-              sin(-1 * _rot.z));
+    Vec_t c(cos(-1 * _rot.x), cos(-1 * _rot.y), cos(-1 * _rot.z));
+    Vec_t s(sin(-1 * _rot.x), sin(-1 * _rot.y), sin(-1 * _rot.z));
 
     _directMatrix[0][0] = c.y * c.z;
     _directMatrix[1][0] = c.y * s.z;
@@ -59,17 +51,13 @@ namespace Rayon
     _directMatrix[2][2] = c.x * c.y;
   }
 
-  void            Entity::computeIndirectRotation()
+  void Entity::computeIndirectRotation()
   {
     using std::cos;
     using std::sin;
 
-    Vec_t   c(cos(_rot.x),
-              cos(_rot.y),
-              cos(_rot.z));
-    Vec_t   s(sin(_rot.x),
-              sin(_rot.y),
-              sin(_rot.z));
+    Vec_t c(cos(_rot.x), cos(_rot.y), cos(_rot.z));
+    Vec_t s(sin(_rot.x), sin(_rot.y), sin(_rot.z));
 
     _indirectMatrix[0][0] = c.y * c.z;
     _indirectMatrix[1][0] = c.x * s.z + c.z * s.x * s.y;
@@ -94,14 +82,14 @@ namespace Rayon
     writeVal(root, "rotation", _rot, {0, 0, 0});
   }
 
-  Vec_t      Entity::directRotation(const Vec_t &vec) const
+  Vec_t Entity::directRotation(const Vec_t& vec) const
   {
     if (_rotIsIdentity)
       return vec;
     return vec * _directMatrix;
   }
 
-  Vec_t   Entity::indirectRotation(const Vec_t &vec) const
+  Vec_t Entity::indirectRotation(const Vec_t& vec) const
   {
     if (_rotIsIdentity)
       return vec;
@@ -109,6 +97,6 @@ namespace Rayon
   }
 
   RAYON_GENERATE_Vec_t_GETTERS_SETTERS_DEFINITION(Entity, _pos, Pos)
-  RAYON_GENERATE_Vec_t_GETTERS_SETTERS_DEFINITION(Entity, _rot, Rot)
+    RAYON_GENERATE_Vec_t_GETTERS_SETTERS_DEFINITION(Entity, _rot, Rot)
 
-} // namespace Rayon
+}  // namespace Rayon

@@ -3,25 +3,26 @@
 #ifndef RAYON_REGISTRY_HH_
 #define RAYON_REGISTRY_HH_
 
+#include <map>
+#include <memory>
+#include <vector>
+
 #include "ImageFileHandlers/IImageFileHandler.hh"
 #include "MetaRTLights/IMetaRTLight.hh"
 #include "MetaRTShapes/IMetaRTShape.hh"
-
-#include <vector>
-#include <memory>
-#include <map>
 
 namespace Rayon
 {
   class Registry
   {
     using ImageFileHandlerType = std::unique_ptr<IImageFileHandler>;
-    using ImageFileHandlerContainer = std::map<std::string, ImageFileHandlerType>;
+    using ImageFileHandlerContainer
+      = std::map<std::string, ImageFileHandlerType>;
 
-    using MetaRTLightType = std::unique_ptr<IMetaRTLight>;
+    using MetaRTLightType      = std::unique_ptr<IMetaRTLight>;
     using MetaRTLightContainer = std::map<std::string, MetaRTLightType>;
 
-    using MetaRTShapeType = std::unique_ptr<IMetaRTShape>;
+    using MetaRTShapeType      = std::unique_ptr<IMetaRTShape>;
     using MetaRTShapeContainer = std::map<std::string, MetaRTShapeType>;
 
   public:
@@ -29,19 +30,19 @@ namespace Rayon
     ~Registry();
 
   public:
-    bool  registerImageFileHandler(IImageFileHandler* handler);
-    const IImageFileHandler*          getImageFileHandler(const std::string& id) const;
-    const ImageFileHandlerContainer&  getImageFileHandlers() const;
+    bool registerImageFileHandler(IImageFileHandler* handler);
+    const IImageFileHandler* getImageFileHandler(const std::string& id) const;
+    const ImageFileHandlerContainer& getImageFileHandlers() const;
 
   public:
-    bool  registerMetaRTLight(IMetaRTLight* meta);
+    bool                        registerMetaRTLight(IMetaRTLight* meta);
     const IMetaRTLight*         getMetaRTLight(const std::string& id) const;
     const MetaRTLightContainer& getMetaRTLights() const;
 
   public:
-    bool  registerMetaRTShape(IMetaRTShape* meta);
-    const IMetaRTShape*           getMetaRTShape(const std::string& id) const;
-    const MetaRTShapeContainer&  getMetaRTShapes() const;
+    bool                        registerMetaRTShape(IMetaRTShape* meta);
+    const IMetaRTShape*         getMetaRTShape(const std::string& id) const;
+    const MetaRTShapeContainer& getMetaRTShapes() const;
 
   private:
     ImageFileHandlerContainer _imgHandlers;
@@ -54,6 +55,6 @@ namespace Rayon
     static Registry reg;
     return reg;
   }
-} // namespace Rayon
+}  // namespace Rayon
 
-#endif // RAYON_REGISTRY_HH_
+#endif  // RAYON_REGISTRY_HH_

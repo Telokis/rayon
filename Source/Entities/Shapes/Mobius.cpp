@@ -1,23 +1,21 @@
 #include "Entities/Shapes/Mobius.hh"
-#include "SolverSecond.hh"
-#include "SceneParse.hh"
 
 #include <Json.h>
 
+#include "SceneParse.hh"
+#include "SolverSecond.hh"
+
 namespace Rayon
 {
-
   Mobius::Mobius()
   {
   }
 
-  Mobius::Mobius(const Vec_t &pos, const Vec_t &rot)
-    : ParentType(pos, rot)
+  Mobius::Mobius(const Vec_t& pos, const Vec_t& rot) : ParentType(pos, rot)
   {
   }
 
-  Mobius::Mobius(Float_t x, Float_t y, Float_t z)
-    : ParentType(x, y, z)
+  Mobius::Mobius(Float_t x, Float_t y, Float_t z) : ParentType(x, y, z)
   {
   }
 
@@ -25,11 +23,11 @@ namespace Rayon
   {
   }
 
-  bool        Mobius::interImpl(const Ray& ray, IntersectionData& data) const
+  bool Mobius::interImpl(const Ray& ray, IntersectionData& data) const
   {
-    Vec_t tmp_pos;
-    Vec_t tmp_dir;
-    bool  found = false;
+    Vec_t            tmp_pos;
+    Vec_t            tmp_dir;
+    bool             found = false;
     IntersectionData realData;
     realData.k = Globals::Invalid;
 
@@ -48,9 +46,9 @@ namespace Rayon
       {
         if (data.k < realData.k && data.k > Globals::Epsilon)
         {
-          found = true;
+          found    = true;
           realData = data;
-          _last = i;
+          _last    = i;
         }
       }
       ++i;
@@ -59,20 +57,20 @@ namespace Rayon
     return found;
   }
 
-  void    Mobius::fillDataImpl(IntersectionData& data) const
+  void Mobius::fillDataImpl(IntersectionData& data) const
   {
     _facets.at(_last).fillData(data);
     data.normal = Tools::Normalize(directRotation(data.normal));
   }
 
-  void      Mobius::preprocessImpl()
+  void Mobius::preprocessImpl()
   {
     Float_t step = .1;
     Float_t halW = _width / 2;
 
     _facets.clear();
 
-    auto lambda = [this] (Float_t v, Float_t t) {
+    auto lambda = [this](Float_t v, Float_t t) {
       Vec_t p;
 
       Float_t cdv = Tools::Cos(2 * v);
@@ -127,4 +125,4 @@ namespace Rayon
 
   RAYON_GENERATE_PROPERTY_DEFINITION(Mobius, uint32, _torsion, Torsion)
   RAYON_GENERATE_PROPERTY_DEFINITION(Mobius, Float_t, _width, Width)
-} // namespace Rayon
+}  // namespace Rayon

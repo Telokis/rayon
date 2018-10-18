@@ -3,24 +3,17 @@
 #ifndef RAYON_CUBEMAP_HH_
 #define RAYON_CUBEMAP_HH_
 
-#include "RawImage.hh"
-#include "Ray.hh"
+#include <Json-forwards.h>
 
 #include <array>
 #include <map>
-#include <Json-forwards.h>
+
+#include "RawImage.hh"
+#include "Ray.hh"
 
 namespace Rayon
 {
-  enum class Side : size_t
-  {
-    Front,
-    Back,
-    Left,
-    Right,
-    Up,
-    Down
-  };
+  enum class Side : size_t { Front, Back, Left, Right, Up, Down };
 
   class CubeMap
   {
@@ -34,14 +27,14 @@ namespace Rayon
     Color interceptRay(const Ray& ray) const;
 
   public:
-    void    read(const Json::Value& root);
-    void    write(Json::Value& root) const;
+    void read(const Json::Value& root);
+    void write(Json::Value& root) const;
 
   private:
-    std::array<RawImage, 6> _images;
+    std::array<RawImage, 6>    _images;
     std::array<std::string, 6> _paths;
-    uint32  _size;
+    uint32                     _size;
   };
-} // namespace Rayon
+}  // namespace Rayon
 
-#endif // RAYON_CUBEMAP_HH_
+#endif  // RAYON_CUBEMAP_HH_

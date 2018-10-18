@@ -1,27 +1,22 @@
 #include "Entities/Shapes/Rectangle.hh"
-#include "SceneParse.hh"
 
 #include <Json.h>
 
+#include "SceneParse.hh"
+
 namespace Rayon
 {
-  Rectangle::Rectangle(Float_t width, Float_t height)
-    : _width(width)
-    , _height(height)
+  Rectangle::Rectangle(Float_t width, Float_t height) : _width(width), _height(height)
   {
   }
 
-  Rectangle::Rectangle(const Vec_t &pos, const Vec_t &rot, Float_t width, Float_t height)
-    : ParentType(pos, rot)
-    , _width(width)
-    , _height(height)
+  Rectangle::Rectangle(const Vec_t& pos, const Vec_t& rot, Float_t width, Float_t height)
+    : ParentType(pos, rot), _width(width), _height(height)
   {
   }
 
   Rectangle::Rectangle(Float_t x, Float_t y, Float_t z, Float_t width, Float_t height)
-    : ParentType(x, y, z)
-    , _width(width)
-    , _height(height)
+    : ParentType(x, y, z), _width(width), _height(height)
   {
   }
 
@@ -29,13 +24,13 @@ namespace Rayon
   {
   }
 
-  bool      Rectangle::interImpl(const Ray& ray, IntersectionData& data) const
+  bool Rectangle::interImpl(const Ray& ray, IntersectionData& data) const
   {
     if (!_isOk)
       return false;
 
-    Vec_t  tmp_pos;
-    Vec_t  tmp_dir;
+    Vec_t tmp_pos;
+    Vec_t tmp_dir;
 
     tmp_pos = ray.getOrigin() - _pos;
     tmp_pos = indirectRotation(tmp_pos);
@@ -58,17 +53,17 @@ namespace Rayon
     return true;
   }
 
-  void    Rectangle::fillDataImpl(IntersectionData& data) const
+  void Rectangle::fillDataImpl(IntersectionData& data) const
   {
     data.normal = _norm;
   }
 
-  void        Rectangle::preprocessImpl()
+  void Rectangle::preprocessImpl()
   {
-    _isOk = !(_width < Globals::Epsilon || _height < Globals::Epsilon);
+    _isOk  = !(_width < Globals::Epsilon || _height < Globals::Epsilon);
     _halfW = _width / 2;
     _halfH = _height / 2;
-    _norm = Tools::Normalize(directRotation(Vec_t(0, 1, 0)));
+    _norm  = Tools::Normalize(directRotation(Vec_t(0, 1, 0)));
   }
 
   RAYON_GENERATE_PROPERTY_DEFINITION(Rectangle, Float_t, _width, Width)
@@ -88,4 +83,4 @@ namespace Rayon
     writeVal(root, "height", _height, 1);
   }
 
-} // namespace Rayon
+}  // namespace Rayon

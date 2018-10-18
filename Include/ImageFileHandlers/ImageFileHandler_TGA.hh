@@ -16,6 +16,6 @@ namespace Rayon
 
     const char* extensionName() const final;
   };
-} // namespace Rayon
+}  // namespace Rayon
 
-#endif // RAYON_IMAGEFILE_HANDLER_TGA_HH_
+#endif  // RAYON_IMAGEFILE_HANDLER_TGA_HH_

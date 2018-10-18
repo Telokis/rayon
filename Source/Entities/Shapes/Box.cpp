@@ -1,30 +1,23 @@
 #include "Entities/Shapes/Box.hh"
-#include "SceneParse.hh"
 
 #include <Json.h>
+
+#include "SceneParse.hh"
 
 namespace Rayon
 {
   Box::Box(Float_t width, Float_t height, Float_t depth)
-    : _width(width)
-    , _height(height)
-    , _depth(depth)
+    : _width(width), _height(height), _depth(depth)
   {
   }
 
-  Box::Box(const Vec_t &pos, const Vec_t &rot, Float_t width, Float_t height, Float_t depth)
-    : ParentType(pos, rot)
-    , _width(width)
-    , _height(height)
-    , _depth(depth)
+  Box::Box(const Vec_t& pos, const Vec_t& rot, Float_t width, Float_t height, Float_t depth)
+    : ParentType(pos, rot), _width(width), _height(height), _depth(depth)
   {
   }
 
   Box::Box(Float_t x, Float_t y, Float_t z, Float_t width, Float_t height, Float_t depth)
-    : ParentType(x, y, z)
-    , _width(width)
-    , _height(height)
-    , _depth(depth)
+    : ParentType(x, y, z), _width(width), _height(height), _depth(depth)
   {
   }
 
@@ -32,18 +25,17 @@ namespace Rayon
   {
   }
 
-  bool      Box::interImpl(const Ray& ray, IntersectionData& data) const
+  bool Box::interImpl(const Ray& ray, IntersectionData& data) const
   {
     if (!_isOk)
       return false;
 
-    Vec_t   tmp_pos;
-    Vec_t   tmp_dir;
+    Vec_t tmp_pos;
+    Vec_t tmp_dir;
 
     tmp_pos = ray.getOrigin() - _pos;
     tmp_pos = indirectRotation(tmp_pos);
     tmp_dir = Float_t(1.0) / indirectRotation(ray.getDirection());
-
 
     Float_t t1 = (_min[0] - tmp_pos.x) * tmp_dir.x;
     Float_t t2 = (_max[0] - tmp_pos.x) * tmp_dir.x;
@@ -62,14 +54,14 @@ namespace Rayon
 
     if (tmax > Tools::Max(tmin, 0.0))
     {
-      data.k = Tools::Smallest(tmin, tmax);
+      data.k          = Tools::Smallest(tmin, tmax);
       data.localPoint = tmp_pos + data.k * tmp_dir;
       return true;
     }
     return false;
   }
 
-  void    Box::fillDataImpl(IntersectionData& data) const
+  void Box::fillDataImpl(IntersectionData& data) const
   {
     data.localPoint = data.point - _pos;
     data.localPoint = indirectRotation(data.localPoint);
@@ -88,13 +80,11 @@ namespace Rayon
       data.normal = -_norm[2];
   }
 
-  void        Box::preprocessImpl()
+  void Box::preprocessImpl()
   {
-    _isOk = !(_width < Globals::Epsilon ||
-              _height < Globals::Epsilon ||
-              _depth < Globals::Epsilon);
-    _min = {-_width / 2, -_height / 2, -_depth / 2};
-    _max = {_width / 2, _height / 2, _depth / 2};
+    _isOk = !(_width < Globals::Epsilon || _height < Globals::Epsilon || _depth < Globals::Epsilon);
+    _min  = {-_width / 2, -_height / 2, -_depth / 2};
+    _max  = {_width / 2, _height / 2, _depth / 2};
     _norm[0] = Tools::Normalize(directRotation(Vec_t(1, 0, 0)));
     _norm[1] = Tools::Normalize(directRotation(Vec_t(0, 1, 0)));
     _norm[2] = Tools::Normalize(directRotation(Vec_t(0, 0, 1)));
@@ -120,4 +110,4 @@ namespace Rayon
     writeVal(root, "depth", _depth, 1);
   }
 
-} // namespace Rayon
+}  // namespace Rayon

@@ -16,7 +16,7 @@ namespace Rayon
       Random(unsigned int seed);
 
     public:
-      void  seed(unsigned int s);
+      void seed(unsigned int s);
 
     public:
       int nextInt();
@@ -24,12 +24,12 @@ namespace Rayon
       int nextInt(int min, int max);
 
     public:
-      double  nextDouble();
-      double  nextDouble(double max);
-      double  nextDouble(double min, double max);
+      double nextDouble();
+      double nextDouble(double max);
+      double nextDouble(double min, double max);
 
     private:
-      std::mt19937  _generator;
+      std::mt19937 _generator;
     };
 
     Random& random()
@@ -37,7 +37,7 @@ namespace Rayon
       static Random rnd;
       return rnd;
     }
-  }
-}
+  }  // namespace Tools
+}  // namespace Rayon
 
-#endif // RAYON_TOOLS_RANDOM_HH
+#endif  // RAYON_TOOLS_RANDOM_HH

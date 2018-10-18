@@ -10,10 +10,10 @@ namespace Rayon
   class MetaSun : public IMetaRTLight
   {
   public:
-    RTLight*    make() const final;
+    RTLight* make() const final;
 
     const char* lightName() const final;
   };
-} // namespace Rayon
+}  // namespace Rayon
 
-#endif // RAYON_META_SUN_HH_
+#endif  // RAYON_META_SUN_HH_

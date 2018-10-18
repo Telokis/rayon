@@ -3,27 +3,28 @@
 #ifndef RAYON_RAWIMAGE_HH_
 #define RAYON_RAWIMAGE_HH_
 
-#include "Color.hh"
 #include <memory>
 #include <vector>
+
+#include "Color.hh"
 
 namespace Rayon
 {
   class RawImage
   {
     static const int BYTES_PER_PIXEL = 4;
-    using StorageType = std::vector<Color>;
+    using StorageType                = std::vector<Color>;
 
   public:
     RawImage();
     RawImage(const uint32 width, const uint32 height);
 
-    void  resize(const uint32 width, const uint32 height);
+    void resize(const uint32 width, const uint32 height);
 
     std::unique_ptr<uint8[]> rawRGB() const;
     std::unique_ptr<uint8[]> rawRGBA() const;
-    void  fromRawRGB(const uint8* data, uint32 w, uint32 h);
-    void  fromRawRGBA(const uint8* data, uint32 w, uint32 h);
+    void                     fromRawRGB(const uint8* data, uint32 w, uint32 h);
+    void                     fromRawRGBA(const uint8* data, uint32 w, uint32 h);
 
     inline uint32 width() const
     {
@@ -60,6 +61,6 @@ namespace Rayon
     uint32      _height;
     StorageType _pixels;
   };
-} // namespace Rayon
+}  // namespace Rayon
 
-#endif // RAYON_RAWIMAGE_HH_
+#endif  // RAYON_RAWIMAGE_HH_

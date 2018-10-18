@@ -1,9 +1,10 @@
 #include "MetaRTShapes/MetaRectangle.hh"
+
 #include "Entities/Shapes/Rectangle.hh"
 
 namespace Rayon
 {
-  RTShape*    MetaRectangle::make() const
+  RTShape* MetaRectangle::make() const
   {
     return new Rectangle;
   }
@@ -12,4 +13,4 @@ namespace Rayon
   {
     return Rectangle::ShapeName;
   }
-} // namespace Rayon
+}  // namespace Rayon

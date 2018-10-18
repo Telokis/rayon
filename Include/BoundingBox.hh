@@ -4,8 +4,8 @@
 #define RAYON_TOOLS_BOUNDINGBOX_HH_
 
 #include "CachedValue.hh"
-#include "Tools/Helpers.hh"
 #include "Ray.hh"
+#include "Tools/Helpers.hh"
 
 namespace Rayon
 {
@@ -19,6 +19,7 @@ namespace Rayon
     const Vec_t getSize() const;
     bool        isInside(const Vec_t& point) const;
     bool        intersectRay(const Ray& ray) const;
+    bool        intersectBox(const BoundingBox& bbox) const;
 
   private:
     Vec_t                      _min;
@@ -26,6 +27,6 @@ namespace Rayon
     mutable CachedValue<Vec_t> _size;
   };
 
-} // namespace Rayon
+}  // namespace Rayon
 
-#endif // RAYON_TOOLS_BOUNDINGBOX_HH_
+#endif  // RAYON_TOOLS_BOUNDINGBOX_HH_

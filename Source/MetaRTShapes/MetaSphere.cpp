@@ -1,9 +1,10 @@
 #include "MetaRTShapes/MetaSphere.hh"
+
 #include "Entities/Shapes/Sphere.hh"
 
 namespace Rayon
 {
-  RTShape*    MetaSphere::make() const
+  RTShape* MetaSphere::make() const
   {
     return new Sphere;
   }
@@ -12,4 +13,4 @@ namespace Rayon
   {
     return Sphere::ShapeName;
   }
-} // namespace Rayon
+}  // namespace Rayon

@@ -1,16 +1,17 @@
 #ifndef RAYON_SCENE_HH_
 #define RAYON_SCENE_HH_
 
-#include "Entities/Eye.hh"
-#include "CubeMap.hh"
 #include <vector>
+
+#include "CubeMap.hh"
+#include "Entities/Eye.hh"
 
 namespace Rayon
 {
-  class   RTLight;
-  class   Object;
-  struct  IntersectionData;
-} // namespace Rayon
+  class RTLight;
+  class Object;
+  struct IntersectionData;
+}  // namespace Rayon
 
 namespace Rayon
 {
@@ -21,10 +22,12 @@ namespace Rayon
    *          it holds, properly releasing memory on
    *          deletion.
    */
-  class   Scene
+  class Scene
   {
-    typedef std::vector<Object*>  ObjectsContainer; /**< Typedef for the @ref Object container */
-    typedef std::vector<RTLight*> LightsContainer;  /**< Typedef for the @ref RTLight container */
+    typedef std::vector<Object*>
+      ObjectsContainer; /**< Typedef for the @ref Object container */
+    typedef std::vector<RTLight*>
+      LightsContainer; /**< Typedef for the @ref RTLight container */
 
   public:
     /**
@@ -48,7 +51,7 @@ namespace Rayon
      *              in @a other.
      * @param[in]   other   @ref Scene to copy data from.
      */
-    Scene&  operator=(const Scene& other);
+    Scene& operator=(const Scene& other);
 
     /**
      * @brief       Move constructor. Will take ownership
@@ -65,12 +68,12 @@ namespace Rayon
      *              leaving @a other in a default state.
      * @param[in]   other   @ref Scene to move data from.
      */
-    Scene   &operator=(Scene&& other);
+    Scene& operator=(Scene&& other);
 
     /**
-      * @brief  Destructor. Will delete all pointers held
-      *         by the instance.
-      */
+     * @brief  Destructor. Will delete all pointers held
+     *         by the instance.
+     */
     ~Scene();
 
   public:
@@ -82,7 +85,7 @@ namespace Rayon
      * @param[in] object    The @ref Object to add to
      *                      the Scene.
      */
-    void        addObject(const Object& object);
+    void addObject(const Object& object);
 
     /**
      * @brief   Will return the last @ref Object added
@@ -90,7 +93,7 @@ namespace Rayon
      * @return  The last @ref Object added to the Scene
      *          or nullptr if no @ref Object is held.
      */
-    Object*     lastObject() const;
+    Object* lastObject() const;
 
     /**
      * @brief   Will return the @ref Object container to
@@ -109,55 +112,54 @@ namespace Rayon
      *              nullptr if no intersection was found.
      *              nullptr if no @ref Object is in the Scene.
      */
-    Object*     getNearest(const Ray& ray,
-                           IntersectionData& data) const;
+    Object* getNearest(const Ray& ray, IntersectionData& data) const;
 
   public:
     /**
      * @brief           Will set the Scene's @ref Eye to @a eye.
      * @param[in] eye   The @ref Eye to store.
      */
-    void        setEye(const Eye& eye);
+    void setEye(const Eye& eye);
 
     /**
      * @brief   Returns the @ref Eye held by the Scene.
      * @return  The @ref Eye held by the Scene.
      */
-    const Eye&  eye() const;
+    const Eye& eye() const;
 
   public:
     /**
      * @brief             Will set the Scene's @ref CubeMap to @a cubemap.
      * @param[in] cubemap The @ref CubeMap to store.
      */
-    void        setCubeMap(const CubeMap& cubemap);
+    void setCubeMap(const CubeMap& cubemap);
 
     /**
      * @brief   Returns the @ref CubeMap held by the Scene.
      * @return  The @ref CubeMap held by the Scene.
      */
-    const CubeMap&  cubemap() const;
+    const CubeMap& cubemap() const;
 
   public:
     /**
      * @brief           Adds a @ref RTLight to the Scene.
      * @param[in] light The @ref RTLight to add.
      */
-    void        addLight(RTLight* light);
+    void addLight(RTLight* light);
 
     /**
      * @brief   Returns the last @ref RTLight added to
      *          the Scene.
      * @return  The last @ref RTLight added to the Scene.
      */
-    RTLight*    lastLight() const;
+    RTLight* lastLight() const;
 
     /**
      * @brief   Will return the @ref RTLight container to
      *          allow outside read access.
      * @return  A const reference on the container.
      */
-    const LightsContainer&  lights() const;
+    const LightsContainer& lights() const;
 
     /**
      * @brief   Processes all @ref RTLight to modify the
@@ -172,25 +174,23 @@ namespace Rayon
      * @param[out]  specular  The specular color.
      * @return  The computed color to use.
      */
-    Color       processLights(const IntersectionData& data,
-                              Color& specular) const;
+    Color processLights(const IntersectionData& data, Color& specular) const;
 
   public:
     /**
      * @brief   Preprocesses everything stored in the Scene.
      *          Preprocessing computes rotation matrix.
      */
-    void        preprocess();
+    void preprocess();
 
   private:
-    ObjectsContainer  _objects;   /**< Collection of @ref Object * */
-    LightsContainer   _lights;    /**< Collection of @ref RTLight * */
-    Eye               _eye;       /**< @ref Eye of the Scene */
-    CubeMap           _cubemap;   /**< @ref CubeMap of the Scene */
+    ObjectsContainer _objects; /**< Collection of @ref Object * */
+    LightsContainer  _lights;  /**< Collection of @ref RTLight * */
+    Eye              _eye;     /**< @ref Eye of the Scene */
+    CubeMap          _cubemap; /**< @ref CubeMap of the Scene */
 
     RAYON_GENERATE_PROPERTY_DECLARATION(Scene, Float_t, _ambient, Ambient)
   };
-} // namespace Rayon
+}  // namespace Rayon
 
-#endif // RAYON_SCENE_HH_
-
+#endif  // RAYON_SCENE_HH_

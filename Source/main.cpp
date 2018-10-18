@@ -5,26 +5,23 @@
 #include "Libraries/stb_image_write.hh"
 #undef _CRT_SECURE_NO_WARNINGS
 
+#include <iostream>
+
 #include "ImageFileHandlers/ImageFileHandler_BMP.hh"
 #include "ImageFileHandlers/ImageFileHandler_PNG.hh"
 #include "ImageFileHandlers/ImageFileHandler_TGA.hh"
-
 #include "MetaRTLights/MetaSun.hh"
-
-#include "MetaRTShapes/MetaSphere.hh"
-#include "MetaRTShapes/MetaPlane.hh"
-#include "MetaRTShapes/MetaRectangle.hh"
 #include "MetaRTShapes/MetaBox.hh"
 #include "MetaRTShapes/MetaMobius.hh"
+#include "MetaRTShapes/MetaPlane.hh"
+#include "MetaRTShapes/MetaRectangle.hh"
+#include "MetaRTShapes/MetaSphere.hh"
 #include "MetaRTShapes/MetaTriangle.hh"
-
 #include "Ray.hh"
 #include "Rayon.hh"
 #include "Registry.hh"
 
-#include <iostream>
-
-void  setupDefaultRegistry()
+void setupDefaultRegistry()
 {
   Rayon::registry().registerImageFileHandler(new Rayon::ImageFileHandler_BMP);
   Rayon::registry().registerImageFileHandler(new Rayon::ImageFileHandler_PNG);
@@ -40,7 +37,7 @@ void  setupDefaultRegistry()
   Rayon::registry().registerMetaRTShape(new Rayon::MetaTriangle);
 }
 
-int  main(int ac, char** av)
+int main(int ac, char** av)
 {
   try
   {

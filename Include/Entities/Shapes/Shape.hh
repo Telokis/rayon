@@ -6,21 +6,18 @@
 namespace Rayon
 {
   template <class Derived>
-  class   Shape : public RTShape
+  class Shape : public RTShape
   {
   public:
     Shape()
     {
     }
 
-    Shape(const Vec_t &pos,
-           const Vec_t &rot)
-      : RTShape(pos, rot)
+    Shape(const Vec_t& pos, const Vec_t& rot) : RTShape(pos, rot)
     {
     }
 
-    Shape(Float_t x, Float_t y, Float_t z)
-      : RTShape(x, y, z)
+    Shape(Float_t x, Float_t y, Float_t z) : RTShape(x, y, z)
     {
     }
 
@@ -29,22 +26,22 @@ namespace Rayon
     }
 
   protected:
-    void    preprocessImpl()
+    void preprocessImpl()
     {
     }
 
   public:
-    RTShape*   clone() const final
+    RTShape* clone() const final
     {
       return new Derived(static_cast<Derived const&>(*this));
     }
 
-    bool  inter(const Ray &ray, IntersectionData& data) const final
+    bool inter(const Ray& ray, IntersectionData& data) const final
     {
       return static_cast<Derived const*>(this)->interImpl(ray, data);
     }
 
-    void        fillData(IntersectionData& data) const final
+    void fillData(IntersectionData& data) const final
     {
       return static_cast<Derived const*>(this)->fillDataImpl(data);
     }
@@ -54,12 +51,12 @@ namespace Rayon
       return Derived::ShapeName;
     }
 
-    void        preprocess() final
+    void preprocess() final
     {
       static_cast<Derived*>(this)->preprocessImpl();
     }
   };
 
-} // namespace Rayon
+}  // namespace Rayon
 
-#endif // RTOBJECT_H
+#endif  // RTOBJECT_H
