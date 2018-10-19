@@ -5,6 +5,7 @@
 #include "Entities/Lights/RTLight.hh"
 #include "IntersectionData.hh"
 #include "Object.hh"
+#include "Tools/Stat.hh"
 
 namespace Rayon
 {
@@ -94,9 +95,12 @@ namespace Rayon
 
     data.k = Globals::Invalid;
     tmp.k  = Globals::Invalid;
+
     for (Object* item : _objects)
     {
+      ++(data.stat->intersectionsChecked);
       bool res = item->inter(ray, data);
+
       if (res && data.k < tmp.k)
       {
         tmp    = data;
@@ -105,6 +109,7 @@ namespace Rayon
       else
         data.k = tmp.k;
     }
+
     data = tmp;
     return result;
   }

@@ -34,14 +34,17 @@ namespace Rayon
     Float_t cos_a;
     Vec_t   light_vec;
 
-    if (doesShadow(_pos, scene, data.point, data.obj->getShape()))
+    if (doesShadow(_pos, scene, data.point, data.obj->getShape(), data.stat))
       return 0;
+
     cos_a     = 0;
     light_vec = getPos() - data.point;
     light_vec = Tools::Normalize(light_vec);
     cos_a     = Tools::DotProduct(light_vec, data.normal);
+
     if (cos_a < Globals::Epsilon)
       return 0;
+
     specular += getSpecular(light_vec, scene, _color, data);
     return color * cos_a * _power;
   }
