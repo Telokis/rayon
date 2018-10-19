@@ -46,6 +46,7 @@ namespace Rayon
       while (fs::exists(_outputPath))
         _outputPath = "out (" + std::to_string(++i) + ").png";
     }
+
     if (_threadsCount < 1)
       _threadsCount = 1;
   }
@@ -57,11 +58,19 @@ namespace Rayon
       std::cout << _description << '\n';
       return true;
     }
+
     if (_variables.count("version"))
     {
       std::cout << "Rayon v." << version() << '\n';
       return true;
     }
+
+    if (config().getInputPath().empty())
+    {
+      std::cout << "No input file specified." << '\n';
+      return true;
+    }
+
     return false;
   }
 

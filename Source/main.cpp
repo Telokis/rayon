@@ -41,7 +41,6 @@ int main(int ac, char** av)
 {
   try
   {
-    std::cout << std::hex;
     setupDefaultRegistry();
     Rayon::Rayon app(ac, av);
     return app.run();

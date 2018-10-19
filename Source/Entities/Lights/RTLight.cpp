@@ -5,6 +5,7 @@
 #include "Object.hh"
 #include "Scene.hh"
 #include "SceneParse.hh"
+#include "Tools/Stat.hh"
 
 namespace Rayon
 {
@@ -29,7 +30,8 @@ namespace Rayon
   bool RTLight::doesShadow(const Vec_t& pos,
                            const Scene& scene,
                            const Vec_t& point,
-                           RTShape*     obj) const
+                           RTShape*     obj,
+                           Tools::Stat* stat) const
   {
     Vec_t            light_vec(pos - point);
     Vec_t            tmp_pos(point + light_vec * Globals::Epsilon);
@@ -38,10 +40,20 @@ namespace Rayon
     data.k = Globals::Invalid;
     Ray shadowRay(RayType::Shadow, tmp_pos, light_vec);
 
+    stat->rayCounts[RayType::Shadow] += 1;
+
     for (const auto& object : scene.objects())
     {
-      if (obj != object->getShape() && object->inter(shadowRay, data) && data.k < 1.0)
-        return true;
+      if (obj != object->getShape())
+      {
+        stat->intersectionsChecked += 1;
+
+        if (object->inter(shadowRay, data) && data.k < 1.0)
+        {
+          stat->hits += 1;
+          return true;
+        }
+      }
     }
     return false;
   }

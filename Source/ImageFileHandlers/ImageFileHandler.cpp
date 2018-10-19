@@ -15,7 +15,7 @@ namespace Rayon
 
     if (ext.empty())
     {
-      std::cout << "[Warning]No extension specified. Defaulting to bmp\n";
+      std::cerr << "[Warning]No extension specified. Defaulting to bmp\n";
       ext = "bmp";
     }
 
@@ -23,7 +23,7 @@ namespace Rayon
     if (handler)
       return handler->readFromFile(file.c_str(), readInto);
 
-    std::cout << "[Error]No handler found for extension [" << ext << "].\n";
+    std::cerr << "[Error]No handler found for extension [" << ext << "].\n";
     return false;
   }
 
@@ -36,8 +36,8 @@ namespace Rayon
 
     if (ext.empty())
     {
-      std::cout << "[Warning]No extension specified. Defaulting to bmp\n";
-      ext = "bmp";
+      std::cerr << "[Warning]No extension specified. Defaulting to png\n";
+      ext = "png";
     }
 
     const auto&              handlers = registry().getImageFileHandlers();
@@ -54,14 +54,15 @@ namespace Rayon
                   << "]."
                      " Forcing to "
                   << def->extensionName() << "...\n";
-        return def->writeToFile((file + def->extensionName()).c_str(), readFrom);
+        return def->writeToFile(
+          (file.substr(file.find_last_of('.') - 1) + def->extensionName()).c_str(), readFrom);
       }
-      std::cout << "[SEVERE]No handler registered.\n";
+      std::cerr << "[SEVERE]No handler registered.\n";
       return false;
     }
 
-    std::cout << "[Error]No handler found for extension [" << ext << "].\n";
-    std::cout << "       Set force to true to default to another handler.\n";
+    std::cerr << "[Error]No handler found for extension [" << ext << "].\n";
+    std::cerr << "       Set force to true to default to another handler.\n";
     return false;
   }
 }  // namespace Rayon

@@ -1,0 +1,48 @@
+{
+    "eye": {
+        "position": {
+            "y": 30,
+            "z": -90
+        },
+        "rotation": {
+            "x": 30
+        }
+    },
+    "lights": [
+        {
+            "position": {
+                "x": 0,
+                "y": 90,
+                "z": -80
+            },
+            "type": "Sun"
+        }
+    ],
+    "objects": [
+        {
+            "material": {
+                "color": "swimming pool",
+                "reflexion": 0.5
+            },
+            "position": {
+                "y": 0
+            },
+            "type": "Plane"
+        },
+        {
+            "position": { "y": 5, "z": -46.5, "x": 0 },
+            "radius": 5,
+            "type": "Sphere",
+            "material": {
+                "ambient": -1,
+                "glossiness": 0,
+                "reflexion": 0.7,
+                "refraction": 1,
+                "shininess": 5.6,
+                "transparency": 0,
+                "flags": [],
+                "color": "lime"
+            }
+        }
+    ]
+}

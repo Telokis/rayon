@@ -1,19 +1,29 @@
 common_settings:
-    c++: 14
+  c++: 14
+
+local_settings:
+  local_build: true
+  build_dir: ./.cppan/build
+  build:
+    configuration: Debug
 
 files:
-    - Source/.*
-    - Include/.*
-    - Dependencies/json/Json.cpp
-    - Dependencies/json/Json.h
-    - Dependencies/json/Json-forwards.h
+  - Source/.*
+  - Include/.*
+  - Dependencies/json/Json.cpp
+  - Dependencies/json/Json.h
+  - Dependencies/json/Json-forwards.h
 
 include_directories:
-    private:
-        - Include/
-        - Dependencies/json
-        - Dependencies/glm/include
+  private:
+    - Include/
+    - Dependencies/json
+    - Dependencies/glm/include
 
 dependencies:
-    - pvt.cppan.demo.boost.program_options: 1.63.0
-    - pvt.cppan.demo.boost.log: 1.63.0
+  - pvt.cppan.demo.boost.program_options: 1.63.0
+  - pvt.cppan.demo.boost.log: 1.63.0
+
+post_sources: |
+  set_target_properties(${this} PROPERTIES PDB_NAME Rayon)
+  set_target_properties(${this} PROPERTIES PDB_OUTPUT_DIRECTORY_DEBUG "${CPPAN_BUILD_OUTPUT_DIR}")

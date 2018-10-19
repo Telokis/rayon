@@ -8,6 +8,11 @@
 namespace Rayon
 {
   class Scene;
+
+  namespace Tools
+  {
+    struct Stat;
+  }
 }  // namespace Rayon
 
 namespace Rayon
@@ -16,9 +21,7 @@ namespace Rayon
   {
   public:
     explicit RTLight(const Color& color = 0xffffffff);
-    RTLight(const Vec_t& pos,
-            const Vec_t& rot,
-            const Color& color = 0xffffffff);
+    RTLight(const Vec_t& pos, const Vec_t& rot, const Color& color = 0xffffffff);
     RTLight(Float_t x, Float_t y, Float_t z, const Color& color = 0xffffffff);
     virtual ~RTLight();
 
@@ -36,7 +39,8 @@ namespace Rayon
     bool doesShadow(const Vec_t& pos,
                     const Scene& scene,
                     const Vec_t& point,
-                    RTShape*     obj) const;
+                    RTShape*     obj,
+                    Tools::Stat* stat) const;
 
     Color getSpecular(const Vec_t&            lightVec,
                       const Scene&            scene,

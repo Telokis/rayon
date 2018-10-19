@@ -1,8 +1,11 @@
 #include "Worker.hh"
 
+#include <chrono>
+
 #include "Entities/Shapes/RTShape.hh"
 #include "IntersectionData.hh"
 #include "Object.hh"
+#include "Tools/Stat.hh"
 
 namespace Rayon
 {
@@ -10,7 +13,7 @@ namespace Rayon
   {
     static constexpr const uint8 MAX_DEPTH  = 5;
     static constexpr const uint8 MAX_GLOSSY = 5;
-    Color                        inter(const Scene& scene, const Ray& ray, uint8 depth = 0);
+    Color inter(const Scene& scene, const Ray& ray, uint8 depth, Tools::Stat* stat);
 
     Color handleReflection(const Scene&            scene,
                            const Ray&              ray,
@@ -32,12 +35,12 @@ namespace Rayon
           reflected.setDirection(reflectedDir + tmp);
           reflected.normalize();
           reflected.setOrigin(data.point + Globals::Epsilon * reflected.getDirection());
-          color += inter(scene, reflected, depth + 1);
+          color += inter(scene, reflected, depth + 1, data.stat);
         }
         return color * (Float_t(1.0) / MAX_GLOSSY);
       }
       reflected.setOrigin(data.point + Globals::Epsilon * reflected.getDirection());
-      return inter(scene, reflected, depth + 1);
+      return inter(scene, reflected, depth + 1, data.stat);
     }
 
     Color handleTransparency(const Scene&            scene,
@@ -51,7 +54,7 @@ namespace Rayon
       if (eta != 1 && eta > Globals::Epsilon)
         refracted.setDirection(Tools::Refract(ray.getDirection(), data, eta));
       refracted.setOrigin(data.point + Globals::Epsilon * refracted.getDirection());
-      return inter(scene, refracted, depth + 1);
+      return inter(scene, refracted, depth + 1, data.stat);
     }
 
     // http://graphics.stanford.edu/courses/cs148-10-summer/docs/2006--degreve--reflection_refraction.pdf
@@ -132,58 +135,41 @@ namespace Rayon
       return specular + (ambient + lighting) * (1.0 - coef) + reflectionRefraction * coef;
     }
 
-    Color inter(const Scene& scene, const Ray& ray, uint8 depth)
+    Color inter(const Scene& scene, const Ray& ray, uint8 depth, Tools::Stat* stat)
     {
       IntersectionData data;
 
-      data.obj = scene.getNearest(ray, data);
+      stat->rayCounts[ray.getType()] += 1;
+
+      data.stat = stat;
+      data.obj  = scene.getNearest(ray, data);
+
       if (data.obj)
       {
+        stat->hits += 1;
         data.point = ray.evaluate(data.k);
         data.obj->getShape()->fillData(data);
         data.ray = &ray;
+
         if (data.isInside)
           data.normal *= -1;
+
         return getColor(scene, ray, data, depth);
       }
       return scene.cubemap().interceptRay(ray);
     }
   }  // anonymous namespace
 
-  Worker::Worker(RawImage* img, uint32 yStart, uint32 yStop)
-    : _img(img), _yStart(yStart), _yStop(yStop)
+  Worker::Worker(RawImage* img, uint32 xStart, uint32 xStop, Tools::Stat* stat)
+    : _img(img), _xStart(xStart), _xStop(xStop), _stat(stat)
   {
   }
 
-  // void Worker::operator()(uint32 width, uint32 height, Scene *scene_) const
-  // {
-  //   Scene scene = *scene_;
-  //   scene.preprocess();
-  //   Ray cameraRay(RayType::Primary, scene.eye().getPos(), Vec_t());
-
-  //   Float_t scale = Tools::Tan(Tools::DegToRad(120.0 * 0.5));
-  //   Float_t imageAspectRatio = width / (Float_t)height;
-
-  //   for (uint32 x = 0; x < width; ++x)
-  //   {
-  //     for (uint32 y = _yStart; y < _yStop; ++y)
-  //     {
-  //       Float_t i = (2 * (x + 0.5) / (Float_t)width - 1) * scale;
-  //       Float_t j = (1 - 2 * (y + 0.5) / (Float_t)height) * scale * 1 / imageAspectRatio;
-
-  //       cameraRay.setDirection(scene.eye().indirectRotation(Vec_t(i, j, 1)));
-  //       cameraRay.normalize();
-  //       auto color = inter(scene, cameraRay);
-  //       _img->pixel(x, y) = color;
-  //     }
-  //   }
-  // }
-
-  void Worker::operator()(uint32 width, uint32 height, Scene* scene_) const
+  void Worker::operator()(uint32 width, uint32 height, Scene* scene_)
   {
+    auto  start = std::chrono::steady_clock::now();
     Scene scene = *scene_;
-    scene.preprocess();
-    Ray cameraRay(RayType::Primary, scene.eye().getPos(), Vec_t());
+    Ray   cameraRay(RayType::Primary, scene.eye().getPos(), Vec_t());
 
     Float_t fovX = Tools::DegToRad(55.0);
     Float_t fovY = (fovX * height) / width;
@@ -191,9 +177,9 @@ namespace Rayon
     Float_t angleV = fovX / width;
     Float_t angleH = fovY / height;
 
-    for (uint32 x = 0; x < width; ++x)
+    for (uint32 x = _xStart; x < _xStop; ++x)
     {
-      for (uint32 y = _yStart; y < _yStop; ++y)
+      for (uint32 y = 0; y < height; ++y)
       {
         Float_t tmpAngleV = fovX / 2 - angleV * x;
         Float_t tmpAngleH = fovY / 2 - angleH * y;
@@ -209,10 +195,14 @@ namespace Rayon
         cameraRay.setDirection(tmp);
         cameraRay.setDirection(scene.eye().indirectRotation(tmp));
         cameraRay.normalize();
-        auto color        = inter(scene, cameraRay);
+
+        auto color        = inter(scene, cameraRay, 0, _stat);
         _img->pixel(x, y) = color;
       }
     }
+
+    auto end       = std::chrono::steady_clock::now();
+    _stat->elapsed = end - start;
   }
 
 }  // namespace Rayon
