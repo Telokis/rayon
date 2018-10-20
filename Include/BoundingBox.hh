@@ -21,8 +21,11 @@ namespace Rayon
   public:
     const Vec_t getSize() const;
     bool        isInside(const Vec_t& point) const;
-    bool        intersectRay(const Ray& ray) const;
-    bool        intersectBox(const BoundingBox& bbox) const;
+    Float_t     intersectRay(const Ray& ray) const;
+    bool        intersectBox(const BoundingBox& bbox);
+    void        expand(const BoundingBox& bbox);
+
+    bool isInfinite() const;
 
   private:
     Vec_t                      _min;

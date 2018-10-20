@@ -5,6 +5,8 @@
 namespace Rayon
 {
   BoundingBox::BoundingBox()
+    : _min{Globals::Infinity, Globals::Infinity, Globals::Infinity}
+    , _max{-Globals::Infinity, -Globals::Infinity, -Globals::Infinity}
   {
   }
 
@@ -41,7 +43,7 @@ namespace Rayon
     return true;
   }
 
-  bool BoundingBox::intersectRay(const Ray& ray) const
+  Float_t BoundingBox::intersectRay(const Ray& ray) const
   {
     Float_t t1 = (_min[0] - ray.getOrigin().x) * ray.getInvDirection().x;
     Float_t t2 = (_max[0] - ray.getOrigin().x) * ray.getInvDirection().x;
@@ -58,7 +60,41 @@ namespace Rayon
       tmax = Tools::Min(tmax, Tools::Max(Tools::Max(t1, t2), tmin));
     }
 
-    return tmax > Tools::Max(tmin, 0.0);
+    if (tmax > Tools::Max(tmin, 0.0))
+      return Tools::Smallest(tmin, tmax);
+
+    return Globals::Invalid;
+  }
+
+  bool BoundingBox::intersectBox(const BoundingBox& bbox)
+  {
+    if (bbox._max.x < _min.x)
+      return false;
+    if (bbox._max.y < _min.y)
+      return false;
+    if (bbox._max.z < _min.z)
+      return false;
+    if (bbox._min.x > _max.x)
+      return false;
+    if (bbox._min.y > _max.y)
+      return false;
+    if (bbox._min.z > _max.z)
+      return false;
+
+    return true;
+  }
+
+  void BoundingBox::expand(const BoundingBox& bbox)
+  {
+    _size.invalidate();
+
+    _min = Tools::Min(_min, bbox._min);
+    _max = Tools::Max(_max, bbox._max);
+  }
+
+  bool BoundingBox::isInfinite() const
+  {
+    return _min == BoundingBox::Infinite._min && _max == BoundingBox::Infinite._max;
   }
 
 }  // namespace Rayon
