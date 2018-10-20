@@ -94,10 +94,14 @@ namespace Rayon
     auto     height = config().getHeight();
     RawImage img(width, height);
 
+    auto start = std::chrono::steady_clock::now();
     _scene.preprocess();
+    auto end = std::chrono::steady_clock::now();
+    std::cout << "Preprocessing took " << Duration_t(end - start).count() << "s\n";
+
     uint8 jn = config().getThreadCount();
 
-    auto                     start = std::chrono::steady_clock::now();
+    start = std::chrono::steady_clock::now();
     std::vector<std::thread> threads;
     std::vector<UniqueStat>  stats;
     threads.reserve(jn);
@@ -117,7 +121,7 @@ namespace Rayon
     for (auto&& thread : threads)
       thread.join();
 
-    auto       end  = std::chrono::steady_clock::now();
+    end             = std::chrono::steady_clock::now();
     Duration_t diff = end - start;
 
     printStats(stats, diff, width * height);
