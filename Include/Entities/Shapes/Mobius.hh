@@ -30,9 +30,10 @@ namespace Rayon
     static const constexpr auto ShapeName = "Mobius";
 
   private:
-    bool interImpl(const Ray& ray, IntersectionData& data) const;
-    void fillDataImpl(IntersectionData& data) const;
-    void preprocessImpl();
+    bool        interImpl(const Ray& ray, IntersectionData& data) const;
+    void        fillDataImpl(IntersectionData& data) const;
+    void        preprocessImpl();
+    BoundingBox getBBoxImpl() const;
 
     RAYON_GENERATE_PROPERTY_DECLARATION(Mobius, uint32, _torsion, Torsion)
     RAYON_GENERATE_PROPERTY_DECLARATION(Mobius, Float_t, _width, Width)

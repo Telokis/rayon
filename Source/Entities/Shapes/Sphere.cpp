@@ -52,6 +52,14 @@ namespace Rayon
     return false;
   }
 
+  BoundingBox Sphere::getBBoxImpl() const
+  {
+    return BoundingBox{
+      {_pos.x - _radius, _pos.y - _radius, _pos.z - _radius},
+      {_pos.x + _radius, _pos.y + _radius, _pos.z + _radius},
+    };
+  }
+
   void Sphere::fillDataImpl(IntersectionData& data) const
   {
     data.normal = Tools::Normalize(data.point - _pos);

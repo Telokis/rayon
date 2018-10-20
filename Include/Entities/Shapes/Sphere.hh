@@ -24,10 +24,11 @@ namespace Rayon
     static constexpr const auto ShapeName = "Sphere";
 
   private:
-    bool interImpl(const Ray& ray, IntersectionData& data) const;
-    void fillDataImpl(IntersectionData& data) const;
+    bool        interImpl(const Ray& ray, IntersectionData& data) const;
+    void        fillDataImpl(IntersectionData& data) const;
+    BoundingBox getBBoxImpl() const;
 
-    RAYON_GENERATE_PROPERTY_DECLARATION(Sphere, Float_t, _radius, Radius)
+    RAYON_GENERATE_PROPERTY_DECLARATION(Sphere, Float_t, _radius, Radius);
   };
 }  // namespace Rayon
 

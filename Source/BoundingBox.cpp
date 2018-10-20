@@ -1,5 +1,7 @@
 #include "BoundingBox.hh"
 
+#include "Tools/Globals.hh"
+
 namespace Rayon
 {
   BoundingBox::BoundingBox()
@@ -9,6 +11,10 @@ namespace Rayon
   BoundingBox::BoundingBox(const Vec_t& min, const Vec_t& max) : _min(min), _max(max)
   {
   }
+
+  const BoundingBox BoundingBox::Infinite{
+    {-Globals::Infinity, -Globals::Infinity, -Globals::Infinity},
+    {Globals::Infinity, Globals::Infinity, Globals::Infinity}};
 
   const Vec_t BoundingBox::getSize() const
   {

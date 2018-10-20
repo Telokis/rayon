@@ -29,10 +29,11 @@ namespace Rayon
     Vec_t indirectRotation(const Vec_t& Vec_t) const;
 
   public:
-    RAYON_GENERATE_Vec_t_GETTERS_SETTERS_DECLARATION(Entity, Pos)
-      RAYON_GENERATE_Vec_t_GETTERS_SETTERS_DECLARATION(Entity, Rot)
+    RAYON_GENERATE_Vec_t_GETTERS_SETTERS_DECLARATION(Entity, Pos);
+    RAYON_GENERATE_Vec_t_GETTERS_SETTERS_DECLARATION(Entity, Rot);
 
-        protected : bool _rotIsIdentity;
+  protected:
+    bool  _rotIsIdentity;
     Vec_t _pos;
     Vec_t _rot;
     Mat_t _directMatrix;

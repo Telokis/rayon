@@ -57,6 +57,11 @@ namespace Rayon
     return found;
   }
 
+  BoundingBox Mobius::getBBoxImpl() const
+  {
+    return BoundingBox::Infinite;
+  }
+
   void Mobius::fillDataImpl(IntersectionData& data) const
   {
     _facets.at(_last).fillData(data);

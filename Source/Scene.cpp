@@ -153,8 +153,10 @@ namespace Rayon
   {
     const Color color = data.obj->getMaterial().getColor();
     Color       result;
+
     for (size_t i = 0; i < _lights.size(); ++i)
       result += _lights[i]->apply(color, *this, data, specular);
+
     return result;
   }
 

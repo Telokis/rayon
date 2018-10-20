@@ -48,6 +48,11 @@ namespace Rayon
     return false;
   }
 
+  BoundingBox Triangle::getBBoxImpl() const
+  {
+    return BoundingBox::Infinite;
+  }
+
   void Triangle::fillDataImpl(IntersectionData& data) const
   {
     data.normal = _norm;

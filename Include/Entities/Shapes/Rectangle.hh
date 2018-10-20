@@ -12,10 +12,7 @@ namespace Rayon
 
   public:
     Rectangle(Float_t width = 1.0, Float_t height = 1.0);
-    Rectangle(const Vec_t& pos,
-              const Vec_t& rot,
-              Float_t      width,
-              Float_t      height);
+    Rectangle(const Vec_t& pos, const Vec_t& rot, Float_t width, Float_t height);
     Rectangle(Float_t x, Float_t y, Float_t z, Float_t width, Float_t height);
     ~Rectangle();
 
@@ -33,9 +30,10 @@ namespace Rayon
     static const constexpr auto ShapeName = "Rectangle";
 
   private:
-    bool interImpl(const Ray& ray, IntersectionData& data) const;
-    void fillDataImpl(IntersectionData& data) const;
-    void preprocessImpl();
+    bool        interImpl(const Ray& ray, IntersectionData& data) const;
+    void        fillDataImpl(IntersectionData& data) const;
+    void        preprocessImpl();
+    BoundingBox getBBoxImpl() const;
 
   private:
     RAYON_GENERATE_PROPERTY_DECLARATION(Rectangle, Float_t, _width, Width)

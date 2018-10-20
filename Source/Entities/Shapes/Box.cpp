@@ -61,6 +61,11 @@ namespace Rayon
     return false;
   }
 
+  BoundingBox Box::getBBoxImpl() const
+  {
+    return BoundingBox::Infinite;
+  }
+
   void Box::fillDataImpl(IntersectionData& data) const
   {
     data.localPoint = data.point - _pos;

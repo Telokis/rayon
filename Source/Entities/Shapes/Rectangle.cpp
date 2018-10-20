@@ -53,6 +53,11 @@ namespace Rayon
     return true;
   }
 
+  BoundingBox Rectangle::getBBoxImpl() const
+  {
+    return BoundingBox::Infinite;
+  }
+
   void Rectangle::fillDataImpl(IntersectionData& data) const
   {
     data.normal = _norm;
