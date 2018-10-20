@@ -27,15 +27,16 @@ namespace Rayon
   {
   }
 
-  bool RTLight::doesShadow(const Vec_t& pos,
-                           const Scene& scene,
-                           const Vec_t& point,
-                           RTShape*     obj,
-                           Tools::Stat* stat) const
+  Float_t RTLight::shadowCoef(const Vec_t& pos,
+                              const Scene& scene,
+                              const Vec_t& point,
+                              RTShape*     obj,
+                              Tools::Stat* stat) const
   {
     Vec_t            light_vec(pos - point);
     Vec_t            tmp_pos(point + light_vec * Globals::Epsilon);
     IntersectionData data;
+    Float_t          coef = 1.0;
 
     data.k = Globals::Invalid;
     Ray shadowRay(RayType::Shadow, tmp_pos, light_vec);
@@ -51,11 +52,17 @@ namespace Rayon
         if (object->inter(shadowRay, data) && data.k < 1.0)
         {
           stat->hits += 1;
-          return true;
+          coef *= object->getMaterial().getTransparency();
         }
       }
+
+      if (Tools::IsZero(coef))
+      {
+        return 0.0;
+      }
     }
-    return false;
+
+    return coef;
   }
 
   Color RTLight::getSpecular(const Vec_t&            lightVec,
