@@ -24,10 +24,8 @@ namespace Rayon
    */
   class Scene
   {
-    typedef std::vector<Object*>
-      ObjectsContainer; /**< Typedef for the @ref Object container */
-    typedef std::vector<RTLight*>
-      LightsContainer; /**< Typedef for the @ref RTLight container */
+    typedef std::vector<Object*>  ObjectsContainer; /**< Typedef for the @ref Object container */
+    typedef std::vector<RTLight*> LightsContainer;  /**< Typedef for the @ref RTLight container */
 
   public:
     /**
@@ -189,7 +187,7 @@ namespace Rayon
     Eye              _eye;     /**< @ref Eye of the Scene */
     CubeMap          _cubemap; /**< @ref CubeMap of the Scene */
 
-    RAYON_GENERATE_PROPERTY_DECLARATION(Scene, Float_t, _ambient, Ambient)
+    RAYON_GENERATE_PROPERTY_DECLARATION(Scene, Float_t, _ambient, Ambient);
   };
 }  // namespace Rayon
 

@@ -197,7 +197,7 @@ namespace Rayon
  *	@code{.cpp}
  *  class Entity
  *  {
- *      RAYON_GENERATE_PROPERTY_DECLARATION(Entity, int, _color, Color)
+ *      RAYON_GENERATE_PROPERTY_DECLARATION(Entity, int, _color, Color);
  *  };
  *	@endcode
  *
@@ -236,7 +236,7 @@ public:                                                                       \
  *
  *	Here is an example :
  *	@code{.cpp}
- *      RAYON_GENERATE_PROPERTY_DEFINITION(Entity, int, _color, Color)
+ *      RAYON_GENERATE_PROPERTY_DEFINITION(Entity, int, _color, Color);
  *	@endcode
  *
  *  Will become :

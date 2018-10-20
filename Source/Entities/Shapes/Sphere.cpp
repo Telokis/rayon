@@ -65,7 +65,7 @@ namespace Rayon
     data.normal = Tools::Normalize(data.point - _pos);
   }
 
-  RAYON_GENERATE_PROPERTY_DEFINITION(Sphere, Float_t, _radius, Radius)
+  RAYON_GENERATE_PROPERTY_DEFINITION(Sphere, Float_t, _radius, Radius);
 
   void Sphere::read(const Json::Value& root)
   {

@@ -80,7 +80,7 @@ namespace Rayon
     return 0;
   }
 
-  RAYON_GENERATE_PROPERTY_DEFINITION(RTLight, Color, _color, Color)
+  RAYON_GENERATE_PROPERTY_DEFINITION(RTLight, Color, _color, Color);
 
   void RTLight::read(const Json::Value& root)
   {

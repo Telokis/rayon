@@ -36,8 +36,8 @@ namespace Rayon
     BoundingBox getBBoxImpl() const;
 
   private:
-    RAYON_GENERATE_PROPERTY_DECLARATION(Rectangle, Float_t, _width, Width)
-    RAYON_GENERATE_PROPERTY_DECLARATION(Rectangle, Float_t, _height, Height)
+    RAYON_GENERATE_PROPERTY_DECLARATION(Rectangle, Float_t, _width, Width);
+    RAYON_GENERATE_PROPERTY_DECLARATION(Rectangle, Float_t, _height, Height);
   };
 
 }  // namespace Rayon

@@ -71,8 +71,8 @@ namespace Rayon
     _norm  = Tools::Normalize(directRotation(Vec_t(0, 1, 0)));
   }
 
-  RAYON_GENERATE_PROPERTY_DEFINITION(Rectangle, Float_t, _width, Width)
-  RAYON_GENERATE_PROPERTY_DEFINITION(Rectangle, Float_t, _height, Height)
+  RAYON_GENERATE_PROPERTY_DEFINITION(Rectangle, Float_t, _width, Width);
+  RAYON_GENERATE_PROPERTY_DEFINITION(Rectangle, Float_t, _height, Height);
 
   void Rectangle::read(const Json::Value& root)
   {

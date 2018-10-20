@@ -60,7 +60,7 @@ namespace Rayon
                               Color&                  specular) const = 0;
     virtual const char* name() const                 = 0;
 
-    RAYON_GENERATE_PROPERTY_DECLARATION(RTLight, Color, _color, Color)
+    RAYON_GENERATE_PROPERTY_DECLARATION(RTLight, Color, _color, Color);
   };
 }  // namespace Rayon
 

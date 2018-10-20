@@ -128,6 +128,6 @@ namespace Rayon
     writeVal(root, "width", _width, 1);
   }
 
-  RAYON_GENERATE_PROPERTY_DEFINITION(Mobius, uint32, _torsion, Torsion)
-  RAYON_GENERATE_PROPERTY_DEFINITION(Mobius, Float_t, _width, Width)
+  RAYON_GENERATE_PROPERTY_DEFINITION(Mobius, uint32, _torsion, Torsion);
+  RAYON_GENERATE_PROPERTY_DEFINITION(Mobius, Float_t, _width, Width);
 }  // namespace Rayon

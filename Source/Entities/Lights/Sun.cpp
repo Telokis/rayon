@@ -52,7 +52,7 @@ namespace Rayon
     return color * cos_a * _power * coef;
   }
 
-  RAYON_GENERATE_PROPERTY_DEFINITION(Sun, Float_t, _power, Power)
+  RAYON_GENERATE_PROPERTY_DEFINITION(Sun, Float_t, _power, Power);
 
   void Sun::read(const Json::Value& root)
   {

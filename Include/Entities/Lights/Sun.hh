@@ -16,9 +16,8 @@ namespace Rayon
    */
   class Sun : public Light<Sun>
   {
-    typedef Light<Sun>
-      ParentType;      /**< Typedef for easier access to parent's type */
-    friend ParentType; /**< Required for CRTP used by @ref Light */
+    typedef Light<Sun> ParentType; /**< Typedef for easier access to parent's type */
+    friend ParentType;             /**< Required for CRTP used by @ref Light */
 
   public:
     /**
@@ -81,7 +80,7 @@ namespace Rayon
                     const IntersectionData& data,
                     Color&                  specular) const;
 
-    RAYON_GENERATE_PROPERTY_DECLARATION(Sun, Float_t, _power, Power)
+    RAYON_GENERATE_PROPERTY_DECLARATION(Sun, Float_t, _power, Power);
   };
 }  // namespace Rayon
 

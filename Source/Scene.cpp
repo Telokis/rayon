@@ -175,5 +175,5 @@ namespace Rayon
     _eye.computeRotation();
   }
 
-  RAYON_GENERATE_PROPERTY_DEFINITION(Scene, Float_t, _ambient, Ambient)
+  RAYON_GENERATE_PROPERTY_DEFINITION(Scene, Float_t, _ambient, Ambient);
 }  // namespace Rayon

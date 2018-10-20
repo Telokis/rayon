@@ -96,7 +96,7 @@ namespace Rayon
     return vec * _indirectMatrix;
   }
 
-  RAYON_GENERATE_Vec_t_GETTERS_SETTERS_DEFINITION(Entity, _pos, Pos)
-    RAYON_GENERATE_Vec_t_GETTERS_SETTERS_DEFINITION(Entity, _rot, Rot)
+  RAYON_GENERATE_Vec_t_GETTERS_SETTERS_DEFINITION(Entity, _pos, Pos);
+  RAYON_GENERATE_Vec_t_GETTERS_SETTERS_DEFINITION(Entity, _rot, Rot);
 
 }  // namespace Rayon

@@ -21,20 +21,11 @@ namespace Rayon
     boost::program_options::variables_map       _variables;
 
   private:
-    RAYON_GENERATE_PROPERTY_DECLARATION(Config,
-                                        std::string,
-                                        _outputPath,
-                                        OutputPath)
-    RAYON_GENERATE_PROPERTY_DECLARATION(Config,
-                                        std::string,
-                                        _inputPath,
-                                        InputPath)
-    RAYON_GENERATE_PROPERTY_DECLARATION(Config, uint32, _width, Width)
-    RAYON_GENERATE_PROPERTY_DECLARATION(Config, uint32, _height, Height)
-    RAYON_GENERATE_PROPERTY_DECLARATION(Config,
-                                        uint32,
-                                        _threadsCount,
-                                        ThreadCount)
+    RAYON_GENERATE_PROPERTY_DECLARATION(Config, std::string, _outputPath, OutputPath);
+    RAYON_GENERATE_PROPERTY_DECLARATION(Config, std::string, _inputPath, InputPath);
+    RAYON_GENERATE_PROPERTY_DECLARATION(Config, uint32, _width, Width);
+    RAYON_GENERATE_PROPERTY_DECLARATION(Config, uint32, _height, Height);
+    RAYON_GENERATE_PROPERTY_DECLARATION(Config, uint32, _threadsCount, ThreadCount);
   };
 
   inline Config& config()

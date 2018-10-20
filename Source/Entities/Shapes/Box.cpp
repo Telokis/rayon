@@ -95,9 +95,9 @@ namespace Rayon
     _norm[2] = Tools::Normalize(directRotation(Vec_t(0, 0, 1)));
   }
 
-  RAYON_GENERATE_PROPERTY_DEFINITION(Box, Float_t, _width, Width)
-  RAYON_GENERATE_PROPERTY_DEFINITION(Box, Float_t, _height, Height)
-  RAYON_GENERATE_PROPERTY_DEFINITION(Box, Float_t, _depth, Depth)
+  RAYON_GENERATE_PROPERTY_DEFINITION(Box, Float_t, _width, Width);
+  RAYON_GENERATE_PROPERTY_DEFINITION(Box, Float_t, _height, Height);
+  RAYON_GENERATE_PROPERTY_DEFINITION(Box, Float_t, _depth, Depth);
 
   void Box::read(const Json::Value& root)
   {
