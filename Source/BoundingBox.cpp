@@ -97,4 +97,7 @@ namespace Rayon
     return _min == BoundingBox::Infinite._min && _max == BoundingBox::Infinite._max;
   }
 
+  RAYON_GENERATE_Vec_t_GETTERS_SETTERS_DEFINITION(BoundingBox, _min, Min);
+  RAYON_GENERATE_Vec_t_GETTERS_SETTERS_DEFINITION(BoundingBox, _max, Max);
+
 }  // namespace Rayon

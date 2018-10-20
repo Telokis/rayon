@@ -27,6 +27,10 @@ namespace Rayon
 
     bool isInfinite() const;
 
+  public:
+    RAYON_GENERATE_Vec_t_GETTERS_SETTERS_DECLARATION(BoundingBox, Min);
+    RAYON_GENERATE_Vec_t_GETTERS_SETTERS_DECLARATION(BoundingBox, Max);
+
   private:
     Vec_t                      _min;
     Vec_t                      _max;
