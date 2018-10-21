@@ -40,6 +40,11 @@ namespace Rayon
     return true;
   }
 
+  BoundingBox Plane::getBBoxImpl() const
+  {
+    return BoundingBox::Infinite;
+  }
+
   void Plane::fillDataImpl(IntersectionData& data) const
   {
     data.normal = _norm;

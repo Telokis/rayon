@@ -41,6 +41,11 @@ namespace Rayon
       return static_cast<Derived const*>(this)->interImpl(ray, data);
     }
 
+    BoundingBox getBBox() const final
+    {
+      return static_cast<Derived const*>(this)->getBBoxImpl();
+    }
+
     void fillData(IntersectionData& data) const final
     {
       return static_cast<Derived const*>(this)->fillDataImpl(data);

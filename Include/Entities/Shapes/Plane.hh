@@ -27,9 +27,10 @@ namespace Rayon
     static const constexpr auto ShapeName = "Plane";
 
   private:
-    bool interImpl(const Ray& ray, IntersectionData& data) const;
-    void fillDataImpl(IntersectionData& data) const;
-    void preprocessImpl();
+    bool        interImpl(const Ray& ray, IntersectionData& data) const;
+    void        fillDataImpl(IntersectionData& data) const;
+    void        preprocessImpl();
+    BoundingBox getBBoxImpl() const;
   };
 
 }  // namespace Rayon

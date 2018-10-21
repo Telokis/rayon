@@ -116,6 +116,18 @@ namespace Rayon
       return max(a, b);
     }
 
+    inline Vec_t Min(const Vec_t& a, const Vec_t& b)
+    {
+      using Tools::Min;
+      return {Min(a.x, b.x), Min(a.y, b.y), Min(a.z, b.z)};
+    }
+
+    inline Vec_t Max(const Vec_t& a, const Vec_t& b)
+    {
+      using Tools::Max;
+      return {Max(a.x, b.x), Max(a.y, b.y), Max(a.z, b.z)};
+    }
+
     inline Float_t Tan(Float_t a)
     {
       using std::tan;
@@ -161,9 +173,8 @@ namespace Rayon
                 ? (b)
                 : (a) > Globals::Epsilon && (b) < Globals::Epsilon
                     ? (a)
-                    : (a) < Globals::Epsilon && (b) < Globals::Epsilon
-                        ? Globals::Invalid
-                        : (a) < (b) ? (a) : (b));
+                    : (a) < Globals::Epsilon && (b) < Globals::Epsilon ? Globals::Invalid
+                                                                       : (a) < (b) ? (a) : (b));
     }
 
   }  // namespace Tools
@@ -186,7 +197,7 @@ namespace Rayon
  *	@code{.cpp}
  *  class Entity
  *  {
- *      RAYON_GENERATE_PROPERTY_DECLARATION(Entity, int, _color, Color)
+ *      RAYON_GENERATE_PROPERTY_DECLARATION(Entity, int, _color, Color);
  *  };
  *	@endcode
  *
@@ -225,7 +236,7 @@ public:                                                                       \
  *
  *	Here is an example :
  *	@code{.cpp}
- *      RAYON_GENERATE_PROPERTY_DEFINITION(Entity, int, _color, Color)
+ *      RAYON_GENERATE_PROPERTY_DEFINITION(Entity, int, _color, Color);
  *	@endcode
  *
  *  Will become :
@@ -269,43 +280,42 @@ public:                                                                       \
   void         set##prefix##Y(Float_t value);                               \
   void         set##prefix##Z(Float_t value);
 
-#define RAYON_GENERATE_Vec_t_GETTERS_SETTERS_DEFINITION(       \
-  className, varName, prefix)                                  \
-  void className::set##prefix(const Vec_t& vec)                \
-  {                                                            \
-    varName = vec;                                             \
-  }                                                            \
-  void className::set##prefix(Float_t x, Float_t y, Float_t z) \
-  {                                                            \
-    varName = std::move(Vec_t(x, y, z));                       \
-  }                                                            \
-  void className::set##prefix##X(Float_t value)                \
-  {                                                            \
-    varName.x = (value);                                       \
-  }                                                            \
-  void className::set##prefix##Y(Float_t value)                \
-  {                                                            \
-    varName.y = (value);                                       \
-  }                                                            \
-  void className::set##prefix##Z(Float_t value)                \
-  {                                                            \
-    varName.z = (value);                                       \
-  }                                                            \
-  const Vec_t& className::get##prefix() const                  \
-  {                                                            \
-    return (varName);                                          \
-  }                                                            \
-  Float_t className::get##prefix##X() const                    \
-  {                                                            \
-    return (varName.x);                                        \
-  }                                                            \
-  Float_t className::get##prefix##Y() const                    \
-  {                                                            \
-    return (varName.y);                                        \
-  }                                                            \
-  Float_t className::get##prefix##Z() const                    \
-  {                                                            \
-    return (varName.z);                                        \
+#define RAYON_GENERATE_Vec_t_GETTERS_SETTERS_DEFINITION(className, varName, prefix) \
+  void className::set##prefix(const Vec_t& vec)                                     \
+  {                                                                                 \
+    varName = vec;                                                                  \
+  }                                                                                 \
+  void className::set##prefix(Float_t x, Float_t y, Float_t z)                      \
+  {                                                                                 \
+    varName = std::move(Vec_t(x, y, z));                                            \
+  }                                                                                 \
+  void className::set##prefix##X(Float_t value)                                     \
+  {                                                                                 \
+    varName.x = (value);                                                            \
+  }                                                                                 \
+  void className::set##prefix##Y(Float_t value)                                     \
+  {                                                                                 \
+    varName.y = (value);                                                            \
+  }                                                                                 \
+  void className::set##prefix##Z(Float_t value)                                     \
+  {                                                                                 \
+    varName.z = (value);                                                            \
+  }                                                                                 \
+  const Vec_t& className::get##prefix() const                                       \
+  {                                                                                 \
+    return (varName);                                                               \
+  }                                                                                 \
+  Float_t className::get##prefix##X() const                                         \
+  {                                                                                 \
+    return (varName.x);                                                             \
+  }                                                                                 \
+  Float_t className::get##prefix##Y() const                                         \
+  {                                                                                 \
+    return (varName.y);                                                             \
+  }                                                                                 \
+  Float_t className::get##prefix##Z() const                                         \
+  {                                                                                 \
+    return (varName.z);                                                             \
   }
 
 #endif  // RAYON_TOOLS_HELPERS_HH

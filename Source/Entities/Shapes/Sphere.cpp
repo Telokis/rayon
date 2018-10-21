@@ -52,12 +52,20 @@ namespace Rayon
     return false;
   }
 
+  BoundingBox Sphere::getBBoxImpl() const
+  {
+    return BoundingBox{
+      {_pos.x - _radius, _pos.y - _radius, _pos.z - _radius},
+      {_pos.x + _radius, _pos.y + _radius, _pos.z + _radius},
+    };
+  }
+
   void Sphere::fillDataImpl(IntersectionData& data) const
   {
     data.normal = Tools::Normalize(data.point - _pos);
   }
 
-  RAYON_GENERATE_PROPERTY_DEFINITION(Sphere, Float_t, _radius, Radius)
+  RAYON_GENERATE_PROPERTY_DEFINITION(Sphere, Float_t, _radius, Radius);
 
   void Sphere::read(const Json::Value& root)
   {

@@ -1,6 +1,7 @@
 #ifndef RAYON_RTOBJECT_HH_
 #define RAYON_RTOBJECT_HH_
 
+#include "BoundingBox.hh"
 #include "Color.hh"
 #include "Entities/Entity.hh"
 #include "IntersectionData.hh"
@@ -31,6 +32,7 @@ namespace Rayon
     virtual void        preprocess()                                        = 0;
     virtual RTShape*    clone() const                                       = 0;
     virtual void        fillData(IntersectionData& data) const              = 0;
+    virtual BoundingBox getBBox() const                                     = 0;
     virtual const char* name() const                                        = 0;
   };
 }  // namespace Rayon

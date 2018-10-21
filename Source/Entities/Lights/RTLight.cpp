@@ -27,35 +27,37 @@ namespace Rayon
   {
   }
 
-  bool RTLight::doesShadow(const Vec_t& pos,
-                           const Scene& scene,
-                           const Vec_t& point,
-                           RTShape*     obj,
-                           Tools::Stat* stat) const
+  Float_t RTLight::shadowCoef(const Vec_t& pos,
+                              const Scene& scene,
+                              const Vec_t& point,
+                              RTShape*     obj,
+                              Tools::Stat* stat) const
   {
     Vec_t            light_vec(pos - point);
     Vec_t            tmp_pos(point + light_vec * Globals::Epsilon);
     IntersectionData data;
+    Float_t          coef = 1.0;
 
-    data.k = Globals::Invalid;
+    data.stat = stat;
     Ray shadowRay(RayType::Shadow, tmp_pos, light_vec);
 
     stat->rayCounts[RayType::Shadow] += 1;
 
-    for (const auto& object : scene.objects())
-    {
-      if (obj != object->getShape())
-      {
-        stat->intersectionsChecked += 1;
-
-        if (object->inter(shadowRay, data) && data.k < 1.0)
+    scene.iterateIfIntersect(
+      shadowRay, data, [obj, &coef](const Object* object, IntersectionData& data) {
+        if (obj != object->getShape())
         {
-          stat->hits += 1;
-          return true;
+          if (data.k < 1.0)
+          {
+            data.stat->hits += 1;
+            coef *= object->getMaterial().getTransparency();
+          }
         }
-      }
-    }
-    return false;
+
+        return !Tools::IsZero(coef);
+      });
+
+    return coef;
   }
 
   Color RTLight::getSpecular(const Vec_t&            lightVec,
@@ -73,7 +75,7 @@ namespace Rayon
     return 0;
   }
 
-  RAYON_GENERATE_PROPERTY_DEFINITION(RTLight, Color, _color, Color)
+  RAYON_GENERATE_PROPERTY_DEFINITION(RTLight, Color, _color, Color);
 
   void RTLight::read(const Json::Value& root)
   {

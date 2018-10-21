@@ -36,11 +36,11 @@ namespace Rayon
      * @return      True if an opaque object is in the way.
      *              False if no opaque object were found.
      */
-    bool doesShadow(const Vec_t& pos,
-                    const Scene& scene,
-                    const Vec_t& point,
-                    RTShape*     obj,
-                    Tools::Stat* stat) const;
+    Float_t shadowCoef(const Vec_t& pos,
+                       const Scene& scene,
+                       const Vec_t& point,
+                       RTShape*     obj,
+                       Tools::Stat* stat) const;
 
     Color getSpecular(const Vec_t&            lightVec,
                       const Scene&            scene,
@@ -60,7 +60,7 @@ namespace Rayon
                               Color&                  specular) const = 0;
     virtual const char* name() const                 = 0;
 
-    RAYON_GENERATE_PROPERTY_DECLARATION(RTLight, Color, _color, Color)
+    RAYON_GENERATE_PROPERTY_DECLARATION(RTLight, Color, _color, Color);
   };
 }  // namespace Rayon
 

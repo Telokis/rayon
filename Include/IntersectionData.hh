@@ -3,6 +3,7 @@
 #ifndef RAYON_INTERSECTIONDATA_HH_
 #define RAYON_INTERSECTIONDATA_HH_
 
+#include "Tools/Globals.hh"
 #include "Tools/Types.hh"
 
 namespace Rayon
@@ -22,7 +23,7 @@ namespace Rayon
       , point(0)
       , normal(0)
       , ray(nullptr)
-      , k(0)
+      , k(Globals::Invalid)
       , obj(nullptr)
       , isInside(false)
       , stat(nullptr)

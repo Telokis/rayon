@@ -1,6 +1,8 @@
 #ifndef RAYON_SCENE_HH_
 #define RAYON_SCENE_HH_
 
+#include <functional>
+#include <memory>
 #include <vector>
 
 #include "CubeMap.hh"
@@ -11,6 +13,7 @@ namespace Rayon
   class RTLight;
   class Object;
   struct IntersectionData;
+  class KDTree;
 }  // namespace Rayon
 
 namespace Rayon
@@ -24,10 +27,8 @@ namespace Rayon
    */
   class Scene
   {
-    typedef std::vector<Object*>
-      ObjectsContainer; /**< Typedef for the @ref Object container */
-    typedef std::vector<RTLight*>
-      LightsContainer; /**< Typedef for the @ref RTLight container */
+    typedef std::vector<Object*>  ObjectsContainer; /**< Typedef for the @ref Object container */
+    typedef std::vector<RTLight*> LightsContainer;  /**< Typedef for the @ref RTLight container */
 
   public:
     /**
@@ -114,6 +115,10 @@ namespace Rayon
      */
     Object* getNearest(const Ray& ray, IntersectionData& data) const;
 
+    bool iterateIfIntersect(const Ray&                                            ray,
+                            IntersectionData&                                     data,
+                            std::function<bool(const Object*, IntersectionData&)> func) const;
+
   public:
     /**
      * @brief           Will set the Scene's @ref Eye to @a eye.
@@ -184,12 +189,15 @@ namespace Rayon
     void preprocess();
 
   private:
-    ObjectsContainer _objects; /**< Collection of @ref Object * */
-    LightsContainer  _lights;  /**< Collection of @ref RTLight * */
-    Eye              _eye;     /**< @ref Eye of the Scene */
-    CubeMap          _cubemap; /**< @ref CubeMap of the Scene */
+    ObjectsContainer
+                     _infiniteObjects; /**< Collection of @ref Object * which have an infinite bbox */
+    ObjectsContainer _objects;         /**< Collection of @ref Object * */
+    LightsContainer  _lights;          /**< Collection of @ref RTLight * */
+    Eye              _eye;             /**< @ref Eye of the Scene */
+    CubeMap          _cubemap;         /**< @ref CubeMap of the Scene */
+    KDTree*          _kdtree;          /**< KD-Tree of the Scene */
 
-    RAYON_GENERATE_PROPERTY_DECLARATION(Scene, Float_t, _ambient, Ambient)
+    RAYON_GENERATE_PROPERTY_DECLARATION(Scene, Float_t, _ambient, Ambient);
   };
 }  // namespace Rayon
 

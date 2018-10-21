@@ -31,10 +31,13 @@ namespace Rayon
                        const IntersectionData& data,
                        Color&                  specular) const
   {
+    Float_t coef;
     Float_t cos_a;
     Vec_t   light_vec;
 
-    if (doesShadow(_pos, scene, data.point, data.obj->getShape(), data.stat))
+    coef = shadowCoef(_pos, scene, data.point, data.obj->getShape(), data.stat);
+
+    if (Tools::IsZero(coef))
       return 0;
 
     cos_a     = 0;
@@ -46,10 +49,10 @@ namespace Rayon
       return 0;
 
     specular += getSpecular(light_vec, scene, _color, data);
-    return color * cos_a * _power;
+    return color * cos_a * _power * coef;
   }
 
-  RAYON_GENERATE_PROPERTY_DEFINITION(Sun, Float_t, _power, Power)
+  RAYON_GENERATE_PROPERTY_DEFINITION(Sun, Float_t, _power, Power);
 
   void Sun::read(const Json::Value& root)
   {
