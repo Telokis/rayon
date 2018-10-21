@@ -1,4 +1,4 @@
-#include "Helpers/getNearestInVector.hh"
+#include "Helpers/inVector.hh"
 
 namespace Rayon
 {
@@ -31,6 +31,23 @@ namespace Rayon
       data.obj = result;
 
       return result;
+    }
+
+    bool iterateIfIntersect(const Ray&                                            ray,
+                            IntersectionData&                                     data,
+                            const std::vector<Object*>&                           objects,
+                            std::function<bool(const Object*, IntersectionData&)> func)
+    {
+      for (Object* object : objects)
+      {
+        ++(data.stat->intersectionsChecked);
+
+        if (object->inter(ray, data))
+          if (!func(object, data))
+            return false;
+      }
+
+      return true;
     }
   }  // namespace Helpers
 }  // namespace Rayon

@@ -3,6 +3,7 @@
 #ifndef RAYON_TOOLS_KDTREE_HH_
 #define RAYON_TOOLS_KDTREE_HH_
 
+#include <functional>
 #include <memory>
 
 #include "BoundingBox.hh"
@@ -21,6 +22,9 @@ namespace Rayon
 
   public:
     Object* getNearest(const Ray& ray, IntersectionData& data) const;
+    bool    iterateIfIntersect(const Ray&                                            ray,
+                               IntersectionData&                                     data,
+                               std::function<bool(const Object*, IntersectionData&)> func) const;
 
   public:
     std::vector<Object*> objects;

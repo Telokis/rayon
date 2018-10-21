@@ -3,7 +3,7 @@
 #include <algorithm>
 
 #include "Entities/Shapes/RTShape.hh"
-#include "Helpers/getNearestInVector.hh"
+#include "Helpers/inVector.hh"
 #include "Object.hh"
 
 namespace Rayon
@@ -18,39 +18,60 @@ namespace Rayon
     delete right;
   }
 
+  bool KDTree::iterateIfIntersect(const Ray&                                            ray,
+                                  IntersectionData&                                     data,
+                                  std::function<bool(const Object*, IntersectionData&)> func) const
+  {
+    ++data.stat->treeBranchesExplored;
+
+    if (left && right)
+    {
+      Float_t leftDist;
+      Float_t rightDist;
+
+      leftDist  = left->box.intersectRay(ray);
+      rightDist = right->box.intersectRay(ray);
+
+      if (leftDist != Globals::Invalid)
+        if (!left->iterateIfIntersect(ray, data, func))
+          return false;
+
+      if (rightDist != Globals::Invalid)
+        if (!right->iterateIfIntersect(ray, data, func))
+          return false;
+    }
+    else
+    {
+      return Helpers::iterateIfIntersect(ray, data, objects, func);
+    }
+
+    return true;
+  }
+
   Object* KDTree::getNearest(const Ray& ray, IntersectionData& data) const
   {
     ++data.stat->treeBranchesExplored;
 
     if (left && right)
     {
-      Float_t          closestDist;
-      Float_t          farthestDist;
+      Float_t          leftDist;
+      Float_t          rightDist;
       IntersectionData closestMatch;
-      KDTree*          close;
-      KDTree*          far;
+      IntersectionData farthestMatch;
 
-      closestMatch.stat = data.stat;
+      closestMatch.stat  = data.stat;
+      farthestMatch.stat = data.stat;
 
-      closestDist  = left->box.intersectRay(ray);
-      farthestDist = right->box.intersectRay(ray);
+      leftDist  = left->box.intersectRay(ray);
+      rightDist = right->box.intersectRay(ray);
 
-      close = left;
-      far   = right;
+      if (leftDist != Globals::Invalid)
+        left->getNearest(ray, closestMatch);
 
-      if (farthestDist < closestDist)
-      {
-        std::swap(close, far);
-        std::swap(closestDist, farthestDist);
-      }
+      if (rightDist != Globals::Invalid)
+        right->getNearest(ray, farthestMatch);
 
-      if (closestDist != Globals::Invalid)
-        close->getNearest(ray, closestMatch);
-
-      if (closestMatch.obj == nullptr && farthestDist != Globals::Invalid)
-        far->getNearest(ray, closestMatch);
-
-      data = closestMatch;
+      data = closestMatch.k < farthestMatch.k ? closestMatch : farthestMatch;
     }
     else
     {

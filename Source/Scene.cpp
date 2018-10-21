@@ -3,7 +3,7 @@
 #include <iostream>
 
 #include "Entities/Lights/RTLight.hh"
-#include "Helpers/getNearestInVector.hh"
+#include "Helpers/inVector.hh"
 #include "IntersectionData.hh"
 #include "KDTree.hh"
 #include "Object.hh"
@@ -97,7 +97,6 @@ namespace Rayon
   {
     IntersectionData tmp;
 
-    data.k   = Globals::Invalid;
     tmp.stat = data.stat;
 
     tmp.k = _kdtree->box.intersectRay(ray);
@@ -111,6 +110,19 @@ namespace Rayon
       data = tmp;
 
     return data.obj;
+  }
+
+  bool Scene::iterateIfIntersect(const Ray&                                            ray,
+                                 IntersectionData&                                     data,
+                                 std::function<bool(const Object*, IntersectionData&)> func) const
+  {
+    data.k = _kdtree->box.intersectRay(ray);
+
+    if (data.k != Globals::Invalid)
+      if (!_kdtree->iterateIfIntersect(ray, data, func))
+        return false;
+
+    return Helpers::iterateIfIntersect(ray, data, _infiniteObjects, func);
   }
 
   void Scene::setEye(const Eye& eye)

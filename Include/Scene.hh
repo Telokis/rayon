@@ -1,6 +1,7 @@
 #ifndef RAYON_SCENE_HH_
 #define RAYON_SCENE_HH_
 
+#include <functional>
 #include <memory>
 #include <vector>
 
@@ -113,6 +114,10 @@ namespace Rayon
      *              nullptr if no @ref Object is in the Scene.
      */
     Object* getNearest(const Ray& ray, IntersectionData& data) const;
+
+    bool iterateIfIntersect(const Ray&                                            ray,
+                            IntersectionData&                                     data,
+                            std::function<bool(const Object*, IntersectionData&)> func) const;
 
   public:
     /**

@@ -38,29 +38,24 @@ namespace Rayon
     IntersectionData data;
     Float_t          coef = 1.0;
 
-    data.k = Globals::Invalid;
+    data.stat = stat;
     Ray shadowRay(RayType::Shadow, tmp_pos, light_vec);
 
     stat->rayCounts[RayType::Shadow] += 1;
 
-    for (const auto& object : scene.objects())
-    {
-      if (obj != object->getShape())
-      {
-        stat->intersectionsChecked += 1;
-
-        if (object->inter(shadowRay, data) && data.k < 1.0)
+    scene.iterateIfIntersect(
+      shadowRay, data, [obj, &coef](const Object* object, IntersectionData& data) {
+        if (obj != object->getShape())
         {
-          stat->hits += 1;
-          coef *= object->getMaterial().getTransparency();
+          if (data.k < 1.0)
+          {
+            data.stat->hits += 1;
+            coef *= object->getMaterial().getTransparency();
+          }
         }
-      }
 
-      if (Tools::IsZero(coef))
-      {
-        return 0.0;
-      }
-    }
+        return !Tools::IsZero(coef);
+      });
 
     return coef;
   }
