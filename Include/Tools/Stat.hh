@@ -23,12 +23,14 @@ namespace Rayon
                     {RayType::Primary, 0},
                     {RayType::Reflected, 0},
                     {RayType::Transparency, 0}}
+        , treeBranchesExplored(0)
       {
       }
 
       std::chrono::duration<double> elapsed;
       uint64                        intersectionsChecked;
       uint64                        hits;
+      uint64                        treeBranchesExplored;
 
       std::map<RayType, uint64> rayCounts;
     };

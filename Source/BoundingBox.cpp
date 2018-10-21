@@ -92,6 +92,20 @@ namespace Rayon
     _max = Tools::Max(_max, bbox._max);
   }
 
+  uint32 BoundingBox::biggestAxis() const
+  {
+    auto size = getSize();
+    auto max  = Tools::Max(size.x, Tools::Max(size.y, size.z));
+
+    if (max == size.x)
+      return 0;
+
+    if (max == size.y)
+      return 1;
+
+    return 2;
+  }
+
   bool BoundingBox::isInfinite() const
   {
     return _min == BoundingBox::Infinite._min && _max == BoundingBox::Infinite._max;

@@ -165,11 +165,10 @@ namespace Rayon
   {
   }
 
-  void Worker::operator()(uint32 width, uint32 height, Scene* scene_)
+  void Worker::operator()(uint32 width, uint32 height, const Scene* scene_)
   {
-    auto  start = std::chrono::steady_clock::now();
-    Scene scene = *scene_;
-    Ray   cameraRay(RayType::Primary, scene.eye().getPos(), Vec_t());
+    auto start = std::chrono::steady_clock::now();
+    Ray  cameraRay(RayType::Primary, scene_->eye().getPos(), Vec_t());
 
     Float_t fovX = Tools::DegToRad(55.0);
     Float_t fovY = (fovX * height) / width;
@@ -193,10 +192,10 @@ namespace Rayon
         };
 
         cameraRay.setDirection(tmp);
-        cameraRay.setDirection(scene.eye().indirectRotation(tmp));
+        cameraRay.setDirection(scene_->eye().indirectRotation(tmp));
         cameraRay.normalize();
 
-        auto color        = inter(scene, cameraRay, 0, _stat);
+        auto color        = inter(*scene_, cameraRay, 0, _stat);
         _img->pixel(x, y) = color;
       }
     }

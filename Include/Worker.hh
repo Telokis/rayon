@@ -15,7 +15,7 @@ namespace Rayon
   {
   public:
     Worker(RawImage* img, uint32 xStart, uint32 xStop, Tools::Stat* stat);
-    void operator()(uint32 width, uint32 height, Scene* scene_);
+    void operator()(uint32 width, uint32 height, const Scene* scene_);
 
   public:  // SLOTS
     void pause();

@@ -38,6 +38,7 @@ namespace Rayon
     {
       auto&& stat = stats.at(i);
 
+      total.treeBranchesExplored += stat->treeBranchesExplored;
       total.intersectionsChecked += stat->intersectionsChecked;
       total.hits += stat->hits;
       total.rayCounts.at(RayType::Primary) += stat->rayCounts.at(RayType::Primary);
@@ -46,10 +47,11 @@ namespace Rayon
       total.rayCounts.at(RayType::Transparency) += stat->rayCounts.at(RayType::Transparency);
 
       std::cout << " Thread #" << (i + 1) << ":\n";
+      std::cout << "  Tree branches explored: " << formatNumber(stat->treeBranchesExplored) << "\n";
       std::cout << "  Intersections checked: " << formatNumber(stat->intersectionsChecked) << "\n";
       std::cout << "  Hits: " << formatNumber(stat->hits) << " ("
-                << (stat->intersectionsChecked / static_cast<double>(stat->hits))
-                << " checks per hit)"
+                << (stat->hits / static_cast<double>(stat->intersectionsChecked))
+                << " hits per check)"
                 << "\n";
       std::cout << "  Primary rays: " << formatNumber(stat->rayCounts.at(RayType::Primary)) << "\n";
       std::cout << "  Shadow rays: " << formatNumber(stat->rayCounts.at(RayType::Shadow)) << "\n";
@@ -61,10 +63,11 @@ namespace Rayon
     }
 
     std::cout << "Total:\n";
+    std::cout << "  Tree branches explored: " << formatNumber(total.treeBranchesExplored) << "\n";
     std::cout << "  Intersections checked: " << formatNumber(total.intersectionsChecked) << "\n";
     std::cout << "  Hits: " << formatNumber(total.hits) << " ("
-              << (total.intersectionsChecked / static_cast<double>(total.hits))
-              << " checks per hit)"
+              << (total.hits / static_cast<double>(total.intersectionsChecked))
+              << " hits per check)"
               << "\n";
     std::cout << "  Primary rays: " << formatNumber(total.rayCounts.at(RayType::Primary)) << "\n";
     std::cout << "  Shadow rays: " << formatNumber(total.rayCounts.at(RayType::Shadow)) << "\n";
@@ -97,7 +100,7 @@ namespace Rayon
     auto start = std::chrono::steady_clock::now();
     _scene.preprocess();
     auto end = std::chrono::steady_clock::now();
-    std::cout << "Preprocessing took " << Duration_t(end - start).count() << "s\n";
+    std::cout << "Preprocessing took " << Duration_t(end - start).count() << "s" << std::endl;
 
     uint8 jn = config().getThreadCount();
 

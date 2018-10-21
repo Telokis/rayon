@@ -14,9 +14,13 @@ namespace Rayon
   {
   public:
     KDTree();
+    ~KDTree();
 
   public:
-    using KDTreePtr = std::unique_ptr<KDTree>;
+    using KDTreePtr = KDTree*;
+
+  public:
+    Object* getNearest(const Ray& ray, IntersectionData& data) const;
 
   public:
     std::vector<Object*> objects;

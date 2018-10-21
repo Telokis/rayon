@@ -1,6 +1,7 @@
 #ifndef RAYON_SCENE_HH_
 #define RAYON_SCENE_HH_
 
+#include <memory>
 #include <vector>
 
 #include "CubeMap.hh"
@@ -11,6 +12,7 @@ namespace Rayon
   class RTLight;
   class Object;
   struct IntersectionData;
+  class KDTree;
 }  // namespace Rayon
 
 namespace Rayon
@@ -182,10 +184,13 @@ namespace Rayon
     void preprocess();
 
   private:
-    ObjectsContainer _objects; /**< Collection of @ref Object * */
-    LightsContainer  _lights;  /**< Collection of @ref RTLight * */
-    Eye              _eye;     /**< @ref Eye of the Scene */
-    CubeMap          _cubemap; /**< @ref CubeMap of the Scene */
+    ObjectsContainer
+                     _infiniteObjects; /**< Collection of @ref Object * which have an infinite bbox */
+    ObjectsContainer _objects;         /**< Collection of @ref Object * */
+    LightsContainer  _lights;          /**< Collection of @ref RTLight * */
+    Eye              _eye;             /**< @ref Eye of the Scene */
+    CubeMap          _cubemap;         /**< @ref CubeMap of the Scene */
+    KDTree*          _kdtree;          /**< KD-Tree of the Scene */
 
     RAYON_GENERATE_PROPERTY_DECLARATION(Scene, Float_t, _ambient, Ambient);
   };

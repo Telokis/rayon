@@ -3,7 +3,9 @@
 #include <iostream>
 
 #include "Entities/Lights/RTLight.hh"
+#include "Helpers/getNearestInVector.hh"
 #include "IntersectionData.hh"
+#include "KDTree.hh"
 #include "Object.hh"
 #include "Tools/Stat.hh"
 
@@ -66,11 +68,14 @@ namespace Rayon
       delete item;
       item = nullptr;
     }
+
     for (auto& item : _lights)
     {
       delete item;
       item = nullptr;
     }
+
+    delete _kdtree;
   }
 
   void Scene::addObject(const Object& object)
@@ -90,28 +95,22 @@ namespace Rayon
 
   Object* Scene::getNearest(const Ray& ray, IntersectionData& data) const
   {
-    Object*          result = nullptr;
     IntersectionData tmp;
 
-    data.k = Globals::Invalid;
-    tmp.k  = Globals::Invalid;
+    data.k   = Globals::Invalid;
+    tmp.stat = data.stat;
 
-    for (Object* item : _objects)
-    {
-      ++(data.stat->intersectionsChecked);
-      bool res = item->inter(ray, data);
+    tmp.k = _kdtree->box.intersectRay(ray);
 
-      if (res && data.k < tmp.k)
-      {
-        tmp    = data;
-        result = item;
-      }
-      else
-        data.k = tmp.k;
-    }
+    if (tmp.k != Globals::Invalid)
+      _kdtree->getNearest(ray, tmp);
 
-    data = tmp;
-    return result;
+    Helpers::getNearestInVector(ray, data, _infiniteObjects);
+
+    if (tmp.k < data.k)
+      data = tmp;
+
+    return data.obj;
   }
 
   void Scene::setEye(const Eye& eye)
@@ -162,17 +161,24 @@ namespace Rayon
 
   void Scene::preprocess()
   {
-    for (Object* item : _objects)
+    for (Object* object : _objects)
     {
-      item->getShape()->computeRotation();
-      item->getShape()->preprocess();
+      object->getShape()->computeRotation();
+      object->getShape()->preprocess();
+
+      if (object->getShape()->getBBox().isInfinite())
+        _infiniteObjects.push_back(object);
     }
-    for (auto& item : _lights)
+
+    for (auto& light : _lights)
     {
-      item->computeRotation();
-      item->preprocess();
+      light->computeRotation();
+      light->preprocess();
     }
+
     _eye.computeRotation();
+
+    _kdtree = build(_objects, 0);
   }
 
   RAYON_GENERATE_PROPERTY_DEFINITION(Scene, Float_t, _ambient, Ambient);

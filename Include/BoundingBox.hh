@@ -25,7 +25,8 @@ namespace Rayon
     bool        intersectBox(const BoundingBox& bbox);
     void        expand(const BoundingBox& bbox);
 
-    bool isInfinite() const;
+    bool   isInfinite() const;
+    uint32 biggestAxis() const;
 
   public:
     RAYON_GENERATE_Vec_t_GETTERS_SETTERS_DECLARATION(BoundingBox, Min);
