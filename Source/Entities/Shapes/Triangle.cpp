@@ -50,7 +50,17 @@ namespace Rayon
 
   BoundingBox Triangle::getBBoxImpl() const
   {
-    return BoundingBox::Infinite;
+    Float_t xMin = Tools::Min(_v[0].x, Tools::Min(_v[1].x, _v[2].x));
+    Float_t yMin = Tools::Min(_v[0].y, Tools::Min(_v[1].y, _v[2].y));
+    Float_t zMin = Tools::Min(_v[0].z, Tools::Min(_v[1].z, _v[2].z));
+    Float_t xMax = Tools::Max(_v[0].x, Tools::Max(_v[1].x, _v[2].x));
+    Float_t yMax = Tools::Max(_v[0].y, Tools::Max(_v[1].y, _v[2].y));
+    Float_t zMax = Tools::Max(_v[0].z, Tools::Max(_v[1].z, _v[2].z));
+
+    return BoundingBox{
+      {xMin, yMin, zMin},
+      {xMax, yMax, zMax},
+    };
   }
 
   void Triangle::fillDataImpl(IntersectionData& data) const

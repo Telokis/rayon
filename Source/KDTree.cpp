@@ -100,7 +100,7 @@ namespace Rayon
       }
     }
 
-    if (objects.size() <= 10)
+    if (objects.size() <= 10 || depth >= 100)
       return node;
 
     axis = node->box.biggestAxis();

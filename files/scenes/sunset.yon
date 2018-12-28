@@ -82,6 +82,64 @@
             "width": 1
         },
         {
+            "depth": 1,
+            "height": 1,
+            "material": {
+                "ambient": 0,
+                "color": {
+                    "blue": 139,
+                    "green": 139,
+                    "red": 0
+                },
+                "glossiness": 0,
+                "reflexion": 0,
+                "refraction": 1,
+                "shininess": 0,
+                "transparency": 0
+            },
+            "position": {
+                "x": -1.5,
+                "y": 2.7,
+                "z": 2.5
+            },
+            "rotation": {
+                "x": 0,
+                "y": 225,
+                "z": 0
+            },
+            "type": "Box",
+            "width": 1
+        },
+        {
+            "depth": 1,
+            "height": 1,
+            "material": {
+                "ambient": 0,
+                "color": {
+                    "blue": 139,
+                    "green": 139,
+                    "red": 0
+                },
+                "glossiness": 0,
+                "reflexion": 0,
+                "refraction": 1,
+                "shininess": 0,
+                "transparency": 0
+            },
+            "position": {
+                "x": 1.5,
+                "y": 2.7,
+                "z": 2.5
+            },
+            "rotation": {
+                "x": 0,
+                "y": -45,
+                "z": 0
+            },
+            "type": "Box",
+            "width": 1
+        },
+        {
             "material": {
                 "ambient": -1,
                 "color": "deeppink4",

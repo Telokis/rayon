@@ -2,6 +2,9 @@
 
 #include <Json.h>
 
+#include "Entities/Shapes/Triangle.hh"
+#include "KDTree.hh"
+#include "Object.hh"
 #include "SceneParse.hh"
 #include "SolverSecond.hh"
 
@@ -21,6 +24,11 @@ namespace Rayon
 
   Mobius::~Mobius()
   {
+    for (Object*& obj : _facets)
+      delete obj;
+    _facets.clear();
+
+    delete _kdtree;
   }
 
   bool Mobius::interImpl(const Ray& ray, IntersectionData& data) const
@@ -29,7 +37,8 @@ namespace Rayon
     Vec_t            tmp_dir;
     bool             found = false;
     IntersectionData realData;
-    realData.k = Globals::Invalid;
+    realData.k    = Globals::Invalid;
+    realData.stat = data.stat;
 
     tmp_pos = ray.getOrigin() - _pos;
     tmp_pos = indirectRotation(tmp_pos);
@@ -39,39 +48,36 @@ namespace Rayon
     transformed.setOrigin(tmp_pos);
     transformed.setDirection(tmp_dir);
 
-    size_t i = 0;
-    for (const Triangle& tri : _facets)
+    auto obj = _kdtree->getNearest(ray, realData);
+
+    if (obj)
     {
-      if (tri.inter(transformed, data))
-      {
-        if (data.k < realData.k && data.k > Globals::Epsilon)
-        {
-          found    = true;
-          realData = data;
-          _last    = i;
-        }
-      }
-      ++i;
+      _last = obj;
+      data  = realData;
+      return true;
     }
-    data = realData;
-    return found;
+
+    return false;
   }
 
   BoundingBox Mobius::getBBoxImpl() const
   {
-    return BoundingBox::Infinite;
+    return _kdtree->box;
   }
 
   void Mobius::fillDataImpl(IntersectionData& data) const
   {
-    _facets.at(_last).fillData(data);
+    _last->getShape()->fillData(data);
     data.normal = Tools::Normalize(directRotation(data.normal));
   }
 
   void Mobius::preprocessImpl()
   {
-    Float_t step = .1;
+    Float_t step = .5;
     Float_t halW = _width / 2;
+
+    for (Object*& obj : _facets)
+      delete obj;
 
     _facets.clear();
 
@@ -106,12 +112,19 @@ namespace Rayon
         Vec_t p2 = lambda(v + step, t);
         Vec_t p3 = lambda(v, t + step);
         Vec_t p4 = lambda(v + step, t + step);
-        _facets.emplace_back(p1, p2, p3);
-        _facets.back().preprocess();
-        _facets.emplace_back(p3, p2, p4);
-        _facets.back().preprocess();
+
+        Triangle* tri1 = new Triangle{p1, p2, p3};
+        Triangle* tri2 = new Triangle{p3, p2, p4};
+
+        tri1->preprocess();
+        tri2->preprocess();
+
+        _facets.emplace_back(new Object(tri1));
+        _facets.emplace_back(new Object(tri2));
       }
     }
+
+    _kdtree = build(_facets, 0);
   }
 
   void Mobius::read(const Json::Value& root)

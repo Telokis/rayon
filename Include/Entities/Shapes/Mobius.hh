@@ -3,7 +3,14 @@
 
 #include <vector>
 
-#include "Entities/Shapes/Triangle.hh"
+#include "Entities/Shapes/Shape.hh"
+
+namespace Rayon
+{
+  class KDTree;
+  class RTShape;
+  class Object;
+}  // namespace Rayon
 
 namespace Rayon
 {
@@ -23,8 +30,9 @@ namespace Rayon
     void write(Json::Value& root) const override;
 
   private:
-    std::vector<Triangle> _facets;
-    mutable std::size_t   _last = -1;
+    std::vector<Object*> _facets;
+    mutable Object*      _last   = nullptr;
+    KDTree*              _kdtree = nullptr;
 
   public:
     static const constexpr auto ShapeName = "Mobius";

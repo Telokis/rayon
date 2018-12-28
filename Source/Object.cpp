@@ -9,7 +9,7 @@
 
 namespace Rayon
 {
-  Object::Object() : _shape(nullptr)
+  Object::Object(RTShape* shape) : _shape(shape)
   {
   }
 

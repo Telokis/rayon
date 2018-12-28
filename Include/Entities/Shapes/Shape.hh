@@ -1,5 +1,5 @@
-#ifndef RAYON_OBJECT_HH_
-#define RAYON_OBJECT_HH_
+#ifndef RAYON_SHAPE_HH_
+#define RAYON_SHAPE_HH_
 
 #include "Entities/Shapes/RTShape.hh"
 
@@ -64,4 +64,4 @@ namespace Rayon
 
 }  // namespace Rayon
 
-#endif  // RTOBJECT_H
+#endif  // RAYON_SHAPE_HH_

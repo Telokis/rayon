@@ -16,7 +16,7 @@ namespace Rayon
   class Object
   {
   public:
-    Object();
+    Object(RTShape* = nullptr);
     ~Object();
     Object(const Object& object);
     Object& operator=(const Object& object);
