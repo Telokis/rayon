@@ -72,17 +72,17 @@ namespace Rayon
     data.localPoint = indirectRotation(data.localPoint);
 
     if (Tools::IsEqual(data.localPoint.x, _min.x))
-      data.normal = _norm[0];
-    else if (Tools::IsEqual(data.localPoint.x, _max.x))
       data.normal = -_norm[0];
+    else if (Tools::IsEqual(data.localPoint.x, _max.x))
+      data.normal = _norm[0];
     else if (Tools::IsEqual(data.localPoint.y, _min.y))
-      data.normal = _norm[1];
-    else if (Tools::IsEqual(data.localPoint.y, _max.y))
       data.normal = -_norm[1];
+    else if (Tools::IsEqual(data.localPoint.y, _max.y))
+      data.normal = _norm[1];
     else if (Tools::IsEqual(data.localPoint.z, _min.z))
-      data.normal = _norm[2];
-    else if (Tools::IsEqual(data.localPoint.z, _max.z))
       data.normal = -_norm[2];
+    else if (Tools::IsEqual(data.localPoint.z, _max.z))
+      data.normal = _norm[2];
   }
 
   void Box::preprocessImpl()
