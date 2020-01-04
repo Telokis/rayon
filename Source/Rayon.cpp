@@ -15,12 +15,30 @@
 #include "Version.hh"
 #include "Worker.hh"
 
+struct dotted : std::numpunct<char>
+{
+  char do_thousands_sep() const
+  {
+    return ' ';
+  }
+
+  std::string do_grouping() const
+  {
+    return "\3";
+  }
+
+  static void imbue(std::ostream& os)
+  {
+    os.imbue(std::locale(os.getloc(), new dotted));
+  }
+};
+
 template <class T>
 std::string formatNumber(T value)
 {
   std::stringstream ss;
-  ss.imbue(std::locale(""));
-  ss << std::fixed << value;
+  dotted::imbue(ss);
+  ss << std::setprecision(3) << std::fixed << value;
   return ss.str();
 }
 
@@ -50,7 +68,7 @@ namespace Rayon
       std::cout << "  Tree branches explored: " << formatNumber(stat->treeBranchesExplored) << "\n";
       std::cout << "  Intersections checked: " << formatNumber(stat->intersectionsChecked) << "\n";
       std::cout << "  Hits: " << formatNumber(stat->hits) << " ("
-                << (stat->hits / static_cast<double>(stat->intersectionsChecked))
+                << formatNumber(stat->hits / static_cast<double>(stat->intersectionsChecked))
                 << " hits per check)"
                 << "\n";
       std::cout << "  Primary rays: " << formatNumber(stat->rayCounts.at(RayType::Primary)) << "\n";
@@ -59,14 +77,14 @@ namespace Rayon
                 << "\n";
       std::cout << "  Transparency rays: "
                 << formatNumber(stat->rayCounts.at(RayType::Transparency)) << "\n";
-      std::cout << "  Thread worked for: " << stat->elapsed.count() << " seconds\n\n";
+      std::cout << "  Thread worked for: " << formatNumber(stat->elapsed.count()) << " seconds\n\n";
     }
 
     std::cout << "Total:\n";
     std::cout << "  Tree branches explored: " << formatNumber(total.treeBranchesExplored) << "\n";
     std::cout << "  Intersections checked: " << formatNumber(total.intersectionsChecked) << "\n";
     std::cout << "  Hits: " << formatNumber(total.hits) << " ("
-              << (total.hits / static_cast<double>(total.intersectionsChecked))
+              << formatNumber(total.hits / static_cast<double>(total.intersectionsChecked))
               << " hits per check)"
               << "\n";
     std::cout << "  Primary rays: " << formatNumber(total.rayCounts.at(RayType::Primary)) << "\n";
@@ -76,8 +94,8 @@ namespace Rayon
     std::cout << "  Transparency rays: " << formatNumber(total.rayCounts.at(RayType::Transparency))
               << "\n\n";
 
-    std::cout << "Rendered " << formatNumber(pixels) << " pixels in " << overallDuration.count()
-              << "s.\n";
+    std::cout << "Rendered " << formatNumber(pixels) << " pixels in "
+              << formatNumber(overallDuration.count()) << "s.\n";
   }
 
   Rayon::Rayon(int ac, char** av)
