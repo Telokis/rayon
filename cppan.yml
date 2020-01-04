@@ -5,6 +5,7 @@ local_settings:
   local_build: true
   build_dir: ./.cppan/build
   build:
+    generator: Visual Studio 15 2017
     configuration: Debug
 
 files:
