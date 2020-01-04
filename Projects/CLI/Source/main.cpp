@@ -1,10 +1,3 @@
-#define _CRT_SECURE_NO_WARNINGS 1
-#define STB_IMAGE_IMPLEMENTATION
-#include "Libraries/stb_image.hh"
-#define STB_IMAGE_WRITE_IMPLEMENTATION
-#include "Libraries/stb_image_write.hh"
-#undef _CRT_SECURE_NO_WARNINGS
-
 #include <iostream>
 
 #include "CLIOptions.hh"

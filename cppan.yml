@@ -12,6 +12,9 @@ root_project: rayon
 
 projects:
   engine:
+    type: lib
+    static_only: true
+
     files:
       - Projects/Engine/Source/.*
       - Projects/Engine/Include/.*
@@ -20,14 +23,33 @@ projects:
       - Dependencies/json/Json-forwards.h
 
     include_directories:
-      private:
+      public:
         - Projects/Engine/Include/
         - Dependencies/json
         - Dependencies/glm/include
 
     dependencies:
+      - pvt.cppan.demo.boost.filesystem: 1.63.0
+
+    post_sources: |
+      set_target_properties(${this} PROPERTIES PDB_NAME ${PACKAGE_NAME_LAST})
+      set_target_properties(${this} PROPERTIES PDB_OUTPUT_DIRECTORY_DEBUG "${CPPAN_BUILD_OUTPUT_DIR}")
+
+  cli:
+    files:
+      - Projects/CLI/Source/.*
+      - Projects/CLI/Include/.*
+      - Projects/Engine/Include/.*
+      - Dependencies/json/Json-forwards.h
+
+    include_directories:
+      private:
+        - Projects/CLI/Include/
+
+    dependencies:
+      - engine
       - pvt.cppan.demo.boost.program_options: 1.63.0
-      - pvt.cppan.demo.boost.log: 1.63.0
+      - pvt.cppan.demo.boost.filesystem: 1.63.0
 
     post_sources: |
       set_target_properties(${this} PROPERTIES PDB_NAME ${PACKAGE_NAME_LAST})
