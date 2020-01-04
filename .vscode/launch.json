@@ -8,7 +8,7 @@
       "name": "(Windows) Launch",
       "type": "cppvsdbg",
       "request": "launch",
-      "program": "${workspaceFolder}/bin/cli.exe",
+      "program": "${workspaceFolder}/bin/engine.exe",
       "args": [
         "-w",
         "1024",

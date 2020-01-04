@@ -11,13 +11,16 @@ namespace Rayon
   class Rayon
   {
   public:
-    Rayon(int ac, char** av);
+    Rayon(const Config& config);
 
   public:
-    int run();
+    int  run();
+    void registerDefaults();
+    void loadSceneFromFile(const std::string& filename);
 
   private:
-    Scene _scene;
+    Scene  _scene;
+    Config _config;
   };
 }  // namespace Rayon
 

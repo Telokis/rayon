@@ -11,15 +11,16 @@
 
 namespace Rayon
 {
-  Scene::Scene() : _ambient(0.2)
+  Scene::Scene() : _ambient(0.2), _kdtree(nullptr)
   {
   }
 
   Scene::Scene(const Scene& other)
-    : _ambient(other._ambient), _eye(other._eye), _cubemap(other._cubemap)
+    : _ambient(other._ambient), _eye(other._eye), _cubemap(other._cubemap), _kdtree(nullptr)
   {
     for (const Object* object : other._objects)
       _objects.push_back(new Object(*object));
+
     for (auto& light : other._lights)
       _lights.push_back(light->clone());
   }
@@ -31,33 +32,42 @@ namespace Rayon
       _ambient = other._ambient;
       _eye     = other._eye;
       _cubemap = other._cubemap;
+      _kdtree  = nullptr;
+
       for (const Object* object : other._objects)
         _objects.push_back(new Object(*object));
+
       for (auto&& light : other._lights)
         _lights.push_back(light->clone());
     }
+
     return *this;
   }
 
   Scene::Scene(Scene&& other)
   {
-    _eye     = other._eye;
-    _cubemap = other._cubemap;
-    _ambient = other._ambient;
-    _objects = std::move(other._objects);
-    _lights  = std::move(other._lights);
+    _eye          = other._eye;
+    _cubemap      = other._cubemap;
+    _ambient      = other._ambient;
+    _objects      = std::move(other._objects);
+    _lights       = std::move(other._lights);
+    _kdtree       = other._kdtree;
+    other._kdtree = nullptr;
   }
 
   Scene& Scene::operator=(Scene&& other)
   {
     if (this != &other)
     {
-      _eye     = other._eye;
-      _cubemap = other._cubemap;
-      _ambient = other._ambient;
-      _objects = std::move(other._objects);
-      _lights  = std::move(other._lights);
+      _eye          = other._eye;
+      _cubemap      = other._cubemap;
+      _ambient      = other._ambient;
+      _objects      = std::move(other._objects);
+      _lights       = std::move(other._lights);
+      _kdtree       = other._kdtree;
+      other._kdtree = nullptr;
     }
+
     return *this;
   }
 

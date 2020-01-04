@@ -25,8 +25,10 @@ namespace Rayon
   Object& Object::operator=(const Object& object)
   {
     delete _shape;
+
     _shape    = object._shape->clone();
     _material = object._material;
+
     return *this;
   }
 
@@ -38,8 +40,10 @@ namespace Rayon
   Object& Object::operator=(Object&& object)
   {
     delete _shape;
+
     _shape    = std::exchange(object._shape, nullptr);
     _material = object._material;
+
     return *this;
   }
 
@@ -75,6 +79,7 @@ namespace Rayon
     {
       std::string         name = root["type"].asString();
       const IMetaRTShape* meta = registry().getMetaRTShape(name);
+
       if (meta)
       {
         _shape = meta->make();
@@ -91,6 +96,7 @@ namespace Rayon
       std::cout << "[Warning] Invalid `type` for object. Skipping...\n";
       return false;
     }
+
     _material.read(root["material"]);
     return true;
   }
@@ -105,6 +111,7 @@ namespace Rayon
   {
     if (getMaterial().testFlag(ray.getType()))
       return false;
+
     return _shape->inter(ray, data);
   }
 }  // namespace Rayon

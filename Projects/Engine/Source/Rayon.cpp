@@ -6,11 +6,23 @@
 #include <locale>
 #include <memory>
 #include <numeric>
+#include <sstream>
 #include <thread>
 #include <vector>
 
 #include "ImageFileHandlers/ImageFileHandler.hh"
+#include "ImageFileHandlers/ImageFileHandler_BMP.hh"
+#include "ImageFileHandlers/ImageFileHandler_PNG.hh"
+#include "ImageFileHandlers/ImageFileHandler_TGA.hh"
+#include "MetaRTLights/MetaSun.hh"
+#include "MetaRTShapes/MetaBox.hh"
+#include "MetaRTShapes/MetaMobius.hh"
+#include "MetaRTShapes/MetaPlane.hh"
+#include "MetaRTShapes/MetaRectangle.hh"
+#include "MetaRTShapes/MetaSphere.hh"
+#include "MetaRTShapes/MetaTriangle.hh"
 #include "RawImage.hh"
+#include "Registry.hh"
 #include "SceneParse.hh"
 #include "Version.hh"
 #include "Worker.hh"
@@ -98,21 +110,35 @@ namespace Rayon
               << formatNumber(overallDuration.count()) << "s.\n";
   }
 
-  Rayon::Rayon(int ac, char** av)
+  Rayon::Rayon(const Config& config) : _config(config)
   {
-    config().init(ac, av);
+  }
 
-    if (!config().getInputPath().empty())
-      sceneRead(_scene, config().getInputPath());
+  void Rayon::registerDefaults()
+  {
+    registry().registerImageFileHandler(new ImageFileHandler_BMP);
+    registry().registerImageFileHandler(new ImageFileHandler_PNG);
+    registry().registerImageFileHandler(new ImageFileHandler_TGA);
+
+    registry().registerMetaRTLight(new MetaSun);
+
+    registry().registerMetaRTShape(new MetaSphere);
+    registry().registerMetaRTShape(new MetaPlane);
+    registry().registerMetaRTShape(new MetaRectangle);
+    registry().registerMetaRTShape(new MetaBox);
+    registry().registerMetaRTShape(new MetaMobius);
+    registry().registerMetaRTShape(new MetaTriangle);
+  }
+
+  void Rayon::loadSceneFromFile(const std::string& filename)
+  {
+    sceneRead(_scene, _config.getInputPath());
   }
 
   int Rayon::run()
   {
-    if (config().handleStoppingArgs())
-      return 0;
-
-    auto     width  = config().getWidth();
-    auto     height = config().getHeight();
+    auto     width  = _config.getWidth();
+    auto     height = _config.getHeight();
     RawImage img(width, height);
 
     auto start = std::chrono::steady_clock::now();
@@ -120,7 +146,7 @@ namespace Rayon
     auto end = std::chrono::steady_clock::now();
     std::cout << "Preprocessing took " << Duration_t(end - start).count() << "s" << std::endl;
 
-    uint8 jn = config().getThreadCount();
+    uint8 jn = _config.getThreadCount();
 
     start = std::chrono::steady_clock::now();
     std::vector<std::thread> threads;
@@ -147,7 +173,7 @@ namespace Rayon
 
     printStats(stats, diff, width * height);
 
-    ImageFileHandler::writeToFileBasedOnExtension(config().getOutputPath(), img);
+    ImageFileHandler::writeToFileBasedOnExtension(_config.getOutputPath(), img);
     return 0;
   }
 

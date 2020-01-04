@@ -11,17 +11,17 @@ local_settings:
 root_project: rayon
 
 projects:
-  cli:
+  engine:
     files:
-      - Source/.*
-      - Include/.*
+      - Projects/Engine/Source/.*
+      - Projects/Engine/Include/.*
       - Dependencies/json/Json.cpp
       - Dependencies/json/Json.h
       - Dependencies/json/Json-forwards.h
 
     include_directories:
       private:
-        - Include/
+        - Projects/Engine/Include/
         - Dependencies/json
         - Dependencies/glm/include
 
