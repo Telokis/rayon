@@ -1,0 +1,17 @@
+QToolTip {
+    border: 1px solid #76797C;
+    background-color: rgb(83, 83, 83);
+    color: white;
+    font-weight:normal;
+    padding: 1px;
+    opacity: 250;
+}
+
+QMenu::separator {
+    height: 1px;
+    background-color: #76797C;
+    color: white;
+    padding-left: 4px;
+    margin-left: 10px;
+    margin-right: 5px;
+}
