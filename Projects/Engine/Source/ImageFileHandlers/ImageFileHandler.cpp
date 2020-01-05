@@ -55,7 +55,7 @@ namespace Rayon
                      " Forcing to "
                   << def->extensionName() << "...\n";
         return def->writeToFile(
-          (file.substr(file.find_last_of('.') - 1) + def->extensionName()).c_str(), readFrom);
+          (file.substr(0, file.length() - ext.length()) + def->extensionName()).c_str(), readFrom);
       }
       std::cerr << "[SEVERE]No handler registered.\n";
       return false;
