@@ -13,7 +13,7 @@
       "label": "Build with sw",
       "type": "shell",
       "command": "sw",
-      "args": ["-config", "rwdi", "build"],
+      "args": ["-config", "r", "build", "-output-dir", "bin"],
       "group": {
         "kind": "build",
         "isDefault": true
