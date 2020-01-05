@@ -17,7 +17,6 @@
 #include <thread>
 #include <vector>
 
-#include "ImageFileHandlers/ImageFileHandler.hh"
 #include "ImageFileHandlers/ImageFileHandler_BMP.hh"
 #include "ImageFileHandlers/ImageFileHandler_PNG.hh"
 #include "ImageFileHandlers/ImageFileHandler_TGA.hh"
@@ -139,14 +138,15 @@ namespace Rayon
 
   void Rayon::loadSceneFromFile(const std::string& filename)
   {
-    sceneRead(_scene, _config.getInputPath());
+    sceneRead(_scene, filename);
   }
 
-  int Rayon::run()
+  int Rayon::run(RawImage& img)
   {
-    auto     width  = _config.getWidth();
-    auto     height = _config.getHeight();
-    RawImage img(width, height);
+    auto width  = _config.getWidth();
+    auto height = _config.getHeight();
+
+    img.resize(width, height);
 
     auto start = std::chrono::steady_clock::now();
     _scene.preprocess();
@@ -180,7 +180,6 @@ namespace Rayon
 
     printStats(stats, diff, width * height);
 
-    ImageFileHandler::writeToFileBasedOnExtension(_config.getOutputPath(), img);
     return 0;
   }
 

@@ -25,13 +25,13 @@ namespace Rayon::CLI
     opts("height,h",
          po::value<uint32>(&config.height)->default_value(512),
          "Height of the output image");
-    opts("output,o", po::value<std::string>(&config.outputPath), "Path to the image output");
+    opts("output,o", po::value<std::string>(&_outputPath), "Path to the image output");
     opts("thread-count,j",
          po::value<uint32>(&config.threadsCount)->default_value(4),
          "Number of threads to use to render");
 
     po::options_description hidden;
-    hidden.add_options()("input", po::value<std::string>(&config.inputPath), "Input scene file");
+    hidden.add_options()("input", po::value<std::string>(&_inputPath), "Input scene file");
     hidden.add(_description);
 
     po::positional_options_description positional;
@@ -41,25 +41,25 @@ namespace Rayon::CLI
               _variables);
     po::notify(_variables);
 
-    fs::path input = config.inputPath;
-    if (!config.inputPath.empty() && config.outputPath.empty() && input.has_filename())
+    fs::path input = _inputPath;
+    if (!_inputPath.empty() && _outputPath.empty() && input.has_filename())
     {
-      config.outputPath = (input.parent_path() / input.stem()).string() + ".png";
+      _outputPath = (input.parent_path() / input.stem()).string() + ".png";
     }
-    else if (config.inputPath.empty() && config.outputPath.empty())
+    else if (_inputPath.empty() && _outputPath.empty())
     {
-      std::size_t i     = 0;
-      config.outputPath = "out.png";
+      std::size_t i = 0;
+      _outputPath   = "out.png";
 
-      while (fs::exists(config.outputPath))
-        config.outputPath = "out (" + std::to_string(++i) + ").png";
+      while (fs::exists(_outputPath))
+        _outputPath = "out (" + std::to_string(++i) + ").png";
     }
 
     if (config.threadsCount < 1)
       config.threadsCount = 1;
   }
 
-  bool CLIOptions::handleStoppingArgs(const Config& config) const
+  bool CLIOptions::handleStoppingArgs() const
   {
     if (_variables.count("help"))
     {
@@ -73,7 +73,7 @@ namespace Rayon::CLI
       return true;
     }
 
-    if (config.inputPath.empty())
+    if (_inputPath.empty())
     {
       std::cout << "No input file specified." << '\n';
       return true;
@@ -81,4 +81,7 @@ namespace Rayon::CLI
 
     return false;
   }
+
+  RAYON_GENERATE_PROPERTY_DEFINITION(CLIOptions, std::string, _outputPath, OutputPath);
+  RAYON_GENERATE_PROPERTY_DEFINITION(CLIOptions, std::string, _inputPath, InputPath);
 }  // namespace Rayon::CLI

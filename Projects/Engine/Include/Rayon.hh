@@ -14,7 +14,7 @@ namespace Rayon
     Rayon(const Config& config);
 
   public:
-    int  run();
+    int  run(RawImage& img);
     void registerDefaults();
     void loadSceneFromFile(const std::string& filename);
 

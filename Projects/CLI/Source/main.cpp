@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "CLIOptions.hh"
+#include "ImageFileHandlers/ImageFileHandler.hh"
 #include "Ray.hh"
 #include "Rayon.hh"
 
@@ -10,20 +11,30 @@ int main(int ac, char** av)
   {
     Rayon::CLI::CLIOptions cliOptions;
     Rayon::Config          config;
+    Rayon::RawImage        img;
 
     cliOptions.fillConfig(ac, av, config);
 
-    if (cliOptions.handleStoppingArgs(config))
+    if (cliOptions.handleStoppingArgs())
       return 0;
 
     Rayon::Rayon engine(config);
 
     engine.registerDefaults();
 
-    if (!config.getInputPath().empty())
-      engine.loadSceneFromFile(config.getInputPath());
+    if (!cliOptions.getInputPath().empty())
+    {
+      engine.loadSceneFromFile(cliOptions.getInputPath());
+    }
 
-    return engine.run();
+    auto result = engine.run(img);
+
+    if (result == 0)
+    {
+      Rayon::ImageFileHandler::writeToFileBasedOnExtension(cliOptions.getOutputPath(), img);
+    }
+
+    return result;
   }
   catch (std::exception& except)
   {

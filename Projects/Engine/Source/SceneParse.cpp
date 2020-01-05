@@ -16,7 +16,16 @@ namespace Rayon
 {
   namespace
   {
-    void readJson(const fs::path& path, Json::Value& root)
+    void parseJsonString(const std::string& content, Json::Value& root)
+    {
+      Json::Reader reader;
+
+      if (!reader.parse(content, root))
+        throw std::runtime_error("Error while parsing `" + content
+                                 + "`: " + reader.getFormattedErrorMessages());
+    }
+
+    void parseJsonFile(const fs::path& path, Json::Value& root)
     {
       std::string   str = path.string();
       std::ifstream file(str);
@@ -30,7 +39,7 @@ namespace Rayon
                                  + "`: " + reader.getFormattedErrorMessages());
     }
 
-    void writeJson(const fs::path& path, Json::Value& root)
+    void writeJsonFile(const fs::path& path, Json::Value& root)
     {
       std::string   str = path.string();
       std::ofstream file(str);
@@ -46,19 +55,22 @@ namespace Rayon
   {
     Json::Value root;
 
-    readJson(filename, root);
+    parseJsonFile(filename, root);
+
     if (root.isMember("eye") && root["eye"].isObject())
     {
       Eye eye;
       eye.read(root["eye"]);
       scene.setEye(eye);
     }
+
     if (root.isMember("cubemap") && root["cubemap"].isObject())
     {
       CubeMap cubemap;
       cubemap.read(root["cubemap"]);
       scene.setCubeMap(cubemap);
     }
+
     if (root.isMember("objects") && root["objects"].isArray())
     {
       const Json::Value& objects = root["objects"];
@@ -66,10 +78,12 @@ namespace Rayon
       for (const Json::Value& object : objects)
       {
         Object obj;
+
         if (obj.read(object))
           scene.addObject(obj);
       }
     }
+
     if (root.isMember("lights") && root["lights"].isArray())
     {
       const Json::Value& lights = root["lights"];
@@ -80,6 +94,7 @@ namespace Rayon
         {
           std::string         name = light["type"].asString();
           const IMetaRTLight* meta = registry().getMetaRTLight(name);
+
           if (meta)
           {
             RTLight* lig = meta->make();
@@ -105,6 +120,7 @@ namespace Rayon
     scene.eye().write(root["eye"]);
     scene.cubemap().write(root["cubemap"]);
     Json::Value& lights = root["lights"];
+
     for (const auto& light : scene.lights())
     {
       Json::Value val;
@@ -112,6 +128,7 @@ namespace Rayon
       light->write(val);
       lights.append(val);
     }
+
     Json::Value& objects = root["objects"];
     for (const Object* obj : scene.objects())
     {
@@ -120,14 +137,15 @@ namespace Rayon
       obj->write(val);
       objects.append(val);
     }
-    writeJson(filename, root);
+
+    writeJsonFile(filename, root);
   }
 
   void materialRead(Material& material, const std::string& filename)
   {
     Json::Value root;
 
-    readJson(filename, root);
+    parseJsonFile(filename, root);
     material.read(root);
   }
 
@@ -136,7 +154,7 @@ namespace Rayon
     Json::Value root;
 
     material.write(root);
-    writeJson(filename, root);
+    writeJsonFile(filename, root);
   }
 
   /*
@@ -157,6 +175,7 @@ namespace Rayon
     Json::Value& subNode = node[name];
     const auto   value   = color.intValue();
     const auto&  cols    = colors();
+
     for (const auto& pair : cols)
     {
       if (value == pair.second.intValue())
@@ -165,6 +184,7 @@ namespace Rayon
         return;
       }
     }
+
     writeVal(subNode, "red", uint32(color.red()), uint32(def.red()));
     writeVal(subNode, "green", uint32(color.green()), uint32(def.green()));
     writeVal(subNode, "blue", uint32(color.blue()), uint32(def.blue()));
@@ -173,6 +193,7 @@ namespace Rayon
   void writeVal(Json::Value& node, const std::string& name, const Vec_t& vec, const Vec_t& def)
   {
     Json::Value& subNode = node[name];
+
     writeVal(subNode, "x", vec.x, def.x);
     writeVal(subNode, "y", vec.y, def.y);
     writeVal(subNode, "z", vec.z, def.z);
@@ -204,6 +225,7 @@ namespace Rayon
       if (parent[name].isObject())
       {
         const Json::Value& colorNode = parent[name];
+
         readVal(colorNode, "red", color.red(), def.red());
         readVal(colorNode, "green", color.green(), def.green());
         readVal(colorNode, "blue", color.blue(), def.blue());
@@ -212,6 +234,7 @@ namespace Rayon
       else if (parent[name].isString())
       {
         const std::string str = parent[name].asString();
+
         if (colors().count(str))
         {
           color = colors().at(str);
@@ -229,6 +252,7 @@ namespace Rayon
     if (parent.isMember(name) && parent[name].isObject())
     {
       const Json::Value& node = parent[name];
+
       readVal(node, "x", vec.x, def.x);
       readVal(node, "y", vec.y, def.y);
       readVal(node, "z", vec.z, def.z);

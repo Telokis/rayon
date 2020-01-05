@@ -14,11 +14,15 @@ namespace Rayon::CLI
   public:
     CLIOptions();
     void fillConfig(int ac, char** av, Config& config);
-    bool handleStoppingArgs(const Config& config) const;
+    bool handleStoppingArgs() const;
 
   private:
     boost::program_options::options_description _description;
     boost::program_options::variables_map       _variables;
+
+  protected:
+    RAYON_GENERATE_PROPERTY_DECLARATION(CLIOptions, std::string, _outputPath, OutputPath);
+    RAYON_GENERATE_PROPERTY_DECLARATION(CLIOptions, std::string, _inputPath, InputPath);
   };
 }  // namespace Rayon::CLI
 
