@@ -5,7 +5,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "(Windows) Launch",
+      "name": "(Windows) Launch - deprecated",
       "type": "cppvsdbg",
       "request": "launch",
       "program": "${workspaceFolder}/bin/cli.exe",
@@ -25,6 +25,17 @@
       "environment": [],
       "externalConsole": false,
       "preLaunchTask": "Build with cppan"
+    },
+    {
+      "name": "(Windows) Launch GUI",
+      "type": "cppvsdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/.sw/out/72b288/rayon.gui-0.0.1.exe",
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "environment": [],
+      "externalConsole": false,
+      "preLaunchTask": "Build with sw"
     }
   ]
 }
