@@ -4,6 +4,7 @@
 *.o
 *.obj
 .cppan
+.sw
 bin
 *.lnk
 /*.png
