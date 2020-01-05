@@ -1,5 +1,5 @@
 common_settings:
-  c++: 14
+  c++: 17
 
 local_settings:
   local_build: true
@@ -29,7 +29,7 @@ projects:
         - Dependencies/glm/include
 
     dependencies:
-      - pvt.cppan.demo.boost.filesystem: 1.63.0
+      - pvt.cppan.demo.boost.filesystem: 1.68.0
 
     post_sources: |
       set_target_properties(${this} PROPERTIES PDB_NAME ${PACKAGE_NAME_LAST})
@@ -48,8 +48,8 @@ projects:
 
     dependencies:
       - engine
-      - pvt.cppan.demo.boost.program_options: 1.63.0
-      - pvt.cppan.demo.boost.filesystem: 1.63.0
+      - pvt.cppan.demo.boost.program_options: 1.68.0
+      - pvt.cppan.demo.boost.filesystem: 1.68.0
 
     post_sources: |
       set_target_properties(${this} PROPERTIES PDB_NAME ${PACKAGE_NAME_LAST})
