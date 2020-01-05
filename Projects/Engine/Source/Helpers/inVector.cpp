@@ -1,53 +1,50 @@
 #include "Helpers/inVector.hh"
 
-namespace Rayon
+namespace Rayon::Helpers
 {
-  namespace Helpers
+  Object* getNearestInVector(const Ray&                  ray,
+                             IntersectionData&           data,
+                             const std::vector<Object*>& objects)
   {
-    Object* getNearestInVector(const Ray&                  ray,
-                               IntersectionData&           data,
-                               const std::vector<Object*>& objects)
+    Object*          result = nullptr;
+    IntersectionData tmp;
+
+    tmp.stat = data.stat;
+
+    for (Object* object : objects)
     {
-      Object*          result = nullptr;
-      IntersectionData tmp;
+      ++(data.stat->intersectionsChecked);
+      bool res = object->inter(ray, data);
 
-      tmp.stat = data.stat;
-
-      for (Object* object : objects)
+      if (res && data.k < tmp.k)
       {
-        ++(data.stat->intersectionsChecked);
-        bool res = object->inter(ray, data);
-
-        if (res && data.k < tmp.k)
-        {
-          tmp    = data;
-          result = object;
-        }
-        else
-          data.k = tmp.k;
+        tmp    = data;
+        result = object;
       }
-
-      data     = tmp;
-      data.obj = result;
-
-      return result;
+      else
+        data.k = tmp.k;
     }
 
-    bool iterateIfIntersect(const Ray&                                            ray,
-                            IntersectionData&                                     data,
-                            const std::vector<Object*>&                           objects,
-                            std::function<bool(const Object*, IntersectionData&)> func)
+    data     = tmp;
+    data.obj = result;
+
+    return result;
+  }
+
+  bool iterateIfIntersect(const Ray&                                            ray,
+                          IntersectionData&                                     data,
+                          const std::vector<Object*>&                           objects,
+                          std::function<bool(const Object*, IntersectionData&)> func)
+  {
+    for (Object* object : objects)
     {
-      for (Object* object : objects)
-      {
-        ++(data.stat->intersectionsChecked);
+      ++(data.stat->intersectionsChecked);
 
-        if (object->inter(ray, data))
-          if (!func(object, data))
-            return false;
-      }
-
-      return true;
+      if (object->inter(ray, data))
+        if (!func(object, data))
+          return false;
     }
-  }  // namespace Helpers
-}  // namespace Rayon
+
+    return true;
+  }
+}  // namespace Rayon::Helpers

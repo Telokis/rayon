@@ -10,19 +10,16 @@
 #include "Ray.hh"
 #include "Tools/Stat.hh"
 
-namespace Rayon
+namespace Rayon::Helpers
 {
-  namespace Helpers
-  {
-    Object* getNearestInVector(const Ray&                  ray,
-                               IntersectionData&           data,
-                               const std::vector<Object*>& objects);
+  Object* getNearestInVector(const Ray&                  ray,
+                             IntersectionData&           data,
+                             const std::vector<Object*>& objects);
 
-    bool iterateIfIntersect(const Ray&                                            ray,
-                            IntersectionData&                                     data,
-                            const std::vector<Object*>&                           objects,
-                            std::function<bool(const Object*, IntersectionData&)> func);
-  }  // namespace Helpers
-}  // namespace Rayon
+  bool iterateIfIntersect(const Ray&                                            ray,
+                          IntersectionData&                                     data,
+                          const std::vector<Object*>&                           objects,
+                          std::function<bool(const Object*, IntersectionData&)> func);
+}  // namespace Rayon::Helpers
 
 #endif  // RAYON_HELPERS_INVECTOR_HH_

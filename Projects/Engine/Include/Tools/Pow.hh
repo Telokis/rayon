@@ -3,49 +3,46 @@
 #ifndef RAYON_TOOLS_HELPERS_POW_HH
 #define RAYON_TOOLS_HELPERS_POW_HH
 
-namespace Rayon
+namespace Rayon::Tools
 {
-  namespace Tools
+  namespace  // Anonymous namespace
   {
-    namespace  // Anonymous namespace
-    {
-      template <unsigned int P, typename T>
-      struct PowImpl
-      {
-        static const constexpr T Compute(const T& n)
-        {
-          return n * PowImpl<P - 1, T>::Compute(n);
-        }
-      };
-
-      template <typename T>
-      struct PowImpl<1, T>
-      {
-        static const constexpr T Compute(const T& n)
-        {
-          return n;
-        }
-      };
-    }  // Anonymous namespace
-
     template <unsigned int P, typename T>
-    constexpr inline T Pow(const T& n)
+    struct PowImpl
     {
-      return PowImpl<P, T>::Compute(n);
-    }
+      static const constexpr T Compute(const T& n)
+      {
+        return n * PowImpl<P - 1, T>::Compute(n);
+      }
+    };
 
     template <typename T>
-    constexpr inline T Pow2(const T& n)
+    struct PowImpl<1, T>
     {
-      return Pow<2>(n);
-    }
+      static const constexpr T Compute(const T& n)
+      {
+        return n;
+      }
+    };
+  }  // Anonymous namespace
 
-    template <typename T>
-    constexpr inline T Pow3(const T& n)
-    {
-      return Pow<3>(n);
-    }
-  }  // namespace Tools
-}  // namespace Rayon
+  template <unsigned int P, typename T>
+  constexpr inline T Pow(const T& n)
+  {
+    return PowImpl<P, T>::Compute(n);
+  }
+
+  template <typename T>
+  constexpr inline T Pow2(const T& n)
+  {
+    return Pow<2>(n);
+  }
+
+  template <typename T>
+  constexpr inline T Pow3(const T& n)
+  {
+    return Pow<3>(n);
+  }
+}  // namespace Rayon::Tools
 
 #endif  // RAYON_TOOLS_HELPERS_POW_HH

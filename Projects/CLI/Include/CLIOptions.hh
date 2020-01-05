@@ -7,22 +7,19 @@
 
 #include "Config.hh"
 
-namespace Rayon
+namespace Rayon::CLI
 {
-  namespace CLI
+  class CLIOptions
   {
-    class CLIOptions
-    {
-    public:
-      CLIOptions();
-      void fillConfig(int ac, char** av, Config& config);
-      bool handleStoppingArgs(const Config& config) const;
+  public:
+    CLIOptions();
+    void fillConfig(int ac, char** av, Config& config);
+    bool handleStoppingArgs(const Config& config) const;
 
-    private:
-      boost::program_options::options_description _description;
-      boost::program_options::variables_map       _variables;
-    };
-  }  // namespace CLI
-}  // namespace Rayon
+  private:
+    boost::program_options::options_description _description;
+    boost::program_options::variables_map       _variables;
+  };
+}  // namespace Rayon::CLI
 
 #endif  // RAYON_CLIOPTIONS_HH_
