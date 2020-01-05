@@ -4,7 +4,8 @@
       "name": "Win32",
       "includePath": [
         "${workspaceFolder}/Projects/Engine/Include/",
-        "${workspaceFolder}/Projects/Cli/Include/",
+        "${workspaceFolder}/Projects/CLI/Include/",
+        "${workspaceFolder}/Projects/GUI/Include/",
         "${workspaceFolder}/Dependencies/json/",
         "${workspaceFolder}/Dependencies/glm/include",
         "C:/Users/Telokis/Documents/Dev/cppan/storage/src/**"

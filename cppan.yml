@@ -6,7 +6,7 @@ local_settings:
   build_dir: ./.cppan/build
   build:
     generator: Visual Studio 15 2017
-    configuration: Debug
+    configuration: Release
 
 root_project: rayon
 
@@ -45,6 +45,7 @@ projects:
     include_directories:
       private:
         - Projects/CLI/Include/
+        - Dependencies/glm/include
 
     dependencies:
       - engine
@@ -54,3 +55,77 @@ projects:
     post_sources: |
       set_target_properties(${this} PROPERTIES PDB_NAME ${PACKAGE_NAME_LAST})
       set_target_properties(${this} PROPERTIES PDB_OUTPUT_DIRECTORY_DEBUG "${CPPAN_BUILD_OUTPUT_DIR}")
+
+  gui:
+    files:
+      - Projects/GUI/Source/.*
+      - Projects/GUI/Include/.*
+      - Projects/GUI/Form/.*
+      - Projects/Engine/Include/.*
+      - Dependencies/json/Json.cpp
+      - Dependencies/json/Json.h
+      - Dependencies/json/Json-forwards.h
+
+    include_directories:
+      private:
+        - Projects/GUI/Include/
+        - Dependencies/json
+        - Dependencies/glm/include
+
+    dependencies:
+      engine:
+        version: "*"
+      pvt.cppan.demo.boost.filesystem:
+        version: 1.68.0
+      pvt.cppan.demo.qtproject.qt.base.tools.moc:
+        version: 5
+        reference: MOC_COMMAND
+      pvt.cppan.demo.qtproject.qt.base.tools.uic:
+        version: 5
+        reference: UIC_COMMAND
+      pvt.cppan.demo.qtproject.qt.base.core:
+        version: 5
+        reference: CORE
+      pvt.cppan.demo.qtproject.qt.base.tools.rcc:
+        version: 5
+        reference: RCC_COMMAND
+      pvt.cppan.demo.qtproject.qt.base.widgets:
+        version: 5
+        reference: WIDGETS
+
+    post_sources: |
+      set_target_properties(${this} PROPERTIES PDB_NAME ${PACKAGE_NAME_LAST})
+      set_target_properties(${this} PROPERTIES PDB_OUTPUT_DIRECTORY_DEBUG "${CPPAN_BUILD_OUTPUT_DIR}")
+
+      include(${CORE_SDIR}/src/corelib/Qt5CoreMacros.cmake)
+
+      set(moc ${src})
+      list(FILTER moc INCLUDE REGEX ".hh$")
+      find_moc_targets(moc ${moc})
+
+      set(Qt5Core_MOC_EXECUTABLE ${MOC_COMMAND})
+      cppan_qt5_wrap_cpp(moc ${moc} TARGET ${this})
+      set(src ${src} ${moc})
+
+      include(${WIDGETS_SDIR}/src/widgets/Qt5WidgetsMacros.cmake)
+      set(Qt5Widgets_UIC_EXECUTABLE ${UIC_COMMAND})
+      file(GLOB ui ${SDIR}/src/printsupport/dialogs/*.ui)
+      foreach(u ${ui})
+          qt5_wrap_ui(uic ${u})
+          set(src ${src} ${uic})
+      endforeach()
+
+    # set(Qt5Core_RCC_EXECUTABLE ${RCC_COMMAND})
+    # qt5_add_resources(rcc ${SDIR}/src/printsupport/dialogs/qprintdialog.qrc)
+    # set(src ${src} ${rcc})
+
+    post_target: |
+      set(dirs)
+      foreach(f ${moc})
+          get_filename_component(f ${f} PATH)
+          list(APPEND dirs ${f})
+      endforeach()
+      list(REMOVE_DUPLICATES dirs)
+      foreach(d ${dirs})
+          target_include_directories(${this} PRIVATE ${d})
+      endforeach()
