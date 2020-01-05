@@ -13,6 +13,11 @@ namespace Rayon
   struct Config
   {
   public:
+    Config();
+    Config(uint32 w, uint32 h);
+    Config(uint32 w, uint32 h, uint32 j);
+
+  public:
     RAYON_GENERATE_PROPERTY_DECLARATION_PUBLIC(Config, uint32, width, Width);
     RAYON_GENERATE_PROPERTY_DECLARATION_PUBLIC(Config, uint32, height, Height);
     RAYON_GENERATE_PROPERTY_DECLARATION_PUBLIC(Config, uint32, threadsCount, ThreadCount);

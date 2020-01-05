@@ -17,16 +17,6 @@
 #include <thread>
 #include <vector>
 
-#include "ImageFileHandlers/ImageFileHandler_BMP.hh"
-#include "ImageFileHandlers/ImageFileHandler_PNG.hh"
-#include "ImageFileHandlers/ImageFileHandler_TGA.hh"
-#include "MetaRTLights/MetaSun.hh"
-#include "MetaRTShapes/MetaBox.hh"
-#include "MetaRTShapes/MetaMobius.hh"
-#include "MetaRTShapes/MetaPlane.hh"
-#include "MetaRTShapes/MetaRectangle.hh"
-#include "MetaRTShapes/MetaSphere.hh"
-#include "MetaRTShapes/MetaTriangle.hh"
 #include "RawImage.hh"
 #include "Registry.hh"
 #include "SceneParse.hh"
@@ -116,32 +106,25 @@ namespace Rayon
               << formatNumber(overallDuration.count()) << "s.\n";
   }
 
+  Rayon::Rayon()
+  {
+  }
+
   Rayon::Rayon(const Config& config) : _config(config)
   {
   }
 
-  void Rayon::registerDefaults()
-  {
-    registry().registerImageFileHandler(new ImageFileHandler_BMP);
-    registry().registerImageFileHandler(new ImageFileHandler_PNG);
-    registry().registerImageFileHandler(new ImageFileHandler_TGA);
-
-    registry().registerMetaRTLight(new MetaSun);
-
-    registry().registerMetaRTShape(new MetaSphere);
-    registry().registerMetaRTShape(new MetaPlane);
-    registry().registerMetaRTShape(new MetaRectangle);
-    registry().registerMetaRTShape(new MetaBox);
-    registry().registerMetaRTShape(new MetaMobius);
-    registry().registerMetaRTShape(new MetaTriangle);
-  }
-
   void Rayon::loadSceneFromFile(const std::string& filename)
   {
-    sceneRead(_scene, filename);
+    readSceneFromFile(_scene, filename);
   }
 
-  int Rayon::run(RawImage& img)
+  int Rayon::run(RawImage& img, bool preprocess)
+  {
+    return run(img, _scene, preprocess);
+  }
+
+  int Rayon::run(RawImage& img, Scene& scene, bool preprocess)
   {
     auto width  = _config.getWidth();
     auto height = _config.getHeight();
@@ -149,9 +132,15 @@ namespace Rayon
     img.resize(width, height);
 
     auto start = std::chrono::steady_clock::now();
-    _scene.preprocess();
+    if (preprocess)
+    {
+      scene.preprocess();
+    }
     auto end = std::chrono::steady_clock::now();
-    std::cout << "Preprocessing took " << Duration_t(end - start).count() << "s" << std::endl;
+    if (preprocess)
+    {
+      std::cout << "Preprocessing took " << Duration_t(end - start).count() << "s" << std::endl;
+    }
 
     uint8 jn = _config.getThreadCount();
 
@@ -168,7 +157,7 @@ namespace Rayon
 
       auto stat = std::make_unique<Tools::Stat>();
 
-      threads.emplace_back(Worker(&img, xStart, xStop, stat.get()), width, height, &_scene);
+      threads.emplace_back(Worker(&img, xStart, xStop, stat.get()), width, height, &scene);
       stats.emplace_back(std::move(stat));
     }
 

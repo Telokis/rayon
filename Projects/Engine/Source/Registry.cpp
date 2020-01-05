@@ -4,6 +4,16 @@
 
 #include <iostream>
 
+#include "ImageFileHandlers/ImageFileHandler_BMP.hh"
+#include "ImageFileHandlers/ImageFileHandler_PNG.hh"
+#include "ImageFileHandlers/ImageFileHandler_TGA.hh"
+#include "MetaRTLights/MetaSun.hh"
+#include "MetaRTShapes/MetaBox.hh"
+#include "MetaRTShapes/MetaMobius.hh"
+#include "MetaRTShapes/MetaPlane.hh"
+#include "MetaRTShapes/MetaRectangle.hh"
+#include "MetaRTShapes/MetaSphere.hh"
+#include "MetaRTShapes/MetaTriangle.hh"
 #include "Rayon.hh"
 
 namespace Rayon
@@ -14,6 +24,22 @@ namespace Rayon
 
   Registry::~Registry()
   {
+  }
+
+  void Registry::registerDefaults()
+  {
+    registerImageFileHandler(new ImageFileHandler_BMP);
+    registerImageFileHandler(new ImageFileHandler_PNG);
+    registerImageFileHandler(new ImageFileHandler_TGA);
+
+    registerMetaRTLight(new MetaSun);
+
+    registerMetaRTShape(new MetaSphere);
+    registerMetaRTShape(new MetaPlane);
+    registerMetaRTShape(new MetaRectangle);
+    registerMetaRTShape(new MetaBox);
+    registerMetaRTShape(new MetaMobius);
+    registerMetaRTShape(new MetaTriangle);
   }
 
   bool Registry::registerImageFileHandler(IImageFileHandler* handler)

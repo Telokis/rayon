@@ -2,8 +2,8 @@
 
 #include "CLIOptions.hh"
 #include "ImageFileHandlers/ImageFileHandler.hh"
-#include "Ray.hh"
 #include "Rayon.hh"
+#include "Registry.hh"
 
 int main(int ac, char** av)
 {
@@ -20,7 +20,7 @@ int main(int ac, char** av)
 
     Rayon::Rayon engine(config);
 
-    engine.registerDefaults();
+    Rayon::registry().registerDefaults();
 
     if (!cliOptions.getInputPath().empty())
     {

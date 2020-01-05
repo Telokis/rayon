@@ -15,9 +15,8 @@ namespace Rayon
 {
   class Registry
   {
-    using ImageFileHandlerType = std::unique_ptr<IImageFileHandler>;
-    using ImageFileHandlerContainer
-      = std::map<std::string, ImageFileHandlerType>;
+    using ImageFileHandlerType      = std::unique_ptr<IImageFileHandler>;
+    using ImageFileHandlerContainer = std::map<std::string, ImageFileHandlerType>;
 
     using MetaRTLightType      = std::unique_ptr<IMetaRTLight>;
     using MetaRTLightContainer = std::map<std::string, MetaRTLightType>;
@@ -30,8 +29,8 @@ namespace Rayon
     ~Registry();
 
   public:
-    bool registerImageFileHandler(IImageFileHandler* handler);
-    const IImageFileHandler* getImageFileHandler(const std::string& id) const;
+    bool                             registerImageFileHandler(IImageFileHandler* handler);
+    const IImageFileHandler*         getImageFileHandler(const std::string& id) const;
     const ImageFileHandlerContainer& getImageFileHandlers() const;
 
   public:
@@ -43,6 +42,9 @@ namespace Rayon
     bool                        registerMetaRTShape(IMetaRTShape* meta);
     const IMetaRTShape*         getMetaRTShape(const std::string& id) const;
     const MetaRTShapeContainer& getMetaRTShapes() const;
+
+  public:
+    void registerDefaults();
 
   private:
     ImageFileHandlerContainer _imgHandlers;

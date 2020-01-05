@@ -3,6 +3,7 @@
 #include <QStyleFactory>
 
 #include "MainWindow.hh"
+#include "Rayon.hh"
 
 void setPalette(QApplication& app)
 {
@@ -17,9 +18,9 @@ void setPalette(QApplication& app)
   darkPalette.setColor(QPalette::Button, QColor(53, 53, 53));
   darkPalette.setColor(QPalette::ButtonText, Qt::white);
   darkPalette.setColor(QPalette::BrightText, Qt::red);
-  darkPalette.setColor(QPalette::Link, QColor(0x6B, 0x23, 0x8E));
+  darkPalette.setColor(QPalette::Link, QColor(0x10, 0x4E, 0x8B));
 
-  darkPalette.setColor(QPalette::Highlight, QColor(0x6B, 0x23, 0x8E));
+  darkPalette.setColor(QPalette::Highlight, QColor(0x10, 0x4E, 0x8B));
   darkPalette.setColor(QPalette::HighlightedText, Qt::white);
 
   app.setPalette(darkPalette);
@@ -37,7 +38,7 @@ int main(int argc, char* argv[])
   setPalette(app);
 
   MainWindow window;
-  window.show();
+  window.showMaximized();
 
   return app.exec();
 }

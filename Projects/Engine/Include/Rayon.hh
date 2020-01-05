@@ -11,12 +11,14 @@ namespace Rayon
   class Rayon
   {
   public:
+    Rayon();
     Rayon(const Config& config);
 
   public:
-    int  run(RawImage& img);
-    void registerDefaults();
+    int  run(RawImage& img, Scene& scene, bool preprocess = false);
+    int  run(RawImage& img, bool preprocess = true);
     void loadSceneFromFile(const std::string& filename);
+    void loadSceneFromString(const std::string& json);
 
   private:
     Scene  _scene;

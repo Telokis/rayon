@@ -49,68 +49,81 @@ namespace Rayon
 
       file << root;
     }
+
+    void populateScene(Scene& scene, const Json::Value& root)
+    {
+      if (root.isMember("eye") && root["eye"].isObject())
+      {
+        Eye eye;
+        eye.read(root["eye"]);
+        scene.setEye(eye);
+      }
+
+      if (root.isMember("cubemap") && root["cubemap"].isObject())
+      {
+        CubeMap cubemap;
+        cubemap.read(root["cubemap"]);
+        scene.setCubeMap(cubemap);
+      }
+
+      if (root.isMember("objects") && root["objects"].isArray())
+      {
+        const Json::Value& objects = root["objects"];
+
+        for (const Json::Value& object : objects)
+        {
+          Object obj;
+
+          if (obj.read(object))
+            scene.addObject(obj);
+        }
+      }
+
+      if (root.isMember("lights") && root["lights"].isArray())
+      {
+        const Json::Value& lights = root["lights"];
+
+        for (const Json::Value& light : lights)
+        {
+          if (light.isMember("type") && light["type"].isString())
+          {
+            std::string         name = light["type"].asString();
+            const IMetaRTLight* meta = registry().getMetaRTLight(name);
+
+            if (meta)
+            {
+              RTLight* lig = meta->make();
+              lig->read(light);
+              scene.addLight(lig);
+            }
+            else
+            {
+              std::cout << "[Warning] Unknown type `" << name << "` for light. Skipping...\n";
+              continue;
+            }
+          }
+          else
+            std::cout << "[Warning] Invalid `type` for light. Skipping...\n";
+        }
+      }
+    }
+
   }  // namespace
 
-  void sceneRead(Scene& scene, const std::string& filename)
+  void readSceneFromFile(Scene& scene, const std::string& filename)
   {
     Json::Value root;
 
     parseJsonFile(filename, root);
+    populateScene(scene, root);
+  }
 
-    if (root.isMember("eye") && root["eye"].isObject())
-    {
-      Eye eye;
-      eye.read(root["eye"]);
-      scene.setEye(eye);
-    }
+  void readSceneFromString(Scene& scene, const std::string& content)
+  {
+    Json::Value root;
 
-    if (root.isMember("cubemap") && root["cubemap"].isObject())
-    {
-      CubeMap cubemap;
-      cubemap.read(root["cubemap"]);
-      scene.setCubeMap(cubemap);
-    }
-
-    if (root.isMember("objects") && root["objects"].isArray())
-    {
-      const Json::Value& objects = root["objects"];
-
-      for (const Json::Value& object : objects)
-      {
-        Object obj;
-
-        if (obj.read(object))
-          scene.addObject(obj);
-      }
-    }
-
-    if (root.isMember("lights") && root["lights"].isArray())
-    {
-      const Json::Value& lights = root["lights"];
-
-      for (const Json::Value& light : lights)
-      {
-        if (light.isMember("type") && light["type"].isString())
-        {
-          std::string         name = light["type"].asString();
-          const IMetaRTLight* meta = registry().getMetaRTLight(name);
-
-          if (meta)
-          {
-            RTLight* lig = meta->make();
-            lig->read(light);
-            scene.addLight(lig);
-          }
-          else
-          {
-            std::cout << "[Warning] Unknown type `" << name << "` for light. Skipping...\n";
-            continue;
-          }
-        }
-        else
-          std::cout << "[Warning] Invalid `type` for light. Skipping...\n";
-      }
-    }
+    parseJsonString(content, root);
+    populateScene(scene, root);
   }
 
   void sceneWrite(const Scene& scene, const std::string& filename)
