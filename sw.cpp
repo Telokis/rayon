@@ -54,6 +54,7 @@ void build(Solution& s)
     gui.Private += "Projects/GUI/Source/.*"_rr;
     gui.Private += "Projects/GUI/Include/.*"_rr;
     gui.Private += "Projects/GUI/Form/.*"_rr;
+    gui.Private += "Projects/GUI/Resources/.*"_rr;
     gui.Private += "Projects/Engine/Include/.*"_rr;
     gui.Private += "Dependencies/json/Json.cpp";
     gui.Private += "Dependencies/json/Json.h";
@@ -62,8 +63,9 @@ void build(Solution& s)
     // Dependencies
     gui.Private += engine;
     gui.Private += "org.sw.demo.boost.filesystem-1.72.0"_dep;
-    gui.Private += "org.sw.demo.qtproject.qt.base.plugins.platforms.windows-5.14.0"_dep;
-    gui.Private += "org.sw.demo.qtproject.qt.base.widgets-5.14.0"_dep;
+    gui.Private
+      += "pub.telokis.qt_with_fusion.qtproject.qt.base.plugins.platforms.windows-5.14.0"_dep;
+    gui.Private += "pub.telokis.qt_with_fusion.qtproject.qt.base.widgets-5.14.0"_dep;
 
     // Include directories
     gui.Private += "Projects/GUI/Include/"_id;
@@ -71,6 +73,5 @@ void build(Solution& s)
     gui.Private += "Dependencies/glm/include"_id;
 
     qt_moc_rcc_uic("org.sw.demo.qtproject.qt"_dep, gui);
-    qt_tr("org.sw.demo.qtproject.qt"_dep, gui);
   }
 }
