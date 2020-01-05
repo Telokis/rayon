@@ -87,8 +87,8 @@ namespace Rayon
       std::cout << "  Tree branches explored: " << formatNumber(stat->treeBranchesExplored) << "\n";
       std::cout << "  Intersections checked: " << formatNumber(stat->intersectionsChecked) << "\n";
       std::cout << "  Hits: " << formatNumber(stat->hits) << " ("
-                << formatNumber(stat->hits / static_cast<double>(stat->intersectionsChecked))
-                << " hits per check)"
+                << formatNumber(stat->hits / static_cast<double>(stat->intersectionsChecked) * 100)
+                << "%)"
                 << "\n";
       std::cout << "  Primary rays: " << formatNumber(stat->rayCounts.at(RayType::Primary)) << "\n";
       std::cout << "  Shadow rays: " << formatNumber(stat->rayCounts.at(RayType::Shadow)) << "\n";
@@ -103,8 +103,8 @@ namespace Rayon
     std::cout << "  Tree branches explored: " << formatNumber(total.treeBranchesExplored) << "\n";
     std::cout << "  Intersections checked: " << formatNumber(total.intersectionsChecked) << "\n";
     std::cout << "  Hits: " << formatNumber(total.hits) << " ("
-              << formatNumber(total.hits / static_cast<double>(total.intersectionsChecked))
-              << " hits per check)"
+              << formatNumber(total.hits / static_cast<double>(total.intersectionsChecked) * 100)
+              << "%)"
               << "\n";
     std::cout << "  Primary rays: " << formatNumber(total.rayCounts.at(RayType::Primary)) << "\n";
     std::cout << "  Shadow rays: " << formatNumber(total.rayCounts.at(RayType::Shadow)) << "\n";
