@@ -395,5 +395,25 @@
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>colorComboBox</sender>
+   <signal>currentTextChanged(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>changeColor(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1142</x>
+     <y>146</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>625</x>
+     <y>409</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>changeColor(QString)</slot>
+ </slots>
 </ui>

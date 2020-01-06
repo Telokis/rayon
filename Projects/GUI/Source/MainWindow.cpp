@@ -6,6 +6,7 @@
 #include "./ui_MainWindow.h"
 #include "Color.hh"
 #include "Material.hh"
+#include "Object.hh"
 #include "Registry.hh"
 #include "SceneParse.hh"
 
@@ -68,8 +69,16 @@ void populateFlags(QLayout* parentLayout, QWidget* parent)
 
 // 2316, 1317
 MainWindow::MainWindow(QWidget* parent)
-  : QMainWindow(parent), ui(new Ui::MainWindow), _engine({1024, 1024})
+  : QMainWindow(parent)
+  , ui(new Ui::MainWindow)
+  , _engine(Rayon::Config(1024, 1024, 8).setSilent(true))
 {
+  Rayon::registry().registerDefaults();
+  Rayon::readSceneFromString(_scene, rawScene);
+  _scene.preprocess();
+
+  _material = _scene.lastObject()->getMaterialPtr();
+
   ui->setupUi(this);
   populateColors(ui->colorComboBox);
   populateFlags(ui->flagsGroupLayout, ui->flagsGroupBox);
@@ -79,10 +88,11 @@ MainWindow::MainWindow(QWidget* parent)
 
   ui->imageLabel->setPixmap(QPixmap());
 
-  Rayon::registry().registerDefaults();
-  Rayon::readSceneFromString(_scene, rawScene);
-  _scene.preprocess();
+  refreshRender();
+}
 
+void MainWindow::refreshRender()
+{
   Rayon::RawImage img;
   _engine.run(img, _scene, false);
 
@@ -99,6 +109,17 @@ MainWindow::MainWindow(QWidget* parent)
   }
 
   ui->imageLabel->setPixmap(QPixmap::fromImage(qimg));
+}
+
+void MainWindow::changeColor(const QString& newColor)
+{
+  auto colorStr = newColor.toStdString();
+
+  if (Rayon::colors().count(colorStr))
+  {
+    _material->setColor(Rayon::colors().at(colorStr));
+    refreshRender();
+  }
 }
 
 MainWindow::~MainWindow()

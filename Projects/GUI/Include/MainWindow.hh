@@ -5,6 +5,11 @@
 
 #include "Rayon.hh"
 
+namespace Rayon
+{
+  class Material;
+}
+
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
@@ -19,11 +24,17 @@ class MainWindow : public QMainWindow
 public:
   MainWindow(QWidget* parent = nullptr);
   ~MainWindow();
-  void d();
 
 private:
-  Ui::MainWindow* ui;
-  Rayon::Rayon    _engine;
-  Rayon::Scene    _scene;
+  void refreshRender();
+
+public slots:
+  void changeColor(const QString& newColor);
+
+private:
+  Ui::MainWindow*  ui;
+  Rayon::Rayon     _engine;
+  Rayon::Scene     _scene;
+  Rayon::Material* _material;
 };
 #endif  // MAINWINDOW_HH
