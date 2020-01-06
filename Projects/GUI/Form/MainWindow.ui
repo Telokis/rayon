@@ -302,7 +302,7 @@
              <string/>
             </property>
             <property name="maximum">
-             <double>1.000000000000000</double>
+             <double>10.000000000000000</double>
             </property>
             <property name="singleStep">
              <double>0.050000000000000</double>
@@ -331,7 +331,7 @@
              <string/>
             </property>
             <property name="maximum">
-             <double>1.000000000000000</double>
+             <double>10.000000000000000</double>
             </property>
             <property name="singleStep">
              <double>0.050000000000000</double>
@@ -400,7 +400,7 @@
    <sender>colorComboBox</sender>
    <signal>currentTextChanged(QString)</signal>
    <receiver>MainWindow</receiver>
-   <slot>changeColor(QString)</slot>
+   <slot>colorChanged(QString)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>1142</x>
@@ -412,8 +412,110 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>reflexionSpinBox</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>reflexionChanged(double)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1178</x>
+     <y>207</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>625</x>
+     <y>409</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>transparencySpinBox</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>transparencyChanged(double)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>refractionSpinBox</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>refractionChanged(double)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>glossinessSpinBox</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>glossinessChanged(double)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>shininessSpinBox</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>shininessChanged(double)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ambientSpinBox</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>ambientChanged(double)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
-  <slot>changeColor(QString)</slot>
+  <slot>colorChanged(QString)</slot>
+  <slot>reflexionChanged(double)</slot>
+  <slot>transparencyChanged(double)</slot>
+  <slot>refractionChanged(double)</slot>
+  <slot>glossinessChanged(double)</slot>
+  <slot>shininessChanged(double)</slot>
+  <slot>ambientChanged(double)</slot>
  </slots>
 </ui>

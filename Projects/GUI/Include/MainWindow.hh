@@ -29,7 +29,13 @@ private:
   void refreshRender();
 
 public slots:
-  void changeColor(const QString& newColor);
+  void colorChanged(const QString& newColor);
+  void reflexionChanged(double newReflexion);
+  void transparencyChanged(double newTransparency);
+  void refractionChanged(double newRefraction);
+  void glossinessChanged(double newGlossiness);
+  void shininessChanged(double newShininess);
+  void ambientChanged(double newAmbient);
 
 private:
   Ui::MainWindow*  ui;

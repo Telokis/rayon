@@ -12,6 +12,14 @@
 
 auto rawScene = R"json(
 {
+  "cubemap": {
+    "back": "./files/textures/cubemap/stormydays_bk.tga",
+    "down": "./files/textures/cubemap/stormydays_dn.tga",
+    "front": "./files/textures/cubemap/stormydays_ft.tga",
+    "left": "./files/textures/cubemap/stormydays_lf.tga",
+    "right": "./files/textures/cubemap/stormydays_rt.tga",
+    "up": "./files/textures/cubemap/stormydays_up.tga"
+  },
 	"eye" : 
 	{
 		"position" : 
@@ -111,7 +119,7 @@ void MainWindow::refreshRender()
   ui->imageLabel->setPixmap(QPixmap::fromImage(qimg));
 }
 
-void MainWindow::changeColor(const QString& newColor)
+void MainWindow::colorChanged(const QString& newColor)
 {
   auto colorStr = newColor.toStdString();
 
@@ -120,6 +128,42 @@ void MainWindow::changeColor(const QString& newColor)
     _material->setColor(Rayon::colors().at(colorStr));
     refreshRender();
   }
+}
+
+void MainWindow::reflexionChanged(double newReflexion)
+{
+  _material->setReflexion(newReflexion);
+  refreshRender();
+}
+
+void MainWindow::transparencyChanged(double newTransparency)
+{
+  _material->setTransparency(newTransparency);
+  refreshRender();
+}
+
+void MainWindow::refractionChanged(double newRefraction)
+{
+  _material->setRefraction(newRefraction);
+  refreshRender();
+}
+
+void MainWindow::glossinessChanged(double newGlossiness)
+{
+  _material->setGlossiness(newGlossiness);
+  refreshRender();
+}
+
+void MainWindow::shininessChanged(double newShininess)
+{
+  _material->setShininess(newShininess);
+  refreshRender();
+}
+
+void MainWindow::ambientChanged(double newAmbient)
+{
+  _material->setAmbient(newAmbient);
+  refreshRender();
 }
 
 MainWindow::~MainWindow()
