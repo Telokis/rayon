@@ -41,14 +41,12 @@ auto rawScene = R"json(
 }
 )json";
 
-static const auto repetitions = 100;
-
 static void BM_RayonRunBasic_NoPreprocessing(benchmark::State& state)
 {
   Rayon::Config   config(1024, 1024, 4);
   Rayon::RawImage img;
   Rayon::Scene    scene;
-  Rayon::Rayon    engine(config);
+  Rayon::Rayon    engine(config.setSilent(true));
 
   Rayon::registry().registerDefaults();
   Rayon::readSceneFromString(scene, rawScene);
@@ -57,7 +55,7 @@ static void BM_RayonRunBasic_NoPreprocessing(benchmark::State& state)
   for (auto _ : state)
     engine.run(img, scene, false);
 }
-BENCHMARK(BM_RayonRunBasic_NoPreprocessing)->Repetitions(repetitions);
+BENCHMARK(BM_RayonRunBasic_NoPreprocessing)->UseRealTime()->Unit(benchmark::kMillisecond);
 
 static void BM_RayonRunBasic_WithPreprocessing(benchmark::State& state)
 {
@@ -72,7 +70,7 @@ static void BM_RayonRunBasic_WithPreprocessing(benchmark::State& state)
   for (auto _ : state)
     engine.run(img, scene, true);
 }
-BENCHMARK(BM_RayonRunBasic_WithPreprocessing)->Repetitions(repetitions);
+BENCHMARK(BM_RayonRunBasic_WithPreprocessing)->UseRealTime()->Unit(benchmark::kMillisecond);
 
 static void BM_RayonRunBasic_OneThread(benchmark::State& state)
 {
@@ -88,7 +86,23 @@ static void BM_RayonRunBasic_OneThread(benchmark::State& state)
   for (auto _ : state)
     engine.run(img, scene, false);
 }
-BENCHMARK(BM_RayonRunBasic_OneThread)->Repetitions(repetitions);
+BENCHMARK(BM_RayonRunBasic_OneThread)->UseRealTime()->Unit(benchmark::kMillisecond);
+
+static void BM_RayonRunBasic_OneThreadForced(benchmark::State& state)
+{
+  Rayon::Config   config(1024, 1024, 1);
+  Rayon::RawImage img;
+  Rayon::Scene    scene;
+  Rayon::Rayon    engine(config.setSilent(true).setForceUseThread(true));
+
+  Rayon::registry().registerDefaults();
+  Rayon::readSceneFromString(scene, rawScene);
+  scene.preprocess();
+
+  for (auto _ : state)
+    engine.run(img, scene, false);
+}
+BENCHMARK(BM_RayonRunBasic_OneThreadForced)->UseRealTime()->Unit(benchmark::kMillisecond);
 
 static void BM_RayonRunBasic_EightThread(benchmark::State& state)
 {
@@ -104,6 +118,6 @@ static void BM_RayonRunBasic_EightThread(benchmark::State& state)
   for (auto _ : state)
     engine.run(img, scene, false);
 }
-BENCHMARK(BM_RayonRunBasic_EightThread)->Repetitions(repetitions);
+BENCHMARK(BM_RayonRunBasic_EightThread)->UseRealTime()->Unit(benchmark::kMillisecond);
 
 BENCHMARK_MAIN();
