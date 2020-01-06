@@ -178,7 +178,7 @@ namespace Rayon
     start = std::chrono::steady_clock::now();
     std::vector<UniqueStat> stats;
 
-    if (jn > 1)
+    if (jn > 1 || _config.getForceUseThread())
     {
       runMultipleThreads(stats, jn, img, scene, width, height);
     }
