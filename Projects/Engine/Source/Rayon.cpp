@@ -126,6 +126,32 @@ namespace Rayon
     return run(img, _scene, preprocess);
   }
 
+  void runMultipleThreads(std::vector<UniqueStat>& stats,
+                          uint8                    jn,
+                          RawImage&                img,
+                          Scene&                   scene,
+                          uint32                   width,
+                          uint32                   height)
+  {
+    std::vector<std::thread> threads;
+    threads.reserve(jn);
+    stats.reserve(jn);
+
+    for (uint8 i = 0; i < jn; ++i)
+    {
+      uint32 xStart = i * width / jn;
+      uint32 xStop  = (i + 1) * width / jn;
+
+      auto stat = std::make_unique<Tools::Stat>();
+
+      threads.emplace_back(Worker(&img, xStart, xStop, stat.get()), width, height, &scene);
+      stats.emplace_back(std::move(stat));
+    }
+
+    for (auto&& thread : threads)
+      thread.join();
+  }
+
   int Rayon::run(RawImage& img, Scene& scene, bool preprocess)
   {
     auto        width  = _config.getWidth();
@@ -143,38 +169,35 @@ namespace Rayon
 
       if (!_config.getSilent())
       {
-      std::cout << "Preprocessing took " << Duration_t(end - start).count() << "s" << std::endl;
-    }
+        std::cout << "Preprocessing took " << Duration_t(end - start).count() << "s" << std::endl;
+      }
     }
 
     uint8 jn = _config.getThreadCount();
 
     start = std::chrono::steady_clock::now();
-    std::vector<std::thread> threads;
-    std::vector<UniqueStat>  stats;
-    threads.reserve(jn);
-    stats.reserve(jn);
+    std::vector<UniqueStat> stats;
 
-    for (uint8 i = 0; i < jn; ++i)
+    if (jn > 1)
     {
-      uint32 xStart = i * width / jn;
-      uint32 xStop  = (i + 1) * width / jn;
+      runMultipleThreads(stats, jn, img, scene, width, height);
+    }
+    else
+    {
+      auto stat   = std::make_unique<Tools::Stat>();
+      auto worker = Worker(&img, 0, width, stat.get());
 
-      auto stat = std::make_unique<Tools::Stat>();
+      worker(width, height, &scene);
 
-      threads.emplace_back(Worker(&img, xStart, xStop, stat.get()), width, height, &scene);
       stats.emplace_back(std::move(stat));
     }
-
-    for (auto&& thread : threads)
-      thread.join();
 
     end             = std::chrono::steady_clock::now();
     Duration_t diff = end - start;
 
     if (!_config.getSilent())
     {
-    printStats(stats, diff, width * height);
+      printStats(stats, diff, width * height);
     }
 
     return 0;
