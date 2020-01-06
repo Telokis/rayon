@@ -42,16 +42,16 @@ protected:                                                                    \
   type varName;                                                               \
                                                                               \
 public:                                                                       \
-  void set##prefix(type value);                                               \
-  type get##prefix() const;
+  className& set##prefix(type value);                                         \
+  type       get##prefix() const;
 
 #define RAYON_GENERATE_PROPERTY_DECLARATION_PUBLIC(className, type, varName, prefix) \
 public:                                                                              \
   type varName;                                                                      \
                                                                                      \
 public:                                                                              \
-  void set##prefix(type value);                                                      \
-  type get##prefix() const;
+  className& set##prefix(type value);                                                \
+  type       get##prefix() const;
 
 /**
  * @brief       Generates code for a property definition inside a class.
@@ -66,10 +66,10 @@ public:                                                                         
  *
  *  Will become :
  *	@code{.cpp}
- *      Entity  *Entity::setColor(int value)
+ *      Entity  &Entity::setColor(int value)
  *      {
  *          _color = value;
- *          return (this);
+ *          return *this;
  *      }
  *      int     Entity::getColor() const
  *      {
@@ -85,9 +85,10 @@ public:                                                                         
  * @see RAYON_GENERATE_PROPERTY_DECLARATION
  */
 #define RAYON_GENERATE_PROPERTY_DEFINITION(className, type, varName, prefix) \
-  void className::set##prefix(type value)                                    \
+  className& className::set##prefix(type value)                              \
   {                                                                          \
     varName = value;                                                         \
+    return *this;                                                            \
   }                                                                          \
   type className::get##prefix() const                                        \
   {                                                                          \
@@ -99,32 +100,37 @@ public:                                                                         
   Float_t      get##prefix##X() const;                                      \
   Float_t      get##prefix##Y() const;                                      \
   Float_t      get##prefix##Z() const;                                      \
-  void         set##prefix(const Vec_t&);                                   \
-  void         set##prefix(Float_t x, Float_t y, Float_t z);                \
-  void         set##prefix##X(Float_t value);                               \
-  void         set##prefix##Y(Float_t value);                               \
-  void         set##prefix##Z(Float_t value);
+  className&   set##prefix(const Vec_t&);                                   \
+  className&   set##prefix(Float_t x, Float_t y, Float_t z);                \
+  className&   set##prefix##X(Float_t value);                               \
+  className&   set##prefix##Y(Float_t value);                               \
+  className&   set##prefix##Z(Float_t value);
 
 #define RAYON_GENERATE_Vec_t_GETTERS_SETTERS_DEFINITION(className, varName, prefix) \
-  void className::set##prefix(const Vec_t& vec)                                     \
+  className& className::set##prefix(const Vec_t& vec)                               \
   {                                                                                 \
     varName = vec;                                                                  \
+    return *this;                                                                   \
   }                                                                                 \
-  void className::set##prefix(Float_t x, Float_t y, Float_t z)                      \
+  className& className::set##prefix(Float_t x, Float_t y, Float_t z)                \
   {                                                                                 \
     varName = std::move(Vec_t(x, y, z));                                            \
+    return *this;                                                                   \
   }                                                                                 \
-  void className::set##prefix##X(Float_t value)                                     \
+  className& className::set##prefix##X(Float_t value)                               \
   {                                                                                 \
     varName.x = (value);                                                            \
+    return *this;                                                                   \
   }                                                                                 \
-  void className::set##prefix##Y(Float_t value)                                     \
+  className& className::set##prefix##Y(Float_t value)                               \
   {                                                                                 \
     varName.y = (value);                                                            \
+    return *this;                                                                   \
   }                                                                                 \
-  void className::set##prefix##Z(Float_t value)                                     \
+  className& className::set##prefix##Z(Float_t value)                               \
   {                                                                                 \
     varName.z = (value);                                                            \
+    return *this;                                                                   \
   }                                                                                 \
   const Vec_t& className::get##prefix() const                                       \
   {                                                                                 \
