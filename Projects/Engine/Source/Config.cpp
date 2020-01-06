@@ -2,11 +2,11 @@
 
 namespace Rayon
 {
-  Config::Config() : width(1024), height(1024), threadsCount(4)
+  Config::Config() : Config(1024, 1024)
   {
   }
 
-  Config::Config(uint32 w, uint32 h) : width(w), height(h), threadsCount(4)
+  Config::Config(uint32 w, uint32 h) : Config(w, h, 4)
   {
   }
 
