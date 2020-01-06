@@ -46,6 +46,23 @@ void build(Solution& s)
     cli.Private += "Dependencies/glm/include"_id;
   }
 
+  auto& bench = rayon.addTarget<ExecutableTarget>("bench");
+  {
+    bench.CPPVersion = CPPLanguageStandard::CPP17;
+
+    // Files
+    bench.Private += "Projects/Bench/Source/.*"_rr;
+    bench.Private += "Projects/Engine/Include/.*"_rr;
+    bench.Private += "Dependencies/json/Json-forwards.h";
+
+    // Dependencies
+    bench.Private += engine;
+    bench.Private += "pub.telokis.github.google.benchmark-1.5.0"_dep;
+
+    // Include directories
+    bench.Private += "Dependencies/glm/include"_id;
+  }
+
   auto& gui = rayon.addTarget<ExecutableTarget>("gui");
   {
     gui.CPPVersion = CPPLanguageStandard::CPP17;
