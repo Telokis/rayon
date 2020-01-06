@@ -22,6 +22,7 @@ namespace Rayon
     RAYON_GENERATE_PROPERTY_DECLARATION_PUBLIC(Config, uint32, height, Height);
     RAYON_GENERATE_PROPERTY_DECLARATION_PUBLIC(Config, uint32, threadsCount, ThreadCount);
     RAYON_GENERATE_PROPERTY_DECLARATION_PUBLIC(Config, bool, silent, Silent);
+    RAYON_GENERATE_PROPERTY_DECLARATION_PUBLIC(Config, bool, forceUseThread, ForceUseThread);
   };
 
 }  // namespace Rayon
