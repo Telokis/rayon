@@ -57,6 +57,11 @@ namespace Rayon
     return _material;
   }
 
+  Material* Object::getMaterialPtr()
+  {
+    return &_material;
+  }
+
   RTShape* Object::getShape()
   {
     return _shape;

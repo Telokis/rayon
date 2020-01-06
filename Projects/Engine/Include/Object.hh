@@ -26,6 +26,7 @@ namespace Rayon
   public:
     const RTShape* getShape() const;
     const Material getMaterial() const;
+    Material*      getMaterialPtr();
     RTShape*       getShape();
 
     void setShape(RTShape* shape);
