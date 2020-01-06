@@ -140,7 +140,11 @@ namespace Rayon
       start = std::chrono::steady_clock::now();
       scene.preprocess();
       end = std::chrono::steady_clock::now();
+
+      if (!_config.getSilent())
+      {
       std::cout << "Preprocessing took " << Duration_t(end - start).count() << "s" << std::endl;
+    }
     }
 
     uint8 jn = _config.getThreadCount();
@@ -168,7 +172,10 @@ namespace Rayon
     end             = std::chrono::steady_clock::now();
     Duration_t diff = end - start;
 
+    if (!_config.getSilent())
+    {
     printStats(stats, diff, width * height);
+    }
 
     return 0;
   }
