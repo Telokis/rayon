@@ -23,6 +23,8 @@
 #include "Version.hh"
 #include "Worker.hh"
 
+using TimePoint_t = std::chrono::steady_clock::time_point;
+
 struct dotted : std::numpunct<char>
 {
   char do_thousands_sep() const
@@ -126,19 +128,18 @@ namespace Rayon
 
   int Rayon::run(RawImage& img, Scene& scene, bool preprocess)
   {
-    auto width  = _config.getWidth();
-    auto height = _config.getHeight();
+    auto        width  = _config.getWidth();
+    auto        height = _config.getHeight();
+    TimePoint_t start;
+    TimePoint_t end;
 
     img.resize(width, height);
 
-    auto start = std::chrono::steady_clock::now();
     if (preprocess)
     {
+      start = std::chrono::steady_clock::now();
       scene.preprocess();
-    }
-    auto end = std::chrono::steady_clock::now();
-    if (preprocess)
-    {
+      end = std::chrono::steady_clock::now();
       std::cout << "Preprocessing took " << Duration_t(end - start).count() << "s" << std::endl;
     }
 
