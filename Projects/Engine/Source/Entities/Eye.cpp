@@ -18,12 +18,12 @@ namespace Rayon
   {
   }
 
-  void Eye::read(const Json::Value& root)
+  void Eye::read(const YAML::Node& root)
   {
     Entity::read(root);
   }
 
-  void Eye::write(Json::Value& root) const
+  void Eye::write(YAML::Node& root) const
   {
     Entity::write(root);
   }

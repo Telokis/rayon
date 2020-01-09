@@ -1,6 +1,6 @@
 #include "Entities/Shapes/Rectangle.hh"
 
-#include <Json.h>
+#include <yaml-cpp/yaml.h>
 
 #include "SceneParse.hh"
 
@@ -74,14 +74,14 @@ namespace Rayon
   RAYON_GENERATE_PROPERTY_DEFINITION(Rectangle, Float_t, _width, Width);
   RAYON_GENERATE_PROPERTY_DEFINITION(Rectangle, Float_t, _height, Height);
 
-  void Rectangle::read(const Json::Value& root)
+  void Rectangle::read(const YAML::Node& root)
   {
     ParentType::read(root);
     readVal(root, "width", _width, 1);
     readVal(root, "height", _height, 1);
   }
 
-  void Rectangle::write(Json::Value& root) const
+  void Rectangle::write(YAML::Node& root) const
   {
     ParentType::write(root);
     writeVal(root, "width", _width, 1);

@@ -4,42 +4,23 @@
 #include "Registry.hh"
 #include "SceneParse.hh"
 
-auto rawScene = R"json(
-{
-	"eye" :
-	{
-		"position" :
-		{
-			"z" : -5
-		}
-	},
-	"lights" :
-	[
-		{
-			"position" :
-			{
-				"x" : 2,
-				"y" : 2.8,
-				"z" : -3
-			},
-			"color":"white",
-			"type" : "Sun"
-		}
-	],
-	"objects" :
-	[
-
-		{
-			"material" :
-			{
-				"color" : "aqua"
-			},
-			"radius":1,
-			"type" : "Sphere"
-		}
-	]
-}
-)json";
+auto rawScene = R"rawScene(
+eye:
+  position:
+    z: -5
+lights:
+  - position:
+      x: 2
+      y: 2.8
+      z: -3
+    color: white
+    type: Sun
+objects:
+  - material:
+      color: aqua
+    radius: 1
+    type: Sphere
+)rawScene";
 
 static void BM_RayonRunBasic_NoPreprocessing(benchmark::State& state)
 {

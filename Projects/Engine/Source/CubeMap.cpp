@@ -1,11 +1,12 @@
 #include "CubeMap.hh"
 
-#include <Json.h>
+#include <yaml-cpp/yaml.h>
 
 #include <iostream>
 #include <regex>
 
 #include "ImageFileHandlers/ImageFileHandler.hh"
+#include "SceneParse.hh"
 
 namespace Rayon
 {
@@ -187,13 +188,13 @@ namespace Rayon
     return res;
   }
 
-  void CubeMap::read(const Json::Value& root)
+  void CubeMap::read(const YAML::Node& root)
   {
     for (auto it = root.begin(); it != root.end(); ++it)
     {
-      const std::string& key = it.key().asString();
+      const std::string& key = it->first.as<std::string>();
 
-      if (!it->isString())
+      if (!isString(it->second))
       {
         std::cout << "[Warning] Non string path found for cubemap. Skipping...\n";
       }
@@ -203,12 +204,12 @@ namespace Rayon
       }
       else
       {
-        loadSide(strToSide.at(key), it->asString());
+        loadSide(strToSide.at(key), it->second.as<std::string>());
       }
     }
   }
 
-  void CubeMap::write(Json::Value& root) const
+  void CubeMap::write(YAML::Node& root) const
   {
     for (auto i = 0u; i < _paths.size(); ++i)
     {

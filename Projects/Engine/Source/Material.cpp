@@ -1,6 +1,6 @@
 #include "Material.hh"
 
-#include <Json.h>
+#include <yaml-cpp/yaml.h>
 
 #include "SceneParse.hh"
 
@@ -70,20 +70,23 @@ namespace Rayon
     return false;
   }
 
-  void Material::read(const Json::Value& root)
+  void Material::read(const YAML::Node& root)
   {
-    if (root.isMember("flags") && root["flags"].isArray())
+    if (root["flags"] && root["flags"].IsSequence())
     {
       _flags.reset();
-      const Json::Value& flags = root["flags"];
-      for (const Json::Value& flag : flags)
+      const YAML::Node& flags = root["flags"];
+
+      for (const YAML::Node& flag : flags)
       {
-        if (strToFlag.count(flag.asString()))
-          setFlag(strToFlag.at(flag.asString()));
+        if (strToFlag.count(flag.as<std::string>()))
+          setFlag(strToFlag.at(flag.as<std::string>()));
         else
-          std::cout << "[Warning] Ignoring unknown material flag `" << flag.asString() << "`.\n";
+          std::cout << "[Warning] Ignoring unknown material flag `" << flag.as<std::string>()
+                    << "`.\n";
       }
     }
+
     readVal(root, "color", _color, 0xffff0000);
     readVal(root, "reflexion", _reflexion, 0);
     readVal(root, "ambient", _ambient, -1);
@@ -93,15 +96,17 @@ namespace Rayon
     readVal(root, "shininess", _shininess, 0);
   }
 
-  void Material::write(Json::Value& root) const
+  void Material::write(YAML::Node& root) const
   {
     if (!_flags.none())
     {
-      Json::Value& flags = root["flags"];
+      YAML::Node& flags = root["flags"];
+
       for (const auto& pair : flagToStr)
         if (testFlag(pair.first))
-          flags.append(pair.second);
+          flags.push_back(pair.second);
     }
+
     writeVal(root, "color", _color, 0xffff0000);
     writeVal(root, "reflexion", _reflexion, 0);
     writeVal(root, "ambient", _ambient, -1);

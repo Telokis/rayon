@@ -18,7 +18,7 @@ namespace Rayon
     int  run(RawImage& img, Scene& scene, bool preprocess = false);
     int  run(RawImage& img, bool preprocess = true);
     void loadSceneFromFile(const std::string& filename);
-    void loadSceneFromString(const std::string& json);
+    void loadSceneFromString(const std::string& spec);
 
   private:
     Scene  _scene;

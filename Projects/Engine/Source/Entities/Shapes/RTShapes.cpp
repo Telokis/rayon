@@ -1,4 +1,4 @@
-#include <Json.h>
+#include <yaml-cpp/yaml.h>
 
 #include "Entities/Shapes/RTShape.hh"
 #include "SceneParse.hh"
@@ -21,12 +21,12 @@ namespace Rayon
   {
   }
 
-  void RTShape::read(const Json::Value& root)
+  void RTShape::read(const YAML::Node& root)
   {
     Entity::read(root);
   }
 
-  void RTShape::write(Json::Value& root) const
+  void RTShape::write(YAML::Node& root) const
   {
     Entity::write(root);
   }

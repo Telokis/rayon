@@ -3,7 +3,7 @@
 #ifndef RAYON_OBJECT_HH_
 #define RAYON_OBJECT_HH_
 
-#include <Json-forwards.h>
+#include <yaml-cpp/node/node.h>
 
 #include "Material.hh"
 
@@ -36,8 +36,8 @@ namespace Rayon
     bool inter(const Ray& ray, IntersectionData& data) const;
 
   public:
-    bool read(const Json::Value& root);
-    void write(Json::Value& root) const;
+    bool read(const YAML::Node& root);
+    void write(YAML::Node& root) const;
 
   private:
     RTShape* _shape;

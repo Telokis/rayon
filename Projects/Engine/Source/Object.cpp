@@ -1,11 +1,12 @@
 #include "Object.hh"
 
-#include <Json.h>
+#include <yaml-cpp/yaml.h>
 
 #include "Entities/Shapes/RTShape.hh"
 #include "IntersectionData.hh"
 #include "Ray.hh"
 #include "Registry.hh"
+#include "SceneParse.hh"
 
 namespace Rayon
 {
@@ -78,11 +79,11 @@ namespace Rayon
     _material = material;
   }
 
-  bool Object::read(const Json::Value& root)
+  bool Object::read(const YAML::Node& root)
   {
-    if (root.isMember("type") && root["type"].isString())
+    if (root["type"] && isString(root["type"]))
     {
-      std::string         name = root["type"].asString();
+      auto                name = root["type"].as<std::string>();
       const IMetaRTShape* meta = registry().getMetaRTShape(name);
 
       if (meta)
@@ -106,7 +107,7 @@ namespace Rayon
     return true;
   }
 
-  void Object::write(Json::Value& root) const
+  void Object::write(YAML::Node& root) const
   {
     _shape->write(root);
     _material.write(root["material"]);

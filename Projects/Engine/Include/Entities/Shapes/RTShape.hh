@@ -24,8 +24,8 @@ namespace Rayon
     virtual ~RTShape();
 
   public:
-    void read(const Json::Value& root) override;
-    void write(Json::Value& root) const override;
+    void read(const YAML::Node& root) override;
+    void write(YAML::Node& root) const override;
 
   public:
     virtual bool        inter(const Ray& ray, IntersectionData& data) const = 0;

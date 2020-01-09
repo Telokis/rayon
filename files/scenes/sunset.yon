@@ -1,236 +1,183 @@
-{
-    "cubemap": {
-        "back": "<scenePath>/../textures/cubemap/stormydays_bk.tga",
-        "down": "<scenePath>/../textures/cubemap/stormydays_dn.tga",
-        "front": "<scenePath>/../textures/cubemap/stormydays_ft.tga",
-        "left": "<scenePath>/../textures/cubemap/stormydays_lf.tga",
-        "right": "<scenePath>/../textures/cubemap/stormydays_rt.tga",
-        "up": "<scenePath>/../textures/cubemap/stormydays_up.tga"
-    },
-    "eye": {
-        "position": {
-            "x": 0,
-            "y": 4,
-            "z": -8
-        },
-        "rotation": {
-            "x": 20,
-            "y": 0,
-            "z": 0
-        }
-    },
-    "lights": [
-        {
-            "color": "white",
-            "position": {
-                "x": 1,
-                "y": 1,
-                "z": -5
-            },
-            "power": 0.5,
-            "type": "Sun"
-        },
-        {
-            "color": "white",
-            "position": {
-                "x": -1,
-                "y": 2,
-                "z": -4
-            },
-            "power": 0.5,
-            "type": "Sun"
-        },
-        {
-            "color": "white",
-            "position": {
-                "x": 1,
-                "y": 5,
-                "z": -3
-            },
-            "power": 0.5,
-            "type": "Sun"
-        }
-    ],
-    "objects": [
-        {
-            "depth": 1,
-            "height": 1,
-            "material": {
-                "ambient": 0,
-                "color": {
-                    "blue": 139,
-                    "green": 139,
-                    "red": 0
-                },
-                "glossiness": 0,
-                "reflexion": 0,
-                "refraction": 1,
-                "shininess": 0,
-                "transparency": 0
-            },
-            "position": {
-                "x": 0,
-                "y": 2.7,
-                "z": 2.5
-            },
-            "rotation": {
-                "x": 0,
-                "y": 45,
-                "z": 0
-            },
-            "type": "Box",
-            "width": 1
-        },
-        {
-            "depth": 1,
-            "height": 1,
-            "material": {
-                "ambient": 0,
-                "color": {
-                    "blue": 139,
-                    "green": 139,
-                    "red": 0
-                },
-                "glossiness": 0,
-                "reflexion": 0,
-                "refraction": 1,
-                "shininess": 0,
-                "transparency": 0
-            },
-            "position": {
-                "x": -1.5,
-                "y": 2.7,
-                "z": 2.5
-            },
-            "rotation": {
-                "x": 0,
-                "y": 225,
-                "z": 0
-            },
-            "type": "Box",
-            "width": 1
-        },
-        {
-            "depth": 1,
-            "height": 1,
-            "material": {
-                "ambient": 0,
-                "color": {
-                    "blue": 139,
-                    "green": 139,
-                    "red": 0
-                },
-                "glossiness": 0,
-                "reflexion": 0,
-                "refraction": 1,
-                "shininess": 0,
-                "transparency": 0
-            },
-            "position": {
-                "x": 1.5,
-                "y": 2.7,
-                "z": 2.5
-            },
-            "rotation": {
-                "x": 0,
-                "y": -45,
-                "z": 0
-            },
-            "type": "Box",
-            "width": 1
-        },
-        {
-            "material": {
-                "ambient": -1,
-                "color": "deeppink4",
-                "glossiness": 0,
-                "reflexion": 1,
-                "refraction": 1,
-                "shininess": 0,
-                "transparency": 0
-            },
-            "position": {
-                "x": 2.5,
-                "y": 0,
-                "z": 0
-            },
-            "radius": 1,
-            "rotation": {
-                "x": 0,
-                "y": 0,
-                "z": 0
-            },
-            "type": "Sphere"
-        },
-        {
-            "material": {
-                "ambient": 1,
-                "color": "deeppink4",
-                "flags": ["NoShading"],
-                "glossiness": 2.5,
-                "reflexion": 1,
-                "refraction": 1,
-                "shininess": 0,
-                "transparency": 0
-            },
-            "position": {
-                "x": -2.5,
-                "y": 0,
-                "z": 0
-            },
-            "radius": 1,
-            "rotation": {
-                "x": 0,
-                "y": 0,
-                "z": 0
-            },
-            "type": "Sphere"
-        },
-        {
-            "material": {
-                "ambient": -1,
-                "color": "deeppink4",
-                "flags": ["NoShadow"],
-                "glossiness": 0,
-                "reflexion": 0,
-                "refraction": 1,
-                "shininess": 0,
-                "transparency": 0
-            },
-            "position": {
-                "x": 0,
-                "y": 0,
-                "z": 5
-            },
-            "radius": 1,
-            "rotation": {
-                "x": 0,
-                "y": 0,
-                "z": 0
-            },
-            "type": "Sphere"
-        },
-        {
-            "material": {
-                "ambient": -1,
-                "color": "swimming pool",
-                "glossiness": 0,
-                "reflexion": 0.8,
-                "refraction": 1,
-                "shininess": 0,
-                "transparency": 0
-            },
-            "position": {
-                "x": 0,
-                "y": -0.8,
-                "z": 0
-            },
-            "rotation": {
-                "x": 0,
-                "y": 0,
-                "z": 0
-            },
-            "type": "Plane"
-        }
-    ]
-}
+cubemap:
+  back: "<scenePath>/../textures/cubemap/stormydays_bk.tga"
+  down: "<scenePath>/../textures/cubemap/stormydays_dn.tga"
+  front: "<scenePath>/../textures/cubemap/stormydays_ft.tga"
+  left: "<scenePath>/../textures/cubemap/stormydays_lf.tga"
+  right: "<scenePath>/../textures/cubemap/stormydays_rt.tga"
+  up: "<scenePath>/../textures/cubemap/stormydays_up.tga"
+eye:
+  position:
+    x: 0
+    y: 4
+    z: -8
+  rotation:
+    x: 20
+    y: 0
+    z: 0
+lights:
+  - color: white
+    position:
+      x: 1
+      y: 1
+      z: -5
+    power: 0.5
+    type: Sun
+  - color: white
+    position:
+      x: -1
+      y: 2
+      z: -4
+    power: 0.5
+    type: Sun
+  - color: white
+    position:
+      x: 1
+      y: 5
+      z: -3
+    power: 0.5
+    type: Sun
+objects:
+  - depth: 1
+    height: 1
+    material:
+      ambient: 0
+      color:
+        blue: 139
+        green: 139
+        red: 0
+      glossiness: 0
+      reflexion: 0
+      refraction: 1
+      shininess: 0
+      transparency: 0
+    position:
+      x: 0
+      y: 2.7
+      z: 2.5
+    rotation:
+      x: 0
+      y: 45
+      z: 0
+    type: Box
+    width: 1
+  - depth: 1
+    height: 1
+    material:
+      ambient: 0
+      color:
+        blue: 139
+        green: 139
+        red: 0
+      glossiness: 0
+      reflexion: 0
+      refraction: 1
+      shininess: 0
+      transparency: 0
+    position:
+      x: -1.5
+      y: 2.7
+      z: 2.5
+    rotation:
+      x: 0
+      y: 225
+      z: 0
+    type: Box
+    width: 1
+  - depth: 1
+    height: 1
+    material:
+      ambient: 0
+      color:
+        blue: 139
+        green: 139
+        red: 0
+      glossiness: 0
+      reflexion: 0
+      refraction: 1
+      shininess: 0
+      transparency: 0
+    position:
+      x: 1.5
+      y: 2.7
+      z: 2.5
+    rotation:
+      x: 0
+      y: -45
+      z: 0
+    type: Box
+    width: 1
+  - material:
+      ambient: -1
+      color: deeppink4
+      glossiness: 0
+      reflexion: 1
+      refraction: 1
+      shininess: 0
+      transparency: 0
+    position:
+      x: 2.5
+      y: 0
+      z: 0
+    radius: 1
+    rotation:
+      x: 0
+      y: 0
+      z: 0
+    type: Sphere
+  - material:
+      ambient: 1
+      color: deeppink4
+      flags:
+        - NoShading
+      glossiness: 2.5
+      reflexion: 1
+      refraction: 1
+      shininess: 0
+      transparency: 0
+    position:
+      x: -2.5
+      y: 0
+      z: 0
+    radius: 1
+    rotation:
+      x: 0
+      y: 0
+      z: 0
+    type: Sphere
+  - material:
+      ambient: -1
+      color: deeppink4
+      flags:
+        - NoShadow
+      glossiness: 0
+      reflexion: 0
+      refraction: 1
+      shininess: 0
+      transparency: 0
+    position:
+      x: 0
+      y: 0
+      z: 5
+    radius: 1
+    rotation:
+      x: 0
+      y: 0
+      z: 0
+    type: Sphere
+  - material:
+      ambient: -1
+      color: swimming pool
+      glossiness: 0
+      reflexion: 0.8
+      refraction: 1
+      shininess: 0
+      transparency: 0
+    position:
+      x: 0
+      y: -0.8
+      z: 0
+    rotation:
+      x: 0
+      y: 0
+      z: 0
+    type: Plane
