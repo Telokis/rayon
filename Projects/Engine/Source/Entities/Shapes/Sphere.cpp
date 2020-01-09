@@ -1,6 +1,6 @@
 #include "Entities/Shapes/Sphere.hh"
 
-#include <Json.h>
+#include <yaml-cpp/yaml.h>
 
 #include "SceneParse.hh"
 #include "SolverSecond.hh"
@@ -67,13 +67,13 @@ namespace Rayon
 
   RAYON_GENERATE_PROPERTY_DEFINITION(Sphere, Float_t, _radius, Radius);
 
-  void Sphere::read(const Json::Value& root)
+  void Sphere::read(const YAML::Node& root)
   {
     ParentType::read(root);
     readVal(root, "radius", _radius, 1);
   }
 
-  void Sphere::write(Json::Value& root) const
+  void Sphere::write(YAML::Node& root) const
   {
     ParentType::write(root);
     writeVal(root, "radius", _radius, 1);

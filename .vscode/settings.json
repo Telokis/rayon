@@ -4,7 +4,7 @@
   "C_Cpp.loggingLevel": "Warning",
   "workbench.colorTheme": "Default Dark+",
   "files.associations": {
-    "*.yon": "json",
+    "*.yon": "yaml",
     "*.ui": "xml",
     "*.qrc": "xml",
     "*.qss": "css",

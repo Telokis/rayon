@@ -1,6 +1,6 @@
 #include "Entities/Lights/RTLight.hh"
 
-#include <Json.h>
+#include <yaml-cpp/yaml.h>
 
 #include "Object.hh"
 #include "Scene.hh"
@@ -77,13 +77,13 @@ namespace Rayon
 
   RAYON_GENERATE_PROPERTY_DEFINITION(RTLight, Color, _color, Color);
 
-  void RTLight::read(const Json::Value& root)
+  void RTLight::read(const YAML::Node& root)
   {
     Entity::read(root);
     readVal(root, "color", _color, 0xffffffff);
   }
 
-  void RTLight::write(Json::Value& root) const
+  void RTLight::write(YAML::Node& root) const
   {
     Entity::write(root);
     writeVal(root, "color", _color, 0xffffffff);

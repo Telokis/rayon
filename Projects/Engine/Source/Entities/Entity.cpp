@@ -1,6 +1,6 @@
 #include "Entities/Entity.hh"
 
-#include <Json.h>
+#include <yaml-cpp/yaml.h>
 
 #include "SceneParse.hh"
 
@@ -70,13 +70,13 @@ namespace Rayon
     _indirectMatrix[2][2] = c.x * c.y;
   }
 
-  void Entity::read(const Json::Value& root)
+  void Entity::read(const YAML::Node& root)
   {
     readVal(root, "position", _pos, {0, 0, 0});
     readVal(root, "rotation", _rot, {0, 0, 0});
   }
 
-  void Entity::write(Json::Value& root) const
+  void Entity::write(YAML::Node& root) const
   {
     writeVal(root, "position", _pos, {0, 0, 0});
     writeVal(root, "rotation", _rot, {0, 0, 0});

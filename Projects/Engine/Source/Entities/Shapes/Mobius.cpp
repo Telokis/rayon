@@ -1,6 +1,6 @@
 #include "Entities/Shapes/Mobius.hh"
 
-#include <Json.h>
+#include <yaml-cpp/yaml.h>
 
 #include "Entities/Shapes/Triangle.hh"
 #include "KDTree.hh"
@@ -127,14 +127,14 @@ namespace Rayon
     _kdtree = build(_facets, 0);
   }
 
-  void Mobius::read(const Json::Value& root)
+  void Mobius::read(const YAML::Node& root)
   {
     ParentType::read(root);
     readVal(root, "torsion", _torsion, 1);
     readVal(root, "width", _width, 1);
   }
 
-  void Mobius::write(Json::Value& root) const
+  void Mobius::write(YAML::Node& root) const
   {
     ParentType::write(root);
     writeVal(root, "torsion", _torsion, 1);

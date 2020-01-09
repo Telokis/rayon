@@ -1,8 +1,7 @@
 #include "SceneParse.hh"
 
-#include <Json.h>
+#include <yaml-cpp/yaml.h>
 
-#include <boost/filesystem.hpp>
 #include <fstream>
 
 #include "Entities/Lights/RTLight.hh"
@@ -10,49 +9,33 @@
 #include "Registry.hh"
 #include "Scene.hh"
 
-namespace fs = boost::filesystem;
-
 namespace Rayon
 {
   namespace
   {
-    void parseJsonString(const std::string& content, Json::Value& root)
+    void parseSpecString(const std::string& content, YAML::Node& root)
     {
-      Json::Reader reader;
-
-      if (!reader.parse(content, root))
-        throw std::runtime_error("Error while parsing `" + content
-                                 + "`: " + reader.getFormattedErrorMessages());
+      root = YAML::Load(content);
     }
 
-    void parseJsonFile(const fs::path& path, Json::Value& root)
+    void parseSpecFile(const std::string& path, YAML::Node& root)
     {
-      std::string   str = path.string();
-      std::ifstream file(str);
-
-      if (!file.is_open())
-        throw std::runtime_error("Unable to open `" + str + "`");
-
-      Json::Reader reader;
-      if (!reader.parse(file, root))
-        throw std::runtime_error("Error while parsing `" + str
-                                 + "`: " + reader.getFormattedErrorMessages());
+      root = YAML::LoadFile(path);
     }
 
-    void writeJsonFile(const fs::path& path, Json::Value& root)
+    void writeSpecFile(const std::string& path, YAML::Node& root)
     {
-      std::string   str = path.string();
-      std::ofstream file(str);
+      std::ofstream file(path);
 
       if (!file.is_open())
-        throw std::runtime_error("Unable to open `" + str + "`");
+        throw std::runtime_error("Unable to open `" + path + "`");
 
       file << root;
     }
 
-    void populateScene(Scene& scene, const Json::Value& root, const std::string& filename = "")
+    void populateScene(Scene& scene, const YAML::Node& root, const std::string& filename = "")
     {
-      if (root.isMember("eye") && root["eye"].isObject())
+      if (root["eye"] && root["eye"].IsMap())
       {
         Eye eye;
 
@@ -60,7 +43,7 @@ namespace Rayon
         scene.setEye(eye);
       }
 
-      if (root.isMember("cubemap") && root["cubemap"].isObject())
+      if (root["cubemap"] && root["cubemap"].IsMap())
       {
         CubeMap cubemap;
 
@@ -69,11 +52,11 @@ namespace Rayon
         scene.setCubeMap(cubemap);
       }
 
-      if (root.isMember("objects") && root["objects"].isArray())
+      if (root["objects"] && root["objects"].IsSequence())
       {
-        const Json::Value& objects = root["objects"];
+        const YAML::Node& objects = root["objects"];
 
-        for (const Json::Value& object : objects)
+        for (const YAML::Node& object : objects)
         {
           Object obj;
 
@@ -84,15 +67,15 @@ namespace Rayon
         }
       }
 
-      if (root.isMember("lights") && root["lights"].isArray())
+      if (root["lights"] && root["lights"].IsSequence())
       {
-        const Json::Value& lights = root["lights"];
+        const YAML::Node& lights = root["lights"];
 
-        for (const Json::Value& light : lights)
+        for (const YAML::Node& light : lights)
         {
-          if (light.isMember("type") && light["type"].isString())
+          if (light["type"] && isString(light["type"]))
           {
-            std::string         name = light["type"].asString();
+            std::string         name = light["type"].as<std::string>();
             const IMetaRTLight* meta = registry().getMetaRTLight(name);
 
             if (meta)
@@ -116,84 +99,123 @@ namespace Rayon
     }
   }  // namespace
 
+  bool isString(const YAML::Node& node)
+  {
+    try
+    {
+      auto str = node.as<std::string>();
+      return true;
+    }
+    catch (...)
+    {
+      return false;
+    }
+  };
+
+  bool isUint32(const YAML::Node& node)
+  {
+    try
+    {
+      auto str = node.as<uint32>();
+      return true;
+    }
+    catch (...)
+    {
+      return false;
+    }
+  };
+
+  bool isDouble(const YAML::Node& node)
+  {
+    try
+    {
+      auto str = node.as<Float_t>();
+      return true;
+    }
+    catch (...)
+    {
+      return false;
+    }
+  };
+
   void readSceneFromFile(Scene& scene, const std::string& filename)
   {
-    Json::Value root;
+    YAML::Node root;
 
-    parseJsonFile(filename, root);
+    parseSpecFile(filename, root);
     populateScene(scene, root, filename);
   }
 
   void readSceneFromString(Scene& scene, const std::string& content)
   {
-    Json::Value root;
+    YAML::Node root;
 
-    parseJsonString(content, root);
+    parseSpecString(content, root);
     populateScene(scene, root);
   }
 
   void sceneWrite(const Scene& scene, const std::string& filename)
   {
-    Json::Value root;
+    YAML::Node root;
 
     scene.eye().write(root["eye"]);
     scene.cubemap().write(root["cubemap"]);
-    Json::Value& lights = root["lights"];
+    YAML::Node& lights = root["lights"];
 
     for (const auto& light : scene.lights())
     {
-      Json::Value val;
+      YAML::Node val;
       val["type"] = light->name();
       light->write(val);
-      lights.append(val);
+      lights.push_back(val);
     }
 
-    Json::Value& objects = root["objects"];
+    YAML::Node& objects = root["objects"];
     for (const Object* obj : scene.objects())
     {
-      Json::Value val;
+      YAML::Node val;
       val["type"] = obj->getShape()->name();
       obj->write(val);
-      objects.append(val);
+      objects.push_back(val);
     }
 
-    writeJsonFile(filename, root);
+    writeSpecFile(filename, root);
   }
 
   void materialRead(Material& material, const std::string& filename)
   {
-    Json::Value root;
+    YAML::Node root;
 
-    parseJsonFile(filename, root);
+    parseSpecFile(filename, root);
     material.read(root);
   }
 
   void materialWrite(const Material& material, const std::string& filename)
   {
-    Json::Value root;
+    YAML::Node root;
 
     material.write(root);
-    writeJsonFile(filename, root);
+    writeSpecFile(filename, root);
   }
 
   /*
    *  Write
    */
-  void writeVal(Json::Value& node, const std::string& name, const Float_t& val, const Float_t& def)
+  void writeVal(YAML::Node& node, const std::string& name, const Float_t& val, const Float_t& def)
   {
     node[name] = static_cast<double>(val);
   }
 
-  void writeVal(Json::Value& node, const std::string& name, const uint32& val, const uint32& def)
+  void writeVal(YAML::Node& node, const std::string& name, const uint32& val, const uint32& def)
   {
     node[name] = val;
   }
 
-  void writeVal(Json::Value& node, const std::string& name, const Color& color, const Color& def)
+  void writeVal(YAML::Node& node, const std::string& name, const Color& color, const Color& def)
   {
-    Json::Value& subNode = node[name];
-    const auto   value   = color.intValue();
-    const auto&  cols    = colors();
+    YAML::Node& subNode = node[name];
+    const auto  value   = color.intValue();
+    const auto& cols    = colors();
 
     for (const auto& pair : cols)
     {
@@ -209,9 +231,9 @@ namespace Rayon
     writeVal(subNode, "blue", uint32(color.blue()), uint32(def.blue()));
   }
 
-  void writeVal(Json::Value& node, const std::string& name, const Vec_t& vec, const Vec_t& def)
+  void writeVal(YAML::Node& node, const std::string& name, const Vec_t& vec, const Vec_t& def)
   {
-    Json::Value& subNode = node[name];
+    YAML::Node& subNode = node[name];
 
     writeVal(subNode, "x", vec.x, def.x);
     writeVal(subNode, "y", vec.y, def.y);
@@ -221,38 +243,38 @@ namespace Rayon
   /*
    *  Read
    */
-  void readVal(const Json::Value& parent, const std::string& name, uint32& val, const uint32& def)
+  void readVal(const YAML::Node& parent, const std::string& name, uint32& val, const uint32& def)
   {
-    if (parent.isMember(name) && parent[name].isUInt())
-      val = parent[name].asUInt();
+    if (parent[name] && isUint32(parent[name]))
+      val = parent[name].as<uint32>();
     else
       val = def;
   }
 
-  void readVal(const Json::Value& parent, const std::string& name, Float_t& val, const Float_t& def)
+  void readVal(const YAML::Node& parent, const std::string& name, Float_t& val, const Float_t& def)
   {
-    if (parent.isMember(name) && parent[name].isDouble())
-      val = parent[name].asDouble();
+    if (parent[name] && isDouble(parent[name]))
+      val = parent[name].as<Float_t>();
     else
       val = def;
   }
 
-  void readVal(const Json::Value& parent, const std::string& name, Color& color, const Color& def)
+  void readVal(const YAML::Node& parent, const std::string& name, Color& color, const Color& def)
   {
-    if (parent.isMember(name))
+    if (parent[name])
     {
-      if (parent[name].isObject())
+      if (parent[name].IsMap())
       {
-        const Json::Value& colorNode = parent[name];
+        const YAML::Node& colorNode = parent[name];
 
         readVal(colorNode, "red", color.red(), def.red());
         readVal(colorNode, "green", color.green(), def.green());
         readVal(colorNode, "blue", color.blue(), def.blue());
         return;
       }
-      else if (parent[name].isString())
+      else if (isString(parent[name]))
       {
-        const std::string str = parent[name].asString();
+        const std::string str = parent[name].as<std::string>();
 
         if (colors().count(str))
         {
@@ -266,11 +288,11 @@ namespace Rayon
     color = def;
   }
 
-  void readVal(const Json::Value& parent, const std::string& name, Vec_t& vec, const Vec_t& def)
+  void readVal(const YAML::Node& parent, const std::string& name, Vec_t& vec, const Vec_t& def)
   {
-    if (parent.isMember(name) && parent[name].isObject())
+    if (parent[name] && parent[name].IsMap())
     {
-      const Json::Value& node = parent[name];
+      const YAML::Node& node = parent[name];
 
       readVal(node, "x", vec.x, def.x);
       readVal(node, "y", vec.y, def.y);

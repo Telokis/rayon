@@ -1,6 +1,6 @@
 #include "Entities/Shapes/Plane.hh"
 
-#include <Json.h>
+#include <yaml-cpp/yaml.h>
 
 #include "SceneParse.hh"
 #include "SolverSecond.hh"
@@ -55,12 +55,12 @@ namespace Rayon
     _norm = Tools::Normalize(directRotation(Vec_t(0, 1, 0)));
   }
 
-  void Plane::read(const Json::Value& root)
+  void Plane::read(const YAML::Node& root)
   {
     ParentType::read(root);
   }
 
-  void Plane::write(Json::Value& root) const
+  void Plane::write(YAML::Node& root) const
   {
     ParentType::write(root);
   }

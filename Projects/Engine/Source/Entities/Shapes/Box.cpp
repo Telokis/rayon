@@ -1,6 +1,6 @@
 #include "Entities/Shapes/Box.hh"
 
-#include <Json.h>
+#include <yaml-cpp/yaml.h>
 
 #include "SceneParse.hh"
 
@@ -99,7 +99,7 @@ namespace Rayon
   RAYON_GENERATE_PROPERTY_DEFINITION(Box, Float_t, _height, Height);
   RAYON_GENERATE_PROPERTY_DEFINITION(Box, Float_t, _depth, Depth);
 
-  void Box::read(const Json::Value& root)
+  void Box::read(const YAML::Node& root)
   {
     ParentType::read(root);
     readVal(root, "width", _width, 1);
@@ -107,7 +107,7 @@ namespace Rayon
     readVal(root, "depth", _depth, 1);
   }
 
-  void Box::write(Json::Value& root) const
+  void Box::write(YAML::Node& root) const
   {
     ParentType::write(root);
     writeVal(root, "width", _width, 1);

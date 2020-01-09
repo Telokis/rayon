@@ -10,50 +10,30 @@
 #include "Registry.hh"
 #include "SceneParse.hh"
 
-auto rawScene = R"json(
-{
-  "cubemap": {
-    "back": "./files/textures/cubemap/stormydays_bk.tga",
-    "down": "./files/textures/cubemap/stormydays_dn.tga",
-    "front": "./files/textures/cubemap/stormydays_ft.tga",
-    "left": "./files/textures/cubemap/stormydays_lf.tga",
-    "right": "./files/textures/cubemap/stormydays_rt.tga",
-    "up": "./files/textures/cubemap/stormydays_up.tga"
-  },
-	"eye" : 
-	{
-		"position" : 
-		{
-			"z" : -5
-		}
-	},
-	"lights" : 
-	[
-		{
-			"position" : 
-			{
-				"x" : 2,
-				"y" : 2.8,
-				"z" : -3
-			},
-			"color":"white",
-			"type" : "Sun"
-		}
-	],
-	"objects" : 
-	[
-		
-		{
-			"material" : 
-			{
-				"color" : "aqua"
-			},
-			"radius":1,
-			"type" : "Sphere"
-		}
-	]
-}
-)json";
+auto rawScene = R"rawScene(
+cubemap:
+  back: "./files/textures/cubemap/stormydays_bk.tga"
+  down: "./files/textures/cubemap/stormydays_dn.tga"
+  front: "./files/textures/cubemap/stormydays_ft.tga"
+  left: "./files/textures/cubemap/stormydays_lf.tga"
+  right: "./files/textures/cubemap/stormydays_rt.tga"
+  up: "./files/textures/cubemap/stormydays_up.tga"
+eye:
+  position:
+    z: -5
+lights:
+  - position:
+      x: 2
+      y: 2.8
+      z: -3
+    color: white
+    type: Sun
+objects:
+  - material:
+      color: aqua
+    radius: 1
+    type: Sphere
+)rawScene";
 
 void populateColors(QComboBox* colorComboBox)
 {

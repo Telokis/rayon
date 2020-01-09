@@ -1,6 +1,6 @@
 #include "Entities/Lights/Sun.hh"
 
-#include <Json.h>
+#include <yaml-cpp/yaml.h>
 
 #include <iostream>
 
@@ -54,13 +54,13 @@ namespace Rayon
 
   RAYON_GENERATE_PROPERTY_DEFINITION(Sun, Float_t, _power, Power);
 
-  void Sun::read(const Json::Value& root)
+  void Sun::read(const YAML::Node& root)
   {
     ParentType::read(root);
     readVal(root, "power", _power, 0.5);
   }
 
-  void Sun::write(Json::Value& root) const
+  void Sun::write(YAML::Node& root) const
   {
     ParentType::write(root);
     writeVal(root, "power", _power, 0.5);

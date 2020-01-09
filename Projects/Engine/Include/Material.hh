@@ -3,7 +3,7 @@
 #ifndef RAYON_MATERIAL_HH_
 #define RAYON_MATERIAL_HH_
 
-#include <Json-forwards.h>
+#include <yaml-cpp/node/node.h>
 
 #include <bitset>
 #include <map>
@@ -40,8 +40,8 @@ namespace Rayon
     bool testFlag(RayType type) const;
 
   public:
-    void read(const Json::Value& root);
-    void write(Json::Value& root) const;
+    void read(const YAML::Node& root);
+    void write(YAML::Node& root) const;
 
     RAYON_GENERATE_PROPERTY_DECLARATION(Material, Color, _color, Color);
     RAYON_GENERATE_PROPERTY_DECLARATION(Material, Float_t, _reflexion, Reflexion);

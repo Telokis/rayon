@@ -1,6 +1,6 @@
 #include "Entities/Shapes/Triangle.hh"
 
-#include <Json.h>
+#include <yaml-cpp/yaml.h>
 
 #include "SceneParse.hh"
 #include "SolverSecond.hh"
@@ -76,7 +76,7 @@ namespace Rayon
     _norm = Tools::Normalize(_norm);
   }
 
-  void Triangle::read(const Json::Value& root)
+  void Triangle::read(const YAML::Node& root)
   {
     ParentType::read(root);
     readVal(root, "v0", _v[0], Vec_t(1, 0, 0));
@@ -84,7 +84,7 @@ namespace Rayon
     readVal(root, "v2", _v[2], Vec_t(0, 0, 1));
   }
 
-  void Triangle::write(Json::Value& root) const
+  void Triangle::write(YAML::Node& root) const
   {
     ParentType::write(root);
     writeVal(root, "v0", _v[0], Vec_t(1, 0, 0));

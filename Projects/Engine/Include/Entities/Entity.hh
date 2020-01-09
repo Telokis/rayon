@@ -1,7 +1,7 @@
 #ifndef RAYON_ENTITY_HH_
 #define RAYON_ENTITY_HH_
 
-#include <Json-forwards.h>
+#include <yaml-cpp/node/node.h>
 
 #include "Tools/Helpers.hh"
 
@@ -21,8 +21,8 @@ namespace Rayon
     void computeIndirectRotation();
 
   public:
-    virtual void read(const Json::Value& root);
-    virtual void write(Json::Value& root) const;
+    virtual void read(const YAML::Node& root);
+    virtual void write(YAML::Node& root) const;
 
   public:
     Vec_t directRotation(const Vec_t& Vec_t) const;

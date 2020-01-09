@@ -3,7 +3,7 @@
 #ifndef RAYON_CUBEMAP_HH_
 #define RAYON_CUBEMAP_HH_
 
-#include <Json-forwards.h>
+#include <yaml-cpp/yaml.h>
 
 #include <array>
 #include <map>
@@ -28,8 +28,8 @@ namespace Rayon
     Color interceptRay(const Ray& ray) const;
 
   public:
-    void read(const Json::Value& root);
-    void write(Json::Value& root) const;
+    void read(const YAML::Node& root);
+    void write(YAML::Node& root) const;
 
   protected:
     RAYON_GENERATE_PROPERTY_DECLARATION(CubeMap, std::string, _sourceFilename, SourceFilename);
