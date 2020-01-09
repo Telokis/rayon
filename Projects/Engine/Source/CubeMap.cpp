@@ -3,6 +3,7 @@
 #include <Json.h>
 
 #include <iostream>
+#include <regex>
 
 #include "ImageFileHandlers/ImageFileHandler.hh"
 
@@ -21,7 +22,7 @@ namespace Rayon
 #undef RAYON_DECLARE
 #define RAYON_DECLARE(side, name) \
   {                               \
-#name, Side::side             \
+    "" #name, Side::side          \
   }
   const std::map<std::string, Side> CubeMap::strToSide{RAYON_DECLARE(Front, front),
                                                        RAYON_DECLARE(Back, back),
@@ -31,36 +32,55 @@ namespace Rayon
                                                        RAYON_DECLARE(Down, down)};
 #undef RAYON_DECLARE
 
-  CubeMap::CubeMap() : _size(0)
+  CubeMap::CubeMap() : _size(0), _sourceFilename("")
   {
   }
 
   bool CubeMap::loadSide(Side side, const std::string& path)
   {
-    RawImage&    img  = _images.at(static_cast<size_t>(side));
-    std::string& file = _paths.at(static_cast<size_t>(side));
-    bool         res  = ImageFileHandler::readFromFileBasedOnExtension(path, img);
+    RawImage&    img         = _images.at(static_cast<size_t>(side));
+    std::string& file        = _paths.at(static_cast<size_t>(side));
+    std::string  alteredPath = path;
+
+    if (alteredPath.rfind("<scenePath>/", 0) == 0)
+    {
+      if (_sourceFilename != "")
+      {
+        auto sourceFileDir = std::string(_sourceFilename.data(), _sourceFilename.rfind("/"));
+
+        alteredPath = std::regex_replace(alteredPath, std::regex("<scenePath>"), sourceFileDir);
+        std::cout << "Altered CubeMap path. New path is " << alteredPath << "\n";
+      }
+      else
+      {
+        std::cout << "[Warning] No source file found. Replacing '<scenePath>' by '.'...\n";
+        alteredPath = std::regex_replace(alteredPath, std::regex("<scenePath>"), ".");
+      }
+    }
+
+    bool res = ImageFileHandler::readFromFileBasedOnExtension(alteredPath, img);
+
     if (!res)
     {
-      std::cout << "[Error]Unable to load image [" << path << "] for cubemap.\n";
+      std::cout << "[Error]Unable to load image [" << alteredPath << "] for cubemap.\n";
       return false;
     }
 
     if (img.width() != img.height())
     {
-      std::cout << "[Error]Image [" << path << "] must be a square for cubemap.\n";
+      std::cout << "[Error]Image [" << alteredPath << "] must be a square for cubemap.\n";
       return false;
     }
 
     if (_size != 0 && img.width() != _size)
     {
-      std::cout << "[Error]Image [" << path
+      std::cout << "[Error]Image [" << alteredPath
                 << "]. All sides of the cubemap must be the same size.\n";
       return false;
     }
 
     _size = img.width();
-    file  = path;
+    file  = alteredPath;
 
     return true;
   }
@@ -90,6 +110,7 @@ namespace Rayon
 
       Color ci1 = Color::interpolate(c1, c2, ucoef);
       Color ci2 = Color::interpolate(c3, c4, ucoef);
+
       return Color::interpolate(ci1, ci2, vcoef);
     }
   }  // namespace
@@ -171,12 +192,19 @@ namespace Rayon
     for (auto it = root.begin(); it != root.end(); ++it)
     {
       const std::string& key = it.key().asString();
-      if (strToSide.count(key) && it->isString())
-        loadSide(strToSide.at(key), it->asString());
-      else if (!it->isString())
+
+      if (!it->isString())
+      {
         std::cout << "[Warning] Non string path found for cubemap. Skipping...\n";
+      }
       else if (!strToSide.count(key))
+      {
         std::cout << "[Warning] Unknown side found for cubemap. Skipping...\n";
+      }
+      else
+      {
+        loadSide(strToSide.at(key), it->asString());
+      }
     }
   }
 
@@ -185,8 +213,13 @@ namespace Rayon
     for (auto i = 0u; i < _paths.size(); ++i)
     {
       const std::string& str = _paths[i];
+
       if (!str.empty())
+      {
         root[sideToStr.at(static_cast<Side>(i))] = str;
+      }
     }
   }
+
+  RAYON_GENERATE_PROPERTY_DEFINITION(CubeMap, std::string, _sourceFilename, SourceFilename);
 }  // namespace Rayon

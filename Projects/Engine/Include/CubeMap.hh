@@ -10,6 +10,7 @@
 
 #include "RawImage.hh"
 #include "Ray.hh"
+#include "Tools/CodeMacros.hh"
 
 namespace Rayon
 {
@@ -29,6 +30,9 @@ namespace Rayon
   public:
     void read(const Json::Value& root);
     void write(Json::Value& root) const;
+
+  protected:
+    RAYON_GENERATE_PROPERTY_DECLARATION(CubeMap, std::string, _sourceFilename, SourceFilename);
 
   private:
     std::array<RawImage, 6>    _images;

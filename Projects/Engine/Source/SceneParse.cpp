@@ -50,11 +50,12 @@ namespace Rayon
       file << root;
     }
 
-    void populateScene(Scene& scene, const Json::Value& root)
+    void populateScene(Scene& scene, const Json::Value& root, const std::string& filename = "")
     {
       if (root.isMember("eye") && root["eye"].isObject())
       {
         Eye eye;
+
         eye.read(root["eye"]);
         scene.setEye(eye);
       }
@@ -62,6 +63,8 @@ namespace Rayon
       if (root.isMember("cubemap") && root["cubemap"].isObject())
       {
         CubeMap cubemap;
+
+        cubemap.setSourceFilename(filename);
         cubemap.read(root["cubemap"]);
         scene.setCubeMap(cubemap);
       }
@@ -75,7 +78,9 @@ namespace Rayon
           Object obj;
 
           if (obj.read(object))
+          {
             scene.addObject(obj);
+          }
         }
       }
 
@@ -103,11 +108,12 @@ namespace Rayon
             }
           }
           else
+          {
             std::cout << "[Warning] Invalid `type` for light. Skipping...\n";
+          }
         }
       }
     }
-
   }  // namespace
 
   void readSceneFromFile(Scene& scene, const std::string& filename)
@@ -115,7 +121,7 @@ namespace Rayon
     Json::Value root;
 
     parseJsonFile(filename, root);
-    populateScene(scene, root);
+    populateScene(scene, root, filename);
   }
 
   void readSceneFromString(Scene& scene, const std::string& content)
