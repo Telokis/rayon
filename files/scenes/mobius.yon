@@ -1,11 +1,11 @@
 {
     "cubemap": {
-        "back": "./files/textures/cubemap/stormydays_bk.tga",
-        "down": "./files/textures/cubemap/stormydays_dn.tga",
-        "front": "./files/textures/cubemap/stormydays_ft.tga",
-        "left": "./files/textures/cubemap/stormydays_lf.tga",
-        "right": "./files/textures/cubemap/stormydays_rt.tga",
-        "up": "./files/textures/cubemap/stormydays_up.tga"
+        "back": "<scenePath>/../textures/cubemap/stormydays_bk.tga",
+        "down": "<scenePath>/../textures/cubemap/stormydays_dn.tga",
+        "front": "<scenePath>/../textures/cubemap/stormydays_ft.tga",
+        "left": "<scenePath>/../textures/cubemap/stormydays_lf.tga",
+        "right": "<scenePath>/../textures/cubemap/stormydays_rt.tga",
+        "up": "<scenePath>/../textures/cubemap/stormydays_up.tga"
     },
     "eye": {
         "position": {
