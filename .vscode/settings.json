@@ -7,6 +7,7 @@
     "*.yon": "json",
     "*.ui": "xml",
     "*.qrc": "xml",
-    "*.qss": "css"
+    "*.qss": "css",
+    "xstring": "cpp"
   }
 }
