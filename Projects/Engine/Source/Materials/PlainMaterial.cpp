@@ -1,4 +1,4 @@
-#include "Material.hh"
+#include "Materials/PlainMaterial.hh"
 
 #include <yaml-cpp/yaml.h>
 
@@ -10,7 +10,7 @@ namespace Rayon
   {                         \
     Flags::flag, #flag      \
   }
-  const std::map<Flags, std::string> Material::flagToStr{RAYON_DECLARE(NoShadow),
+  const std::map<Flags, std::string> PlainMaterial::flagToStr{RAYON_DECLARE(NoShadow),
                                                          RAYON_DECLARE(NoImage),
                                                          RAYON_DECLARE(NoReflection),
                                                          RAYON_DECLARE(NoTransparency),
@@ -20,14 +20,14 @@ namespace Rayon
   {                         \
 #flag, Flags::flag      \
   }
-  const std::map<std::string, Flags> Material::strToFlag{RAYON_DECLARE(NoShadow),
+  const std::map<std::string, Flags> PlainMaterial::strToFlag{RAYON_DECLARE(NoShadow),
                                                          RAYON_DECLARE(NoImage),
                                                          RAYON_DECLARE(NoReflection),
                                                          RAYON_DECLARE(NoTransparency),
                                                          RAYON_DECLARE(NoShading)};
 #undef RAYON_DECLARE
 
-  Material::Material()
+  PlainMaterial::PlainMaterial()
     : _color(0xffff0000)
     , _reflexion(0)
     , _transparency(0)
@@ -39,20 +39,21 @@ namespace Rayon
   {
   }
 
-  void Material::setFlag(Flags flag, bool value)
+  void PlainMaterial::setFlag(Flags flag, bool value)
   {
     _flags.set(static_cast<size_t>(flag), value);
   }
 
-  bool Material::testFlag(Flags flag) const
+  bool PlainMaterial::testFlag(Flags flag) const
   {
     return _flags.test(static_cast<size_t>(flag));
   }
 
-  bool Material::testFlag(RayType type) const
+  bool PlainMaterial::testFlag(RayType type) const
   {
     if (_flags.none())
       return false;
+
     switch (type)
     {
       case RayType::Shadow:
@@ -67,10 +68,11 @@ namespace Rayon
       case RayType::Primary:
         return testFlag(Flags::NoImage);
     }
+
     return false;
   }
 
-  void Material::read(const YAML::Node& root)
+  void PlainMaterial::read(const YAML::Node& root)
   {
     if (root["flags"] && root["flags"].IsSequence())
     {
@@ -80,10 +82,14 @@ namespace Rayon
       for (const YAML::Node& flag : flags)
       {
         if (strToFlag.count(flag.as<std::string>()))
+        {
           setFlag(strToFlag.at(flag.as<std::string>()));
+        }
         else
+        {
           std::cout << "[Warning] Ignoring unknown material flag `" << flag.as<std::string>()
                     << "`.\n";
+        }
       }
     }
 
@@ -96,7 +102,7 @@ namespace Rayon
     readVal(root, "shininess", _shininess, 0);
   }
 
-  void Material::write(YAML::Node& root) const
+  void PlainMaterial::write(YAML::Node& root) const
   {
     if (!_flags.none())
     {
@@ -116,11 +122,11 @@ namespace Rayon
     writeVal(root, "shininess", _shininess, 0);
   }
 
-  RAYON_GENERATE_PROPERTY_DEFINITION(Material, Color, _color, Color);
-  RAYON_GENERATE_PROPERTY_DEFINITION(Material, Float_t, _reflexion, Reflexion);
-  RAYON_GENERATE_PROPERTY_DEFINITION(Material, Float_t, _transparency, Transparency);
-  RAYON_GENERATE_PROPERTY_DEFINITION(Material, Float_t, _refraction, Refraction);
-  RAYON_GENERATE_PROPERTY_DEFINITION(Material, Float_t, _glossiness, Glossiness);
-  RAYON_GENERATE_PROPERTY_DEFINITION(Material, Float_t, _ambient, Ambient);
-  RAYON_GENERATE_PROPERTY_DEFINITION(Material, Float_t, _shininess, Shininess);
+  RAYON_GENERATE_PROPERTY_DEFINITION(PlainMaterial, Color, _color, Color);
+  RAYON_GENERATE_PROPERTY_DEFINITION(PlainMaterial, Float_t, _reflexion, Reflexion);
+  RAYON_GENERATE_PROPERTY_DEFINITION(PlainMaterial, Float_t, _transparency, Transparency);
+  RAYON_GENERATE_PROPERTY_DEFINITION(PlainMaterial, Float_t, _refraction, Refraction);
+  RAYON_GENERATE_PROPERTY_DEFINITION(PlainMaterial, Float_t, _glossiness, Glossiness);
+  RAYON_GENERATE_PROPERTY_DEFINITION(PlainMaterial, Float_t, _ambient, Ambient);
+  RAYON_GENERATE_PROPERTY_DEFINITION(PlainMaterial, Float_t, _shininess, Shininess);
 }  // namespace Rayon

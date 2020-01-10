@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef RAYON_MATERIAL_HH_
-#define RAYON_MATERIAL_HH_
+#ifndef RAYON_MATERIALS_PLAINMATERIAL_HH_
+#define RAYON_MATERIALS_PLAINMATERIAL_HH_
 
 #include <yaml-cpp/node/node.h>
 
@@ -24,16 +24,16 @@ namespace Rayon
     COUNT
   };
 
-  class Material
+  class PlainMaterial
   {
   public:
     static const std::map<Flags, std::string> flagToStr;
     static const std::map<std::string, Flags> strToFlag;
 
   public:
-    Material();
-    Material(const Material&) = default;
-    Material& operator=(const Material&) = default;
+    PlainMaterial();
+    PlainMaterial(const PlainMaterial&) = default;
+    PlainMaterial& operator=(const PlainMaterial&) = default;
 
     void setFlag(Flags flag, bool value = true);
     bool testFlag(Flags flag) const;
@@ -43,17 +43,17 @@ namespace Rayon
     void read(const YAML::Node& root);
     void write(YAML::Node& root) const;
 
-    RAYON_GENERATE_PROPERTY_DECLARATION(Material, Color, _color, Color);
-    RAYON_GENERATE_PROPERTY_DECLARATION(Material, Float_t, _reflexion, Reflexion);
-    RAYON_GENERATE_PROPERTY_DECLARATION(Material, Float_t, _transparency, Transparency);
-    RAYON_GENERATE_PROPERTY_DECLARATION(Material, Float_t, _refraction, Refraction);
-    RAYON_GENERATE_PROPERTY_DECLARATION(Material, Float_t, _glossiness, Glossiness);
-    RAYON_GENERATE_PROPERTY_DECLARATION(Material, Float_t, _ambient, Ambient);
-    RAYON_GENERATE_PROPERTY_DECLARATION(Material, Float_t, _shininess, Shininess);
+    RAYON_GENERATE_PROPERTY_DECLARATION(PlainMaterial, Color, _color, Color);
+    RAYON_GENERATE_PROPERTY_DECLARATION(PlainMaterial, Float_t, _reflexion, Reflexion);
+    RAYON_GENERATE_PROPERTY_DECLARATION(PlainMaterial, Float_t, _transparency, Transparency);
+    RAYON_GENERATE_PROPERTY_DECLARATION(PlainMaterial, Float_t, _refraction, Refraction);
+    RAYON_GENERATE_PROPERTY_DECLARATION(PlainMaterial, Float_t, _glossiness, Glossiness);
+    RAYON_GENERATE_PROPERTY_DECLARATION(PlainMaterial, Float_t, _ambient, Ambient);
+    RAYON_GENERATE_PROPERTY_DECLARATION(PlainMaterial, Float_t, _shininess, Shininess);
 
   private:
     std::bitset<static_cast<size_t>(Flags::COUNT)> _flags;
   };
 }  // namespace Rayon
 
-#endif  // RAYON_MATERIAL_HH_
+#endif  // RAYON_MATERIALS_PLAINMATERIAL_HH_

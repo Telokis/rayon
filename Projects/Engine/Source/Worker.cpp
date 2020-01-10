@@ -156,6 +156,7 @@ namespace Rayon
 
         return getColor(scene, ray, data, depth);
       }
+
       return scene.cubemap().interceptRay(ray);
     }
   }  // anonymous namespace
