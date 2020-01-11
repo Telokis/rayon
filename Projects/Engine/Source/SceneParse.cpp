@@ -182,22 +182,6 @@ namespace Rayon
     writeSpecFile(filename, root);
   }
 
-  void materialRead(Material& material, const std::string& filename)
-  {
-    YAML::Node root;
-
-    parseSpecFile(filename, root);
-    material.read(root);
-  }
-
-  void materialWrite(const Material& material, const std::string& filename)
-  {
-    YAML::Node root;
-
-    material.write(root);
-    writeSpecFile(filename, root);
-  }
-
   /*
    *  Write
    */

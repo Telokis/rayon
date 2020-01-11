@@ -10,7 +10,6 @@
 namespace Rayon
 {
   class Scene;
-  class Material;
   class Color;
 
   bool isString(const YAML::Node& node);
@@ -20,9 +19,6 @@ namespace Rayon
   void readSceneFromFile(Scene& scene, const std::string& filename);
   void readSceneFromString(Scene& scene, const std::string& content);
   void sceneWrite(const Scene& scene, const std::string& filename);
-
-  void materialRead(Material& material, const std::string& filename);
-  void materialWrite(const Material& material, const std::string& filename);
 
   void writeVal(YAML::Node& node, const std::string& name, const uint32& val, const uint32& def);
   void writeVal(YAML::Node& node, const std::string& name, const Float_t& val, const Float_t& def);

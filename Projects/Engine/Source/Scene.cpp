@@ -203,5 +203,30 @@ namespace Rayon
     _kdtree = build(_objects, 0);
   }
 
+  Color Scene::inter(const Ray& ray, uint8 depth, Tools::Stat* stat) const
+  {
+    IntersectionData data;
+
+    stat->rayCounts[ray.getType()] += 1;
+
+    data.stat = stat;
+    data.obj  = getNearest(ray, data);
+
+    if (data.obj)
+    {
+      stat->hits += 1;
+      data.point = ray.evaluate(data.k);
+      data.obj->getShape()->fillData(data);
+      data.ray = &ray;
+
+      if (data.isInside)
+        data.normal *= -1;
+
+      return data.obj->getMaterial()->getColor(*this, ray, data, depth);
+    }
+
+    return cubemap().interceptRay(ray);
+  }
+
   RAYON_GENERATE_PROPERTY_DEFINITION(Scene, Float_t, _ambient, Ambient);
 }  // namespace Rayon

@@ -188,6 +188,8 @@ namespace Rayon
      */
     void preprocess();
 
+    Color inter(const Ray& ray, uint8 depth, Tools::Stat* stat) const;
+
   private:
     ObjectsContainer
                      _infiniteObjects; /**< Collection of @ref Object * which have an infinite bbox */
