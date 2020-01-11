@@ -8,8 +8,8 @@
 #include <vector>
 
 #include "ImageFileHandlers/IImageFileHandler.hh"
-#include "MetaMaterials/IMetaRTMaterial.hh"
 #include "MetaRTLights/IMetaRTLight.hh"
+#include "MetaRTMaterials/IMetaRTMaterial.hh"
 #include "MetaRTShapes/IMetaRTShape.hh"
 
 namespace Rayon

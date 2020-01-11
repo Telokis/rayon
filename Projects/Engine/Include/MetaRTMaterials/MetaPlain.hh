@@ -3,7 +3,7 @@
 #ifndef RAYON_META_PLAIN_HH_
 #define RAYON_META_PLAIN_HH_
 
-#include "MetaMaterials/IMetaRTMaterial.hh"
+#include "MetaRTMaterials/IMetaRTMaterial.hh"
 
 namespace Rayon
 {

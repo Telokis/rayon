@@ -1,4 +1,4 @@
-#include "MetaMaterials/MetaPlain.hh"
+#include "MetaRTMaterials/MetaPlain.hh"
 
 #include "Materials/Plain.hh"
 

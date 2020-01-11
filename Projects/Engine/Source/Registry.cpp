@@ -7,8 +7,8 @@
 #include "ImageFileHandlers/ImageFileHandler_BMP.hh"
 #include "ImageFileHandlers/ImageFileHandler_PNG.hh"
 #include "ImageFileHandlers/ImageFileHandler_TGA.hh"
-#include "MetaMaterials/MetaPlain.hh"
 #include "MetaRTLights/MetaSun.hh"
+#include "MetaRTMaterials/MetaPlain.hh"
 #include "MetaRTShapes/MetaBox.hh"
 #include "MetaRTShapes/MetaMobius.hh"
 #include "MetaRTShapes/MetaPlane.hh"
@@ -21,7 +21,7 @@ namespace Rayon
 {
   Registry::Registry()
   {
-    registerMetaMaterial(new MetaPlain);
+    registerMetaRTMaterial(new MetaPlain);
   }
 
   Registry::~Registry()
