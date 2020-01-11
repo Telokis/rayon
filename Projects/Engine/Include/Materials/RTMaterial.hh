@@ -36,7 +36,7 @@ namespace Rayon
     static const std::map<std::string, Flags> strToFlag;
 
   public:
-    virtual ~RTMaterial() = 0;
+    virtual ~RTMaterial();
 
   public:
     virtual void read(const YAML::Node& root)  = 0;

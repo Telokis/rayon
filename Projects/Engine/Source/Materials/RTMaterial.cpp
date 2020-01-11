@@ -29,6 +29,10 @@ namespace Rayon
                                                            RAYON_DECLARE(NoShading)};
 #undef RAYON_DECLARE
 
+  RTMaterial::~RTMaterial()
+  {
+  }
+
   bool RTMaterial::testFlag(RayType type) const
   {
     switch (type)
