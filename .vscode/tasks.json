@@ -4,16 +4,20 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "Build with cppan",
-      "type": "shell",
-      "command": "cppan",
-      "args": ["--build", "."]
-    },
-    {
       "label": "Build with sw",
       "type": "shell",
       "command": "sw",
       "args": ["-config", "r", "build", "-output-dir", "bin"],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "Generate compdb file",
+      "type": "shell",
+      "command": "sw",
+      "args": ["--build-name", "rayon", "generate", "-g", "compdb"],
       "group": {
         "kind": "build",
         "isDefault": true

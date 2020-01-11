@@ -5,7 +5,7 @@
 
 #include "./ui_MainWindow.h"
 #include "Color.hh"
-#include "Material.hh"
+#include "Materials/Plain.hh"
 #include "Object.hh"
 #include "Registry.hh"
 #include "SceneParse.hh"
@@ -45,7 +45,7 @@ void populateColors(QComboBox* colorComboBox)
 
 void populateFlags(QLayout* parentLayout, QWidget* parent)
 {
-  for (auto&& flags : Rayon::Material::strToFlag)
+  for (auto&& flags : Rayon::RTMaterial::strToFlag)
   {
     auto* checkBox = new QCheckBox(parent);
 
@@ -65,7 +65,7 @@ MainWindow::MainWindow(QWidget* parent)
   Rayon::readSceneFromString(_scene, rawScene);
   _scene.preprocess();
 
-  _material = _scene.lastObject()->getMaterialPtr();
+  _material = static_cast<Rayon::Plain*>(_scene.lastObject()->getMaterial());
 
   ui->setupUi(this);
   populateColors(ui->colorComboBox);

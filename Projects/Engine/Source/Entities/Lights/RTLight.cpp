@@ -51,7 +51,7 @@ namespace Rayon
           if (data.k < 1.0)
           {
             data.stat->hits += 1;
-            coef *= object->getMaterial()->getPlain()->getTransparency();
+            coef *= object->getMaterial()->getTransparency(data);
           }
         }
 
@@ -66,14 +66,15 @@ namespace Rayon
                              const Color&            lightColor,
                              const IntersectionData& data) const
   {
-    if (data.obj->getMaterial()->getPlain()->getShininess() < Globals::Epsilon)
+    if (data.obj->getMaterial()->getShininess(data) < Globals::Epsilon)
       return 0;
 
     Vec_t   refLight = Tools::Reflect(lightVec, data.normal);
     Float_t dot      = Tools::DotProduct(data.ray->getDirection(), refLight);
 
     if (dot > Globals::Epsilon)
-      return lightColor * std::pow(dot, data.obj->getMaterial()->getPlain()->getShininess());
+      return lightColor * std::pow(dot, data.obj->getMaterial()->getShininess(data));
+
     return 0;
   }
 

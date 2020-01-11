@@ -14,12 +14,11 @@ namespace Rayon
   class Worker
   {
   public:
+    static Color inter(const Scene& scene, const Ray& ray, uint8 depth, Tools::Stat* stat);
+
+  public:
     Worker(RawImage* img, uint32 xStart, uint32 xStop, Tools::Stat* stat);
     void operator()(uint32 width, uint32 height, const Scene* scene_);
-
-  public:  // SLOTS
-    void pause();
-    void start();
 
   private:
     RawImage*    _img;

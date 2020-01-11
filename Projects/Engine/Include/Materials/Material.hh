@@ -23,28 +23,71 @@ namespace Rayon
       return false;
     }
 
+    Float_t getReflexionImpl(const IntersectionData& data) const
+    {
+      return 0;
+    }
+
+    Float_t getTransparencyImpl(const IntersectionData& data) const
+    {
+      return 0;
+    }
+
+    Float_t getRefractionImpl(const IntersectionData& data) const
+    {
+      return 1;
+    }
+
+    Float_t getGlossinessImpl(const IntersectionData& data) const
+    {
+      return 0;
+    }
+
+    Float_t getShininessImpl(const IntersectionData& data) const
+    {
+      return 0;
+    }
+
+  public:
+    Color getColor(const IntersectionData& data) const final
+    {
+      return static_cast<Derived const*>(this)->getColorImpl(data);
+    }
+
+    Float_t getReflexion(const IntersectionData& data) const final
+    {
+      return static_cast<Derived const*>(this)->getReflexionImpl(data);
+    }
+
+    Float_t getTransparency(const IntersectionData& data) const final
+    {
+      return static_cast<Derived const*>(this)->getTransparencyImpl(data);
+    }
+
+    Float_t getRefraction(const IntersectionData& data) const final
+    {
+      return static_cast<Derived const*>(this)->getRefractionImpl(data);
+    }
+
+    Float_t getGlossiness(const IntersectionData& data) const final
+    {
+      return static_cast<Derived const*>(this)->getGlossinessImpl(data);
+    }
+
+    Float_t getShininess(const IntersectionData& data) const final
+    {
+      return static_cast<Derived const*>(this)->getShininessImpl(data);
+    }
+
   public:
     RTMaterial* clone() const final
     {
       return new Derived(static_cast<Derived const&>(*this));
     }
 
-    const Plain* getPlain() const final
-    {
-      return static_cast<Derived const*>(this)->getPlainImpl();
-    }
-
     bool testFlag(Flags flag) const final
     {
       return static_cast<Derived const*>(this)->testFlagImpl(flag);
-    }
-
-    Color getColor(const Scene&            scene,
-                   const Ray&              ray,
-                   const IntersectionData& data,
-                   uint8                   depth) const final
-    {
-      return static_cast<Derived const*>(this)->getColorImpl(scene, ray, data, depth);
     }
 
     void preprocess() final

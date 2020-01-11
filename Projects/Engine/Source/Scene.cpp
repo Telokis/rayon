@@ -9,6 +9,7 @@
 #include "Materials/Plain.hh"
 #include "Object.hh"
 #include "Tools/Stat.hh"
+#include "Worker.hh"
 
 namespace Rayon
 {
@@ -173,7 +174,7 @@ namespace Rayon
 
   Color Scene::processLights(const IntersectionData& data, Color& specular) const
   {
-    const Color color = data.obj->getMaterial()->getPlain()->getColor();
+    const Color color = data.obj->getMaterial()->getColor(data);
     Color       result;
 
     for (size_t i = 0; i < _lights.size(); ++i)
@@ -188,6 +189,7 @@ namespace Rayon
     {
       object->getShape()->computeRotation();
       object->getShape()->preprocess();
+      object->getMaterial()->preprocess();
 
       if (object->getShape()->getBBox().isInfinite())
         _infiniteObjects.push_back(object);
@@ -206,27 +208,7 @@ namespace Rayon
 
   Color Scene::inter(const Ray& ray, uint8 depth, Tools::Stat* stat) const
   {
-    IntersectionData data;
-
-    stat->rayCounts[ray.getType()] += 1;
-
-    data.stat = stat;
-    data.obj  = getNearest(ray, data);
-
-    if (data.obj)
-    {
-      stat->hits += 1;
-      data.point = ray.evaluate(data.k);
-      data.obj->getShape()->fillData(data);
-      data.ray = &ray;
-
-      if (data.isInside)
-        data.normal *= -1;
-
-      return data.obj->getMaterial()->getColor(*this, ray, data, depth);
-    }
-
-    return cubemap().interceptRay(ray);
+    return Worker::inter(*this, ray, depth, stat);
   }
 
   RAYON_GENERATE_PROPERTY_DEFINITION(Scene, Float_t, _ambient, Ambient);

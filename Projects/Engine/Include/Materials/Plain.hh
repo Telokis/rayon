@@ -33,36 +33,34 @@ namespace Rayon
     void write(YAML::Node& root) const override;
 
   public:
-    Color        getColorImpl(const Scene&            scene,
-                              const Ray&              ray,
-                              const IntersectionData& data,
-                              uint8                   depth) const;
-    bool         testFlagImpl(Flags flag) const;
-    const Plain* getPlainImpl() const;
-
-  private:
-    Color   handleReflection(const Scene&            scene,
-                             const Ray&              ray,
-                             const IntersectionData& data,
-                             uint8                   depth) const;
-    Color   handleTransparency(const Scene&            scene,
-                               const Ray&              ray,
-                               const IntersectionData& data,
-                               uint8                   depth) const;
-    Float_t getFresnelReflectance(const IntersectionData& data, const Ray& ray) const;
-    Color   handleReflectionAndRefraction(const Scene&            scene,
-                                          const Ray&              ray,
-                                          const IntersectionData& data,
-                                          uint8                   depth) const;
+    bool testFlagImpl(Flags flag) const;
 
   protected:
-    RAYON_GENERATE_PROPERTY_DECLARATION(Plain, Color, _color, Color);
-    RAYON_GENERATE_PROPERTY_DECLARATION(Plain, Float_t, _reflexion, Reflexion);
-    RAYON_GENERATE_PROPERTY_DECLARATION(Plain, Float_t, _transparency, Transparency);
-    RAYON_GENERATE_PROPERTY_DECLARATION(Plain, Float_t, _refraction, Refraction);
-    RAYON_GENERATE_PROPERTY_DECLARATION(Plain, Float_t, _glossiness, Glossiness);
-    RAYON_GENERATE_PROPERTY_DECLARATION(Plain, Float_t, _ambient, Ambient);
-    RAYON_GENERATE_PROPERTY_DECLARATION(Plain, Float_t, _shininess, Shininess);
+    Color   _color;
+    Float_t _reflexion;
+    Float_t _transparency;
+    Float_t _refraction;
+    Float_t _glossiness;
+    Float_t _ambient;
+    Float_t _shininess;
+
+  public:
+    Plain& setColor(Color value);
+    Plain& setReflexion(Float_t value);
+    Plain& setTransparency(Float_t value);
+    Plain& setRefraction(Float_t value);
+    Plain& setGlossiness(Float_t value);
+    Plain& setAmbient(Float_t value);
+    Plain& setShininess(Float_t value);
+
+  public:
+    Color   getColorImpl(const IntersectionData& data) const;
+    Float_t getReflexionImpl(const IntersectionData& data) const;
+    Float_t getTransparencyImpl(const IntersectionData& data) const;
+    Float_t getRefractionImpl(const IntersectionData& data) const;
+    Float_t getGlossinessImpl(const IntersectionData& data) const;
+    Float_t getAmbientImpl(const IntersectionData& data) const;
+    Float_t getShininessImpl(const IntersectionData& data) const;
 
   private:
     std::bitset<static_cast<size_t>(Flags::COUNT)> _flags;

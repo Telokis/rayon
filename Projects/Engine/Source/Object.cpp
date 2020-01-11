@@ -123,9 +123,14 @@ namespace Rayon
 
         _material = new Plain;
         _material->read(root["material"]);
-
-        return false;
       }
+    }
+    else
+    {
+      std::cout << "[Warning] Unspecified Material. Forcing Plain...\n";
+
+      _material = new Plain;
+      _material->read(root["material"]);
     }
 
     return true;

@@ -8,9 +8,6 @@
 
 namespace Rayon
 {
-  static constexpr const uint8 MAX_DEPTH  = 5;
-  static constexpr const uint8 MAX_GLOSSY = 5;
-
   Plain::Plain()
     : _color(0xffff0000)
     , _reflexion(0)
@@ -83,149 +80,80 @@ namespace Rayon
     writeVal(root, "shininess", _shininess, 0);
   }
 
-  Color Plain::handleReflection(const Scene&            scene,
-                                const Ray&              ray,
-                                const IntersectionData& data,
-                                uint8                   depth) const
+  Plain& Plain::setColor(Color value)
   {
-    Ray reflected(RayType::Reflected, data.point, Tools::Reflect(ray.getDirection(), data.normal));
-
-    if (_glossiness > Globals::Epsilon)
-    {
-      Color   color;
-      Float_t g            = _glossiness;
-      Vec_t   reflectedDir = reflected.getDirection();
-
-      for (auto i = 0u; i < MAX_GLOSSY; ++i)
-      {
-        Vec_t tmp(((rand() % 100) - 50.0) / (100.0 * g),
-                  1.0 * ((rand() % 100) - 50.0) / (100.0 * g),
-                  ((rand() % 100) - 50.0) / (100.0 * g));
-        reflected.setDirection(reflectedDir + tmp);
-        reflected.normalize();
-        reflected.setOrigin(data.point + Globals::Epsilon * reflected.getDirection());
-        color += scene.inter(reflected, depth + 1, data.stat);
-      }
-
-      return color * (Float_t(1.0) / MAX_GLOSSY);
-    }
-
-    reflected.setOrigin(data.point + Globals::Epsilon * reflected.getDirection());
-    return scene.inter(reflected, depth + 1, data.stat);
+    _color = value;
+    return *this;
   }
 
-  Color Plain::handleTransparency(const Scene&            scene,
-                                  const Ray&              ray,
-                                  const IntersectionData& data,
-                                  uint8                   depth) const
+  Plain& Plain::setReflexion(Float_t value)
   {
-    Ray     refracted(RayType::Transparency, data.point, ray.getDirection());
-    Float_t eta = _refraction;
-
-    if (eta != 1 && eta > Globals::Epsilon)
-      refracted.setDirection(Tools::Refract(ray.getDirection(), data, eta));
-
-    refracted.setOrigin(data.point + Globals::Epsilon * refracted.getDirection());
-
-    return scene.inter(refracted, depth + 1, data.stat);
+    _reflexion = value;
+    return *this;
   }
 
-  // http://graphics.stanford.edu/courses/cs148-10-summer/docs/2006--degreve--reflection_refraction.pdf
-  Float_t Plain::getFresnelReflectance(const IntersectionData& data, const Ray& ray) const
+  Plain& Plain::setTransparency(Float_t value)
   {
-    Float_t n1 = _refraction;
-    Float_t n2 = 1.0;
-
-    Float_t cosI = -Tools::DotProduct(ray.getDirection(), data.normal);
-    if (cosI > Globals::Epsilon)
-    {
-      n2 = n1;
-      n1 = 1.0;
-    }
-    else
-      cosI *= -1;
-
-    Float_t n     = n1 / n2;
-    Float_t sin2T = n * n * (Float_t(1.0) - cosI * cosI);
-
-    if (sin2T > 1.0)
-      return 1.0;
-
-    using std::sqrt;
-    Float_t cosT = sqrt(1.0 - sin2T);
-    Float_t rPer = (n1 * cosI - n2 * cosT) / (n1 * cosI + n2 * cosT);
-    Float_t rPar = (n2 * cosI - n1 * cosT) / (n2 * cosI + n1 * cosT);
-
-    return (rPer * rPer + rPar * rPar) * Float_t(0.5);
+    _transparency = value;
+    return *this;
   }
 
-  Color Plain::handleReflectionAndRefraction(const Scene&            scene,
-                                             const Ray&              ray,
-                                             const IntersectionData& data,
-                                             uint8                   depth) const
+  Plain& Plain::setRefraction(Float_t value)
   {
-    bool hasReflexion    = _reflexion > Globals::Epsilon;
-    bool hasTransparency = _transparency > Globals::Epsilon;
-
-    if (!(hasReflexion || hasTransparency) || depth >= MAX_DEPTH)
-      return 0;
-
-    Float_t reflectance   = _reflexion;
-    Float_t transmittance = _transparency;
-
-    Color reflexion;
-    Color transparency;
-
-    if (hasReflexion && hasTransparency)
-    {
-      reflectance   = getFresnelReflectance(data, ray);
-      transmittance = 1.0 - reflectance;
-    }
-
-    if (hasReflexion && reflectance > Globals::Epsilon)
-      reflexion = handleReflection(scene, ray, data, depth) * reflectance;
-
-    if (hasTransparency && transmittance > Globals::Epsilon)
-      transparency = handleTransparency(scene, ray, data, depth) * transmittance;
-
-    return reflexion + transparency;
+    _refraction = value;
+    return *this;
   }
 
-  Color Plain::getColorImpl(const Scene&            scene,
-                            const Ray&              ray,
-                            const IntersectionData& data,
-                            uint8                   depth) const
+  Plain& Plain::setGlossiness(Float_t value)
   {
-    Color ambient = _color * scene.getAmbient();
-    Color lighting;
-    Color specular;
-
-    if (_ambient > -Globals::Epsilon)
-    {
-      ambient = _color * _ambient;
-    }
-
-    if (!testFlag(Flags::NoShading))
-    {
-      lighting = scene.processLights(data, specular);
-    }
-
-    Color   reflectionRefraction = handleReflectionAndRefraction(scene, ray, data, depth);
-    Float_t coef                 = Tools::Max(_transparency, _reflexion);
-
-    return specular + (ambient + lighting) * (1.0 - coef) + reflectionRefraction * coef;
+    _glossiness = value;
+    return *this;
   }
 
-  const Plain* Plain::getPlainImpl() const
+  Plain& Plain::setAmbient(Float_t value)
   {
-    return this;
+    _ambient = value;
+    return *this;
   }
 
-  RAYON_GENERATE_PROPERTY_DEFINITION(Plain, Color, _color, Color);
-  RAYON_GENERATE_PROPERTY_DEFINITION(Plain, Float_t, _reflexion, Reflexion);
-  RAYON_GENERATE_PROPERTY_DEFINITION(Plain, Float_t, _transparency, Transparency);
-  RAYON_GENERATE_PROPERTY_DEFINITION(Plain, Float_t, _refraction, Refraction);
-  RAYON_GENERATE_PROPERTY_DEFINITION(Plain, Float_t, _glossiness, Glossiness);
-  RAYON_GENERATE_PROPERTY_DEFINITION(Plain, Float_t, _ambient, Ambient);
-  RAYON_GENERATE_PROPERTY_DEFINITION(Plain, Float_t, _shininess, Shininess);
+  Plain& Plain::setShininess(Float_t value)
+  {
+    _shininess = value;
+    return *this;
+  }
+
+  Color Plain::getColorImpl(const IntersectionData&) const
+  {
+    return _color;
+  }
+
+  Float_t Plain::getReflexionImpl(const IntersectionData&) const
+  {
+    return _reflexion;
+  }
+
+  Float_t Plain::getTransparencyImpl(const IntersectionData&) const
+  {
+    return _transparency;
+  }
+
+  Float_t Plain::getRefractionImpl(const IntersectionData&) const
+  {
+    return _refraction;
+  }
+
+  Float_t Plain::getGlossinessImpl(const IntersectionData&) const
+  {
+    return _glossiness;
+  }
+
+  Float_t Plain::getAmbientImpl(const IntersectionData&) const
+  {
+    return _ambient;
+  }
+
+  Float_t Plain::getShininessImpl(const IntersectionData&) const
+  {
+    return _shininess;
+  }
 }  // namespace Rayon
