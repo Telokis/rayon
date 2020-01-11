@@ -50,7 +50,7 @@ namespace Rayon
   public:
     bool                           registerMetaRTMaterial(IMetaRTMaterial* meta);
     const IMetaRTMaterial*         getMetaRTMaterial(const std::string& id) const;
-    const MetaRTMaterialContainer& getMetaRTMaterialss() const;
+    const MetaRTMaterialContainer& getMetaRTMaterials() const;
 
   public:
     void registerDefaults();
