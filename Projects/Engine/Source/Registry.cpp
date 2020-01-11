@@ -107,28 +107,28 @@ namespace Rayon
     return _metaRTShapes;
   }
 
-  bool Registry::registerMetaMaterial(IMetaRTMaterial* meta)
+  bool Registry::registerMetaRTMaterial(IMetaRTMaterial* meta)
   {
     std::string id = meta->materialName();
 
-    if (_metaMaterials.count(id))
+    if (_metaRTMaterials.count(id))
       return false;
 
-    _metaMaterials[id].reset(meta);
+    _metaRTMaterials[id].reset(meta);
     return true;
   }
 
-  const IMetaRTMaterial* Registry::getMetaMaterial(const std::string& id) const
+  const IMetaRTMaterial* Registry::getMetaRTMaterial(const std::string& id) const
   {
-    if (!_metaMaterials.count(id))
+    if (!_metaRTMaterials.count(id))
       return nullptr;
 
-    return _metaMaterials.at(id).get();
+    return _metaRTMaterials.at(id).get();
   }
 
-  auto Registry::getMetaMaterialss() const -> const MetaMaterialContainer&
+  auto Registry::getMetaRTMaterials() const -> const MetaRTMaterialContainer&
   {
-    return _metaMaterials;
+    return _metaRTMaterials;
   }
 
 }  // namespace Rayon

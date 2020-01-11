@@ -25,8 +25,8 @@ namespace Rayon
     using MetaRTShapeType      = std::unique_ptr<IMetaRTShape>;
     using MetaRTShapeContainer = std::map<std::string, MetaRTShapeType>;
 
-    using MetaMaterialType      = std::unique_ptr<IMetaRTMaterial>;
-    using MetaMaterialContainer = std::map<std::string, MetaMaterialType>;
+    using MetaRTMaterialType      = std::unique_ptr<IMetaRTMaterial>;
+    using MetaRTMaterialContainer = std::map<std::string, MetaRTMaterialType>;
 
   public:
     Registry();
@@ -48,9 +48,9 @@ namespace Rayon
     const MetaRTShapeContainer& getMetaRTShapes() const;
 
   public:
-    bool                         registerMetaMaterial(IMetaRTMaterial* meta);
-    const IMetaRTMaterial*       getMetaMaterial(const std::string& id) const;
-    const MetaMaterialContainer& getMetaMaterialss() const;
+    bool                           registerMetaRTMaterial(IMetaRTMaterial* meta);
+    const IMetaRTMaterial*         getMetaRTMaterial(const std::string& id) const;
+    const MetaRTMaterialContainer& getMetaRTMaterialss() const;
 
   public:
     void registerDefaults();
@@ -59,7 +59,7 @@ namespace Rayon
     ImageFileHandlerContainer _imgHandlers;
     MetaRTLightContainer      _metaRTLights;
     MetaRTShapeContainer      _metaRTShapes;
-    MetaMaterialContainer     _metaMaterials;
+    MetaRTMaterialContainer   _metaRTMaterials;
   };
 
   inline Registry& registry()
