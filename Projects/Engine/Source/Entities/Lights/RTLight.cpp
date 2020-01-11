@@ -2,6 +2,7 @@
 
 #include <yaml-cpp/yaml.h>
 
+#include "Materials/Plain.hh"
 #include "Object.hh"
 #include "Scene.hh"
 #include "SceneParse.hh"

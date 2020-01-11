@@ -6,6 +6,7 @@
 #include "Helpers/inVector.hh"
 #include "IntersectionData.hh"
 #include "KDTree.hh"
+#include "Materials/Plain.hh"
 #include "Object.hh"
 #include "Tools/Stat.hh"
 
