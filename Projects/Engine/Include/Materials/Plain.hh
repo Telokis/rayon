@@ -33,11 +33,12 @@ namespace Rayon
     void write(YAML::Node& root) const override;
 
   public:
-    Color getColorImpl(const Scene&            scene,
-                       const Ray&              ray,
-                       const IntersectionData& data,
-                       uint8                   depth) const;
-    bool  testFlagImpl(Flags flag) const;
+    Color        getColorImpl(const Scene&            scene,
+                              const Ray&              ray,
+                              const IntersectionData& data,
+                              uint8                   depth) const;
+    bool         testFlagImpl(Flags flag) const;
+    const Plain* getPlainImpl() const;
 
   private:
     Color   handleReflection(const Scene&            scene,

@@ -29,7 +29,12 @@ namespace Rayon
       return new Derived(static_cast<Derived const&>(*this));
     }
 
-    bool testFlag(Flags flag) const
+    const Plain* getPlain() const final
+    {
+      return static_cast<Derived const*>(this)->getPlainImpl();
+    }
+
+    bool testFlag(Flags flag) const final
     {
       return static_cast<Derived const*>(this)->testFlagImpl(flag);
     }

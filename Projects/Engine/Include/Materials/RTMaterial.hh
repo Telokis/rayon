@@ -14,6 +14,7 @@ namespace Rayon
 {
   class Scene;
   class IntersectionData;
+  class Plain;
 }  // namespace Rayon
 
 namespace Rayon
@@ -45,14 +46,15 @@ namespace Rayon
     bool testFlag(RayType type) const;
 
   public:
-    virtual void        preprocess()                = 0;
-    virtual RTMaterial* clone() const               = 0;
-    virtual bool        testFlag(Flags flag) const  = 0;
-    virtual Color       getColor(const Scene&            scene,
-                                 const Ray&              ray,
-                                 const IntersectionData& data,
-                                 uint8                   depth) const = 0;
-    virtual const char* name() const                = 0;
+    virtual void         preprocess()                = 0;
+    virtual RTMaterial*  clone() const               = 0;
+    virtual const Plain* getPlain() const            = 0;
+    virtual bool         testFlag(Flags flag) const  = 0;
+    virtual Color        getColor(const Scene&            scene,
+                                  const Ray&              ray,
+                                  const IntersectionData& data,
+                                  uint8                   depth) const = 0;
+    virtual const char*  name() const                = 0;
   };
 }  // namespace Rayon
 

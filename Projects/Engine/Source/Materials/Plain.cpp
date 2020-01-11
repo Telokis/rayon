@@ -216,6 +216,11 @@ namespace Rayon
     return specular + (ambient + lighting) * (1.0 - coef) + reflectionRefraction * coef;
   }
 
+  const Plain* Plain::getPlainImpl() const
+  {
+    return this;
+  }
+
   RAYON_GENERATE_PROPERTY_DEFINITION(Plain, Color, _color, Color);
   RAYON_GENERATE_PROPERTY_DEFINITION(Plain, Float_t, _reflexion, Reflexion);
   RAYON_GENERATE_PROPERTY_DEFINITION(Plain, Float_t, _transparency, Transparency);

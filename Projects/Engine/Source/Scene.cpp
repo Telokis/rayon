@@ -172,7 +172,7 @@ namespace Rayon
 
   Color Scene::processLights(const IntersectionData& data, Color& specular) const
   {
-    const Color color = data.obj->getMaterial().getColor();
+    const Color color = data.obj->getMaterial()->getPlain()->getColor();
     Color       result;
 
     for (size_t i = 0; i < _lights.size(); ++i)
