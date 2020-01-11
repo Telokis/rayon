@@ -139,7 +139,7 @@ namespace Rayon
 
   bool Object::inter(const Ray& ray, IntersectionData& data) const
   {
-    if (getMaterial().testFlag(ray.getType()))
+    if (getMaterial()->testFlag(ray.getType()))
       return false;
 
     return _shape->inter(ray, data);
