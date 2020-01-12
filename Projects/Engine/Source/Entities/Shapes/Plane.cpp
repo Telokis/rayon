@@ -34,10 +34,10 @@ namespace Rayon
 
     if (Tools::IsZero(tmp_pos.y) || Tools::IsZero(tmp_dir.y))
       return false;
+
     data.k = -1 * tmp_pos.y / tmp_dir.y;
-    if (data.k < Globals::Epsilon)
-      return false;
-    return true;
+
+    return (data.k > Globals::Epsilon);
   }
 
   BoundingBox Plane::getBBoxImpl() const
@@ -47,7 +47,15 @@ namespace Rayon
 
   void Plane::fillDataImpl(IntersectionData& data) const
   {
-    data.normal = _norm;
+    static const constexpr int32 size(16);
+
+    data.normal     = _norm;
+    data.localPoint = data.point - _pos;
+    data.localPoint = indirectRotation(data.localPoint);
+
+    auto vec2 = Vec2_t(data.localPoint.x, data.localPoint.z);
+
+    data.uv = glm::fract(vec2 / Float_t(size));
   }
 
   void Plane::preprocessImpl()
