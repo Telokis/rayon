@@ -58,6 +58,11 @@ namespace Rayon
     {
       _scale = 1;
     }
+
+    for (auto&& tile : _tiles)
+    {
+      tile->preprocess();
+    }
   }
 
   const std::vector<RTMaterial*>& Checkerboard::getTiles() const
