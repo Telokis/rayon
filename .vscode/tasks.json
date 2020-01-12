@@ -7,7 +7,33 @@
       "label": "Build with sw",
       "type": "shell",
       "command": "sw",
-      "args": ["-config", "r", "build", "-output-dir", "bin"],
+      "args": [
+        "-config",
+        "r",
+        "--build-name",
+        "rayon",
+        "build",
+        "-output-dir",
+        "bin"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "Debug build with sw",
+      "type": "shell",
+      "command": "sw",
+      "args": [
+        "-config",
+        "d",
+        "--build-name",
+        "rayon",
+        "build",
+        "-output-dir",
+        "bin"
+      ],
       "group": {
         "kind": "build",
         "isDefault": true

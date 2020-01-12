@@ -8,23 +8,23 @@
       "name": "(Windows) Launch CLI",
       "type": "cppvsdbg",
       "request": "launch",
-      "program": "${workspaceFolder}/bin/cli.exe",
+      "program": "${workspaceFolder}/bin/rayon.cli-0.0.1.exe",
       "args": [
         "-w",
         "1024",
         "-j",
-        "8",
+        "1",
         "-h",
         "1024",
         "-o",
         "${workspaceFolder}/out.png",
-        "${workspaceFolder}/files/scenes/sunset.yon"
+        "${workspaceFolder}/files/scenes/texture.yon"
       ],
       "stopAtEntry": false,
       "cwd": "${workspaceFolder}",
       "environment": [],
       "externalConsole": false,
-      "preLaunchTask": "Build with sw"
+      "preLaunchTask": "Debug build with sw"
     },
     {
       "name": "(Windows) Launch GUI",
