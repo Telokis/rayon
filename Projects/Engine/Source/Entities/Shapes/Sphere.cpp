@@ -44,11 +44,15 @@ namespace Rayon
                               Pow2(tmp_pos.x) + Pow2(tmp_pos.y) + Pow2(tmp_pos.z) - Pow2(_radius)))
     {
       data.k = Tools::Smallest(results[0], results[1]);
+
       if (data.k == results[1])
         data.isInside = true;
+
       data.localPoint = tmp_pos + data.k * tmp_dir;
+
       return data.k != Globals::Invalid;
     }
+
     return false;
   }
 
@@ -63,6 +67,12 @@ namespace Rayon
   void Sphere::fillDataImpl(IntersectionData& data) const
   {
     data.normal = Tools::Normalize(data.point - _pos);
+
+    Float_t phi   = std::atan2(data.normal.z, data.normal.x);
+    Float_t theta = std::asin(data.normal.y);
+
+    data.uv.x = 1 - (phi + Globals::PI) / (2 * Globals::PI);
+    data.uv.y = (theta + Globals::PI / 2) / Globals::PI;
   }
 
   RAYON_GENERATE_PROPERTY_DEFINITION(Sphere, Float_t, _radius, Radius);

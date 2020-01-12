@@ -5,7 +5,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "(Windows) Launch - deprecated",
+      "name": "(Windows) Launch CLI",
       "type": "cppvsdbg",
       "request": "launch",
       "program": "${workspaceFolder}/bin/cli.exe",
@@ -24,7 +24,7 @@
       "cwd": "${workspaceFolder}",
       "environment": [],
       "externalConsole": false,
-      "preLaunchTask": "Build with cppan"
+      "preLaunchTask": "Build with sw"
     },
     {
       "name": "(Windows) Launch GUI",

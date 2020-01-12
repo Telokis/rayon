@@ -40,5 +40,8 @@ int main(int argc, char* argv[])
   MainWindow window;
   window.showMaximized();
 
+  std::cout << std::flush;
+  std::cerr << std::flush;
+
   return app.exec();
 }

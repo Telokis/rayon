@@ -9,6 +9,7 @@
 
 #include "ImageFileHandlers/IImageFileHandler.hh"
 #include "MetaRTLights/IMetaRTLight.hh"
+#include "MetaRTMaterials/IMetaRTMaterial.hh"
 #include "MetaRTShapes/IMetaRTShape.hh"
 
 namespace Rayon
@@ -23,6 +24,9 @@ namespace Rayon
 
     using MetaRTShapeType      = std::unique_ptr<IMetaRTShape>;
     using MetaRTShapeContainer = std::map<std::string, MetaRTShapeType>;
+
+    using MetaRTMaterialType      = std::unique_ptr<IMetaRTMaterial>;
+    using MetaRTMaterialContainer = std::map<std::string, MetaRTMaterialType>;
 
   public:
     Registry();
@@ -44,12 +48,18 @@ namespace Rayon
     const MetaRTShapeContainer& getMetaRTShapes() const;
 
   public:
+    bool                           registerMetaRTMaterial(IMetaRTMaterial* meta);
+    const IMetaRTMaterial*         getMetaRTMaterial(const std::string& id) const;
+    const MetaRTMaterialContainer& getMetaRTMaterials() const;
+
+  public:
     void registerDefaults();
 
   private:
     ImageFileHandlerContainer _imgHandlers;
     MetaRTLightContainer      _metaRTLights;
     MetaRTShapeContainer      _metaRTShapes;
+    MetaRTMaterialContainer   _metaRTMaterials;
   };
 
   inline Registry& registry()

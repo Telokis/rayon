@@ -7,7 +7,7 @@
 
 namespace Rayon
 {
-  class Material;
+  class Plain;
 }
 
 QT_BEGIN_NAMESPACE
@@ -38,9 +38,9 @@ public slots:
   void ambientChanged(double newAmbient);
 
 private:
-  Ui::MainWindow*  ui;
-  Rayon::Rayon     _engine;
-  Rayon::Scene     _scene;
-  Rayon::Material* _material;
+  Ui::MainWindow*    ui;
+  Rayon::Rayon       _engine;
+  Rayon::Scene       _scene;
+  Rayon::Plain* _material;
 };
 #endif  // MAINWINDOW_HH

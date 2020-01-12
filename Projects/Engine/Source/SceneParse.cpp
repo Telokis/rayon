@@ -5,6 +5,7 @@
 #include <fstream>
 
 #include "Entities/Lights/RTLight.hh"
+#include "Materials/Plain.hh"
 #include "Object.hh"
 #include "Registry.hh"
 #include "Scene.hh"
@@ -182,20 +183,40 @@ namespace Rayon
     writeSpecFile(filename, root);
   }
 
-  void materialRead(Material& material, const std::string& filename)
+  void readMaterial(const YAML::Node& root, RTMaterial*& material)
   {
-    YAML::Node root;
+    material = nullptr;
 
-    parseSpecFile(filename, root);
-    material.read(root);
+    if (root.IsMap() && isString(root["type"]))
+    {
+      auto                   name = root["type"].as<std::string>();
+      const IMetaRTMaterial* meta = registry().getMetaRTMaterial(name);
+
+      if (meta)
+      {
+        material = meta->make();
+        material->read(root);
+      }
+      else
+      {
+        std::cout << "[Warning] Unknown type `" << name << "` for material. Forcing Plain...\n";
+
+        material = new Plain;
+        material->read(root);
+      }
+    }
+    else
+    {
+      std::cout << "[Warning] Unspecified Material type. Assuming Plain...\n";
+
+      material = new Plain;
+      material->read(root);
+    }
   }
 
-  void materialWrite(const Material& material, const std::string& filename)
+  void writeMaterial(YAML::Node& root, const RTMaterial* material)
   {
-    YAML::Node root;
-
-    material.write(root);
-    writeSpecFile(filename, root);
+    material->write(root);
   }
 
   /*

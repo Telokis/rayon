@@ -8,6 +8,8 @@
 #include "ImageFileHandlers/ImageFileHandler_PNG.hh"
 #include "ImageFileHandlers/ImageFileHandler_TGA.hh"
 #include "MetaRTLights/MetaSun.hh"
+#include "MetaRTMaterials/MetaCheckerboard.hh"
+#include "MetaRTMaterials/MetaPlain.hh"
 #include "MetaRTShapes/MetaBox.hh"
 #include "MetaRTShapes/MetaMobius.hh"
 #include "MetaRTShapes/MetaPlane.hh"
@@ -20,6 +22,7 @@ namespace Rayon
 {
   Registry::Registry()
   {
+    registerMetaRTMaterial(new MetaPlain);
   }
 
   Registry::~Registry()
@@ -40,6 +43,8 @@ namespace Rayon
     registerMetaRTShape(new MetaBox);
     registerMetaRTShape(new MetaMobius);
     registerMetaRTShape(new MetaTriangle);
+
+    registerMetaRTMaterial(new MetaCheckerboard);
   }
 
   bool Registry::registerImageFileHandler(IImageFileHandler* handler)
@@ -103,6 +108,30 @@ namespace Rayon
   auto Registry::getMetaRTShapes() const -> const MetaRTShapeContainer&
   {
     return _metaRTShapes;
+  }
+
+  bool Registry::registerMetaRTMaterial(IMetaRTMaterial* meta)
+  {
+    std::string id = meta->materialName();
+
+    if (_metaRTMaterials.count(id))
+      return false;
+
+    _metaRTMaterials[id].reset(meta);
+    return true;
+  }
+
+  const IMetaRTMaterial* Registry::getMetaRTMaterial(const std::string& id) const
+  {
+    if (!_metaRTMaterials.count(id))
+      return nullptr;
+
+    return _metaRTMaterials.at(id).get();
+  }
+
+  auto Registry::getMetaRTMaterials() const -> const MetaRTMaterialContainer&
+  {
+    return _metaRTMaterials;
   }
 
 }  // namespace Rayon

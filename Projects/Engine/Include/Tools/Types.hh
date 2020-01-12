@@ -29,7 +29,11 @@ namespace Rayon
    * @brief   Typedef for Vec_ts.
    *          We may want to change it later.
    */
-  using Vec_t = glm::tvec3<Float_t>;
+  using Vec_t  = glm::tvec3<Float_t>;
+  using Vec2_t = glm::tvec2<Float_t>;
+
+  using UInt32Vec_t = glm::tvec3<uint32>;
+  using UInt32Vec2_t = glm::tvec2<uint32>;
 
   using Mat_t = glm::tmat3x3<Float_t>;
 }  // namespace Rayon

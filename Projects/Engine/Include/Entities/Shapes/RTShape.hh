@@ -2,16 +2,9 @@
 #define RAYON_RTOBJECT_HH_
 
 #include "BoundingBox.hh"
-#include "Color.hh"
 #include "Entities/Entity.hh"
 #include "IntersectionData.hh"
-#include "Material.hh"
 #include "Ray.hh"
-
-namespace Rayon
-{
-  class Material;
-}
 
 namespace Rayon
 {

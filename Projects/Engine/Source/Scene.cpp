@@ -6,8 +6,10 @@
 #include "Helpers/inVector.hh"
 #include "IntersectionData.hh"
 #include "KDTree.hh"
+#include "Materials/Plain.hh"
 #include "Object.hh"
 #include "Tools/Stat.hh"
+#include "Worker.hh"
 
 namespace Rayon
 {
@@ -172,7 +174,7 @@ namespace Rayon
 
   Color Scene::processLights(const IntersectionData& data, Color& specular) const
   {
-    const Color color = data.obj->getMaterial().getColor();
+    const Color color = data.obj->getMaterial()->getColor(data);
     Color       result;
 
     for (size_t i = 0; i < _lights.size(); ++i)
@@ -187,6 +189,7 @@ namespace Rayon
     {
       object->getShape()->computeRotation();
       object->getShape()->preprocess();
+      object->getMaterial()->preprocess();
 
       if (object->getShape()->getBBox().isInfinite())
         _infiniteObjects.push_back(object);
@@ -201,6 +204,11 @@ namespace Rayon
     _eye.computeRotation();
 
     _kdtree = build(_objects, 0);
+  }
+
+  Color Scene::inter(const Ray& ray, uint8 depth, Tools::Stat* stat) const
+  {
+    return Worker::inter(*this, ray, depth, stat);
   }
 
   RAYON_GENERATE_PROPERTY_DEFINITION(Scene, Float_t, _ambient, Ambient);

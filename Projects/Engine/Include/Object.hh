@@ -5,7 +5,7 @@
 
 #include <yaml-cpp/node/node.h>
 
-#include "Material.hh"
+#include "Materials/RTMaterial.hh"
 
 namespace Rayon
 {
@@ -16,7 +16,7 @@ namespace Rayon
   class Object
   {
   public:
-    Object(RTShape* = nullptr);
+    Object(RTShape* = nullptr, RTMaterial* = nullptr);
     ~Object();
     Object(const Object& object);
     Object& operator=(const Object& object);
@@ -24,13 +24,13 @@ namespace Rayon
     Object& operator=(Object&& object);
 
   public:
-    const RTShape* getShape() const;
-    const Material getMaterial() const;
-    Material*      getMaterialPtr();
-    RTShape*       getShape();
+    const RTShape*    getShape() const;
+    RTShape*          getShape();
+    const RTMaterial* getMaterial() const;
+    RTMaterial*       getMaterial();
 
     void setShape(RTShape* shape);
-    void setMaterial(Material material);
+    void setMaterial(RTMaterial* material);
 
   public:
     bool inter(const Ray& ray, IntersectionData& data) const;
@@ -40,8 +40,8 @@ namespace Rayon
     void write(YAML::Node& root) const;
 
   private:
-    RTShape* _shape;
-    Material _material;
+    RTShape*    _shape;
+    RTMaterial* _material;
   };
 }  // namespace Rayon
 

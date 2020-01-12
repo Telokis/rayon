@@ -104,6 +104,16 @@ namespace Rayon
       return static_cast<uint32>(floor(val));
     }
 
+    inline UInt32Vec_t Floor(const Vec_t& val)
+    {
+      return {Floor(val.x), Floor(val.y), Floor(val.z)};
+    }
+
+    inline UInt32Vec2_t Floor(const Vec2_t& val)
+    {
+      return {Floor(val.x), Floor(val.y)};
+    }
+
     inline Float_t Min(Float_t a, Float_t b)
     {
       using std::min;
@@ -156,6 +166,24 @@ namespace Rayon
       return val * 180.0 / Globals::PI;
     }
 
+    template <typename T>
+    inline constexpr T Pow(const T& num, const T& power)
+    {
+      if (power == T(0))
+      {
+        return T(1);
+      }
+
+      T result = num;
+
+      for (auto i = 0; i < power - 1; ++i)
+      {
+        result *= num;
+      }
+
+      return result;
+    }
+
     /**
      * @brief       Returns the smallest positive value choosing between
      *              @a a and @a b.
@@ -179,9 +207,17 @@ namespace Rayon
 
   }  // namespace Tools
 
-  inline std::ostream& operator<<(std::ostream& stream, const Vec_t& vec)
+  template <typename T>
+  inline std::ostream& operator<<(std::ostream& stream, const glm::tvec3<T>& vec)
   {
     stream << "{ " << vec.x << ", " << vec.y << ", " << vec.z << " }";
+    return stream;
+  }
+
+  template <typename T>
+  inline std::ostream& operator<<(std::ostream& stream, const glm::tvec2<T>& vec)
+  {
+    stream << "{ " << vec.x << ", " << vec.y << " }";
     return stream;
   }
 }  // namespace Rayon
