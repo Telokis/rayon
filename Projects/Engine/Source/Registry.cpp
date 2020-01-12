@@ -11,6 +11,7 @@
 #include "MetaRTLights/MetaSun.hh"
 #include "MetaRTMaterials/MetaCheckerboard.hh"
 #include "MetaRTMaterials/MetaPlain.hh"
+#include "MetaRTMaterials/MetaTexture.hh"
 #include "MetaRTShapes/MetaBox.hh"
 #include "MetaRTShapes/MetaMobius.hh"
 #include "MetaRTShapes/MetaPlane.hh"
@@ -47,6 +48,7 @@ namespace Rayon
     registerMetaRTShape(new MetaTriangle);
 
     registerMetaRTMaterial(new MetaCheckerboard);
+    registerMetaRTMaterial(new MetaTexture);
   }
 
   bool Registry::registerImageFileHandler(IImageFileHandler* handler)
