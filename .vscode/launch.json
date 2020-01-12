@@ -8,7 +8,7 @@
       "name": "(Windows) Launch CLI",
       "type": "cppvsdbg",
       "request": "launch",
-      "program": "${workspaceFolder}/bin/rayon.cli-0.0.1.exe",
+      "program": "${workspaceFolder}/.sw/out/debug/rayon.cli-0.0.1.exe",
       "args": [
         "-w",
         "1024",
@@ -18,7 +18,7 @@
         "1024",
         "-o",
         "${workspaceFolder}/out.png",
-        "${workspaceFolder}/files/scenes/texture.yon"
+        "${workspaceFolder}/files/scenes/planets.yon"
       ],
       "stopAtEntry": false,
       "cwd": "${workspaceFolder}",
