@@ -46,13 +46,10 @@ namespace Rayon
 
     scene.iterateIfIntersect(
       shadowRay, data, [obj, &coef](const Object* object, IntersectionData& data) {
-        if (obj != object->getShape())
+        if (data.k < 1.0)
         {
-          if (data.k < 1.0)
-          {
-            data.stat->hits += 1;
-            coef *= object->getMaterial()->getTransparency(data);
-          }
+          data.stat->hits += 1;
+          coef *= object->getMaterial()->getTransparency(data);
         }
 
         return !Tools::IsZero(coef);

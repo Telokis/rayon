@@ -30,6 +30,7 @@ lights:
     type: Sun
 objects:
   - material:
+      type: Plain
       color: aqua
     radius: 1
     type: Sphere

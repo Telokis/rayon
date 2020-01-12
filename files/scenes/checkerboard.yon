@@ -1,0 +1,37 @@
+cubemap:
+  back: "<scenePath>/../textures/cubemap/stormydays_bk.tga"
+  down: "<scenePath>/../textures/cubemap/stormydays_dn.tga"
+  front: "<scenePath>/../textures/cubemap/stormydays_ft.tga"
+  left: "<scenePath>/../textures/cubemap/stormydays_lf.tga"
+  right: "<scenePath>/../textures/cubemap/stormydays_rt.tga"
+  up: "<scenePath>/../textures/cubemap/stormydays_up.tga"
+eye:
+  position:
+    z: -50
+    x: 2
+    y: 2
+lights:
+  - position:
+      x: 20
+      y: 20.8
+      z: -40
+    color: white
+    type: Sun
+objects:
+  - material:
+      type: "Checkerboard"
+      scale: 16
+      tiles:
+        - type: "Plain"
+          color:
+            red: 0
+            green: 139
+            blue: 139
+          shininess: 6.4
+          reflexion: 1
+          glossiness: 6
+        - type: "Plain"
+          color: "aqua"
+          transparency: 1
+    radius: 15
+    type: Sphere

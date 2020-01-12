@@ -45,12 +45,20 @@ namespace Rayon
     bool testFlag(RayType type) const;
 
   public:
-    virtual Color   getColor(const IntersectionData& data) const        = 0;
-    virtual Float_t getReflexion(const IntersectionData& data) const    = 0;
-    virtual Float_t getTransparency(const IntersectionData& data) const = 0;
-    virtual Float_t getRefraction(const IntersectionData& data) const   = 0;
-    virtual Float_t getGlossiness(const IntersectionData& data) const   = 0;
-    virtual Float_t getShininess(const IntersectionData& data) const    = 0;
+    Color   getColor(const IntersectionData& data) const;
+    Float_t getReflexion(const IntersectionData& data) const;
+    Float_t getTransparency(const IntersectionData& data) const;
+    Float_t getRefraction(const IntersectionData& data) const;
+    Float_t getGlossiness(const IntersectionData& data) const;
+    Float_t getShininess(const IntersectionData& data) const;
+
+  public:
+    virtual Color   getColor(const IntersectionData& data, uint32 depth) const        = 0;
+    virtual Float_t getReflexion(const IntersectionData& data, uint32 depth) const    = 0;
+    virtual Float_t getTransparency(const IntersectionData& data, uint32 depth) const = 0;
+    virtual Float_t getRefraction(const IntersectionData& data, uint32 depth) const   = 0;
+    virtual Float_t getGlossiness(const IntersectionData& data, uint32 depth) const   = 0;
+    virtual Float_t getShininess(const IntersectionData& data, uint32 depth) const    = 0;
 
   public:
     virtual void        preprocess()               = 0;

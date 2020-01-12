@@ -2,10 +2,6 @@
 
 #include <yaml-cpp/yaml.h>
 
-#include "IntersectionData.hh"
-#include "Scene.hh"
-#include "SceneParse.hh"
-
 namespace Rayon
 {
 #define RAYON_DECLARE(flag) \
@@ -52,4 +48,35 @@ namespace Rayon
 
     return false;
   }
+
+  Color RTMaterial::getColor(const IntersectionData& data) const
+  {
+    return getColor(data, 0);
+  }
+
+  Float_t RTMaterial::getReflexion(const IntersectionData& data) const
+  {
+    return getReflexion(data, 0);
+  }
+
+  Float_t RTMaterial::getTransparency(const IntersectionData& data) const
+  {
+    return getTransparency(data, 0);
+  }
+
+  Float_t RTMaterial::getRefraction(const IntersectionData& data) const
+  {
+    return getRefraction(data, 0);
+  }
+
+  Float_t RTMaterial::getGlossiness(const IntersectionData& data) const
+  {
+    return getGlossiness(data, 0);
+  }
+
+  Float_t RTMaterial::getShininess(const IntersectionData& data) const
+  {
+    return getShininess(data, 0);
+  }
+
 }  // namespace Rayon

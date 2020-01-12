@@ -54,13 +54,13 @@ namespace Rayon
     Plain& setShininess(Float_t value);
 
   public:
-    Color   getColorImpl(const IntersectionData& data) const;
-    Float_t getReflexionImpl(const IntersectionData& data) const;
-    Float_t getTransparencyImpl(const IntersectionData& data) const;
-    Float_t getRefractionImpl(const IntersectionData& data) const;
-    Float_t getGlossinessImpl(const IntersectionData& data) const;
-    Float_t getAmbientImpl(const IntersectionData& data) const;
-    Float_t getShininessImpl(const IntersectionData& data) const;
+    Color   getColorImpl(const IntersectionData& data, uint32 depth) const;
+    Float_t getReflexionImpl(const IntersectionData& data, uint32 depth) const;
+    Float_t getTransparencyImpl(const IntersectionData& data, uint32 depth) const;
+    Float_t getRefractionImpl(const IntersectionData& data, uint32 depth) const;
+    Float_t getGlossinessImpl(const IntersectionData& data, uint32 depth) const;
+    Float_t getAmbientImpl(const IntersectionData& data, uint32 depth) const;
+    Float_t getShininessImpl(const IntersectionData& data, uint32 depth) const;
 
   private:
     std::bitset<static_cast<size_t>(Flags::COUNT)> _flags;

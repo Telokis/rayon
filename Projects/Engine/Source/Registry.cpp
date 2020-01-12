@@ -8,6 +8,7 @@
 #include "ImageFileHandlers/ImageFileHandler_PNG.hh"
 #include "ImageFileHandlers/ImageFileHandler_TGA.hh"
 #include "MetaRTLights/MetaSun.hh"
+#include "MetaRTMaterials/MetaCheckerboard.hh"
 #include "MetaRTMaterials/MetaPlain.hh"
 #include "MetaRTShapes/MetaBox.hh"
 #include "MetaRTShapes/MetaMobius.hh"
@@ -42,6 +43,8 @@ namespace Rayon
     registerMetaRTShape(new MetaBox);
     registerMetaRTShape(new MetaMobius);
     registerMetaRTShape(new MetaTriangle);
+
+    registerMetaRTMaterial(new MetaCheckerboard);
   }
 
   bool Registry::registerImageFileHandler(IImageFileHandler* handler)

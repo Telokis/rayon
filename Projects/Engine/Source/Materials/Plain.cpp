@@ -62,6 +62,8 @@ namespace Rayon
 
   void Plain::write(YAML::Node& root) const
   {
+    root["type"] = name();
+
     if (!_flags.none())
     {
       YAML::Node& flags = root["flags"];
@@ -122,37 +124,37 @@ namespace Rayon
     return *this;
   }
 
-  Color Plain::getColorImpl(const IntersectionData&) const
+  Color Plain::getColorImpl(const IntersectionData&, uint32) const
   {
     return _color;
   }
 
-  Float_t Plain::getReflexionImpl(const IntersectionData&) const
+  Float_t Plain::getReflexionImpl(const IntersectionData&, uint32) const
   {
     return _reflexion;
   }
 
-  Float_t Plain::getTransparencyImpl(const IntersectionData&) const
+  Float_t Plain::getTransparencyImpl(const IntersectionData&, uint32) const
   {
     return _transparency;
   }
 
-  Float_t Plain::getRefractionImpl(const IntersectionData&) const
+  Float_t Plain::getRefractionImpl(const IntersectionData&, uint32) const
   {
     return _refraction;
   }
 
-  Float_t Plain::getGlossinessImpl(const IntersectionData&) const
+  Float_t Plain::getGlossinessImpl(const IntersectionData&, uint32) const
   {
     return _glossiness;
   }
 
-  Float_t Plain::getAmbientImpl(const IntersectionData&) const
+  Float_t Plain::getAmbientImpl(const IntersectionData&, uint32) const
   {
     return _ambient;
   }
 
-  Float_t Plain::getShininessImpl(const IntersectionData&) const
+  Float_t Plain::getShininessImpl(const IntersectionData&, uint32) const
   {
     return _shininess;
   }

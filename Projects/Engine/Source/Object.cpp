@@ -107,31 +107,7 @@ namespace Rayon
       return false;
     }
 
-    if (root["material"] && isString(root["material"]))
-    {
-      auto                   name = root["type"].as<std::string>();
-      const IMetaRTMaterial* meta = registry().getMetaRTMaterial(name);
-
-      if (meta)
-      {
-        _material = meta->make();
-        _material->read(root);
-      }
-      else
-      {
-        std::cout << "[Warning] Unknown type `" << name << "` for material. Forcing Plain...\n";
-
-        _material = new Plain;
-        _material->read(root["material"]);
-      }
-    }
-    else
-    {
-      std::cout << "[Warning] Unspecified Material. Forcing Plain...\n";
-
-      _material = new Plain;
-      _material->read(root["material"]);
-    }
+    readMaterial(root["material"], _material);
 
     return true;
   }

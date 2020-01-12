@@ -104,6 +104,11 @@ namespace Rayon
       return static_cast<uint32>(floor(val));
     }
 
+    inline UInt32Vec_t Floor(const Vec_t& val)
+    {
+      return {Floor(val.x), Floor(val.y), Floor(val.z)};
+    }
+
     inline Float_t Min(Float_t a, Float_t b)
     {
       using std::min;
@@ -154,6 +159,24 @@ namespace Rayon
     inline constexpr Float_t RadToDeg(Float_t val)
     {
       return val * 180.0 / Globals::PI;
+    }
+
+    template <typename T>
+    inline constexpr T Pow(const T& num, const T& power)
+    {
+      if (power == T(0))
+      {
+        return T(1);
+      }
+
+      T result = num;
+
+      for (auto i = 0; i < power - 1; ++i)
+      {
+        result *= num;
+      }
+
+      return result;
     }
 
     /**

@@ -18,65 +18,65 @@ namespace Rayon
     {
     }
 
-    bool testFlagImpl(Flags flag)
+    bool testFlagImpl(Flags flag) const
     {
       return false;
     }
 
-    Float_t getReflexionImpl(const IntersectionData& data) const
+    Float_t getReflexionImpl(const IntersectionData& data, uint32 depth) const
     {
       return 0;
     }
 
-    Float_t getTransparencyImpl(const IntersectionData& data) const
+    Float_t getTransparencyImpl(const IntersectionData& data, uint32 depth) const
     {
       return 0;
     }
 
-    Float_t getRefractionImpl(const IntersectionData& data) const
+    Float_t getRefractionImpl(const IntersectionData& data, uint32 depth) const
     {
       return 1;
     }
 
-    Float_t getGlossinessImpl(const IntersectionData& data) const
+    Float_t getGlossinessImpl(const IntersectionData& data, uint32 depth) const
     {
       return 0;
     }
 
-    Float_t getShininessImpl(const IntersectionData& data) const
+    Float_t getShininessImpl(const IntersectionData& data, uint32 depth) const
     {
       return 0;
     }
 
   public:
-    Color getColor(const IntersectionData& data) const final
+    Color getColor(const IntersectionData& data, uint32 depth) const final
     {
-      return static_cast<Derived const*>(this)->getColorImpl(data);
+      return static_cast<Derived const*>(this)->getColorImpl(data, depth);
     }
 
-    Float_t getReflexion(const IntersectionData& data) const final
+    Float_t getReflexion(const IntersectionData& data, uint32 depth) const final
     {
-      return static_cast<Derived const*>(this)->getReflexionImpl(data);
+      return static_cast<Derived const*>(this)->getReflexionImpl(data, depth);
     }
 
-    Float_t getTransparency(const IntersectionData& data) const final
+    Float_t getTransparency(const IntersectionData& data, uint32 depth) const final
     {
-      return static_cast<Derived const*>(this)->getTransparencyImpl(data);
+      return static_cast<Derived const*>(this)->getTransparencyImpl(data, depth);
     }
 
-    Float_t getRefraction(const IntersectionData& data) const final
+    Float_t getRefraction(const IntersectionData& data, uint32 depth) const final
     {
-      return static_cast<Derived const*>(this)->getRefractionImpl(data);
+      return static_cast<Derived const*>(this)->getRefractionImpl(data, depth);
     }
 
-    Float_t getGlossiness(const IntersectionData& data) const final
+    Float_t getGlossiness(const IntersectionData& data, uint32 depth) const final
     {
-      return static_cast<Derived const*>(this)->getGlossinessImpl(data);
+      return static_cast<Derived const*>(this)->getGlossinessImpl(data, depth);
     }
 
-    Float_t getShininess(const IntersectionData& data) const final
+    Float_t getShininess(const IntersectionData& data, uint32 depth) const final
     {
-      return static_cast<Derived const*>(this)->getShininessImpl(data);
+      return static_cast<Derived const*>(this)->getShininessImpl(data, depth);
     }
 
   public:

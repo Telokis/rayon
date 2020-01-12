@@ -31,6 +31,8 @@ namespace Rayon
    */
   using Vec_t = glm::tvec3<Float_t>;
 
+  using UInt32Vec_t = glm::tvec3<uint32>;
+
   using Mat_t = glm::tmat3x3<Float_t>;
 }  // namespace Rayon
 
