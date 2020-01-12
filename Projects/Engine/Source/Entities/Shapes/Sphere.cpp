@@ -68,8 +68,8 @@ namespace Rayon
   {
     data.normal = Tools::Normalize(data.point - _pos);
 
-    Float_t phi   = std::atan2(data.normal.z, data.normal.x);
-    Float_t theta = std::asin(data.normal.y);
+    Float_t phi   = std::atan2(data.normal.x, -1 * data.normal.z);
+    Float_t theta = std::asin(-1 * data.normal.y);
 
     data.uv.x = 1 - (phi + Globals::PI) / (2 * Globals::PI);
     data.uv.y = (theta + Globals::PI / 2) / Globals::PI;
