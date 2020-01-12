@@ -1,15 +1,17 @@
 cubemap:
-  back: "<scenePath>/textures/cubemap/grimmnight_bk.jpg"
-  down: "<scenePath>/textures/cubemap/grimmnight_dn.jpg"
-  front: "<scenePath>/textures/cubemap/grimmnight_ft.jpg"
-  left: "<scenePath>/textures/cubemap/grimmnight_lf.jpg"
-  right: "<scenePath>/textures/cubemap/grimmnight_rt.jpg"
-  up: "<scenePath>/textures/cubemap/grimmnight_up.jpg"
+  back: "<scenePath>/textures/cubemap/interstellar_bk.jpg"
+  down: "<scenePath>/textures/cubemap/interstellar_dn.jpg"
+  front: "<scenePath>/textures/cubemap/interstellar_ft.jpg"
+  left: "<scenePath>/textures/cubemap/interstellar_lf.jpg"
+  right: "<scenePath>/textures/cubemap/interstellar_rt.jpg"
+  up: "<scenePath>/textures/cubemap/interstellar_up.jpg"
 eye:
   position:
     z: -20
     x: 0
-    y: 0
+    y: 10
+  rotation:
+    x: 20
 lights:
   - position:
       x: 20
@@ -18,6 +20,15 @@ lights:
     color: white
     type: Sun
 objects:
+  - type: Plane
+    material:
+      color: swimming pool
+      reflexion: 1
+    position:
+      z: 200
+    rotation:
+      x: 40
+      z: -42
   - type: Sphere
     position:
       x: 3
