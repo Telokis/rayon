@@ -12,12 +12,12 @@
 
 auto rawScene = R"rawScene(
 cubemap:
-  back: "./files/textures/cubemap/stormydays_bk.tga"
-  down: "./files/textures/cubemap/stormydays_dn.tga"
-  front: "./files/textures/cubemap/stormydays_ft.tga"
-  left: "./files/textures/cubemap/stormydays_lf.tga"
-  right: "./files/textures/cubemap/stormydays_rt.tga"
-  up: "./files/textures/cubemap/stormydays_up.tga"
+  back: "./files/scenes/textures/cubemap/stormydays_bk.jpg"
+  down: "./files/scenes/textures/cubemap/stormydays_dn.jpg"
+  front: "./files/scenes/textures/cubemap/stormydays_ft.jpg"
+  left: "./files/scenes/textures/cubemap/stormydays_lf.jpg"
+  right: "./files/scenes/textures/cubemap/stormydays_rt.jpg"
+  up: "./files/scenes/textures/cubemap/stormydays_up.jpg"
 eye:
   position:
     z: -5
