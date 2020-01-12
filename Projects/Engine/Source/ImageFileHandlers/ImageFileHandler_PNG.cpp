@@ -25,6 +25,7 @@ namespace Rayon
              path, readFrom.width(), readFrom.height(), 4, data.get(), readFrom.width() * 4)
            != 0;
   }
+
   const char* ImageFileHandler_PNG::extensionName() const
   {
     return "png";

@@ -5,6 +5,7 @@
 #include <iostream>
 
 #include "ImageFileHandlers/ImageFileHandler_BMP.hh"
+#include "ImageFileHandlers/ImageFileHandler_JPG.hh"
 #include "ImageFileHandlers/ImageFileHandler_PNG.hh"
 #include "ImageFileHandlers/ImageFileHandler_TGA.hh"
 #include "MetaRTLights/MetaSun.hh"
@@ -34,6 +35,7 @@ namespace Rayon
     registerImageFileHandler(new ImageFileHandler_BMP);
     registerImageFileHandler(new ImageFileHandler_PNG);
     registerImageFileHandler(new ImageFileHandler_TGA);
+    registerImageFileHandler(new ImageFileHandler_JPG);
 
     registerMetaRTLight(new MetaSun);
 
@@ -50,9 +52,12 @@ namespace Rayon
   bool Registry::registerImageFileHandler(IImageFileHandler* handler)
   {
     std::string id = handler->extensionName();
+
     if (_imgHandlers.count(id))
       return false;
+
     _imgHandlers[id].reset(handler);
+
     return true;
   }
 
@@ -60,6 +65,7 @@ namespace Rayon
   {
     if (!_imgHandlers.count(id))
       return nullptr;
+
     return _imgHandlers.at(id).get();
   }
 
@@ -71,9 +77,12 @@ namespace Rayon
   bool Registry::registerMetaRTLight(IMetaRTLight* meta)
   {
     std::string id = meta->lightName();
+
     if (_metaRTLights.count(id))
       return false;
+
     _metaRTLights[id].reset(meta);
+
     return true;
   }
 
@@ -81,6 +90,7 @@ namespace Rayon
   {
     if (!_metaRTLights.count(id))
       return nullptr;
+
     return _metaRTLights.at(id).get();
   }
 
@@ -92,9 +102,12 @@ namespace Rayon
   bool Registry::registerMetaRTShape(IMetaRTShape* meta)
   {
     std::string id = meta->shapeName();
+
     if (_metaRTShapes.count(id))
       return false;
+
     _metaRTShapes[id].reset(meta);
+
     return true;
   }
 
@@ -102,6 +115,7 @@ namespace Rayon
   {
     if (!_metaRTShapes.count(id))
       return nullptr;
+
     return _metaRTShapes.at(id).get();
   }
 
@@ -118,6 +132,7 @@ namespace Rayon
       return false;
 
     _metaRTMaterials[id].reset(meta);
+
     return true;
   }
 

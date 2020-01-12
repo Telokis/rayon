@@ -43,6 +43,7 @@ namespace Rayon
     const auto&              handlers = registry().getImageFileHandlers();
     const IImageFileHandler* def      = handlers.empty() ? nullptr : handlers.begin()->second.get();
     const IImageFileHandler* handler  = registry().getImageFileHandler(ext);
+
     if (handler)
       return handler->writeToFile(file.c_str(), readFrom);
 
@@ -54,6 +55,7 @@ namespace Rayon
                   << "]."
                      " Forcing to "
                   << def->extensionName() << "...\n";
+
         return def->writeToFile(
           (file.substr(0, file.length() - ext.length()) + def->extensionName()).c_str(), readFrom);
       }
