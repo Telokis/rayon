@@ -98,18 +98,18 @@ namespace Rayon
       return o;
     }
 
-    inline uint32 Floor(Float_t val)
+    inline int32 Floor(Float_t val)
     {
       using std::floor;
-      return static_cast<uint32>(floor(val));
+      return static_cast<int32>(floor(val));
     }
 
-    inline UInt32Vec_t Floor(const Vec_t& val)
+    inline Int32Vec_t Floor(const Vec_t& val)
     {
       return {Floor(val.x), Floor(val.y), Floor(val.z)};
     }
 
-    inline UInt32Vec2_t Floor(const Vec2_t& val)
+    inline Int32Vec2_t Floor(const Vec2_t& val)
     {
       return {Floor(val.x), Floor(val.y)};
     }
@@ -204,18 +204,17 @@ namespace Rayon
                     : (a) < Globals::Epsilon && (b) < Globals::Epsilon ? Globals::Invalid
                                                                        : (a) < (b) ? (a) : (b));
     }
-
   }  // namespace Tools
 
   template <typename T>
-  inline std::ostream& operator<<(std::ostream& stream, const glm::tvec3<T>& vec)
+  inline std::ostream& operator<<(std::ostream& stream, const RawVec3_t<T>& vec)
   {
     stream << "{ " << vec.x << ", " << vec.y << ", " << vec.z << " }";
     return stream;
   }
 
   template <typename T>
-  inline std::ostream& operator<<(std::ostream& stream, const glm::tvec2<T>& vec)
+  inline std::ostream& operator<<(std::ostream& stream, const RawVec2_t<T>& vec)
   {
     stream << "{ " << vec.x << ", " << vec.y << " }";
     return stream;
