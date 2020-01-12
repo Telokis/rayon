@@ -21,5 +21,9 @@ objects:
   - type: Sphere
     radius: 1
     material:
-      type: "Texture"
-      filepath: "./files/scenes/textures/03_Topo_small.png"
+      type: "Checkerboard"
+      tiles:
+        - type: "Texture"
+          filepath: "./files/scenes/textures/2k_earth_daymap.jpg"
+        - type: "Texture"
+          filepath: "./files/scenes/textures/2k_earth_daymap - transparent.png"

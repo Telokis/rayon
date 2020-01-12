@@ -1,10 +1,10 @@
 cubemap:
-  back: "<scenePath>/textures/cubemap/stormydays_bk.tga"
-  down: "<scenePath>/textures/cubemap/stormydays_dn.tga"
-  front: "<scenePath>/textures/cubemap/stormydays_ft.tga"
-  left: "<scenePath>/textures/cubemap/stormydays_lf.tga"
-  right: "<scenePath>/textures/cubemap/stormydays_rt.tga"
-  up: "<scenePath>/textures/cubemap/stormydays_up.tga"
+  back: "<scenePath>/textures/cubemap/stormydays_bk.jpg"
+  down: "<scenePath>/textures/cubemap/stormydays_dn.jpg"
+  front: "<scenePath>/textures/cubemap/stormydays_ft.jpg"
+  left: "<scenePath>/textures/cubemap/stormydays_lf.jpg"
+  right: "<scenePath>/textures/cubemap/stormydays_rt.jpg"
+  up: "<scenePath>/textures/cubemap/stormydays_up.jpg"
 eye:
   position:
     z: -50
