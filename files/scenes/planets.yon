@@ -1,0 +1,92 @@
+cubemap:
+  back: "<scenePath>/textures/cubemap/grimmnight_bk.jpg"
+  down: "<scenePath>/textures/cubemap/grimmnight_dn.jpg"
+  front: "<scenePath>/textures/cubemap/grimmnight_ft.jpg"
+  left: "<scenePath>/textures/cubemap/grimmnight_lf.jpg"
+  right: "<scenePath>/textures/cubemap/grimmnight_rt.jpg"
+  up: "<scenePath>/textures/cubemap/grimmnight_up.jpg"
+eye:
+  position:
+    z: -20
+    x: 0
+    y: 0
+lights:
+  - position:
+      x: 20
+      y: 20.8
+      z: -40
+    color: white
+    type: Sun
+objects:
+  - type: Sphere
+    position:
+      x: 3
+      y: 3
+    radius: 1
+    material:
+      type: "Texture"
+      filepath: "./files/scenes/textures/2k_earth_daymap.jpg"
+  - type: Sphere
+    position:
+      x: 0
+      y: 3
+    radius: 1
+    material:
+      type: "Texture"
+      filepath: "./files/scenes/textures/2k_sun.jpg"
+  - type: Sphere
+    position:
+      x: -3
+      y: 3
+    radius: 1
+    material:
+      type: "Texture"
+      filepath: "./files/scenes/textures/2k_moon.jpg"
+  - type: Sphere
+    position:
+      x: -3
+      y: 0
+    radius: 1
+    material:
+      type: "Texture"
+      filepath: "./files/scenes/textures/2k_venus_surface.jpg"
+  - type: Sphere
+    position:
+      x: 3
+      y: 0
+    radius: 1
+    material:
+      type: "Texture"
+      filepath: "./files/scenes/textures/2k_jupiter.jpg"
+  - type: Sphere
+    position:
+      x: 0
+      y: 0
+    radius: 1
+    material:
+      type: "Texture"
+      filepath: "./files/scenes/textures/2k_mars.jpg"
+  - type: Sphere
+    position:
+      x: 0
+      y: -3
+    radius: 1
+    material:
+      type: "Texture"
+      filepath: "./files/scenes/textures/2k_venus_atmosphere.jpg"
+  - type: Sphere
+    position:
+      x: -3
+      y: -3
+    radius: 1
+    material:
+      type: "Texture"
+      filepath: "./files/scenes/textures/2k_makemake_fictional.jpg"
+  - type: Sphere
+    position:
+      x: 3
+      y: -3
+    radius: 1
+    material:
+      type: "Texture"
+      filepath: "./files/scenes/textures/2k_haumea_fictional.jpg"
