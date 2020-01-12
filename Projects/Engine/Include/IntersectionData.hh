@@ -20,6 +20,7 @@ namespace Rayon
   {
     IntersectionData()
       : localPoint(0)
+      , uv(0)
       , point(0)
       , normal(0)
       , ray(nullptr)
@@ -31,6 +32,7 @@ namespace Rayon
     }
 
     Vec_t        localPoint;
+    Vec2_t       uv;
     Vec_t        point;
     Vec_t        normal;
     const Ray*   ray;

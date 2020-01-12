@@ -83,8 +83,9 @@ namespace Rayon
       return nullptr;
     }
 
-    auto point = Tools::Floor(data.localPoint * Float_t(Tools::Pow(2u, depth)) / _scale);
-    auto r     = (point.x + point.y + point.z) % _tiles.size();
+    auto checkerUV = data.uv * Float_t(16);
+    auto point     = Tools::Floor(checkerUV * Float_t(Tools::Pow(2u, depth)) / _scale);
+    auto r         = (point.x + point.y) % _tiles.size();
 
     return _tiles.at(r);
   }

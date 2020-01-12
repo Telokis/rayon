@@ -18,20 +18,26 @@ lights:
     color: white
     type: Sun
 objects:
-  - material:
+  - type: Sphere
+    radius: 15
+    material:
       type: "Checkerboard"
-      scale: 16
+      scale: 1
       tiles:
         - type: "Plain"
           color:
             red: 0
             green: 139
             blue: 139
-          shininess: 6.4
-          reflexion: 1
-          glossiness: 6
         - type: "Plain"
           color: "aqua"
+          reflexion: 1
+        - type: "Plain"
           transparency: 1
-    radius: 15
-    type: Sphere
+        - type: "Checkerboard"
+          tiles:
+            - type: "Plain"
+              color: "yellow"
+            - type: "Plain"
+              color: "green"
+              shininess: 6.4
