@@ -1,53 +1,29 @@
 {
-    "cubemap": {
-        "back": "<scenePath>/../textures/cubemap/stormydays_bk.tga",
-        "down": "<scenePath>/../textures/cubemap/stormydays_dn.tga",
-        "front": "<scenePath>/../textures/cubemap/stormydays_ft.tga",
-        "left": "<scenePath>/../textures/cubemap/stormydays_lf.tga",
-        "right": "<scenePath>/../textures/cubemap/stormydays_rt.tga",
-        "up": "<scenePath>/../textures/cubemap/stormydays_up.tga"
+  "cubemap":
+    {
+      "back": "<scenePath>/textures/cubemap/stormydays_bk.tga",
+      "down": "<scenePath>/textures/cubemap/stormydays_dn.tga",
+      "front": "<scenePath>/textures/cubemap/stormydays_ft.tga",
+      "left": "<scenePath>/textures/cubemap/stormydays_lf.tga",
+      "right": "<scenePath>/textures/cubemap/stormydays_rt.tga",
+      "up": "<scenePath>/textures/cubemap/stormydays_up.tga",
     },
-    "eye": {
-        "position": {
-            "y": 2,
-            "z": -6
-        },
-        "rotation": {
-            "x": 20
-        }
-    },
-    "lights": [
-        {
-            "position": {
-                "x": 0,
-                "y": 20,
-                "z": 0
-            },
-            "type": "Sun"
-        }
+  "eye": { "position": { "y": 2, "z": -6 }, "rotation": { "x": 20 } },
+  "lights": [{ "position": { "x": 0, "y": 20, "z": 0 }, "type": "Sun" }],
+  "objects":
+    [
+      {
+        "material": { "color": "deeppink4", "reflexion": 0 },
+        "position": { "y": 1 },
+        "width": 1,
+        "torsion": 3,
+        "type": "Mobius",
+      },
+      {
+        "material":
+          { "color": "swimming pool", "reflexion": 0.80000000000000004 },
+        "position": { "y": -0.80000000000000004 },
+        "type": "Plane",
+      },
     ],
-    "objects": [
-        {
-            "material": {
-                "color": "deeppink4",
-                "reflexion": 0
-            },
-            "position": {
-                "y": 1
-            },
-            "width": 1,
-            "torsion": 3,
-            "type": "Mobius"
-        },
-        {
-            "material": {
-                "color": "swimming pool",
-                "reflexion": 0.80000000000000004
-            },
-            "position": {
-                "y": -0.80000000000000004
-            },
-            "type": "Plane"
-        }
-    ]
 }
