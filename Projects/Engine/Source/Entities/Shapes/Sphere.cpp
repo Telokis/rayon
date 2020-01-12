@@ -66,10 +66,11 @@ namespace Rayon
 
   void Sphere::fillDataImpl(IntersectionData& data) const
   {
-    data.normal = Tools::Normalize(data.point - _pos);
+    data.normal          = Tools::Normalize(data.point - _pos);
+    auto localNormalized = Tools::Normalize(data.localPoint);
 
-    Float_t phi   = std::atan2(data.normal.x, -1 * data.normal.z);
-    Float_t theta = std::asin(-1 * data.normal.y);
+    Float_t phi   = std::atan2(localNormalized.x, -1 * localNormalized.z);
+    Float_t theta = std::asin(-1 * localNormalized.y);
 
     data.uv.x = 1 - (phi + Globals::PI) / (2 * Globals::PI);
     data.uv.y = (theta + Globals::PI / 2) / Globals::PI;
