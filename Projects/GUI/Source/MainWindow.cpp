@@ -42,6 +42,8 @@ void populateColors(QComboBox* colorComboBox)
   {
     colorComboBox->addItem(colors.first.c_str());
   }
+
+  colorComboBox->addItem("Custom");
 }
 
 void populateFlags(QLayout* parentLayout, QWidget* parent)
@@ -71,6 +73,8 @@ MainWindow::MainWindow(QWidget* parent)
   ui->setupUi(this);
   populateColors(ui->colorComboBox);
   populateFlags(ui->flagsGroupLayout, ui->flagsGroupBox);
+
+  ui->rgbContainer->hide();
 
   delete ui->placeHolderCheckBox;
   ui->placeHolderCheckBox = nullptr;
@@ -106,8 +110,13 @@ void MainWindow::colorChanged(const QString& newColor)
 
   if (Rayon::colors().count(colorStr))
   {
+    ui->rgbContainer->hide();
     _material->setColor(Rayon::colors().at(colorStr));
     refreshRender();
+  }
+  else if (colorStr == "Custom")
+  {
+    ui->rgbContainer->show();
   }
 }
 
