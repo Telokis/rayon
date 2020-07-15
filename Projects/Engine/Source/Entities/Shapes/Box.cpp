@@ -56,6 +56,7 @@ namespace Rayon
     {
       data.k          = Tools::Smallest(tmin, tmax);
       data.localPoint = tmp_pos + data.k * tmp_dir;
+
       return true;
     }
     return false;
