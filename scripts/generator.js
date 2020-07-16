@@ -98,12 +98,32 @@ const random = new (class {
    * Generates a number between 0 and 1.
    */
   floating({ fixed, min, max }) {
-    return (
-      Math.floor((this.float() * (max - min + 1) + min) * (fixed + 1)) /
-      (fixed + 1)
-    );
+    const p = Math.pow(10, fixed);
+
+    return Math.floor((this.float() * (max - min + 1) + min) * p) / p;
   }
 })();
+
+const textures = [
+  "./files/scenes/textures/2k_ceres_fictional.jpg",
+  "./files/scenes/textures/2k_makemake_fictional.jpg",
+  "./files/scenes/textures/2k_stars.jpg",
+  "./files/scenes/textures/2k_earth_daymap.jpg",
+  "./files/scenes/textures/2k_mars.jpg",
+  "./files/scenes/textures/2k_stars_milky_way.jpg",
+  "./files/scenes/textures/2k_earth_nightmap.jpg",
+  "./files/scenes/textures/2k_mercury.jpg",
+  "./files/scenes/textures/2k_sun.jpg",
+  "./files/scenes/textures/2k_eris_fictional.jpg",
+  "./files/scenes/textures/2k_moon.jpg",
+  "./files/scenes/textures/2k_uranus.jpg",
+  "./files/scenes/textures/2k_haumea_fictional.jpg",
+  "./files/scenes/textures/2k_neptune.jpg",
+  "./files/scenes/textures/2k_venus_atmosphere.jpg",
+  "./files/scenes/textures/2k_jupiter.jpg",
+  "./files/scenes/textures/2k_saturn.jpg",
+  "./files/scenes/textures/2k_venus_surface.jpg"
+];
 
 const colors = [
   "black",
@@ -133,8 +153,44 @@ const flags = [
   "NoShading"
 ];
 
-const randomMaterial = () => {
+const randomTextureMaterial = () => {
+  return {
+    type: "Texture",
+    filepath: random.arrayItem(textures)
+  };
+};
+
+const randomCheckerboardMaterial = () => {
   const res = {
+    type: "Checkerboard",
+    scale: random.floating({ fixed: 2, min: 0.1, max: 10 }),
+    tiles: [randomMaterial(), randomMaterial()]
+  };
+
+  if (
+    random.weighted([
+      [1, "y"],
+      [4, "n"]
+    ]) === "y"
+  ) {
+    res.tiles.push(randomMaterial());
+  }
+
+  if (
+    random.weighted([
+      [1, "y"],
+      [8, "n"]
+    ]) === "y"
+  ) {
+    res.tiles.push(randomMaterial());
+  }
+
+  return res;
+};
+
+const randomPlainMaterial = () => {
+  const res = {
+    type: "Plain",
     ambient: -1,
     glossiness: 0,
     reflexion: 0,
@@ -158,7 +214,7 @@ const randomMaterial = () => {
     if (
       random.weighted([
         [1, "y"],
-        [5, "n"]
+        [9, "n"]
       ]) === "y"
     ) {
       res.flags.push(flag);
@@ -166,7 +222,7 @@ const randomMaterial = () => {
   });
 
   // if (random.weighted([[1, "y"],[3, "n"]]) === "y") {
-  //     res.ambient = chance.weighted([[5, 0.1], [2, 0.3],[1, 1]]);
+  //     res.ambient = random.weighted([[5, 0.1], [2, 0.3],[1, 1]]);
   // }
 
   if (
@@ -212,6 +268,14 @@ const randomMaterial = () => {
   return res;
 };
 
+const randomMaterial = () => {
+  return random.weighted([
+    [5, randomPlainMaterial],
+    [2, randomCheckerboardMaterial],
+    [3, randomTextureMaterial]
+  ])();
+};
+
 const makeSphere = (x, z, r) => {
   const res = {
     position: {
@@ -231,19 +295,26 @@ const makeSphere = (x, z, r) => {
 const data = {
   eye: {
     position: {
-      y: 30,
-      z: -90
+      y: 100
     },
     rotation: {
-      x: 30
+      x: 90
     }
   },
   lights: [
     {
       position: {
         x: 0,
-        y: 90,
-        z: -80
+        y: 20,
+        z: 0
+      },
+      type: "Sun"
+    },
+    {
+      position: {
+        x: 0,
+        y: 5,
+        z: 0
       },
       type: "Sun"
     }
@@ -251,6 +322,7 @@ const data = {
   objects: [
     {
       material: {
+        type: "Plain",
         color: "swimming pool",
         reflexion: 0.5
       },
