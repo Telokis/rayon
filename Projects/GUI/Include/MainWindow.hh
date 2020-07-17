@@ -29,7 +29,7 @@ private:
   void refreshRender();
 
 public slots:
-  void colorChanged(const QString& newColor);
+  void colorChanged(const Rayon::Color& newColor);
   void reflexionChanged(double newReflexion);
   void transparencyChanged(double newTransparency);
   void refractionChanged(double newRefraction);
@@ -38,9 +38,9 @@ public slots:
   void ambientChanged(double newAmbient);
 
 private:
-  Ui::MainWindow*    ui;
-  Rayon::Rayon       _engine;
-  Rayon::Scene       _scene;
-  Rayon::Plain* _material;
+  Ui::MainWindow* ui;
+  Rayon::Rayon    _engine;
+  Rayon::Scene    _scene;
+  Rayon::Plain*   _material;
 };
 #endif  // MAINWINDOW_HH

@@ -11,13 +11,16 @@ INCLUDEPATH += $$PWD/include
 
 SOURCES += \
     Source/main.cpp \
-    Source/MainWindow.cpp
+    Source/MainWindow.cpp \
+    Source/RTColorWidget.cpp
 
 HEADERS += \
-    Include/MainWindow.hh
+    Include/MainWindow.hh \
+    Include/RTColorWidget.hh
 
 FORMS += \
-    Form/MainWindow.ui
+    Form/MainWindow.ui \
+    Form/RTColorWidget.ui
 
 #RESOURCES += 
 

@@ -36,16 +36,6 @@ objects:
     type: Sphere
 )rawScene";
 
-void populateColors(QComboBox* colorComboBox)
-{
-  for (auto&& colors : Rayon::colors())
-  {
-    colorComboBox->addItem(colors.first.c_str());
-  }
-
-  colorComboBox->addItem("Custom");
-}
-
 void populateFlags(QLayout* parentLayout, QWidget* parent)
 {
   for (auto&& flags : Rayon::RTMaterial::strToFlag)
@@ -71,10 +61,7 @@ MainWindow::MainWindow(QWidget* parent)
   _material = static_cast<Rayon::Plain*>(_scene.lastObject()->getMaterial());
 
   ui->setupUi(this);
-  populateColors(ui->colorComboBox);
   populateFlags(ui->flagsGroupLayout, ui->flagsGroupBox);
-
-  ui->rgbContainer->hide();
 
   delete ui->placeHolderCheckBox;
   ui->placeHolderCheckBox = nullptr;
@@ -104,20 +91,10 @@ void MainWindow::refreshRender()
   ui->imageLabel->setPixmap(QPixmap::fromImage(qimg));
 }
 
-void MainWindow::colorChanged(const QString& newColor)
+void MainWindow::colorChanged(const Rayon::Color& newColor)
 {
-  auto colorStr = newColor.toStdString();
-
-  if (Rayon::colors().count(colorStr))
-  {
-    ui->rgbContainer->hide();
-    _material->setColor(Rayon::colors().at(colorStr));
-    refreshRender();
-  }
-  else if (colorStr == "Custom")
-  {
-    ui->rgbContainer->show();
-  }
+  _material->setColor(newColor);
+  refreshRender();
 }
 
 void MainWindow::reflexionChanged(double newReflexion)

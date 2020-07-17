@@ -10,6 +10,11 @@
     <height>820</height>
    </rect>
   </property>
+  <property name="font">
+   <font>
+    <pointsize>10</pointsize>
+   </font>
+  </property>
   <property name="windowTitle">
    <string>Rayon</string>
   </property>
@@ -34,8 +39,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>1026</width>
-         <height>757</height>
+         <width>970</width>
+         <height>755</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout">
@@ -112,7 +117,7 @@
      <widget class="QFrame" name="frame">
       <property name="maximumSize">
        <size>
-        <width>200</width>
+        <width>256</width>
         <height>16777215</height>
        </size>
       </property>
@@ -158,85 +163,7 @@
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_3">
           <item>
-           <widget class="QComboBox" name="colorComboBox"/>
-          </item>
-          <item>
-           <widget class="QWidget" name="rgbContainer" native="true">
-            <layout class="QHBoxLayout" name="horizontalLayout_2">
-             <property name="spacing">
-              <number>6</number>
-             </property>
-             <property name="leftMargin">
-              <number>0</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
-              <number>0</number>
-             </property>
-             <item>
-              <layout class="QVBoxLayout" name="verticalLayout">
-               <item>
-                <widget class="QLabel" name="label">
-                 <property name="text">
-                  <string>Red</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QSpinBox" name="redSpinBox">
-                 <property name="maximum">
-                  <number>255</number>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QVBoxLayout" name="verticalLayout_2">
-               <item>
-                <widget class="QLabel" name="label_2">
-                 <property name="text">
-                  <string>Green</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QSpinBox" name="greenSpinBox">
-                 <property name="maximum">
-                  <number>255</number>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QVBoxLayout" name="verticalLayout_4">
-               <item>
-                <widget class="QLabel" name="label_3">
-                 <property name="text">
-                  <string>Blue</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QSpinBox" name="blueSpinBox">
-                 <property name="maximum">
-                  <number>255</number>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-            </layout>
-           </widget>
+           <widget class="RTColorWidget" name="colorEditor" native="true"/>
           </item>
          </layout>
         </widget>
@@ -466,30 +393,25 @@
      <x>0</x>
      <y>0</y>
      <width>1252</width>
-     <height>21</height>
+     <height>23</height>
     </rect>
    </property>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>RTColorWidget</class>
+   <extends>QWidget</extends>
+   <header>RTColorWidget.hh</header>
+   <container>1</container>
+   <slots>
+    <signal>colorChanged(Rayon::Color)</signal>
+   </slots>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections>
-  <connection>
-   <sender>colorComboBox</sender>
-   <signal>currentTextChanged(QString)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>colorChanged(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1142</x>
-     <y>146</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>625</x>
-     <y>409</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>reflexionSpinBox</sender>
    <signal>valueChanged(double)</signal>
@@ -513,8 +435,8 @@
    <slot>transparencyChanged(double)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>1155</x>
+     <y>248</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -529,8 +451,8 @@
    <slot>refractionChanged(double)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>1155</x>
+     <y>274</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -545,8 +467,8 @@
    <slot>glossinessChanged(double)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>1155</x>
+     <y>300</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -561,8 +483,8 @@
    <slot>shininessChanged(double)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>1155</x>
+     <y>326</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -577,8 +499,8 @@
    <slot>ambientChanged(double)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>1155</x>
+     <y>352</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -586,9 +508,25 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>colorEditor</sender>
+   <signal>colorChanged(Rayon::Color)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>colorChanged(Rayon::Color)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1142</x>
+     <y>118</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>625</x>
+     <y>409</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
-  <slot>colorChanged(QString)</slot>
+  <slot>colorChanged(Rayon::Color)</slot>
   <slot>reflexionChanged(double)</slot>
   <slot>transparencyChanged(double)</slot>
   <slot>refractionChanged(double)</slot>
