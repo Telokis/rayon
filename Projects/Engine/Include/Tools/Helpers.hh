@@ -4,6 +4,7 @@
 #define RAYON_TOOLS_HELPERS_HH
 
 #include <algorithm>
+#include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
 
 #include "IntersectionData.hh"
@@ -86,6 +87,16 @@ namespace Rayon
     inline Vec_t Reflect(Vec_t v, Vec_t n)
     {
       return glm::reflect(v, n);
+    }
+
+    inline Mat_t LookAt(Vec_t from, Vec_t target)
+    {
+      return glm::lookAt(from, target, Vec_t{0, 1, 0});
+    }
+
+    inline Mat_t Inverse(Mat_t mat)
+    {
+      return glm::inverse(mat);
     }
 
     inline Vec_t Refract(Vec_t v, const IntersectionData& data, Float_t eta)

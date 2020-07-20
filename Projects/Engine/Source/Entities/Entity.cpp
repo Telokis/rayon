@@ -24,10 +24,11 @@ namespace Rayon
 
   void Entity::computeRotation()
   {
-    _rotIsIdentity = Tools::IsZero(_rot.x) && Tools::IsZero(_rot.y) && Tools::IsZero(_rot.z);
-    _rot.x         = Tools::DegToRad(_rot.x);
-    _rot.y         = Tools::DegToRad(_rot.y);
-    _rot.z         = Tools::DegToRad(_rot.z);
+    _rotIsIdentity
+      = false;  // Tools::IsZero(_rot.x) && Tools::IsZero(_rot.y) && Tools::IsZero(_rot.z);
+    _rot.x = Tools::DegToRad(_rot.x);
+    _rot.y = Tools::DegToRad(_rot.y);
+    _rot.z = Tools::DegToRad(_rot.z);
     computeDirectRotation();
     computeIndirectRotation();
   }
@@ -49,6 +50,8 @@ namespace Rayon
     _directMatrix[0][2] = s.x * s.z + c.x * s.y * c.z;
     _directMatrix[1][2] = -1 * s.x * c.z + c.x * s.y * s.z;
     _directMatrix[2][2] = c.x * c.y;
+
+    _directMatrix = Tools::LookAt(_pos, {1, 1, -5});
   }
 
   void Entity::computeIndirectRotation()
@@ -68,6 +71,8 @@ namespace Rayon
     _indirectMatrix[0][2] = s.y;
     _indirectMatrix[1][2] = -1 * c.y * s.x;
     _indirectMatrix[2][2] = c.x * c.y;
+
+    _indirectMatrix = Tools::Inverse(Tools::LookAt(_pos, {1, 1, -5}));
   }
 
   void Entity::read(const YAML::Node& root)
@@ -86,6 +91,7 @@ namespace Rayon
   {
     if (_rotIsIdentity)
       return vec;
+
     return vec * _directMatrix;
   }
 
@@ -93,6 +99,7 @@ namespace Rayon
   {
     if (_rotIsIdentity)
       return vec;
+
     return vec * _indirectMatrix;
   }
 

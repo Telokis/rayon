@@ -36,6 +36,7 @@ namespace Rayon
     bool  _rotIsIdentity;
     Vec_t _pos;
     Vec_t _rot;
+    Vec_t _lookAt;
     Mat_t _directMatrix;
     Mat_t _indirectMatrix;
   };
