@@ -1,4 +1,5 @@
-#pragma sw require header org.sw.demo.qtproject.qt.base.tools.moc
+#define QT_VERSION "-=5.15.0.0"
+#pragma sw require header org.sw.demo.qtproject.qt.base.tools.moc-=5.15.0.0
 
 void build(Solution& s)
 {
@@ -71,13 +72,13 @@ void build(Solution& s)
     // Dependencies
     gui.Private += engine;
     gui.Private += "org.sw.demo.boost.filesystem-1.72.0"_dep;
-    gui.Private += "org.sw.demo.qtproject.qt.base.plugins.platforms.windows-5.15.0"_dep;
-    gui.Private += "org.sw.demo.qtproject.qt.base.widgets-5.15.0"_dep;
+    gui.Private += "org.sw.demo.qtproject.qt.base.plugins.platforms.windows" QT_VERSION ""_dep;
+    gui.Private += "org.sw.demo.qtproject.qt.base.widgets" QT_VERSION ""_dep;
 
     // Include directories
     gui.Private += "Projects/GUI/Include/"_id;
     gui.Private += "Dependencies/glm/include"_id;
 
-    qt_moc_rcc_uic("org.sw.demo.qtproject.qt"_dep, gui);
+    qt_moc_rcc_uic("org.sw.demo.qtproject.qt" QT_VERSION ""_dep, gui);
   }
 }
