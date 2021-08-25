@@ -73,6 +73,8 @@ MainWindow::MainWindow(QWidget* parent)
 
 void MainWindow::refreshRender()
 {
+  ui->statusbar->showMessage("Rendering...");
+
   Rayon::RawImage img;
   _engine.run(img, _scene, false);
 
@@ -89,6 +91,7 @@ void MainWindow::refreshRender()
   }
 
   ui->imageLabel->setPixmap(QPixmap::fromImage(qimg));
+  ui->statusbar->showMessage("Rendered!");
 }
 
 void MainWindow::colorChanged(const Rayon::Color& newColor)

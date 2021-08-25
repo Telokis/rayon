@@ -1,5 +1,7 @@
+// clang-format off
 #define QT_VERSION "-=5.15.0.0"
 #pragma sw require header org.sw.demo.qtproject.qt.base.tools.moc-=5.15.0.0
+// clang-format on
 
 void build(Solution& s)
 {

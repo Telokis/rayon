@@ -18,24 +18,24 @@
         "1024",
         "-o",
         "${workspaceFolder}/out.png",
-        "${workspaceFolder}/files/scenes/planets.yon"
+        "${workspaceFolder}/files/scenes/cornell.yon"
       ],
       "stopAtEntry": false,
       "cwd": "${workspaceFolder}",
       "environment": [],
-      "externalConsole": false,
+      "console": "internalConsole",
       "preLaunchTask": "Debug build with sw"
     },
     {
       "name": "(Windows) Launch GUI",
       "type": "cppvsdbg",
       "request": "launch",
-      "program": "${workspaceFolder}/bin/rayon.gui-0.0.1.exe",
+      "program": "${workspaceFolder}/.sw/out/debug/rayon.gui-0.0.1.exe",
       "stopAtEntry": false,
       "cwd": "${workspaceFolder}",
       "environment": [],
-      "externalConsole": false,
-      "preLaunchTask": "Build with sw"
+      "console": "internalConsole",
+      "preLaunchTask": "Debug build with sw"
     }
   ]
 }
