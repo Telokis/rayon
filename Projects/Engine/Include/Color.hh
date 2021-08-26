@@ -6,8 +6,7 @@
 #include <iostream>
 #include <map>
 #include <vector>
-
-#include "Tools/Helpers.hh"
+#include "Tools/Types.hh"
 
 namespace Rayon
 {
@@ -42,51 +41,36 @@ namespace Rayon
       return res;
     }
 
-    inline uint32& alpha()
+    inline void setAlpha(uint32 value)
     {
-      return _charValues[0];
+      _charValues[0] = value;
     }
 
-    inline uint32& red()
+    inline void setRed(uint32 value)
     {
-      return _charValues[1];
+      _charValues[1] = value;
     }
 
-    inline uint32& green()
+    inline void setGreen(uint32 value)
     {
-      return _charValues[2];
+      _charValues[2] = value;
     }
 
-    inline uint32& blue()
+    inline void setBlue(uint32 value)
     {
-      return _charValues[3];
+      _charValues[3] = value;
     }
 
-    inline uint8 alpha() const
-    {
-      return static_cast<uint8>(Tools::Clamp(_charValues[0], 0u, 255u));
-    }
-
-    inline uint8 red() const
-    {
-      return static_cast<uint8>(Tools::Clamp(_charValues[1], 0u, 255u));
-    }
-
-    inline uint8 green() const
-    {
-      return static_cast<uint8>(Tools::Clamp(_charValues[2], 0u, 255u));
-    }
-
-    inline uint8 blue() const
-    {
-      return static_cast<uint8>(Tools::Clamp(_charValues[3], 0u, 255u));
-    }
+    uint8 alpha() const;
+    uint8 red() const;
+    uint8 green() const;
+    uint8 blue() const;
 
   private:
     uint32 _charValues[4];
   };
 
-  inline const std::map<std::string, Color>& colors()
+  inline const std::map<std::string, Color>& namedColors()
   {
     static std::map<std::string, Color> cols{{"black", 0},
                                              {"white", 0xffffff},

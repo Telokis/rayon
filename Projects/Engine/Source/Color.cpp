@@ -1,4 +1,5 @@
 #include "Color.hh"
+#include "Tools/Helpers.hh"
 
 using Rayon::Tools::Clamp;
 
@@ -26,7 +27,7 @@ namespace Rayon
 
   Color& Color::operator*=(double val)
   {
-    val            = Clamp(val, 0, 1);
+    val            = Clamp(val, 0.0, 1.0);
     _charValues[1] = Tools::Floor(_charValues[1] * val + 0.5);
     _charValues[2] = Tools::Floor(_charValues[2] * val + 0.5);
     _charValues[3] = Tools::Floor(_charValues[3] * val + 0.5);
@@ -35,6 +36,26 @@ namespace Rayon
 
   Color::~Color()
   {
+  }
+
+  uint8 Color::alpha() const
+  {
+    return static_cast<uint8>(Tools::Clamp(_charValues[0], 0u, 255u));
+  }
+
+  uint8 Color::red() const
+  {
+    return static_cast<uint8>(Tools::Clamp(_charValues[1], 0u, 255u));
+  }
+
+  uint8 Color::green() const
+  {
+    return static_cast<uint8>(Tools::Clamp(_charValues[2], 0u, 255u));
+  }
+
+  uint8 Color::blue() const
+  {
+    return static_cast<uint8>(Tools::Clamp(_charValues[3], 0u, 255u));
   }
 
   Color Color::operator*(double val) const
@@ -47,9 +68,9 @@ namespace Rayon
 
   Color& Color::operator+=(const Color& c)
   {
-    red()   = red() + c.red();
-    green() = green() + c.green();
-    blue()  = blue() + c.blue();
+    _charValues[1] += c._charValues[1];
+    _charValues[2] += c._charValues[2];
+    _charValues[3] += c._charValues[3];
     return *this;
   }
 
@@ -82,9 +103,9 @@ namespace Rayon
       tmp[2] += colors[i].blue();
     }
 
-    result.red()   = static_cast<uint8>(tmp[0] / size);
-    result.green() = static_cast<uint8>(tmp[1] / size);
-    result.blue()  = static_cast<uint8>(tmp[2] / size);
+    result.setRed(static_cast<uint8>(tmp[0] / size));
+    result.setGreen(static_cast<uint8>(tmp[1] / size));
+    result.setBlue(static_cast<uint8>(tmp[2] / size));
     return result;
   }
 

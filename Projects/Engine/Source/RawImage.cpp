@@ -25,11 +25,13 @@ namespace Rayon
     size_t i = 0;
     for (const Color& color : _pixels)
     {
-      auto index      = i * 4;
+      auto index = i * 4;
+
       data[index]     = color.red();
       data[index + 1] = color.green();
       data[index + 2] = color.blue();
       data[index + 3] = color.alpha();
+
       ++i;
     }
     return data;
@@ -41,11 +43,13 @@ namespace Rayon
     size_t i = 0;
     for (Color& color : _pixels)
     {
-      auto index    = i * 4;
-      color.red()   = data[index];
-      color.green() = data[index + 1];
-      color.blue()  = data[index + 2];
-      color.alpha() = data[index + 3];
+      auto index = i * 4;
+
+      color.setRed(data[index]);
+      color.setGreen(data[index + 1]);
+      color.setBlue(data[index + 2]);
+      color.setAlpha(data[index + 3]);
+
       ++i;
     }
   }
@@ -57,10 +61,12 @@ namespace Rayon
     size_t i = 0;
     for (const Color& color : _pixels)
     {
-      auto index      = i * 3;
+      auto index = i * 3;
+
       data[index]     = color.red();
       data[index + 1] = color.green();
       data[index + 2] = color.blue();
+
       ++i;
     }
     return data;
@@ -72,10 +78,12 @@ namespace Rayon
     size_t i = 0;
     for (Color& color : _pixels)
     {
-      auto index    = i * 3;
-      color.red()   = data[index];
-      color.green() = data[index + 1];
-      color.blue()  = data[index + 2];
+      auto index = i * 3;
+
+      color.setRed(data[index]);
+      color.setGreen(data[index + 1]);
+      color.setBlue(data[index + 2]);
+
       ++i;
     }
   }

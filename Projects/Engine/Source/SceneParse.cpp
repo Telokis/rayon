@@ -236,7 +236,7 @@ namespace Rayon
   {
     YAML::Node& subNode = node[name];
     const auto  value   = color.intValue();
-    const auto& cols    = colors();
+    const auto& cols    = namedColors();
 
     for (const auto& pair : cols)
     {
@@ -287,19 +287,27 @@ namespace Rayon
       if (parent[name].IsMap())
       {
         const YAML::Node& colorNode = parent[name];
+        uint32            red;
+        uint32            green;
+        uint32            blue;
 
-        readVal(colorNode, "red", color.red(), def.red());
-        readVal(colorNode, "green", color.green(), def.green());
-        readVal(colorNode, "blue", color.blue(), def.blue());
+        readVal(colorNode, "red", red, def.red());
+        readVal(colorNode, "green", green, def.green());
+        readVal(colorNode, "blue", blue, def.blue());
+
+        color.setRed(red);
+        color.setGreen(green);
+        color.setBlue(blue);
+
         return;
       }
       else if (isString(parent[name]))
       {
         const std::string str = parent[name].as<std::string>();
 
-        if (colors().count(str))
+        if (namedColors().count(str))
         {
-          color = colors().at(str);
+          color = namedColors().at(str);
           return;
         }
         else

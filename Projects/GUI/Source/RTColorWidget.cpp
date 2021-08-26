@@ -6,7 +6,7 @@ namespace
 {
   void populateColors(QComboBox* colorComboBox)
   {
-    for (auto&& colors : Rayon::colors())
+    for (auto&& colors : Rayon::namedColors())
     {
       colorComboBox->addItem(colors.first.c_str());
     }
@@ -60,9 +60,9 @@ void RTColorWidget::colorStringChanged(const QString& newColor)
 {
   auto colorStr = newColor.toStdString();
 
-  if (Rayon::colors().count(colorStr))
+  if (Rayon::namedColors().count(colorStr))
   {
-    _color = Rayon::colors().at(colorStr);
+    _color = Rayon::namedColors().at(colorStr);
 
     setRGB(ui, _color);
     setHex(ui, _color);
@@ -83,7 +83,7 @@ void RTColorWidget::hexChanged(const QString& newHex)
 
 void RTColorWidget::redChanged(int newRed)
 {
-  _color.red() = newRed;
+  _color.setRed(newRed);
 
   setCustomText(ui);
   setHex(ui, _color);
@@ -93,7 +93,7 @@ void RTColorWidget::redChanged(int newRed)
 
 void RTColorWidget::greenChanged(int newGreen)
 {
-  _color.green() = newGreen;
+  _color.setGreen(newGreen);
 
   setCustomText(ui);
   setHex(ui, _color);
@@ -103,7 +103,7 @@ void RTColorWidget::greenChanged(int newGreen)
 
 void RTColorWidget::blueChanged(int newBlue)
 {
-  _color.blue() = newBlue;
+  _color.setBlue(newBlue);
 
   setCustomText(ui);
   setHex(ui, _color);
