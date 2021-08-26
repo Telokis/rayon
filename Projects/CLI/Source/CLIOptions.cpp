@@ -20,6 +20,9 @@ namespace Rayon::CLI
     auto&& opts = _description.add_options();
     opts("help", "Produce help message");
     opts("version,v", "Prints version information");
+    opts("silent",
+         po::value<bool>(&config.silent)->implicit_value(true)->default_value(false),
+         "Don't print stats");
     opts(
       "width,w", po::value<uint32>(&config.width)->default_value(512), "Width of the output image");
     opts("height,h",
