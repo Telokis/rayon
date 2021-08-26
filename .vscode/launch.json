@@ -18,13 +18,13 @@
         "1024",
         "-o",
         "${workspaceFolder}/out.png",
-        "${workspaceFolder}/files/scenes/cornell.yon"
+        "${workspaceFolder}/files/scenes/sunset.yon"
       ],
       "stopAtEntry": false,
       "cwd": "${workspaceFolder}",
       "environment": [],
       "console": "internalConsole",
-      "preLaunchTask": "Debug build with sw"
+      "preLaunchTask": "[CLI] Debug build with sw"
     },
     {
       "name": "(Windows) Launch GUI",

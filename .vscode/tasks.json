@@ -19,7 +19,17 @@
       "group": {
         "kind": "build",
         "isDefault": true
-      }
+      },
+      "windows": {
+          "options": {
+              "shell": {
+                  "executable": "cmd.exe",
+                  "args": [
+                      "/d", "/c"
+                  ]
+              }
+          }
+      },
     },
     {
       "label": "Debug build with sw",
@@ -37,7 +47,47 @@
       "group": {
         "kind": "build",
         "isDefault": true
-      }
+      },
+      "windows": {
+          "options": {
+              "shell": {
+                  "executable": "cmd.exe",
+                  "args": [
+                      "/d", "/c"
+                  ]
+              }
+          }
+      },
+    },
+    {
+      "label": "[CLI] Debug build with sw",
+      "type": "shell",
+      "command": "sw",
+      "args": [
+        "-config",
+        "d",
+        "--build-name",
+        "rayon",
+        "build",
+        "-output-dir",
+        ".sw/out/debug",
+        "-target",
+        "rayon.cli-0.0.1"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "windows": {
+          "options": {
+              "shell": {
+                  "executable": "cmd.exe",
+                  "args": [
+                      "/d", "/c"
+                  ]
+              }
+          }
+      },
     },
     {
       "label": "Generate compdb file",
@@ -47,7 +97,17 @@
       "group": {
         "kind": "build",
         "isDefault": true
-      }
+      },
+      "windows": {
+          "options": {
+              "shell": {
+                  "executable": "cmd.exe",
+                  "args": [
+                      "/d", "/c"
+                  ]
+              }
+          }
+      },
     }
   ]
 }
