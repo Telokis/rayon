@@ -17,6 +17,7 @@ void build(Solution& s)
 
     // Dependencies
     engine.Public += "pub.telokis.github.jbeder.yaml_cpp-0.6.3"_dep;
+    engine.Public += "org.sw.demo.boost.signals2-1.72.0"_dep;
 
     // Include directories
     engine.Public += "Projects/Engine/Include"_id;

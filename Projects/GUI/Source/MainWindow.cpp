@@ -68,30 +68,43 @@ MainWindow::MainWindow(QWidget* parent)
 
   ui->imageLabel->setPixmap(QPixmap());
 
+  connectSignals();
   refreshRender();
+}
+
+void MainWindow::connectSignals()
+{
+  _engine.sigFinished.connect(
+    [this] { QMetaObject::invokeMethod(this, "renderFinished", Qt::AutoConnection); });
 }
 
 void MainWindow::refreshRender()
 {
+  ui->statusbar->showMessage("Canceling previous rendering...");
+  _engine.stop();
+
   ui->statusbar->showMessage("Rendering...");
+  _engine.runAsync(_img, _scene, false);
+}
 
-  Rayon::RawImage img;
-  _engine.run(img, _scene, false);
+void MainWindow::renderFinished()
+{
+  ui->statusbar->showMessage("Preparing image to show...");
 
-  QImage qimg(img.width(), img.height(), QImage::Format_RGB32);
+  QImage qimg(_img.width(), _img.height(), QImage::Format_RGB32);
 
-  for (auto i = 0u; i < img.width(); ++i)
+  for (auto i = 0u; i < _img.width(); ++i)
   {
-    for (auto j = 0u; j < img.height(); ++j)
+    for (auto j = 0u; j < _img.height(); ++j)
     {
-      auto pixel = img.pixel(i, j);
+      auto pixel = _img.pixel(i, j);
 
       qimg.setPixel(i, j, pixel.intValue());
     }
   }
 
   ui->imageLabel->setPixmap(QPixmap::fromImage(qimg));
-  ui->statusbar->showMessage("Rendered!");
+  ui->statusbar->showMessage("All is done!");
 }
 
 void MainWindow::colorChanged(const Rayon::Color& newColor)

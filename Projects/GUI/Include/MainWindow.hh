@@ -27,6 +27,7 @@ public:
 
 private:
   void refreshRender();
+  void connectSignals();
 
 public slots:
   void colorChanged(const Rayon::Color& newColor);
@@ -37,10 +38,14 @@ public slots:
   void shininessChanged(double newShininess);
   void ambientChanged(double newAmbient);
 
+private slots:
+  void renderFinished();
+
 private:
   Ui::MainWindow* ui;
   Rayon::Rayon    _engine;
   Rayon::Scene    _scene;
   Rayon::Plain*   _material;
+  Rayon::RawImage _img;
 };
 #endif  // MAINWINDOW_HH

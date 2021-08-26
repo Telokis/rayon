@@ -13,6 +13,8 @@ if [ "$1" = "build" ]; then
     fi
 elif [ "$1" = "debug" ]; then
     run sw -config d --build-name rayon build -output-dir .sw/out/debug
+elif [ "$1" = "generate" ]; then
+    run sw -config r --build-name rayon generate
 elif [ "$1" = "compdb" ]; then
     run sw --build-name rayon generate -g compdb
 elif [ "$1" = "run" ]; then
@@ -23,5 +25,5 @@ elif [ "$1" = "run" ]; then
     fi
 else
     echo "Command not found: $1"
-    echo "Try build, debug, run or compdb"
+    echo "Try build, debug, run, generate or compdb"
 fi

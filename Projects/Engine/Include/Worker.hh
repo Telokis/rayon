@@ -4,10 +4,13 @@
 #define RAYON_WORKER_HH_
 
 #include <memory>
+#include <boost/signals2.hpp>
 
 #include "RawImage.hh"
 #include "Scene.hh"
 #include "Tools/Stat.hh"
+
+namespace sigs = boost::signals2;
 
 namespace Rayon
 {
@@ -20,11 +23,17 @@ namespace Rayon
     Worker(RawImage* img, uint32 xStart, uint32 xStop, Tools::Stat* stat);
     void operator()(uint32 width, uint32 height, const Scene* scene_);
 
+    void stop();
+
+  public:
+    std::shared_ptr<sigs::signal<void()>> sigFinished;
+
   private:
-    RawImage*    _img;
-    uint32       _xStart;
-    uint32       _xStop;
-    Tools::Stat* _stat;
+    RawImage*                         _img;
+    uint32                            _xStart;
+    uint32                            _xStop;
+    Tools::Stat*                      _stat;
+    std::shared_ptr<std::atomic_bool> _shouldStop;
   };
 }  // namespace Rayon
 

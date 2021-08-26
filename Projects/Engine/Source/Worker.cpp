@@ -10,8 +10,18 @@
 namespace Rayon
 {
   Worker::Worker(RawImage* img, uint32 xStart, uint32 xStop, Tools::Stat* stat)
-    : _img(img), _xStart(xStart), _xStop(xStop), _stat(stat)
+    : _img(img)
+    , _xStart(xStart)
+    , _xStop(xStop)
+    , _stat(stat)
+    , _shouldStop(std::make_shared<std::atomic_bool>(false))
+    , sigFinished(std::make_shared<sigs::signal<void()>>())
   {
+  }
+
+  void Worker::stop()
+  {
+    _shouldStop->store(true);
   }
 
   void Worker::operator()(uint32 width, uint32 height, const Scene* scene)
@@ -46,11 +56,18 @@ namespace Rayon
 
         auto color        = scene->inter(cameraRay, 0, _stat);
         _img->pixel(x, y) = color;
+
+        if (_shouldStop->load())
+        {
+          return;
+        }
       }
     }
 
     auto end       = std::chrono::steady_clock::now();
     _stat->elapsed = end - start;
+
+    (*sigFinished)();
   }
 
   namespace

@@ -8,20 +8,18 @@
 #undef _CRT_SECURE_NO_WARNINGS
 
 #include <chrono>
+#include <mutex>
 #include <iomanip>
 #include <iostream>
 #include <locale>
-#include <memory>
 #include <numeric>
 #include <sstream>
-#include <thread>
 #include <vector>
 
 #include "RawImage.hh"
 #include "Registry.hh"
 #include "SceneParse.hh"
 #include "Version.hh"
-#include "Worker.hh"
 
 using TimePoint_t = std::chrono::steady_clock::time_point;
 
@@ -54,10 +52,10 @@ std::string formatNumber(T value)
 
 namespace Rayon
 {
-  using UniqueStat = std::unique_ptr<Tools::Stat>;
-  using Duration_t = std::chrono::duration<double>;
+  using StatStorage_t = Rayon::StatStorage_t;
+  using Duration_t    = std::chrono::duration<double>;
 
-  void printStats(const std::vector<UniqueStat>& stats, Duration_t overallDuration, uint32 pixels)
+  void printStats(const StatStorage_t& stats, Duration_t overallDuration, uint32 pixels)
   {
     Tools::Stat total;
 
@@ -126,15 +124,20 @@ namespace Rayon
     return run(img, _scene, preprocess);
   }
 
-  void runMultipleThreads(std::vector<UniqueStat>& stats,
-                          uint8                    jn,
-                          RawImage&                img,
-                          Scene&                   scene,
-                          uint32                   width,
-                          uint32                   height)
+  void runMultipleThreads(
+    Rayon::WorkersStorage_t& workerData,
+    StatStorage_t&           stats,
+    uint8                    jn,
+    RawImage&                img,
+    Scene&                   scene,
+    bool                     joinThreads,
+    std::function<void()>    callback = []() {})
   {
-    std::vector<std::thread> threads;
-    threads.reserve(jn);
+    auto count  = std::make_shared<std::atomic_int>(0);
+    auto width  = img.width();
+    auto height = img.height();
+
+    workerData.reserve(jn);
     stats.reserve(jn);
 
     for (uint8 i = 0; i < jn; ++i)
@@ -144,11 +147,59 @@ namespace Rayon
 
       auto stat = std::make_unique<Tools::Stat>();
 
-      threads.emplace_back(Worker(&img, xStart, xStop, stat.get()), width, height, &scene);
+      Worker w(&img, xStart, xStop, stat.get());
+
+      if (!joinThreads)
+      {
+        w.sigFinished->connect([&workerData, count, callback, jn] {
+          (*count)++;
+
+          if (*count >= jn)
+          {
+            callback();
+          }
+        });
+      }
+
+      std::thread thread(w, width, height, &scene);
+
+      workerData.emplace_back(std::move(thread), w);
       stats.emplace_back(std::move(stat));
     }
 
-    for (auto&& thread : threads)
+    if (joinThreads)
+    {
+      for (auto&& [thread, worker] : workerData)
+        thread.join();
+    }
+  }
+
+  void Rayon::runAsync(RawImage& img, Scene& scene, bool preprocess)
+  {
+    auto width  = _config.getWidth();
+    auto height = _config.getHeight();
+
+    _stats.clear();
+    _workerData.clear();
+    img.resize(width, height);
+
+    if (preprocess)
+    {
+      scene.preprocess();
+      sigPreprocessFinished();
+    }
+
+    uint8 jn = _config.getThreadCount();
+
+    runMultipleThreads(_workerData, _stats, jn, img, scene, false, [this] { sigFinished(); });
+  }
+
+  void Rayon::stop()
+  {
+    for (auto&& [thread, worker] : _workerData)
+      worker.stop();
+
+    for (auto&& [thread, worker] : _workerData)
       thread.join();
   }
 
@@ -159,6 +210,7 @@ namespace Rayon
     TimePoint_t start;
     TimePoint_t end;
 
+    _workerData.clear();
     img.resize(width, height);
 
     if (preprocess)
@@ -176,11 +228,11 @@ namespace Rayon
     uint8 jn = _config.getThreadCount();
 
     start = std::chrono::steady_clock::now();
-    std::vector<UniqueStat> stats;
+    StatStorage_t stats;
 
     if (jn > 1 || _config.getForceUseThread())
     {
-      runMultipleThreads(stats, jn, img, scene, width, height);
+      runMultipleThreads(_workerData, stats, jn, img, scene, true);
     }
     else
     {
@@ -199,6 +251,8 @@ namespace Rayon
     {
       printStats(stats, diff, width * height);
     }
+
+    sigFinished();
 
     return 0;
   }
