@@ -29,6 +29,9 @@ namespace Rayon::CLI
          po::value<uint32>(&config.height)->default_value(512),
          "Height of the output image");
     opts("output,o", po::value<std::string>(&_outputPath), "Path to the image output");
+    opts("rpp",
+         po::value<int>(&_rpp)->default_value(1),
+         "Rays per pixels. Negative value will pack pixels together.");
     opts("thread-count,j",
          po::value<uint32>(&config.threadsCount)->default_value(4),
          "Number of threads to use to render");
@@ -87,4 +90,5 @@ namespace Rayon::CLI
 
   RAYON_GENERATE_PROPERTY_DEFINITION(CLIOptions, std::string, _outputPath, OutputPath);
   RAYON_GENERATE_PROPERTY_DEFINITION(CLIOptions, std::string, _inputPath, InputPath);
+  RAYON_GENERATE_PROPERTY_DEFINITION(CLIOptions, int, _rpp, Rpp);
 }  // namespace Rayon::CLI

@@ -3,6 +3,7 @@
 #include "CLIOptions.hh"
 #include "ImageFileHandlers/ImageFileHandler.hh"
 #include "Rayon.hh"
+#include "Batch/LocalBatchGenerator.hh"
 #include "Registry.hh"
 
 int main(int ac, char** av)
@@ -18,6 +19,8 @@ int main(int ac, char** av)
     if (cliOptions.handleStoppingArgs())
       return 0;
 
+    Rayon::LocalBatchGenerator batchGenerator{
+      &img, cliOptions.getRpp(), cliOptions.getRpp(), config.getThreadCount()};
     Rayon::Rayon engine(config);
 
     Rayon::registry().registerDefaults();
@@ -27,7 +30,7 @@ int main(int ac, char** av)
       engine.loadSceneFromFile(cliOptions.getInputPath());
     }
 
-    auto result = engine.run(img);
+    auto result = engine.run(img, &batchGenerator);
 
     if (result == 0)
     {

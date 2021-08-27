@@ -2,8 +2,11 @@
 #define MAINWINDOW_HH
 
 #include <QMainWindow>
+#include <QTimer>
+#include <memory>
 
 #include "Rayon.hh"
+#include "Batch/IBatchGenerator.hh"
 
 namespace Rayon
 {
@@ -28,6 +31,7 @@ public:
 private:
   void refreshRender();
   void connectSignals();
+  void drawImage();
 
 public slots:
   void colorChanged(const Rayon::Color& newColor);
@@ -42,10 +46,12 @@ private slots:
   void renderFinished();
 
 private:
-  Ui::MainWindow* ui;
-  Rayon::Rayon    _engine;
-  Rayon::Scene    _scene;
-  Rayon::Plain*   _material;
-  Rayon::RawImage _img;
+  Ui::MainWindow*                         ui;
+  Rayon::Rayon                            _engine;
+  Rayon::Scene                            _scene;
+  Rayon::Plain*                           _material;
+  Rayon::RawImage                         _img;
+  std::unique_ptr<Rayon::IBatchGenerator> _batchGenerator;
+  QTimer                                  _refreshTimer;
 };
 #endif  // MAINWINDOW_HH

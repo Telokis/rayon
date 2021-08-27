@@ -3,7 +3,6 @@
 #ifndef RAYON_BATCH_IBATCHGENERATOR_HH_
 #define RAYON_BATCH_IBATCHGENERATOR_HH_
 
-#include <string_view>
 #include "Batch/Batch.hh"
 
 namespace Rayon
@@ -11,7 +10,10 @@ namespace Rayon
   class IBatchGenerator
   {
   public:
-    virtual Batch getNextBatch(const std::string_view& sourceIdentifier) = 0;
+    virtual bool  hasNextBatch() = 0;
+    virtual Batch getNextBatch() = 0;
+    virtual void  reset()        = 0;
+    virtual int   getRpp()       = 0;
   };
 
 }  // namespace Rayon

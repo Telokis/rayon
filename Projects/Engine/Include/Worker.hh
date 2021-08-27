@@ -6,7 +6,7 @@
 #include <memory>
 #include <boost/signals2.hpp>
 
-#include "RawImage.hh"
+#include "Batch/IBatchGenerator.hh"
 #include "Scene.hh"
 #include "Tools/Stat.hh"
 
@@ -20,7 +20,7 @@ namespace Rayon
     static Color inter(const Scene& scene, const Ray& ray, uint8 depth, Tools::Stat* stat);
 
   public:
-    Worker(RawImage* img, uint32 xStart, uint32 xStop, Tools::Stat* stat);
+    Worker(IBatchGenerator* batchGenerator, Tools::Stat* stat);
     void operator()(uint32 width, uint32 height, const Scene* scene_);
 
     void stop();
@@ -29,9 +29,7 @@ namespace Rayon
     std::shared_ptr<sigs::signal<void()>> sigFinished;
 
   private:
-    RawImage*                         _img;
-    uint32                            _xStart;
-    uint32                            _xStop;
+    IBatchGenerator*                  _batchGenerator;
     Tools::Stat*                      _stat;
     std::shared_ptr<std::atomic_bool> _shouldStop;
   };

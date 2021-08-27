@@ -9,6 +9,7 @@
 #include "Object.hh"
 #include "Registry.hh"
 #include "SceneParse.hh"
+#include "Batch/LocalBatchGenerator.hh"
 
 auto rawScene = R"rawScene(
 cubemap:
@@ -48,11 +49,14 @@ void populateFlags(QLayout* parentLayout, QWidget* parent)
   }
 }
 
+static const constexpr int THREAD_COUNT = 8;
+
 // 2316, 1317
 MainWindow::MainWindow(QWidget* parent)
   : QMainWindow(parent)
   , ui(new Ui::MainWindow)
-  , _engine(Rayon::Config(1024, 1024, 8).setSilent(true))
+  , _engine(Rayon::Config(800, 800, THREAD_COUNT).setSilent(true))
+  , _batchGenerator(std::make_unique<Rayon::LocalBatchGenerator>(&_img, -6, 4, THREAD_COUNT))
 {
   Rayon::registry().registerDefaults();
   Rayon::readSceneFromString(_scene, rawScene);
@@ -70,27 +74,39 @@ MainWindow::MainWindow(QWidget* parent)
 
   connectSignals();
   refreshRender();
+
+  _refreshTimer.start(250);
 }
 
 void MainWindow::connectSignals()
 {
   _engine.sigFinished.connect(
     [this] { QMetaObject::invokeMethod(this, "renderFinished", Qt::AutoConnection); });
+
+  connect(&_refreshTimer, &QTimer::timeout, this, &MainWindow::drawImage);
 }
 
 void MainWindow::refreshRender()
 {
   ui->statusbar->showMessage("Canceling previous rendering...");
   _engine.stop();
+  _batchGenerator->reset();
 
   ui->statusbar->showMessage("Rendering...");
-  _engine.runAsync(_img, _scene, false);
+  _engine.runAsync(_img, _scene, _batchGenerator.get(), false);
 }
 
 void MainWindow::renderFinished()
 {
   ui->statusbar->showMessage("Preparing image to show...");
 
+  drawImage();
+
+  ui->statusbar->showMessage("All is done!");
+}
+
+void MainWindow::drawImage()
+{
   QImage qimg(_img.width(), _img.height(), QImage::Format_RGB32);
 
   for (auto i = 0u; i < _img.width(); ++i)
@@ -104,7 +120,6 @@ void MainWindow::renderFinished()
   }
 
   ui->imageLabel->setPixmap(QPixmap::fromImage(qimg));
-  ui->statusbar->showMessage("All is done!");
 }
 
 void MainWindow::colorChanged(const Rayon::Color& newColor)

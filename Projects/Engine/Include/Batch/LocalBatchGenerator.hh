@@ -4,6 +4,9 @@
 #define RAYON_BATCH_LOCALBATCHGENERATOR_HH_
 
 #include "Batch/IBatchGenerator.hh"
+#include <mutex>
+#include <atomic>
+#include <condition_variable>
 
 namespace Rayon
 {
@@ -13,25 +16,32 @@ namespace Rayon
 
 namespace Rayon
 {
-  class LocalBatchGenerator
+  class LocalBatchGenerator : public IBatchGenerator
   {
   public:
-    LocalBatchGenerator(const Scene* scene,
-                        Int32Vec2_t  start,
-                        Int32Vec2_t  end,
-                        RawImage*    img,
-                        int          rpp);
+    LocalBatchGenerator(RawImage* img, int rppStart, int rppEnd, uint32 threadsCount);
 
   public:
-    void forEachWork(std::function<Color(double x, double y)> f);
+    bool  hasNextBatch();
+    Batch getNextBatch();
+    void  reset();
+    int   getRpp();
 
-  private:
-    int         _rpp;
-    Int32Vec2_t _start;
-    Int32Vec2_t _end;
-    RawImage*   _img;
+  protected:
+    void   increaseRpp();
+    uint32 rppToSize() const;
 
-    RAYON_GENERATE_PROPERTY_DECLARATION(LocalBatchGenerator, const Scene*, _scene, Scene);
+  protected:
+    RawImage*               _img;
+    int                     _rpp;
+    int                     _rppStart;
+    int                     _rppEnd;
+    Int32Vec2_t             _pos;
+    std::mutex              _mutex;
+    std::condition_variable _rppSync;
+    std::atomic_bool        _rppChanged;
+    std::atomic<uint32>     _threadsLeft;
+    uint32                  _threadsCount;
   };
 
 }  // namespace Rayon

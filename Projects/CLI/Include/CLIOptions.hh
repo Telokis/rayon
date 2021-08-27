@@ -23,6 +23,7 @@ namespace Rayon::CLI
   protected:
     RAYON_GENERATE_PROPERTY_DECLARATION(CLIOptions, std::string, _outputPath, OutputPath);
     RAYON_GENERATE_PROPERTY_DECLARATION(CLIOptions, std::string, _inputPath, InputPath);
+    RAYON_GENERATE_PROPERTY_DECLARATION(CLIOptions, int, _rpp, Rpp);
   };
 }  // namespace Rayon::CLI
 

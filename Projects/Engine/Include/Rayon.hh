@@ -31,10 +31,13 @@ namespace Rayon
     Rayon(const Config& config);
 
   public:
-    void runAsync(RawImage& img, Scene& scene, bool preprocess = false);
+    void runAsync(RawImage&        img,
+                  Scene&           scene,
+                  IBatchGenerator* batchGenerator,
+                  bool             preprocess = false);
     void stop();
-    int  run(RawImage& img, Scene& scene, bool preprocess = false);
-    int  run(RawImage& img, bool preprocess = true);
+    int  run(RawImage& img, Scene& scene, IBatchGenerator* batchGenerator, bool preprocess = false);
+    int  run(RawImage& img, IBatchGenerator* batchGenerator, bool preprocess = true);
     void loadSceneFromFile(const std::string& filename);
     void loadSceneFromString(const std::string& spec);
 

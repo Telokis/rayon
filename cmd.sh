@@ -12,7 +12,11 @@ if [ "$1" = "build" ]; then
         run sw -config r --build-name rayon build -output-dir bin -target rayon.$2-0.0.1
     fi
 elif [ "$1" = "debug" ]; then
-    run sw -config d --build-name rayon build -output-dir .sw/out/debug
+    if [ "$#" -eq 1 ]; then
+        run sw -config d --build-name rayon build -output-dir .sw/out/debug
+    else
+        run sw -config d --build-name rayon build -output-dir .sw/out/debug -target rayon.$2-0.0.1
+    fi
 elif [ "$1" = "generate" ]; then
     run sw -config r --build-name rayon generate
 elif [ "$1" = "compdb" ]; then

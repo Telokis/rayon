@@ -6,12 +6,11 @@
 #include <functional>
 #include "Color.hh"
 #include "Tools/Types.hh"
-#include "Tools/CodeMacros.hh"
 
 namespace Rayon
 {
-  class Scene;
   class RawImage;
+  class IBatchGenerator;
 }  // namespace Rayon
 
 namespace Rayon
@@ -22,18 +21,20 @@ namespace Rayon
     using WorkFunction_t = std::function<Color(double x, double y)>;
 
   public:
-    Batch(const Scene* scene, Int32Vec2_t start, Int32Vec2_t end, RawImage* img, int rpp);
+    Batch(IBatchGenerator* parent, UInt32Vec2_t start, UInt32Vec2_t end, RawImage* img, int rpp);
 
   public:
     void forEachWork(WorkFunction_t f);
 
   private:
-    Int32Vec2_t _start;
-    Int32Vec2_t _end;
-    RawImage*   _img;
-    int         _rpp;
+    void fillColor(int x, int y, const Color& color);
 
-    RAYON_GENERATE_PROPERTY_DECLARATION(Batch, const Scene*, _scene, Scene);
+  private:
+    UInt32Vec2_t     _start;
+    UInt32Vec2_t     _end;
+    RawImage*        _img;
+    int              _rpp;
+    IBatchGenerator* _parent;
   };
 
 }  // namespace Rayon

@@ -9,10 +9,8 @@
 
 namespace Rayon
 {
-  Worker::Worker(RawImage* img, uint32 xStart, uint32 xStop, Tools::Stat* stat)
-    : _img(img)
-    , _xStart(xStart)
-    , _xStop(xStop)
+  Worker::Worker(IBatchGenerator* batchGenerator, Tools::Stat* stat)
+    : _batchGenerator(batchGenerator)
     , _stat(stat)
     , _shouldStop(std::make_shared<std::atomic_bool>(false))
     , sigFinished(std::make_shared<sigs::signal<void()>>())
@@ -35,10 +33,16 @@ namespace Rayon
     Float_t angleV = fovX / width;
     Float_t angleH = fovY / height;
 
-    for (uint32 x = _xStart; x < _xStop; ++x)
+    while (_batchGenerator->hasNextBatch())
     {
-      for (uint32 y = 0; y < height; ++y)
+      auto batch = _batchGenerator->getNextBatch();
+
+      if (*_shouldStop)
       {
+        return;
+      }
+
+      batch.forEachWork([=, &cameraRay](double x, double y) {
         Float_t tmpAngleV = fovX / 2 - angleV * x;
         Float_t tmpAngleH = fovY / 2 - angleH * y;
         Float_t cosV      = Tools::Cos(tmpAngleV);
@@ -54,14 +58,8 @@ namespace Rayon
         cameraRay.setDirection(scene->eye().indirectRotation(tmp));
         cameraRay.normalize();
 
-        auto color        = scene->inter(cameraRay, 0, _stat);
-        _img->pixel(x, y) = color;
-
-        if (_shouldStop->load())
-        {
-          return;
-        }
-      }
+        return scene->inter(cameraRay, 0, _stat);
+      });
     }
 
     auto end       = std::chrono::steady_clock::now();

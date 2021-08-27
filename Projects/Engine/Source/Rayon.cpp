@@ -119,9 +119,9 @@ namespace Rayon
     readSceneFromFile(_scene, filename);
   }
 
-  int Rayon::run(RawImage& img, bool preprocess)
+  int Rayon::run(RawImage& img, IBatchGenerator* batchGenerator, bool preprocess)
   {
-    return run(img, _scene, preprocess);
+    return run(img, _scene, batchGenerator, preprocess);
   }
 
   void runMultipleThreads(
@@ -130,6 +130,7 @@ namespace Rayon
     uint8                    jn,
     RawImage&                img,
     Scene&                   scene,
+    IBatchGenerator*         batchGenerator,
     bool                     joinThreads,
     std::function<void()>    callback = []() {})
   {
@@ -147,7 +148,7 @@ namespace Rayon
 
       auto stat = std::make_unique<Tools::Stat>();
 
-      Worker w(&img, xStart, xStop, stat.get());
+      Worker w(batchGenerator, stat.get());
 
       if (!joinThreads)
       {
@@ -174,7 +175,10 @@ namespace Rayon
     }
   }
 
-  void Rayon::runAsync(RawImage& img, Scene& scene, bool preprocess)
+  void Rayon::runAsync(RawImage&        img,
+                       Scene&           scene,
+                       IBatchGenerator* batchGenerator,
+                       bool             preprocess)
   {
     auto width  = _config.getWidth();
     auto height = _config.getHeight();
@@ -191,7 +195,8 @@ namespace Rayon
 
     uint8 jn = _config.getThreadCount();
 
-    runMultipleThreads(_workerData, _stats, jn, img, scene, false, [this] { sigFinished(); });
+    runMultipleThreads(
+      _workerData, _stats, jn, img, scene, batchGenerator, false, [this] { sigFinished(); });
   }
 
   void Rayon::stop()
@@ -203,7 +208,7 @@ namespace Rayon
       thread.join();
   }
 
-  int Rayon::run(RawImage& img, Scene& scene, bool preprocess)
+  int Rayon::run(RawImage& img, Scene& scene, IBatchGenerator* batchGenerator, bool preprocess)
   {
     auto        width  = _config.getWidth();
     auto        height = _config.getHeight();
@@ -232,12 +237,12 @@ namespace Rayon
 
     if (jn > 1 || _config.getForceUseThread())
     {
-      runMultipleThreads(_workerData, stats, jn, img, scene, true);
+      runMultipleThreads(_workerData, stats, jn, img, scene, batchGenerator, true);
     }
     else
     {
       auto stat   = std::make_unique<Tools::Stat>();
-      auto worker = Worker(&img, 0, width, stat.get());
+      auto worker = Worker(batchGenerator, stat.get());
 
       worker(width, height, &scene);
 

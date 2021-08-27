@@ -11,13 +11,15 @@
       "program": "${workspaceFolder}/.sw/out/debug/rayon.cli-0.0.1.exe",
       "args": [
         "-w",
-        "1024",
+        "1000",
         "-j",
         "1",
         "-h",
-        "1024",
+        "1000",
         "-o",
         "${workspaceFolder}/out.png",
+        "--rpp",
+        "2",
         "${workspaceFolder}/files/scenes/sunset.yon"
       ],
       "stopAtEntry": false,
