@@ -19,7 +19,7 @@ namespace Rayon
 
   void Worker::stop()
   {
-    _shouldStop->store(true);
+    *_shouldStop = true;
   }
 
   void Worker::operator()(uint32 width, uint32 height, const Scene* scene)
@@ -35,12 +35,12 @@ namespace Rayon
 
     while (_batchGenerator->hasNextBatch())
     {
-      auto batch = _batchGenerator->getNextBatch();
-
       if (*_shouldStop)
       {
         return;
       }
+
+      auto batch = _batchGenerator->getNextBatch();
 
       batch.forEachWork([=, &cameraRay](double x, double y) {
         Float_t tmpAngleV = fovX / 2 - angleV * x;
@@ -65,7 +65,10 @@ namespace Rayon
     auto end       = std::chrono::steady_clock::now();
     _stat->elapsed = end - start;
 
-    (*sigFinished)();
+    if (!*_shouldStop)
+    {
+      (*sigFinished)();
+    }
   }
 
   namespace

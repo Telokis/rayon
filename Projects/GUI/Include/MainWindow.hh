@@ -6,7 +6,7 @@
 #include <memory>
 
 #include "Rayon.hh"
-#include "Batch/IBatchGenerator.hh"
+#include "Batch/LocalBatchGenerator.hh"
 
 namespace Rayon
 {
@@ -46,12 +46,12 @@ private slots:
   void renderFinished();
 
 private:
-  Ui::MainWindow*                         ui;
-  Rayon::Rayon                            _engine;
-  Rayon::Scene                            _scene;
-  Rayon::Plain*                           _material;
-  Rayon::RawImage                         _img;
-  std::unique_ptr<Rayon::IBatchGenerator> _batchGenerator;
-  QTimer                                  _refreshTimer;
+  Ui::MainWindow*                             ui;
+  Rayon::Rayon                                _engine;
+  Rayon::Scene                                _scene;
+  Rayon::Plain*                               _material;
+  Rayon::RawImage                             _img;
+  std::unique_ptr<Rayon::LocalBatchGenerator> _batchGenerator;
+  QTimer                                      _refreshTimer;
 };
 #endif  // MAINWINDOW_HH

@@ -27,6 +27,9 @@ namespace Rayon
     void  reset();
     int   getRpp();
 
+  public:
+    void stop();
+
   protected:
     void   increaseRpp();
     uint32 rppToSize() const;
@@ -39,6 +42,7 @@ namespace Rayon
     Int32Vec2_t             _pos;
     std::mutex              _mutex;
     std::condition_variable _rppSync;
+    std::atomic_bool        _stopped;
     std::atomic_bool        _rppChanged;
     std::atomic<uint32>     _threadsLeft;
     uint32                  _threadsCount;

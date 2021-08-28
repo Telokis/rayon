@@ -15,15 +15,29 @@ namespace Rayon
     , _rppStart(rppStart)
     , _rppEnd(rppEnd)
     , _pos(0, 0)
+    , _stopped(false)
     , _rppChanged(false)
     , _threadsLeft(threadsCount)
     , _threadsCount(threadsCount)
   {
   }
 
+  void LocalBatchGenerator::stop()
+  {
+    std::unique_lock lock(_mutex);
+
+    _stopped = true;
+    _rppSync.notify_all();
+  }
+
   bool LocalBatchGenerator::hasNextBatch()
   {
     std::unique_lock lock(_mutex);
+
+    if (_stopped)
+    {
+      return false;
+    }
 
     if (_rppChanged)
     {
@@ -74,8 +88,8 @@ namespace Rayon
   {
     std::unique_lock lock(_mutex);
 
-    _rppSync.notify_all();
     _threadsLeft = _threadsCount;
+    _stopped     = false;
     _rppChanged  = false;
     _rpp         = _rppStart;
     _pos         = {0, 0};

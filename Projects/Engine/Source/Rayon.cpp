@@ -199,13 +199,22 @@ namespace Rayon
       _workerData, _stats, jn, img, scene, batchGenerator, false, [this] { sigFinished(); });
   }
 
-  void Rayon::stop()
+  void Rayon::sendStopSignal()
   {
     for (auto&& [thread, worker] : _workerData)
       worker.stop();
+  }
 
+  void Rayon::joinThreads()
+  {
     for (auto&& [thread, worker] : _workerData)
       thread.join();
+  }
+
+  void Rayon::stopAndJoinThreads()
+  {
+    sendStopSignal();
+    joinThreads();
   }
 
   int Rayon::run(RawImage& img, Scene& scene, IBatchGenerator* batchGenerator, bool preprocess)

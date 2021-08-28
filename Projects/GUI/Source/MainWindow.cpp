@@ -22,6 +22,9 @@ cubemap:
 eye:
   position:
     z: -5
+    y: 2
+  rotation:
+    x: 20
 lights:
   - position:
       x: 2
@@ -30,11 +33,20 @@ lights:
     color: white
     type: Sun
 objects:
-  - material:
+  #- material:
+  #    type: Plain
+  #    color: aqua
+  #  radius: 1
+  #  type: Sphere
+  - type: Box
+    depth: 2
+    height: 2
+    width: 2
+    rotation:
+      y: 1
+    material:
       type: Plain
       color: aqua
-    radius: 1
-    type: Sphere
 )rawScene";
 
 void populateFlags(QLayout* parentLayout, QWidget* parent)
@@ -56,7 +68,7 @@ MainWindow::MainWindow(QWidget* parent)
   : QMainWindow(parent)
   , ui(new Ui::MainWindow)
   , _engine(Rayon::Config(800, 800, THREAD_COUNT).setSilent(true))
-  , _batchGenerator(std::make_unique<Rayon::LocalBatchGenerator>(&_img, -6, 4, THREAD_COUNT))
+  , _batchGenerator(std::make_unique<Rayon::LocalBatchGenerator>(&_img, -6, 1, THREAD_COUNT))
 {
   Rayon::registry().registerDefaults();
   Rayon::readSceneFromString(_scene, rawScene);
@@ -89,7 +101,9 @@ void MainWindow::connectSignals()
 void MainWindow::refreshRender()
 {
   ui->statusbar->showMessage("Canceling previous rendering...");
-  _engine.stop();
+  _engine.sendStopSignal();
+  _batchGenerator->stop();
+  _engine.joinThreads();
   _batchGenerator->reset();
 
   ui->statusbar->showMessage("Rendering...");
@@ -103,6 +117,15 @@ void MainWindow::renderFinished()
   drawImage();
 
   ui->statusbar->showMessage("All is done!");
+
+  _scene.lastObject()->getShape()->setRotY(_scene.lastObject()->getShape()->getRotY()
+                                           + Rayon::Tools::DegToRad(2));
+
+  _scene.lastObject()->getShape()->computeDirectRotation();
+  _scene.lastObject()->getShape()->computeIndirectRotation();
+  _scene.lastObject()->getShape()->preprocess();
+
+  refreshRender();
 }
 
 void MainWindow::drawImage()

@@ -35,7 +35,9 @@ namespace Rayon
                   Scene&           scene,
                   IBatchGenerator* batchGenerator,
                   bool             preprocess = false);
-    void stop();
+    void sendStopSignal();
+    void joinThreads();
+    void stopAndJoinThreads();
     int  run(RawImage& img, Scene& scene, IBatchGenerator* batchGenerator, bool preprocess = false);
     int  run(RawImage& img, IBatchGenerator* batchGenerator, bool preprocess = true);
     void loadSceneFromFile(const std::string& filename);

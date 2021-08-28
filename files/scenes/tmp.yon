@@ -1,0 +1,33 @@
+cubemap:
+  back: "./files/scenes/textures/cubemap/stormydays_bk.jpg"
+  down: "./files/scenes/textures/cubemap/stormydays_dn.jpg"
+  front: "./files/scenes/textures/cubemap/stormydays_ft.jpg"
+  left: "./files/scenes/textures/cubemap/stormydays_lf.jpg"
+  right: "./files/scenes/textures/cubemap/stormydays_rt.jpg"
+  up: "./files/scenes/textures/cubemap/stormydays_up.jpg"
+eye:
+  position:
+    z: -5
+    y: 2
+  rotation:
+    x: 20
+lights:
+  - position:
+      x: 2
+      y: 2.8
+      z: -3
+    color: white
+    type: Sun
+objects:
+  #- material:
+  #    type: Plain
+  #    color: aqua
+  #  radius: 1
+  #  type: Sphere
+  - type: Box
+    depth: 2
+    height: 2
+    width: 2
+    material:
+      type: Plain
+      color: aqua
