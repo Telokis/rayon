@@ -25,9 +25,6 @@ namespace Rayon
   void Entity::computeRotation()
   {
     _rotIsIdentity = Tools::IsZero(_rot.x) && Tools::IsZero(_rot.y) && Tools::IsZero(_rot.z);
-    _rot.x         = Tools::DegToRad(_rot.x);
-    _rot.y         = Tools::DegToRad(_rot.y);
-    _rot.z         = Tools::DegToRad(_rot.z);
     computeDirectRotation();
     computeIndirectRotation();
   }
@@ -37,8 +34,10 @@ namespace Rayon
     using std::cos;
     using std::sin;
 
-    Vec_t c(cos(-1 * _rot.x), cos(-1 * _rot.y), cos(-1 * _rot.z));
-    Vec_t s(sin(-1 * _rot.x), sin(-1 * _rot.y), sin(-1 * _rot.z));
+    Vec_t radRot{Tools::DegToRad(_rot.x), Tools::DegToRad(_rot.y), Tools::DegToRad(_rot.z)};
+
+    Vec_t c(cos(-1 * radRot.x), cos(-1 * radRot.y), cos(-1 * radRot.z));
+    Vec_t s(sin(-1 * radRot.x), sin(-1 * radRot.y), sin(-1 * radRot.z));
 
     _directMatrix[0][0] = c.y * c.z;
     _directMatrix[1][0] = c.y * s.z;
@@ -56,8 +55,10 @@ namespace Rayon
     using std::cos;
     using std::sin;
 
-    Vec_t c(cos(_rot.x), cos(_rot.y), cos(_rot.z));
-    Vec_t s(sin(_rot.x), sin(_rot.y), sin(_rot.z));
+    Vec_t radRot{Tools::DegToRad(_rot.x), Tools::DegToRad(_rot.y), Tools::DegToRad(_rot.z)};
+
+    Vec_t c(cos(radRot.x), cos(radRot.y), cos(radRot.z));
+    Vec_t s(sin(radRot.x), sin(radRot.y), sin(radRot.z));
 
     _indirectMatrix[0][0] = c.y * c.z;
     _indirectMatrix[1][0] = c.x * s.z + c.z * s.x * s.y;

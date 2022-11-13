@@ -92,15 +92,16 @@ MainWindow::MainWindow(QWidget* parent)
 
 void MainWindow::connectSignals()
 {
-  _engine.sigFinished.connect(
-    [this] { QMetaObject::invokeMethod(this, "renderFinished", Qt::AutoConnection); });
+  _engine.sigFinished.connect([this] {
+    QMetaObject::invokeMethod(this, "renderFinished", Qt::AutoConnection);
+  });
 
   connect(&_refreshTimer, &QTimer::timeout, this, &MainWindow::drawImage);
 }
 
 void MainWindow::refreshRender()
 {
-  ui->statusbar->showMessage("Canceling previous rendering...");
+  ui->statusbar->showMessage("Canceling previous rendering....");
   _engine.sendStopSignal();
   _batchGenerator->stop();
   _engine.joinThreads();
