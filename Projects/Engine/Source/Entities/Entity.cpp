@@ -77,7 +77,7 @@ namespace Rayon
     readVal(root, "rotation", _rot, {0, 0, 0});
   }
 
-  void Entity::write(YAML::Node& root) const
+  void Entity::write(YAML::Node root) const
   {
     writeVal(root, "position", _pos, {0, 0, 0});
     writeVal(root, "rotation", _rot, {0, 0, 0});

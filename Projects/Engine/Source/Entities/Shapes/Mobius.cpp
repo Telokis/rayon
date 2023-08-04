@@ -134,7 +134,7 @@ namespace Rayon
     readVal(root, "width", _width, 1);
   }
 
-  void Mobius::write(YAML::Node& root) const
+  void Mobius::write(YAML::Node root) const
   {
     ParentType::write(root);
     writeVal(root, "torsion", _torsion, 1);

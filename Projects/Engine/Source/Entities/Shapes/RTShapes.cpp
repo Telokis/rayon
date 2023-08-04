@@ -26,7 +26,7 @@ namespace Rayon
     Entity::read(root);
   }
 
-  void RTShape::write(YAML::Node& root) const
+  void RTShape::write(YAML::Node root) const
   {
     Entity::write(root);
   }

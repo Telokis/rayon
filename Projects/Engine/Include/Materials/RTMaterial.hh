@@ -39,7 +39,7 @@ namespace Rayon
 
   public:
     virtual void read(const YAML::Node& root)  = 0;
-    virtual void write(YAML::Node& root) const = 0;
+    virtual void write(YAML::Node root) const = 0;
 
   public:
     bool testFlag(RayType type) const;

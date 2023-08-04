@@ -37,7 +37,7 @@ namespace Rayon
     readVal(root, "scale", _scale, 1);
   }
 
-  void Checkerboard::write(YAML::Node& root) const
+  void Checkerboard::write(YAML::Node root) const
   {
     root["type"] = name();
 

@@ -23,7 +23,7 @@ namespace Rayon
     Entity::read(root);
   }
 
-  void Eye::write(YAML::Node& root) const
+  void Eye::write(YAML::Node root) const
   {
     Entity::write(root);
   }

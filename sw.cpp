@@ -1,6 +1,6 @@
 // clang-format off
-#define QT_VERSION "-=5.15.0.0"
-#pragma sw require header org.sw.demo.qtproject.qt.base.tools.moc-=5.15.0.0
+#define QT_VERSION "-=6.5.2"
+#pragma sw require header org.sw.demo.qtproject.qt.base.tools.moc-=6.5.2
 // clang-format on
 
 void build(Solution& s)
@@ -9,15 +9,15 @@ void build(Solution& s)
 
   auto& engine = rayon.addTarget<StaticLibraryTarget>("engine");
   {
-    engine.CPPVersion = CPPLanguageStandard::CPP17;
+    engine += cpp20;
 
     // Files
     engine.Private += "Projects/Engine/Source/.*"_rr;
     engine.Private += "Projects/Engine/Include/.*"_rr;
 
     // Dependencies
-    engine.Public += "pub.telokis.github.jbeder.yaml_cpp-0.6.3"_dep;
-    engine.Public += "org.sw.demo.boost.signals2-1.72.0"_dep;
+    engine.Public += "org.sw.demo.jbeder.yaml_cpp-0.7.0"_dep;
+    engine.Public += "org.sw.demo.boost.signals2-1.82.0"_dep;
 
     // Include directories
     engine.Public += "Projects/Engine/Include"_id;
@@ -28,7 +28,7 @@ void build(Solution& s)
 
   auto& cli = rayon.addTarget<ExecutableTarget>("cli");
   {
-    cli.CPPVersion = CPPLanguageStandard::CPP17;
+    cli += cpp20;
 
     // Files
     cli.Private += "Projects/CLI/Source/.*"_rr;
@@ -37,8 +37,8 @@ void build(Solution& s)
 
     // Dependencies
     cli.Private += engine;
-    cli.Private += "org.sw.demo.boost.filesystem-1.72.0"_dep;
-    cli.Private += "org.sw.demo.boost.program_options-1.72.0"_dep;
+    cli.Private += "org.sw.demo.boost.filesystem-1.82.0"_dep;
+    cli.Private += "org.sw.demo.boost.program_options-1.82.0"_dep;
 
     // Include directories
     cli.Private += "Projects/CLI/Include/"_id;
@@ -47,7 +47,7 @@ void build(Solution& s)
 
   auto& bench = rayon.addTarget<ExecutableTarget>("bench");
   {
-    bench.CPPVersion = CPPLanguageStandard::CPP17;
+    bench += cpp20;
 
     // Files
     bench.Private += "Projects/Bench/Source/.*"_rr;
@@ -63,7 +63,7 @@ void build(Solution& s)
 
   auto& gui = rayon.addTarget<ExecutableTarget>("gui");
   {
-    gui.CPPVersion = CPPLanguageStandard::CPP17;
+    gui += cpp20;
 
     // Files
     gui.Private += "Projects/GUI/Source/.*"_rr;
@@ -74,7 +74,7 @@ void build(Solution& s)
 
     // Dependencies
     gui.Private += engine;
-    gui.Private += "org.sw.demo.boost.filesystem-1.72.0"_dep;
+    gui.Private += "org.sw.demo.boost.filesystem-1.82.0"_dep;
     gui.Private += "org.sw.demo.qtproject.qt.base.plugins.platforms.windows" QT_VERSION ""_dep;
     gui.Private += "org.sw.demo.qtproject.qt.base.widgets" QT_VERSION ""_dep;
 

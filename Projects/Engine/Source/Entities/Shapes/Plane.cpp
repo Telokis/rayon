@@ -68,7 +68,7 @@ namespace Rayon
     ParentType::read(root);
   }
 
-  void Plane::write(YAML::Node& root) const
+  void Plane::write(YAML::Node root) const
   {
     ParentType::write(root);
   }

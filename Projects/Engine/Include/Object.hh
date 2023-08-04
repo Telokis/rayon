@@ -37,7 +37,7 @@ namespace Rayon
 
   public:
     bool read(const YAML::Node& root);
-    void write(YAML::Node& root) const;
+    void write(YAML::Node root) const;
 
   private:
     RTShape*    _shape;

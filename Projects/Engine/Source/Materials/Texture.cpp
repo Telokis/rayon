@@ -27,7 +27,7 @@ namespace Rayon
     }
   }
 
-  void Texture::write(YAML::Node& root) const
+  void Texture::write(YAML::Node root) const
   {
     root["type"] = name();
 

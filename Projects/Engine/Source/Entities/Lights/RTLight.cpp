@@ -83,7 +83,7 @@ namespace Rayon
     readVal(root, "color", _color, 0xffffffff);
   }
 
-  void RTLight::write(YAML::Node& root) const
+  void RTLight::write(YAML::Node root) const
   {
     Entity::write(root);
     writeVal(root, "color", _color, 0xffffffff);

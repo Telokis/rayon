@@ -14,17 +14,17 @@ namespace Rayon
 {
   namespace
   {
-    void parseSpecString(const std::string& content, YAML::Node& root)
+    void parseSpecString(const std::string& content, YAML::Node root)
     {
       root = YAML::Load(content);
     }
 
-    void parseSpecFile(const std::string& path, YAML::Node& root)
+    void parseSpecFile(const std::string& path, YAML::Node root)
     {
       root = YAML::LoadFile(path);
     }
 
-    void writeSpecFile(const std::string& path, YAML::Node& root)
+    void writeSpecFile(const std::string& path, YAML::Node root)
     {
       std::ofstream file(path);
 
@@ -161,7 +161,7 @@ namespace Rayon
 
     scene.eye().write(root["eye"]);
     scene.cubemap().write(root["cubemap"]);
-    YAML::Node& lights = root["lights"];
+    YAML::Node lights = root["lights"];
 
     for (const auto& light : scene.lights())
     {
@@ -171,7 +171,7 @@ namespace Rayon
       lights.push_back(val);
     }
 
-    YAML::Node& objects = root["objects"];
+    YAML::Node objects = root["objects"];
     for (const Object* obj : scene.objects())
     {
       YAML::Node val;
@@ -214,7 +214,7 @@ namespace Rayon
     }
   }
 
-  void writeMaterial(YAML::Node& root, const RTMaterial* material)
+  void writeMaterial(YAML::Node root, const RTMaterial* material)
   {
     material->write(root);
   }
@@ -222,19 +222,19 @@ namespace Rayon
   /*
    *  Write
    */
-  void writeVal(YAML::Node& node, const std::string& name, const Float_t& val, const Float_t& def)
+  void writeVal(YAML::Node node, const std::string& name, const Float_t& val, const Float_t& def)
   {
     node[name] = static_cast<double>(val);
   }
 
-  void writeVal(YAML::Node& node, const std::string& name, const uint32& val, const uint32& def)
+  void writeVal(YAML::Node node, const std::string& name, const uint32& val, const uint32& def)
   {
     node[name] = val;
   }
 
-  void writeVal(YAML::Node& node, const std::string& name, const Color& color, const Color& def)
+  void writeVal(YAML::Node node, const std::string& name, const Color& color, const Color& def)
   {
-    YAML::Node& subNode = node[name];
+    YAML::Node subNode = node[name];
     const auto  value   = color.intValue();
     const auto& cols    = namedColors();
 
@@ -252,9 +252,9 @@ namespace Rayon
     writeVal(subNode, "blue", uint32(color.blue()), uint32(def.blue()));
   }
 
-  void writeVal(YAML::Node& node, const std::string& name, const Vec_t& vec, const Vec_t& def)
+  void writeVal(YAML::Node node, const std::string& name, const Vec_t& vec, const Vec_t& def)
   {
-    YAML::Node& subNode = node[name];
+    YAML::Node subNode = node[name];
 
     writeVal(subNode, "x", vec.x, def.x);
     writeVal(subNode, "y", vec.y, def.y);

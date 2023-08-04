@@ -81,7 +81,7 @@ namespace Rayon
     readVal(root, "height", _height, 1);
   }
 
-  void Rectangle::write(YAML::Node& root) const
+  void Rectangle::write(YAML::Node root) const
   {
     ParentType::write(root);
     writeVal(root, "width", _width, 1);

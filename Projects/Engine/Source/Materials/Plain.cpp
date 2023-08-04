@@ -60,13 +60,13 @@ namespace Rayon
     readVal(root, "shininess", _shininess, 0);
   }
 
-  void Plain::write(YAML::Node& root) const
+  void Plain::write(YAML::Node root) const
   {
     root["type"] = name();
 
     if (!_flags.none())
     {
-      YAML::Node& flags = root["flags"];
+      YAML::Node flags = root["flags"];
 
       for (const auto& pair : flagToStr)
         if (testFlag(pair.first))

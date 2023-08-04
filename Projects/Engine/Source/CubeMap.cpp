@@ -209,7 +209,7 @@ namespace Rayon
     }
   }
 
-  void CubeMap::write(YAML::Node& root) const
+  void CubeMap::write(YAML::Node root) const
   {
     for (auto i = 0u; i < _paths.size(); ++i)
     {

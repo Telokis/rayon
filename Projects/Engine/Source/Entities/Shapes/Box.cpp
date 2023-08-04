@@ -108,7 +108,7 @@ namespace Rayon
     readVal(root, "depth", _depth, 1);
   }
 
-  void Box::write(YAML::Node& root) const
+  void Box::write(YAML::Node root) const
   {
     ParentType::write(root);
     writeVal(root, "width", _width, 1);

@@ -84,7 +84,7 @@ namespace Rayon
     readVal(root, "v2", _v[2], Vec_t(0, 0, 1));
   }
 
-  void Triangle::write(YAML::Node& root) const
+  void Triangle::write(YAML::Node root) const
   {
     ParentType::write(root);
     writeVal(root, "v0", _v[0], Vec_t(1, 0, 0));

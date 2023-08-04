@@ -28,7 +28,7 @@ namespace Rayon
 
   public:
     void read(const YAML::Node& root) override;
-    void write(YAML::Node& root) const override;
+    void write(YAML::Node root) const override;
 
   public:
     const std::vector<RTMaterial*>& getTiles() const;

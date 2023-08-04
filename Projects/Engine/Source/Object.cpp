@@ -112,10 +112,13 @@ namespace Rayon
     return true;
   }
 
-  void Object::write(YAML::Node& root) const
+  void Object::write(YAML::Node root) const
   {
     _shape->write(root);
-    _material->write(root["material"]);
+
+    auto material = root["material"];
+
+    _material->write(material);
   }
 
   bool Object::inter(const Ray& ray, IntersectionData& data) const

@@ -22,7 +22,7 @@ namespace Rayon
 
   public:
     virtual void read(const YAML::Node& root);
-    virtual void write(YAML::Node& root) const;
+    virtual void write(YAML::Node root) const;
 
   public:
     Vec_t directRotation(const Vec_t& Vec_t) const;

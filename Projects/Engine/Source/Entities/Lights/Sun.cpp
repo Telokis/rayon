@@ -60,7 +60,7 @@ namespace Rayon
     readVal(root, "power", _power, 0.5);
   }
 
-  void Sun::write(YAML::Node& root) const
+  void Sun::write(YAML::Node root) const
   {
     ParentType::write(root);
     writeVal(root, "power", _power, 0.5);

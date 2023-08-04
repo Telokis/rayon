@@ -29,7 +29,7 @@ namespace Rayon
 
   public:
     void read(const YAML::Node& root);
-    void write(YAML::Node& root) const;
+    void write(YAML::Node root) const;
 
   protected:
     RAYON_GENERATE_PROPERTY_DECLARATION(CubeMap, std::string, _sourceFilename, SourceFilename);

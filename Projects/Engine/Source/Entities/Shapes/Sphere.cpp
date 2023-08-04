@@ -84,7 +84,7 @@ namespace Rayon
     readVal(root, "radius", _radius, 1);
   }
 
-  void Sphere::write(YAML::Node& root) const
+  void Sphere::write(YAML::Node root) const
   {
     ParentType::write(root);
     writeVal(root, "radius", _radius, 1);
