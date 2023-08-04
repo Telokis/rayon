@@ -17,3 +17,5 @@ BM_RayonRunBasic_OneThreadForced/min_time:5.000/real_time                       
 BM_RayonRunBasic_EightThread/min_time:5.000/real_time                                   498 ms         1.30 ms           12
 BM_RayonRunBasic_ProgressiveRPP_8T/iterations:50/real_time                              157 ms        0.000 ms           50
 BM_RayonRunBasic_ProgressiveRPP_NoConditionalVariable_8T/iterations:50/real_time        148 ms        0.313 ms           50
+
+Total duration: 7262 ms
