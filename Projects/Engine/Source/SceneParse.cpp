@@ -14,12 +14,12 @@ namespace Rayon
 {
   namespace
   {
-    void parseSpecString(const std::string& content, YAML::Node root)
+    void parseSpecString(const std::string& content, YAML::Node& root)
     {
       root = YAML::Load(content);
     }
 
-    void parseSpecFile(const std::string& path, YAML::Node root)
+    void parseSpecFile(const std::string& path, YAML::Node& root)
     {
       root = YAML::LoadFile(path);
     }
