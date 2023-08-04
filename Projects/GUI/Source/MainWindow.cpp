@@ -61,14 +61,14 @@ void populateFlags(QLayout* parentLayout, QWidget* parent)
   }
 }
 
-static const constexpr int THREAD_COUNT = 8;
+static const constexpr int THREAD_COUNT = 24;
 
 // 2316, 1317
 MainWindow::MainWindow(QWidget* parent)
   : QMainWindow(parent)
   , ui(new Ui::MainWindow)
   , _engine(Rayon::Config(800, 800, THREAD_COUNT).setSilent(true))
-  , _batchGenerator(std::make_unique<Rayon::LocalBatchGenerator>(&_img, -6, 1, THREAD_COUNT))
+  , _batchGenerator(std::make_unique<Rayon::LocalBatchGenerator>(&_img, 1, 1, THREAD_COUNT))
 {
   Rayon::registry().registerDefaults();
   Rayon::readSceneFromString(_scene, rawScene);

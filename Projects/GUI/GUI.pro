@@ -22,6 +22,8 @@ FORMS += \
     Form/MainWindow.ui \
     Form/RTColorWidget.ui
 
+RC_ICONS = Resources/favicon.ico
+
 #RESOURCES += 
 
 defineReplace(prependAll) {
