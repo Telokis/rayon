@@ -2,6 +2,7 @@
 
 #include <boost/filesystem.hpp>
 #include <iostream>
+#include <thread>
 
 #include "Tools/Types.hh"
 #include "Version.hh"
@@ -33,7 +34,7 @@ namespace Rayon::CLI
          po::value<int>(&_rpp)->default_value(1),
          "Rays per pixels. Negative value will pack pixels together.");
     opts("thread-count,j",
-         po::value<uint32>(&config.threadsCount)->default_value(4),
+         po::value<uint32>(&config.threadsCount)->default_value(std::thread::hardware_concurrency()),
          "Number of threads to use to render");
 
     po::options_description hidden;
