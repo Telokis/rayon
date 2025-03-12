@@ -1,0 +1,21 @@
+❯ ./rayon.bench-0.0.1.exe
+03/13/25 00:35:48
+Running F:\Telokis\Documents\dev\git\Rayon\bin\rayon.bench-0.0.1.exe
+Run on (32 X 4491 MHz CPU s)
+CPU Caches:
+  L1 Data 32K (x16)
+  L1 Instruction 32K (x16)
+  L2 Unified 1048K (x16)
+  L3 Unified 33554K (x2)
+---------------------------------------------------------------------------------------------------------------------------
+Benchmark                                                                                 Time             CPU   Iterations
+---------------------------------------------------------------------------------------------------------------------------
+BM_RayonRunBasic_NoPreprocessing/min_time:5.000/real_time                               313 ms        0.000 ms           23
+BM_RayonRunBasic_WithPreprocessing/min_time:5.000/real_time                             625 ms        0.000 ms           10
+BM_RayonRunBasic_OneThread/min_time:5.000/real_time                                    1199 ms         1182 ms            6
+BM_RayonRunBasic_OneThreadForced/min_time:5.000/real_time                              1179 ms        0.000 ms            6
+BM_RayonRunBasic_EightThread/min_time:5.000/real_time                                   162 ms        0.355 ms           44
+BM_RayonRunBasic_ProgressiveRPP_8T/iterations:50/real_time                             61.9 ms        0.000 ms           50
+BM_RayonRunBasic_ProgressiveRPP_NoConditionalVariable_8T/iterations:50/real_time       54.5 ms        0.000 ms           50
+
+Total duration: 3594.4 ms
